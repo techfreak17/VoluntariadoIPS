@@ -32,11 +32,11 @@ const ProjectSchema = new Schema({
     },
     date: {
         type: Date,
-        required: true
+        required: false
     },
     areas: {
         type: Array,
-        required: true
+        required: false
     },
     description: {
         type: String,
@@ -44,7 +44,7 @@ const ProjectSchema = new Schema({
     },
     related_entities: {
         type: Array,
-        required: true
+        required: false
     },
     observations: {
         type: String,
@@ -52,11 +52,11 @@ const ProjectSchema = new Schema({
     },
     authorization: {
         type: Boolean,
-        required: true
+        required: false
     },
     user_in_charge: {
         type: Number,
-        required: true
+        required: false
     }
 });
 module.exports = Project = mongoose.model("Projects", ProjectSchema);

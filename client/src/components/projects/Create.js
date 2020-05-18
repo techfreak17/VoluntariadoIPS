@@ -27,16 +27,16 @@ class Create extends Component {
       contact_person: "",
       email_person: "",
       phone_person: "",
-      synopis: "",
+      synopsis: "",
       target_audience: "",
       objectives: "",
       date: "",
-      areas: [],
+      areas: "",
       description : "",
-      related_entities: [],
+      related_entities: "",
       observations: "",
-      authorization: false,
-      user_in_charge: 0
+      authorization: "",
+      user_in_charge: ""
     }
   }
   onChangeTitle(e) {
@@ -46,7 +46,7 @@ class Create extends Component {
   }
   onChangeSynopsis(e) {
     this.setState({
-        synopis: e.target.value
+        synopsis: e.target.value
     })  
   }
   onChangeTarget(e) {
@@ -117,15 +117,15 @@ class Create extends Component {
       contact_person: this.state.contact_person,
       email_person: this.state.email_person,
       phone_person: this.state.phone_person,
-      synopis: this.state.synopis,
-      target_audience: this.state.target,
+      synopsis: this.state.synopsis,
+      target_audience: this.state.target_audience,
       objectives: this.state.objectives,
       date: this.state.date,
       areas: this.state.areas,
-      description: this.state.need_training,
+      description: this.state.description,
       related_entities: this.state.related_entities,
       observations: this.state.observations,
-      authorization: this.state.authorization,
+      authorization: (this.state.authorization  === "true"),
       user_in_charge: this.user_in_charge
     };
    
@@ -136,16 +136,16 @@ class Create extends Component {
         contact_person: "",
         email_person: "",
         phone_person: "",
-        synopis: "",
+        synopsis: "",
         target_audience: "",
         objectives: "",
         date: "",
-        areas: [],
+        areas: "",
         description : "",
-        related_entities: [],
+        related_entities: "",
         observations: "",
         authorization: false,
-        user_in_charge: 0,
+        user_in_charge: "",
     })
   }
  
@@ -194,7 +194,7 @@ class Create extends Component {
                     <label>Resumo do Projeto: </label>
                     <input type="text" 
                       className="form-control"
-                      value={this.state.synopis}
+                      value={this.state.synopsis}
                       onChange={this.onChangeSynopsis}
                       />
                 </div>
@@ -228,6 +228,21 @@ class Create extends Component {
                       className="form-control"
                       value={this.state.description}
                       onChange={this.onChangeDescription}
+                      />
+                </div>
+                <div className="input-field col s12">
+                    <label>Observações </label>
+                    <input type="text" 
+                      className="form-control"
+                      value={this.state.observations}
+                      onChange={this.onChangeObservations}
+                      />
+                </div>
+                <div className="input-field col s12">
+                    <input type="date" 
+                      className="form-control"
+                      value={this.state.date}
+                      onChange={this.onChangeDate}
                       />
                 </div>
                 <div className="form-group">

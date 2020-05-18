@@ -10,7 +10,7 @@ export default class Index extends Component {
       this.state = {project: []};
     }
     componentDidMount(){
-      axios.get('http://localhost:3000/project')
+      axios.get('/api/projects/index')
         .then(response => {
           this.setState({ project: response.data });
         })
@@ -30,7 +30,7 @@ export default class Index extends Component {
           <h3 align="center">Projetos</h3>
           <p className="grey-text text-darken-1">
               <Link to="/dashboard">Voltar</Link> <br></br>
-              <Link to="/createProject"> Propor Projeto</Link>
+              <Link to="/create"> Propor Projeto</Link>
           </p>
           <table className="table table-striped" style={{ marginTop: 20 }}>
             <thead>

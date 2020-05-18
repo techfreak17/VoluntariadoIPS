@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix client",
-    "start": "node Notifications/notif.js",
+    "start": "node Notifications/semVagasNotif.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""

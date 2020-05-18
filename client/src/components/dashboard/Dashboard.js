@@ -19,7 +19,7 @@ class Dashboard extends Component {
             <div style={{ height: "75vh" }} className="container valign-wrapper"> 
                 <div className="row">
                     <p className="grey-text text-darken-1">
-                        <Link to="/projects">Projetos</Link>
+                        <Link to="/listProjects">Projetos</Link>
                     </p>
                     <div className="col s12 center-align">
                         <h4>

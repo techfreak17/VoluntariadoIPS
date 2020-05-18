@@ -52,9 +52,9 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
-              <PrivateRoute exact path='/create' component={ Create } />
+              <PrivateRoute exact path='/createProject' component={ Create } />
               <PrivateRoute path='/editProject/:id' component={ Edit } />
-              <PrivateRoute path='/index' component={ Index } />
+              <PrivateRoute path='/listProjects' component={ Index } />
             </Switch>
           </div>
           </Router>

@@ -24,28 +24,28 @@ export default class Edit extends Component {
       contact_person: "",
       email_person: "",
       phone_person: "",
-      synopis: "",
+      synopsis: "",
       target_audience: "",
       objectives: "",
       date: "",
-      areas: [],
+      areas: "",
       description : "",
-      related_entities: [],
+      related_entities: "",
       observations: "",
-      authorization: false,
-      user_in_charge: 0
+      authorization: "",
+      user_in_charge: ""
     }
   }
 
   componentDidMount() {
-      axios.get('http://localhost:3000/project/edit/'+this.props.match.params.id)
+      axios.get('/api/projects/editProject/'+ this.props.match.params.id)
           .then(response => {
               this.setState({ 
                 title: response.data.title, 
                 contact_person: response.data.contact_person,
                 email_person: response.data.email_person,
                 phone_person: response.data.phone_person,
-                synopis: response.data.synopis,
+                synopsis: response.data.synopsis,
                 target_audience: response.data.target_audience,
                 objectives: response.data.objectives,
                 date: response.data.date,
@@ -61,6 +61,7 @@ export default class Edit extends Component {
               console.log(error);
           })
     }
+
     onChangeTitle(e) {
       this.setState({
           title: e.target.value
@@ -68,7 +69,7 @@ export default class Edit extends Component {
     }
     onChangeSynopsis(e) {
       this.setState({
-          synopis: e.target.value
+          synopsis: e.target.value
       })  
     }
     onChangeTarget(e) {
@@ -139,7 +140,7 @@ export default class Edit extends Component {
       contact_person: this.state.contact_person,
       email_person: this.state.email_person,
       phone_person: this.state.phone_person,
-      synopis: this.state.synopis,
+      synopsis: this.state.synopsis,
       target_audience: this.state.target,
       objectives: this.state.objectives,
       date: this.state.date,
@@ -150,18 +151,18 @@ export default class Edit extends Component {
       authorization: this.state.authorization,
       user_in_charge: this.user_in_charge
     };
-    axios.post('http://localhost:3000/project/update/'+this.props.match.params.id, obj)
+    axios.post('/api/projects/updateProject/' + this.props.match.params.id, obj)
         .then(res => console.log(res.data));
     
-    this.props.history.push('/index');
+    this.props.history.push('/listProjects');
   }
  
   render() {
     return (
         <div style={{ marginTop: 10 }}>
-            <h3 align="center">Update Project</h3>
+            <h3 align="left">Editar Detalhes</h3>
             <form onSubmit={this.onSubmit}>
-            <div className="form-group">
+                <div className="form-group">
                     <label>Nome do Projeto:  </label>
                     <input 
                       type="text" 
@@ -198,7 +199,7 @@ export default class Edit extends Component {
                     <label>Resumo do Projeto: </label>
                     <input type="text" 
                       className="form-control"
-                      value={this.state.synopis}
+                      value={this.state.synopsis}
                       onChange={this.onChangeSynopsis}
                       />
                 </div>
@@ -233,6 +234,27 @@ export default class Edit extends Component {
                       value={this.state.description}
                       onChange={this.onChangeDescription}
                       />
+                </div>
+                <div className="form-group">
+                    <label>Observações </label>
+                    <input type="text" 
+                      className="form-control"
+                      value={this.state.observations}
+                      onChange={this.onChangeObservations}
+                      />
+                </div>
+                <div className="form-group">
+                    <label>Data </label>
+                    <input type="date" 
+                      className="form-control"
+                      value={this.state.date}
+                      onChange={this.onChangeDate}
+                      />
+                </div>
+                <div className="form-group">
+                    <input type="submit" 
+                      value="Submeter" 
+                      className="btn btn-primary"/>
                 </div>
             </form>
         </div>

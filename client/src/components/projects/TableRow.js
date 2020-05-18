@@ -9,9 +9,10 @@ class TableRow extends Component {
         this.delete = this.delete.bind(this);
     }
     delete() {
-        axios.get('/api/projects/delete' + this.props.obj._id)
+        axios.get('/api/projects/deleteProject/' + this.props.obj._id)
             .then(console.log('Deleted'))
             .catch(err => console.log(err))
+        window.location.reload();
     }
   render() {
     return (
@@ -26,7 +27,7 @@ class TableRow extends Component {
             {this.props.obj.description}
           </td>
           <td>
-            <Link to={"/edit/"+this.props.obj._id} className="btn btn-primary">Edit</Link>
+            <Link to={"/editProject/" + this.props.obj._id} className="btn btn-primary">Edit</Link>
           </td>
           <td>
             <button onClick={this.delete} className="btn btn-danger">Delete</button>

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
+import { Link } from "react-router-dom";
+
 
 class Dashboard extends Component {
     onLogoutClick = e => {
@@ -14,8 +16,11 @@ class Dashboard extends Component {
         const { user } = this.props.auth;
 
         return (
-            <div style={{ height: "75vh" }} className="container valign-wrapper">
+            <div style={{ height: "75vh" }} className="container valign-wrapper"> 
                 <div className="row">
+                    <p className="grey-text text-darken-1">
+                        <Link to="/projects">Projetos</Link>
+                    </p>
                     <div className="col s12 center-align">
                         <h4>
                             <b>Hey there,</b> {user.name.split(" ")[0]}

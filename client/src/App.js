@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
@@ -11,6 +11,9 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
+import Create from './components/projects/Create';
+import Edit from './components/projects/Edit';
+import Index from './components/projects/Index';
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -37,7 +40,6 @@ if (localStorage.jwtToken) {
   }
 }
 
-
 class App extends Component {
   render() {
     return (
@@ -50,9 +52,12 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute exact path='/createProject' component={ Create } />
+              <PrivateRoute path='/editProject/:id' component={ Edit } />
+              <PrivateRoute path='/projects' component={ Index } />
             </Switch>
           </div>
-        </Router>
+          </Router>
       </Provider>
     );
   }

@@ -78,9 +78,21 @@ router.route('/updateProject/:id').post(function (req, res) {
       project.authorization = req.body.authorization;
       project.user_in_charge = req.body.user_in_charge;
 
-      project.save().then(project => {
-        res.json('Update complete');
-      })
+      project.updateOne({ title: project.title,
+         contact_person: project.contact_person,
+         email_person: project.email_person,
+         phone_person: project.phone_person,
+         synopsis: project.synopsis,
+         target_audience: project.target_audience,
+         objectives: project.objectives,
+         date: project.date,
+         areas: project.areas,
+         description: project.description,
+         related_entities: project.related_entities,
+         observations: project.observations,
+         authorization: project.authorization,
+         user_in_charge: project.user_in_charge}
+         )
       .catch(err => {
         res.status(400).send("unable to update the database");
       });

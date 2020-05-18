@@ -141,11 +141,11 @@ export default class Edit extends Component {
       email_person: this.state.email_person,
       phone_person: this.state.phone_person,
       synopsis: this.state.synopsis,
-      target_audience: this.state.target,
+      target_audience: this.state.target_audience,
       objectives: this.state.objectives,
       date: this.state.date,
       areas: this.state.areas,
-      description: this.state.need_training,
+      description: this.state.description,
       related_entities: this.state.related_entities,
       observations: this.state.observations,
       authorization: this.state.authorization,
@@ -153,8 +153,8 @@ export default class Edit extends Component {
     };
     axios.post('/api/projects/updateProject/' + this.props.match.params.id, obj)
         .then(res => console.log(res.data));
-    
-    this.props.history.push('/listProjects');
+        this.props.history.push('/listProjects');
+        window.location.reload();
   }
  
   render() {

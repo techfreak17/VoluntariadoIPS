@@ -49,10 +49,19 @@ class RecoverConfirm extends Component {
                                 <p className="grey-text text-darken-1">
                                    Verifica a tua caixa de correio e segue o link para recuperares a tua password. 
                                 </p>
-                                <image src={'../layout/images/mailbox.png'} className="img-responsive" />
                             </h5>
                         </div>
+                        
+                        <div className="col s12" style={{textAlign: "center"}}>
+                            <img src={require('../layout/images/mailbox.png')} 
+                                    alt="(Não esquecer de verificar no spam)" 
+                                    className="img-responsive" 
+                                    style={{borderRadius: '60%', width: '85%', }}
+                                    />
                     </div>
+                    </div>
+                    
+                    
                 </div>
             </div>
         );
@@ -60,7 +69,6 @@ class RecoverConfirm extends Component {
 }
 
 RecoverConfirm.propTypes = {
-    forgotenUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };

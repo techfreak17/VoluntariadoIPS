@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { loginUser } from "../../actions/authActions";
 import classnames from "classnames";
+import { recoverUser } from "../../actions/authActions";
 
-
-class Login extends Component {
+class Recover extends Component {
     constructor() {
         super();
         this.state = {
@@ -16,12 +15,14 @@ class Login extends Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.auth.isAuthenticated) {
-            this.props.history.push("/dashboard"); // push user to dashboard when they login
+    componentDidMount() {
+        // If logged in and user navigates to Register page, should redirect them to dashboard
+        if (this.props.auth.isAuthenticated) {
+            this.props.history.push("/dashboard");
         }
+    }
 
-
+    componentWillReceiveProps(nextProps) {
         if (nextProps.errors) {
             this.setState({
                 errors: nextProps.errors
@@ -35,36 +36,36 @@ class Login extends Component {
 
     onSubmit = e => {
         e.preventDefault();
-        const userData = {
+
+        const forgotenUser = {
             email: this.state.email,
-            password: this.state.password
+            password: "forgotten"
         };
-        this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
-        console.log(userData);
+
+        this.props.recoverUser(forgotenUser, this.props.history);
     };
 
     render() {
         const { errors } = this.state;
+
         return (
             <div className="container">
-                <div style={{ marginTop: "4rem" }} className="row">
+                <div className="row">
                     <div className="col s8 offset-s2">
                         <Link to="/" className="btn-flat waves-effect">
                             <i className="material-icons left">keyboard_backspace</i>
-                            Back to home
+                            Voltar ao inicio
                         </Link>
 
                         <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                             <h4>
-                                <b>Login</b>
-                                below
+                                <b>Recuperar </b>
+                                Password
                             </h4>
-
-                            <p className="grey-text text-darken-1">
-                                Don't have an account? <Link to="/register">Register</Link>
-                            </p>
                         </div>
+
                         <form noValidate onSubmit={this.onSubmit}>
+
                             <div className="input-field col s12">
                                 <input
                                     onChange={this.onChange}
@@ -73,32 +74,13 @@ class Login extends Component {
                                     id="email"
                                     type="email"
                                     className={classnames("", {
-                                        invalid: errors.email || errors.emailnotfound
+                                        invalid: errors.email
                                     })}
                                 />
                                 <label htmlFor="email">Email</label>
-                                <span className="red-text">
-                                    {errors.email}
-                                    {errors.emailnotfound}
-                                </span>
+                                <span className="red-text">{errors.email}</span>
                             </div>
-                            <div className="input-field col s12">
-                                <input
-                                    onChange={this.onChange}
-                                    value={this.state.password}
-                                    error={errors.password}
-                                    id="password"
-                                    type="password"
-                                    className={classnames("", {
-                                        invalid: errors.password || errors.passwordincorrect
-                                    })}
-                                />
-                                <label htmlFor="password">Password</label>
-                                <span className="red-text">
-                                    {errors.password}
-                                    {errors.passwordincorrect}
-                                </span>
-                            </div>
+
                             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                                 <button
                                     style={{
@@ -109,13 +91,8 @@ class Login extends Component {
                                     }}
                                     type="submit"
                                     className="btn btn-large waves-effect waves-light hoverable blue accent-3">
-                                    Login
+                                    Recuperar!
                                 </button>
-                            </div>
-                            <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                                <p className="grey-text text-darken-1">
-                                  Esqueceste a password? Clica-me! <Link to="/recover">Recuperar</Link>
-                                </p>
                             </div>
                         </form>
                     </div>
@@ -125,8 +102,8 @@ class Login extends Component {
     }
 }
 
-Login.propTypes = {
-    loginUser: PropTypes.func.isRequired,
+Recover.propTypes = {
+    recoverUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };
@@ -138,5 +115,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { loginUser }
-)(Login);
+    { recoverUser }
+)(withRouter(Recover));

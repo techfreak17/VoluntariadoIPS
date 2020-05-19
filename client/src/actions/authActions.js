@@ -49,6 +49,19 @@ export const loginUser = userData => dispatch => {
         );
 };
 
+// Recover User
+export const recoverUser = (userData, history) => dispatch => {
+    axios
+        .post("/api/users/recover", userData)
+        .then(res => history.push("/recoverconfirm")) // re-direct to page after email sent
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
+};
+
 // Set logged in user
 export const setCurrentUser = decoded => {
     return {

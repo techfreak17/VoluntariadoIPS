@@ -6,7 +6,7 @@ const sgMail = require('@sendgrid/mail');
 
 sgMail.setApiKey('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');
 const msg = {
-  to: '170221078@estudantes.ips.pt',
+  to: '190200026@estudantes.ips.pt',
   from: 'ipsvoluntariado@gmail.com',
   subject: 'Sending with Twilio SendGrid is Fun',
   text: 'and easy to do anywhere, even with Node.js',

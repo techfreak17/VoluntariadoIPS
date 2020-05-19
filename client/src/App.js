@@ -14,6 +14,8 @@ import Dashboard from "./components/dashboard/Dashboard";
 import Create from './components/projects/Create';
 import Edit from './components/projects/Edit';
 import Index from './components/projects/Index';
+import Recover from "./components/auth/Recover";
+import RecoverConfirm from "./components/auth/RecoverConfirm";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -50,6 +52,8 @@ class App extends Component {
             <Route exact path="/" component={Landing} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/recover" component={Recover} />
+            <Route exact path="/recoverconfirm" component={RecoverConfirm} />
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute exact path='/createProject' component={ Create } />

@@ -1,11 +1,9 @@
 const template = require('./emailNotificationsTemplates');
-const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey('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');
+const sender = require('./emailNotify');
 
-const msg = template.confirmarEmail();
+//Designar qual o template a usar e para que email
+const msg = template.confirmarEmail('170221078@estudantes.ips.pt','ThisIsAToken');
 
-sgMail.send(msg).then(() => {
-    console.log('Message sent')
-}).catch((error) => {
-    console.log(error.response.body)
-})
+
+//Enviar email
+sender.sendEmail(msg);

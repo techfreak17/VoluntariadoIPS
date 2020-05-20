@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 export default class Edit extends Component {
   constructor(props) {
@@ -161,6 +162,9 @@ export default class Edit extends Component {
     return (
         <div style={{ marginTop: 10 }}>
             <h3 align="left">Editar Detalhes</h3>
+            <p className="grey-text text-darken-1">
+              <Link to="/listProjects">Voltar</Link> 
+            </p>
             <form onSubmit={this.onSubmit}>
                 <div className="form-group">
                     <label>Nome do Projeto:  </label>

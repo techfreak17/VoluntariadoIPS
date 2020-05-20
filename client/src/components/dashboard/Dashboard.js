@@ -20,6 +20,7 @@ class Dashboard extends Component {
                 <div className="row">
                     <p className="grey-text text-darken-1">
                         <Link to="/listProjects">Projetos</Link>
+                        <Link to="/listUsers"> Utilizadores</Link>
                     </p>
                     <div className="col s12 center-align">
                         <h4>

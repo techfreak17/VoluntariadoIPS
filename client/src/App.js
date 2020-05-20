@@ -16,6 +16,9 @@ import Edit from './components/projects/Edit';
 import Index from './components/projects/Index';
 import Recover from "./components/auth/Recover";
 import RecoverConfirm from "./components/auth/RecoverConfirm";
+import IndexUsers from './components/users/IndexUsers';
+import CreateUser from './components/users/CreateUser';
+import EditUser from './components/users/EditUser';
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -59,6 +62,9 @@ class App extends Component {
               <PrivateRoute exact path='/createProject' component={ Create } />
               <PrivateRoute path='/editProject/:id' component={ Edit } />
               <PrivateRoute path='/listProjects' component={ Index } />
+              <PrivateRoute exact path='/createUser' component={ CreateUser } />
+              <PrivateRoute path='/editUser/:id' component={ EditUser } />
+              <PrivateRoute path='/listUsers' component={ IndexUsers } />
             </Switch>
           </div>
           </Router>

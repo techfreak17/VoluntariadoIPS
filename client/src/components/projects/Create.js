@@ -155,7 +155,7 @@ class Create extends Component {
             <h3 align="left">Propor Projeto</h3>
             <p className="grey-text text-darken-1">
               <Link to="/listProjects">Voltar</Link> 
-          </p>
+            </p>
             <form onSubmit={this.onSubmit}>
                 <div className="input-field col s12">
                     <label>Nome do Projeto:  </label>

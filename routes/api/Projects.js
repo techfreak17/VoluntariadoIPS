@@ -102,7 +102,7 @@ router.route('/updateProject/:id').post(function (req, res) {
 
 // Defined delete | remove | destroy route
 router.route('/deleteProject/:id').get(function (req, res) {
-  Project.findByIdAndRemove({_id: req.params.id}, function(err, business){
+  Project.findByIdAndRemove({_id: req.params.id}, function(err, project){
       if(err) res.json(err);
       else res.json('Successfully removed');
   });

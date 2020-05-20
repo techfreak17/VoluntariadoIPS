@@ -7,7 +7,7 @@ class Landing extends Component {
                 <div className="row">
                     <div className="col s12 center-align">
                         <h4>
-                            Bem-vindo á plataforma {" "}
+                            Bem-vindo à plataforma {" "}
                             <span style={{ fontFamily: "monospace" }}>VoluntariadoIPS</span>
                             .
                         </h4>
@@ -15,8 +15,8 @@ class Landing extends Component {
                             Pronto para ajudar?
                         </h5>
                         <p className="flow-text grey-text text-darken-1">
-                            Junta-te a nós em diversos projetos que são
-                            enriquecedores tanto para ti como para a comunidade!
+                            Junte-se a nós em diversos projetos que são
+                            enriquecedores tanto para si como para a comunidade!
                         </p>
                         <br />
                         <div className="col s6">

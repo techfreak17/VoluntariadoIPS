@@ -62,16 +62,15 @@ class Register extends Component {
                     <div className="col s8 offset-s2">
                         <Link to="/" className="btn-flat waves-effect">
                             <i className="material-icons left">keyboard_backspace</i>
-                            Voltar ao inicio
+                            Voltar
                         </Link>
 
                         <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                             <h4>
                                 <b>Registar </b>
-                                abaixo
                             </h4>
                             <p className="grey-text text-darken-1">
-                                Já tens uma conta? <Link to="/login">Log in</Link>
+                                Já tem conta? <Link to="/login">Log in</Link>
                             </p>
                         </div>
 
@@ -161,8 +160,8 @@ class Register extends Component {
                                     className="browser-default">
 
                                     <option value="" disabled selected>Selecionar Role</option>
-                                    <option value="Voluntary">Voluntário</option>
-                                    <option value="Entity">Empresa</option>
+                                    <option value="Voluntário">Voluntário</option>
+                                    <option value="Empresa">Empresa</option>
                                 </select>
                                 <span className="red-text">{errors.role}</span>
                             </div>
@@ -177,7 +176,7 @@ class Register extends Component {
                                     }}
                                     type="submit"
                                     className="btn btn-large waves-effect waves-light hoverable blue accent-3">
-                                    Registar!
+                                    Registar
                                 </button>
                             </div>
                         </form>

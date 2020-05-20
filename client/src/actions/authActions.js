@@ -12,6 +12,19 @@ import {
 export const registerUser = (userData, history) => dispatch => {
     axios
         .post("/api/users/register", userData)
+        .then(res => history.push("/confirmAccount")) // re-direct to login on successful register
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
+};
+
+// Register User
+export const confirmToken = (tokenData, history) => dispatch => {
+    axios
+        .post("/api/users/confirmtoken", tokenData)
         .then(res => history.push("/login")) // re-direct to login on successful register
         .catch(err =>
             dispatch({

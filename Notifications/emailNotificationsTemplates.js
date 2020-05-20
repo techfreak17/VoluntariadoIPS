@@ -16,12 +16,15 @@ module.exports = {
         };
     },
     //Email de recuperação de Password
-    recuperarPassword: (email) => {
+    recuperarPassword: (email, token) => {
         return{
             to: email,
             from: 'ipsvoluntariado@gmail.com',
             subject: 'Recuperar Password',
-            template_id: 'd-0935ddb2419643f2a9e879f3a9d4bfe0'
+            template_id: 'd-0935ddb2419643f2a9e879f3a9d4bfe0',
+            dynamic_template_data: {
+                'token': token
+            }  
         };
     },
     //Email de novo Projeto criado

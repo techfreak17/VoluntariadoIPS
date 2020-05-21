@@ -19,6 +19,7 @@ import RecoverConfirm from "./components/auth/RecoverConfirm";
 import ConfirmAccount from "./components/auth/ConfirmAccount";
 import ConfirmAccountToken from "./components/auth/ConfirmAccountToken";
 import ResetPassword from "./components/auth/ResetPassword";
+import Menu from "./components/layout/Menu";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -52,6 +53,7 @@ class App extends Component {
         <Router>
           <div className="App">
             <Navbar />
+            <Menu />
             <Route exact path="/" component={Landing} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />

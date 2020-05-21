@@ -34,7 +34,7 @@ class ConfirmAccountToken extends Component {
         e.preventDefault();
 
         const myToken = {
-            token: this.state.token
+            token: this.props.match.params
         };
 
         this.props.confirmToken(myToken, this.props.history);

@@ -16,6 +16,27 @@ const validatePasswordReset = require("../../validation/recover");
 const User = require("../../models/user");
 const Token = require("../../models/token");
 
+function emailSend(user) {
+  const email = user.email;
+
+  User.findOne({ email }).then(user => {
+
+
+    var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });
+
+    msgToken = 'http://' + "localhost:3000"/*req.headers.host*/ + '/ConfirmAccountToken/' + mytoken.token;
+    console.log("mytoken");
+
+    console.log(mytoken);
+
+    mytoken.save();
+
+    const msg = template.confirmarEmail(email, msgToken);
+    sender.sendEmail(msg);
+
+  });
+};
+
 // @route POST api/users/register
 // @desc Register user
 // @access Public
@@ -48,26 +69,36 @@ router.post("/register", (req, res) => {
           newUser.password = hash;
           newUser
             .save()
-            .then(user => res.json(user))
+            //.then(user => res.json(user))
+            .then(user => {  const email = user.email;
+
+              User.findOne({ email }).then(user => {
+            
+            
+                var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });
+            
+                msgToken = 'http://' + "localhost:3000"/*req.headers.host*/ + '/ConfirmAccountToken/' + mytoken.token;
+                console.log("mytoken");
+            
+                console.log(mytoken);
+            
+                mytoken.save();
+            
+                const msg = template.confirmarEmail(email, msgToken);
+                sender.sendEmail(msg);
+                res.json(user);
+            
+              });})
             .catch(err => console.log(err));
         });
       });
 
-      const email = req.body.email;
-
-      User.findOne({ email }).then(user => {
-
-        var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });
-
-        msgToken = 'http://' + "localhost:3000"/*req.headers.host*/ + '/ConfirmAccountToken/' + mytoken.token;
-
-        const msg = template.confirmarEmail(email, msgToken);
-        sender.sendEmail(msg);
-
-      });
+     
     }
   });
 });
+
+
 
 // @route POST api/users/confirmtoken
 // @desc Recover User password
@@ -76,10 +107,11 @@ router.post("/confirmtoken", (req, res) => {
 
   console.log("Got into backend ");
 
-  const reqToken = req.body.token;
+  var reqToken = req.body.token.token;
+  reqToken = reqToken.toString();
   console.log("token -> " + reqToken);
 
-  Token.findOne({ reqToken }).then(token => {
+  Token.findOne({token: reqToken }).then(token => {
     if (!token) {
       console.log("Invalid token");
       return res.status(404).json({ tokennotfound: "Token not found" });

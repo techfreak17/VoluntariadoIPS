@@ -6,62 +6,60 @@ import { createUser } from "../../actions/userActions";
 import classnames from "classnames";
 
 class CreateUser extends Component {
-  constructor() {
-    super();
-    this.state = {
-        number: "",
-        name: "",
-        role: "",
-        email: "",
-        password: "",
-        password2: "",
-        errors: {}
-    };
-  }
-
-  componentDidMount() {
-    // If logged in and user navigates to Register page, should redirect them to dashboard
-    if (!this.props.auth.isAuthenticated) {
-        this.props.history.push("/dashboard");
+    constructor() {
+        super();
+        this.state = {
+            number: "",
+            name: "",
+            role: "",
+            email: "",
+            password: "",
+            password2: "",
+            errors: {}
+        };
     }
-}
 
-  componentWillReceiveProps(nextProps) {
-      if (nextProps.errors) {
-          this.setState({
-              errors: nextProps.errors
-          });
-      }
-  }
+    componentDidMount() {
+        // If logged in and user navigates to Register page, should redirect them to dashboard
+        if (!this.props.auth.isAuthenticated) {
+            this.props.history.push("/dashboard");
+        }
+    }
 
-  onChange = e => {
-    this.setState({ [e.target.id]: e.target.value });
-  };
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+            this.setState({
+                errors: nextProps.errors
+            });
+        }
+    }
 
-  onSubmit = e => {
-    e.preventDefault();
-
-    const newUser = {
-        number: this.state.number,
-        name: this.state.name,
-        role: this.state.role,
-        email: this.state.email,
-        password: this.state.password,
-        password2: this.state.password2
+    onChange = e => {
+        this.setState({ [e.target.id]: e.target.value });
     };
 
-    this.props.createUser(newUser, this.props.history);
-  }
- 
-  render() {
-    const { errors } = this.state;
+    onSubmit = e => {
+        e.preventDefault();
 
-    return (
-        <div style={{ marginTop: 10 }}>
-            <h3 align="left">Criar Utilizador</h3>
-            <p className="grey-text text-darken-1">
-                <Link to="/listUsers">Voltar</Link> 
-            </p>
+        const newUser = {
+            number: this.state.number,
+            name: this.state.name,
+            role: this.state.role,
+            email: this.state.email,
+            password: this.state.password,
+            password2: this.state.password2
+        };
+
+        this.props.createUser(newUser, this.props.history);
+    }
+
+    render() {
+        const { errors } = this.state;
+
+        return (
+            <div style={{ height: "75vh", marginTop: "5%" }} className="container">
+                <h3 align="left">Criar Utilizador</h3>
+
                 <form noValidate onSubmit={this.onSubmit}>
                     <div className="input-field col s12">
                         <input
@@ -153,37 +151,53 @@ class CreateUser extends Component {
                         <span className="red-text">{errors.role}</span>
                     </div>
 
-                    <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                        <button
-                            style={{
-                                width: "150px",
-                                borderRadius: "3px",
-                                letterSpacing: "1.5px",
-                                marginTop: "1rem"
-                            }}
-                            type="submit"
-                            className="btn btn-large waves-effect waves-light hoverable blue accent-3">
-                            Registar
-                        </button>
+                    <div className="col s12 center-align row">
+                        <div className="col s6">
+                            <button
+                                style={{
+                                    width: "150px",
+                                    borderRadius: "3px",
+                                    letterSpacing: "1.5px",
+                                    marginTop: "1rem",
+                                    backgroundColor: "green"
+                                }}
+                                type="submit"
+                                className="btn btn-large waves-effect waves-light hoverable accent-3">
+                                Criar
+                            </button>
+                        </div>
+                        <div className="col s6">
+                            <button
+                                style={{
+                                    width: "150px",
+                                    borderRadius: "3px",
+                                    letterSpacing: "1.5px",
+                                    marginTop: "1rem",
+                                    backgroundColor: "red"
+                                }}
+                                className="btn btn-large waves-effect waves-light hoverable accent-3">
+                                <Link to="/listUsers" style={{ color: "white" }}>Cancelar</Link>
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>
-    );
-}
+        );
+    }
 }
 
 CreateUser.propTypes = {
-  createUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+    createUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors
+    auth: state.auth,
+    errors: state.errors
 });
 
 export default connect(
-  mapStateToProps,
-  { createUser }
+    mapStateToProps,
+    { createUser }
 )(CreateUser);

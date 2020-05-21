@@ -27,7 +27,8 @@
     "nodemailer": "^2.7.2",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
-    "validator": "^13.0.0"
+    "validator": "^13.0.0",
+    "vue": "^2.6.11"
   },
   "devDependencies": {
     "nodemon": "^2.0.3"

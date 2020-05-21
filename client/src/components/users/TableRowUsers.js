@@ -27,10 +27,10 @@ class TableRowUsers extends Component {
               {this.props.obj.email}
             </td>
             <td>
-              <Link to={"/editUser/" + this.props.obj._id} className="btn btn-primary">Edit</Link>
+              <Link to={"/editUser/" + this.props.obj._id} className="btn btn-primary" style={{backgroundColor: "lightBlue", color: "black"}}>Edit</Link>
             </td>
             <td>
-              <button onClick={this.delete} className="btn btn-danger">Delete</button>
+              <button onClick={this.delete} className="btn btn-danger" style={{backgroundColor: "red"}}>Delete</button>
             </td>
           </tr>
       );

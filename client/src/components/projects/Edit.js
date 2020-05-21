@@ -30,7 +30,7 @@ export default class Edit extends Component {
       objectives: "",
       date: "",
       areas: "",
-      description : "",
+      description: "",
       related_entities: "",
       observations: "",
       authorization: "",
@@ -39,100 +39,100 @@ export default class Edit extends Component {
   }
 
   componentDidMount() {
-      axios.get('/api/projects/editProject/'+ this.props.match.params.id)
-          .then(response => {
-              this.setState({ 
-                title: response.data.title, 
-                contact_person: response.data.contact_person,
-                email_person: response.data.email_person,
-                phone_person: response.data.phone_person,
-                synopsis: response.data.synopsis,
-                target_audience: response.data.target_audience,
-                objectives: response.data.objectives,
-                date: response.data.date,
-                areas: response.data.areas,
-                description: response.data.description,
-                related_entities: response.data.related_entities,
-                observations: response.data.observations,
-                authorization: response.data.authorization,
-                user_in_charge: response.data.user_in_charge,
-            });
-          })
-          .catch(function (error) {
-              console.log(error);
-          })
-    }
+    axios.get('/api/projects/editProject/' + this.props.match.params.id)
+      .then(response => {
+        this.setState({
+          title: response.data.title,
+          contact_person: response.data.contact_person,
+          email_person: response.data.email_person,
+          phone_person: response.data.phone_person,
+          synopsis: response.data.synopsis,
+          target_audience: response.data.target_audience,
+          objectives: response.data.objectives,
+          date: response.data.date,
+          areas: response.data.areas,
+          description: response.data.description,
+          related_entities: response.data.related_entities,
+          observations: response.data.observations,
+          authorization: response.data.authorization,
+          user_in_charge: response.data.user_in_charge,
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+  }
 
-    onChangeTitle(e) {
-      this.setState({
-          title: e.target.value
-      });
-    }
-    onChangeSynopsis(e) {
-      this.setState({
-          synopsis: e.target.value
-      })  
-    }
-    onChangeTarget(e) {
-      this.setState({
-          target_audience: e.target.value
-      })
-    }
-    onChangeObjectives(e) {
-      this.setState({
-          objectives: e.target.value
-      })
-    }
-    onChangeDescription(e) {
-      this.setState({
-          description: e.target.value
-      })
-    }
-    onChangeDate(e) {
-      this.setState({
-          date: e.target.value
-      })
-    }
-    onChangeAreas(e) {
-      this.setState({
-          areas: e.target.value
-      })
-    }
-    onChangeRelatedEntities(e) {
-      this.setState({
-          related_entities: e.target.value
-      })
-    }
-    onChangeObservations(e) {
-      this.setState({
-          observations: e.target.value
-      })
-    }
-    onChangeAuthorization(e) {
-      this.setState({
-          authorization: e.target.value
-      })
-    }
-    onChangeUserInCharge(e) {
-      this.setState({
-          user_in_charge: e.target.value
-      })
-    }
-    onChangeContactPerson(e) {
-      this.setState({
-        contact_person: e.target.value
-      })
-    }
-    onChangeEmailPerson(e) {
-      this.setState({
-        email_person: e.target.value
-      })
-    }
-    onChangePhonePerson(e) {
-      this.setState({
-        phone_person: e.target.value
-      })
-    }
+  onChangeTitle(e) {
+    this.setState({
+      title: e.target.value
+    });
+  }
+  onChangeSynopsis(e) {
+    this.setState({
+      synopsis: e.target.value
+    })
+  }
+  onChangeTarget(e) {
+    this.setState({
+      target_audience: e.target.value
+    })
+  }
+  onChangeObjectives(e) {
+    this.setState({
+      objectives: e.target.value
+    })
+  }
+  onChangeDescription(e) {
+    this.setState({
+      description: e.target.value
+    })
+  }
+  onChangeDate(e) {
+    this.setState({
+      date: e.target.value
+    })
+  }
+  onChangeAreas(e) {
+    this.setState({
+      areas: e.target.value
+    })
+  }
+  onChangeRelatedEntities(e) {
+    this.setState({
+      related_entities: e.target.value
+    })
+  }
+  onChangeObservations(e) {
+    this.setState({
+      observations: e.target.value
+    })
+  }
+  onChangeAuthorization(e) {
+    this.setState({
+      authorization: e.target.value
+    })
+  }
+  onChangeUserInCharge(e) {
+    this.setState({
+      user_in_charge: e.target.value
+    })
+  }
+  onChangeContactPerson(e) {
+    this.setState({
+      contact_person: e.target.value
+    })
+  }
+  onChangeEmailPerson(e) {
+    this.setState({
+      email_person: e.target.value
+    })
+  }
+  onChangePhonePerson(e) {
+    this.setState({
+      phone_person: e.target.value
+    })
+  }
 
   onSubmit(e) {
     e.preventDefault();
@@ -153,115 +153,142 @@ export default class Edit extends Component {
       user_in_charge: this.user_in_charge
     };
     axios.post('/api/projects/updateProject/' + this.props.match.params.id, obj)
-        .then(res => console.log(res.data));
-        this.props.history.push('/listProjects');
-        window.location.reload();
+      .then(res => console.log(res.data));
+    this.props.history.push('/listProjects');
+    window.location.reload();
   }
- 
+
   render() {
     return (
-        <div style={{ marginTop: 10 }}>
-            <h3 align="left">Editar Detalhes</h3>
-            <p className="grey-text text-darken-1">
-              <Link to="/listProjects">Voltar</Link> 
-            </p>
-            <form onSubmit={this.onSubmit}>
-                <div className="form-group">
-                    <label>Nome do Projeto:  </label>
-                    <input 
-                      type="text" 
-                      className="form-control" 
-                      value={this.state.title}
-                      onChange={this.onChangeTitle}
-                      />
-                </div>
-                <div className="form-group">
-                    <label>Pessoa de Contacto: </label>
-                    <input type="text" 
-                      className="form-control"
-                      value={this.state.contact_person}
-                      onChange={this.onChangeContactPerson}
-                      />
-                </div>
-                <div className="form-group">
-                    <label>Email: </label>
-                    <input type="email" 
-                      className="form-control"
-                      value={this.state.email_person}
-                      onChange={this.onChangeEmailPerson}
-                      />
-                </div>
-                <div className="form-group">
-                    <label>Telemóvel: </label>
-                    <input type="number" 
-                      className="form-control"
-                      value={this.state.phone_person}
-                      onChange={this.onChangePhonePerson}
-                      />
-                </div>
-                <div className="form-group">
-                    <label>Resumo do Projeto: </label>
-                    <input type="text" 
-                      className="form-control"
-                      value={this.state.synopsis}
-                      onChange={this.onChangeSynopsis}
-                      />
-                </div>
-                <div className="form-group">
-                    <label>Áreas Intervenção: </label>
-                    <input type="text" 
-                      className="form-control"
-                      value={this.state.areas}
-                      onChange={this.onChangeAreas}
-                      />
-                </div>
-                <div className="form-group">
-                    <label>Público Alvo: </label>
-                    <input type="text" 
-                      className="form-control"
-                      value={this.state.target_audience}
-                      onChange={this.onChangeTarget}
-                      />
-                </div>
-                <div className="form-group">
-                    <label>Objetivos: </label>
-                    <input type="text" 
-                      className="form-control"
-                      value={this.state.objectives}
-                      onChange={this.onChangeObjectives}
-                      />
-                </div>
-                <div className="form-group">
-                    <label>Descrição das Atividades: </label>
-                    <input type="text" 
-                      className="form-control"
-                      value={this.state.description}
-                      onChange={this.onChangeDescription}
-                      />
-                </div>
-                <div className="form-group">
-                    <label>Observações </label>
-                    <input type="text" 
-                      className="form-control"
-                      value={this.state.observations}
-                      onChange={this.onChangeObservations}
-                      />
-                </div>
-                <div className="form-group">
-                    <label>Data </label>
-                    <input type="date" 
-                      className="form-control"
-                      value={this.state.date}
-                      onChange={this.onChangeDate}
-                      />
-                </div>
-                <div className="form-group">
-                    <input type="submit" 
-                      value="Submeter" 
-                      className="btn btn-primary"/>
-                </div>
-            </form>
-        </div>
+      <div style={{ marginTop: 10 }}>
+        <h3 align="left">Editar Detalhes</h3>
+        <form onSubmit={this.onSubmit}>
+          <div className="form-group">
+            <label>Nome do Projeto:  </label>
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.title}
+              onChange={this.onChangeTitle}
+            />
+          </div>
+          <div className="form-group">
+            <label>Pessoa de Contacto: </label>
+            <input type="text"
+              className="form-control"
+              value={this.state.contact_person}
+              onChange={this.onChangeContactPerson}
+            />
+          </div>
+          <div className="form-group">
+            <label>Email: </label>
+            <input type="email"
+              className="form-control"
+              value={this.state.email_person}
+              onChange={this.onChangeEmailPerson}
+            />
+          </div>
+          <div className="form-group">
+            <label>Telemóvel: </label>
+            <input type="number"
+              className="form-control"
+              value={this.state.phone_person}
+              onChange={this.onChangePhonePerson}
+            />
+          </div>
+          <div className="form-group">
+            <label>Resumo do Projeto: </label>
+            <input type="text"
+              className="form-control"
+              value={this.state.synopsis}
+              onChange={this.onChangeSynopsis}
+            />
+          </div>
+          <div className="form-group">
+            <label>Áreas Intervenção: </label>
+            <input type="text"
+              className="form-control"
+              value={this.state.areas}
+              onChange={this.onChangeAreas}
+            />
+          </div>
+          <div className="form-group">
+            <label>Público Alvo: </label>
+            <input type="text"
+              className="form-control"
+              value={this.state.target_audience}
+              onChange={this.onChangeTarget}
+            />
+          </div>
+          <div className="form-group">
+            <label>Objetivos: </label>
+            <input type="text"
+              className="form-control"
+              value={this.state.objectives}
+              onChange={this.onChangeObjectives}
+            />
+          </div>
+          <div className="form-group">
+            <label>Descrição das Atividades: </label>
+            <input type="text"
+              className="form-control"
+              value={this.state.description}
+              onChange={this.onChangeDescription}
+            />
+          </div>
+          <div className="form-group">
+            <label>Observações </label>
+            <input type="text"
+              className="form-control"
+              value={this.state.observations}
+              onChange={this.onChangeObservations}
+            />
+          </div>
+          <div className="form-group">
+            <label>Data </label>
+            <input type="date"
+              className="form-control"
+              value={this.state.date}
+              onChange={this.onChangeDate}
+            />
+          </div>
+          <div className="form-group">
+            <input type="submit"
+              value="Submeter"
+              className="btn btn-primary" />
+          </div>
+
+          <div className="col s12 center-align row">
+            <div className="col s6">
+              <button
+                style={{
+                  width: "150px",
+                  borderRadius: "3px",
+                  letterSpacing: "1.5px",
+                  marginTop: "1rem",
+                  backgroundColor: "green"
+                }}
+                type="submit"
+                className="btn btn-large waves-effect waves-light hoverable accent-3">
+                Submeter
+                </button>
+            </div>
+            <div className="col s6">
+              <button
+                style={{
+                  width: "150px",
+                  borderRadius: "3px",
+                  letterSpacing: "1.5px",
+                  marginTop: "1rem",
+                  backgroundColor: "red"
+                }}
+                className="btn btn-large waves-effect waves-light hoverable accent-3">
+                <Link to="/listProjects" style={{ color: "white" }}>Cancelar</Link>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
     )
   }
 }

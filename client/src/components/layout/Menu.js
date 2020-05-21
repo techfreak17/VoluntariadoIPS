@@ -3,12 +3,13 @@ import React, { Component } from "react";
 class Menu extends Component {
     render() {
         return (
-            <div className="container">
+            <div className="container ">
                 <nav className="nav" style={{
                     width: "70%",
                     position: "fixed",
                     bottom: 0,
-                    backgroundColor: "#23395D"
+                    backgroundColor: "#23395D",
+                    zIndex: "10"
                 }}>
                     <div className="nav-wrapper">
                         <ul id="nav-mobile" className="left">

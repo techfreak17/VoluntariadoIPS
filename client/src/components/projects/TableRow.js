@@ -30,10 +30,10 @@ class TableRow extends Component {
           {this.props.obj.description}
         </td>
         <td>
-          <Link to={"/editProject/" + this.props.obj._id} className="btn btn-primary">Edit</Link>
+          <Link to={"/editProject/" + this.props.obj._id} className="btn btn-primary" style={{backgroundColor: "lightBlue", color: "black"}}>Edit</Link>
         </td>
         <td>
-          <button onClick={this.delete} className="btn btn-danger">Delete</button>
+          <button onClick={this.delete} className="btn btn-danger" style={{backgroundColor: "red"}}>Delete</button>
         </td>
       </tr>
     );

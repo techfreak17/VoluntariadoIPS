@@ -26,7 +26,7 @@ export default class Index extends Component {
 
   render() {
     return (
-      <div className="container" style={{marginTop: 100}}>
+      <div className="container" style={{marginTop: "5%", paddingBottom: 70}}>
         <div>
           <h3 align="center">Projetos</h3>
           <p className="grey-text text-darken-1">

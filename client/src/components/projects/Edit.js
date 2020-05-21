@@ -160,7 +160,7 @@ export default class Edit extends Component {
 
   render() {
     return (
-      <div style={{ marginTop: 10 }}>
+      <div style={{ height: "75vh", marginTop: "5%" }} className="container">
         <h3 align="left">Editar Detalhes</h3>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
@@ -252,13 +252,7 @@ export default class Edit extends Component {
               onChange={this.onChangeDate}
             />
           </div>
-          <div className="form-group">
-            <input type="submit"
-              value="Submeter"
-              className="btn btn-primary" />
-          </div>
-
-          <div className="col s12 center-align row">
+          <div className="col s12 center-align row" style={{paddingBottom: 60}}>
             <div className="col s6">
               <button
                 style={{

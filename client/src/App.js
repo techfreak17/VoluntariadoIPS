@@ -19,6 +19,10 @@ import RecoverConfirm from "./components/auth/RecoverConfirm";
 import IndexUsers from './components/users/IndexUsers';
 import CreateUser from './components/users/CreateUser';
 import EditUser from './components/users/EditUser';
+import ConfirmAccount from "./components/auth/ConfirmAccount";
+import ConfirmAccountToken from "./components/auth/ConfirmAccountToken";
+import ResetPassword from "./components/auth/ResetPassword";
+import Menu from "./components/layout/Menu";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -52,11 +56,15 @@ class App extends Component {
         <Router>
           <div className="App">
             <Navbar />
+            <Menu />
             <Route exact path="/" component={Landing} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/recover" component={Recover} />
             <Route exact path="/recoverconfirm" component={RecoverConfirm} />
+            <Route exact path="/ConfirmAccount" component={ConfirmAccount} />
+            <Route exact path="/ConfirmAccountToken/:token" component={ConfirmAccountToken} />
+            <Route exact path="/resetpassword/:token" component={ResetPassword} />
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute exact path='/createProject' component={ Create } />
@@ -66,6 +74,7 @@ class App extends Component {
               <PrivateRoute path='/editUser/:id' component={ EditUser } />
               <PrivateRoute path='/listUsers' component={ IndexUsers } />
             </Switch>
+
           </div>
           </Router>
       </Provider>

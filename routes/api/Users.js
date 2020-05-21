@@ -3,13 +3,18 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
+const template = require('../../Notifications/emailNotificationsTemplates.js');
+const sender = require('../../Notifications/emailNotify.js');
+const crypto = require('crypto');
 
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
+const validatePasswordReset = require("../../validation/recover");
 
 // Load User model
 const User = require("../../models/user");
+const Token = require("../../models/token");
 
 // @route POST api/users/register
 // @desc Register user
@@ -35,7 +40,7 @@ router.post("/register", (req, res) => {
         email: req.body.email,
         password: req.body.password
       });
-      
+
       // Hash password before saving in database
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -47,9 +52,60 @@ router.post("/register", (req, res) => {
             .catch(err => console.log(err));
         });
       });
+
+      const email = req.body.email;
+
+      User.findOne({ email }).then(user => {
+
+        var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });
+
+        msgToken = 'http://' + "localhost:3000"/*req.headers.host*/ + '/ConfirmAccountToken/' + mytoken.token;
+
+        const msg = template.confirmarEmail(email, msgToken);
+        sender.sendEmail(msg);
+
+      });
     }
   });
 });
+
+// @route POST api/users/confirmtoken
+// @desc Recover User password
+// @access Public
+router.post("/confirmtoken", (req, res) => {
+
+  console.log("Got into backend ");
+
+  const reqToken = req.body.token;
+  console.log("token -> " + reqToken);
+
+  Token.findOne({ reqToken }).then(token => {
+    if (!token) {
+      console.log("Invalid token");
+      return res.status(404).json({ tokennotfound: "Token not found" });
+    }
+
+    console.log("Valid token");
+    const email = token._userEmail;
+    console.log("Token email -> " + email);
+
+    User.findOne({ email }).then(user => {
+      console.log("Found user");
+
+      user.updateOne(
+        { isVerified: true })
+        .catch(err => {
+          res.status(400).send("unable to update the database");
+        });
+
+      console.log("Updated user");
+      res.json(user);
+    });
+
+  });
+
+});
+
 
 // @route POST api/users/login
 // @desc Login user and return JWT token
@@ -77,6 +133,9 @@ router.post("/login", (req, res) => {
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
         // User matched
+        // Make sure the user has been verified
+        if (!user.isVerified) return res.status(401).send({ type: 'not-verified', msg: 'Your account has not been verified.' });
+
         // Create JWT Payload
         const payload = {
           id: user.id,
@@ -110,26 +169,78 @@ router.post("/login", (req, res) => {
 // @access Public
 router.post("/recover", (req, res) => {
 
+  const email = req.body.email;
+
+  // Find user by email
+  console.log(email);
+  User.findOne({ email }).then(user => {
+    console.log(user.email);
+    // Check if user exists
+    if (!user) {
+      return res.status(404).json({ emailnotfound: "Email not found" });
+    }
+
+    var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });
+
+    user.passwordResetToken = mytoken.token;
+    user.passwordResetExpires = Date.now();
+
+    user.save();
+
+    msgToken = 'http://' + "localhost:3000"/*req.headers.host*/ + '/resetpassword/' + mytoken.token;
+
+    const msg = template.recuperarPassword(user.email, msgToken);
+    sender.sendEmail(msg);
+
+    res.json(user);
+  });
+
+});
+
+// @route POST api/users/recover
+// @desc Recover User password
+// @access Public
+router.post("/updatePassword", (req, res) => {
+
   // Form validation
-  const { errors, isValid } = validateLoginInput(req.body);
+  const { errors, isValid } = validatePasswordReset(req.body);
 
   // Check validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
 
-  const email = req.body.email;
+  const passwordResetToken = req.body.token.token;
+  var mypassword = req.body.password;
 
   // Find user by email
-  User.findOne({ email }).then(user => {
-    // Check if user exists
-    if (!user) {
-      return res.status(404).json({ emailnotfound: "Email not found" });
-    }
-    
-    console.log("SEND EMAIL");
-    res.json(user);
+  User.findOne({ passwordResetToken }).then(user => {
+  // Check if user exists
+  if (!user) {
+    return res.status(404).json({ tokennotfound: "Token not found" });
+  }
+    const createdDate = user.passwordResetExpires;
+    const nowDate = Date.now();
+    const difference = nowDate - createdDate;
+
+    // 12 Horas em milisegundos
+  if(difference >= 12*60*60*1000){
+    return res.status(401).json({tokenexpired: "Token date expired"});
+  } 
+
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(mypassword, salt, (err, hash) => {
+      if (err) throw err;
+      user.password = hash;
+      user.passwordResetToken = null;
+      user.passwordResetExpires = null;
+
+      user.save()
+        .then(user => res.json(user))
+        .catch(err => console.log(err));
+    });
   });
+});
 });
 
 // @route POST api/users/createUser

@@ -16,7 +16,7 @@ class Dashboard extends Component {
         const { user } = this.props.auth;
 
         return (
-            <div style={{ height: "75vh" }} className="container valign-wrapper"> 
+            <div style={{ height: "75vh"}} className="container valign-wrapper"> 
                 <div className="row">
                     <p className="grey-text text-darken-1">
                         <Link to="/listProjects">Projetos</Link>

@@ -57,7 +57,7 @@ class Register extends Component {
         const { errors } = this.state;
 
         return (
-            <div className="container">
+            <div className="container" style={{marginTop: "5%"}}>
                 <div className="row">
                     <div className="col s8 offset-s2">
                         <Link to="/" className="btn-flat waves-effect">
@@ -65,7 +65,7 @@ class Register extends Component {
                             Voltar
                         </Link>
 
-                        <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+                        <div className="col s12" style={{ paddingLeft: "11.250px"}}>
                             <h4>
                                 <b>Registar </b>
                             </h4>

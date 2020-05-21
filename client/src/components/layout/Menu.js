@@ -15,7 +15,7 @@ class Menu extends Component {
                             <li><a href="/dashboard"><i className="material-icons">home</i></a></li>
                             <li><a href="/listProjects">Projetos</a></li>
                             <li><a href="/listUsers">Utilizadores</a></li>
-                            <li><a href="..."></a></li>
+                            <li><a href="..."> </a></li>
                         </ul>
                     </div>
                 </nav>

@@ -133,28 +133,34 @@ router.post("/login", (req, res) => {
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
         // User matched
-        // Make sure the user has been verified
-        if (!user.isVerified) return res.status(401).send({ type: 'not-verified', msg: 'Your account has not been verified.' });
 
-        // Create JWT Payload
-        const payload = {
-          id: user.id,
-          name: user.name
-        };
-        // Sign token
-        jwt.sign(
-          payload,
-          keys.secretOrKey,
-          {
-            expiresIn: 31556926 // 1 year in seconds
-          },
-          (err, token) => {
-            res.json({
-              success: true,
-              token: "Bearer " + token
-            });
-          }
-        );
+        // Make sure the user has been verified
+        console.log(user.isVerified);
+        if (user.isVerified) {
+          console.log("after true");
+          // Create JWT Payload
+          const payload = {
+            id: user.id,
+            name: user.name
+          };
+          // Sign token
+          jwt.sign(
+            payload,
+            keys.secretOrKey,
+            {
+              expiresIn: 31556926 // 1 year in seconds
+            },
+            (err, token) => {
+              res.json({
+                success: true,
+                token: "Bearer " + token
+              });
+            }
+          );
+        } else {
+          return res.status(401).json({ notverified: 'Your account has not been verified.' });
+        }
+
       } else {
         return res
           .status(400)
@@ -215,39 +221,39 @@ router.post("/updatePassword", (req, res) => {
 
   // Find user by email
   User.findOne({ passwordResetToken }).then(user => {
-  // Check if user exists
-  if (!user) {
-    return res.status(404).json({ tokennotfound: "Token not found" });
-  }
+    // Check if user exists
+    if (!user) {
+      return res.status(404).json({ tokennotfound: "Token not found" });
+    }
     const createdDate = user.passwordResetExpires;
     const nowDate = Date.now();
     const difference = nowDate - createdDate;
 
     // 12 Horas em milisegundos
-  if(difference >= 12*60*60*1000){
-    return res.status(401).json({tokenexpired: "Token date expired"});
-  } 
+    if (difference >= 12 * 60 * 60 * 1000) {
+      return res.status(401).json({ tokenexpired: "Token date expired" });
+    }
 
-  bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(mypassword, salt, (err, hash) => {
-      if (err) throw err;
-      user.password = hash;
-      user.passwordResetToken = null;
-      user.passwordResetExpires = null;
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(mypassword, salt, (err, hash) => {
+        if (err) throw err;
+        user.password = hash;
+        user.passwordResetToken = null;
+        user.passwordResetExpires = null;
 
-      user.save()
-        .then(user => res.json(user))
-        .catch(err => console.log(err));
+        user.save()
+          .then(user => res.json(user))
+          .catch(err => console.log(err));
+      });
     });
   });
-});
 });
 
 // @route POST api/users/createUser
 // @desc Create user
 // @access Public
 router.post("/createUser", (req, res) => {
-        
+
   // Form validation
   const { errors, isValid } = validateRegisterInput(req.body);
 
@@ -267,7 +273,7 @@ router.post("/createUser", (req, res) => {
         email: req.body.email,
         password: req.body.password
       });
-      
+
       // Hash password before saving in database
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -285,8 +291,8 @@ router.post("/createUser", (req, res) => {
 
 // Defined get data(index or listing) route
 router.route('/listUsers').get(function (req, res) {
-  User.find(function(err, users){
-    if(err){
+  User.find(function (err, users) {
+    if (err) {
       console.log(err);
     }
     else {
@@ -299,40 +305,42 @@ router.route('/listUsers').get(function (req, res) {
 // Defined edit route
 router.route('/editUser/:id').get(function (req, res) {
   let id = req.params.id;
-  User.findById(id, function (err, user){
-      res.json(user);
+  User.findById(id, function (err, user) {
+    res.json(user);
   });
 });
 
 router.route('/updateUser/:id').post(function (req, res) {
-  User.findById(req.params.id, function(err, user) {
-  if (!user)
-    res.status(404).send("data is not found");
-  else {
+  User.findById(req.params.id, function (err, user) {
+    if (!user)
+      res.status(404).send("data is not found");
+    else {
       user.name = req.body.name;
       user.number = req.body.number;
       user.email = req.body.email;
       user.role = req.body.role;
       user.password = req.body.password;
 
-      user.updateOne({ name: user.name,
+      user.updateOne({
+        name: user.name,
         number: user.number,
         email: user.email,
         role: user.role,
-        password: user.password}
-         )
-      .catch(err => {
-        res.status(400).send("unable to update the database");
-      });
-  }
-});
+        password: user.password
+      }
+      )
+        .catch(err => {
+          res.status(400).send("unable to update the database");
+        });
+    }
+  });
 });
 
 // Defined delete | remove | destroy route
 router.route('/deleteUser/:id').get(function (req, res) {
-  User.findByIdAndRemove({_id: req.params.id}, function(err, user){
-      if(err) res.json(err);
-      else res.json('Successfully removed');
+  User.findByIdAndRemove({ _id: req.params.id }, function (err, user) {
+    if (err) res.json(err);
+    else res.json('Successfully removed');
   });
 });
 

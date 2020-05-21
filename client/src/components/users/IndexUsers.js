@@ -27,7 +27,7 @@ export default class IndexUsers extends Component {
 
     render() {
       return (
-        <div className="container" style={{marginTop: "5%"}}>
+        <div className="container" style={{marginTop: "5%", paddingBottom: 70}}>
           <h3 align="center">Utilizadores</h3>
           <p className="grey-text text-darken-1">
               <Link to="/dashboard">Voltar</Link> <br></br>

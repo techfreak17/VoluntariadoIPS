@@ -151,7 +151,7 @@ class CreateUser extends Component {
                         <span className="red-text">{errors.role}</span>
                     </div>
 
-                    <div className="col s12 center-align row">
+                    <div className="col s12 center-align row" style={{paddingBottom: 60}}>
                         <div className="col s6">
                             <button
                                 style={{

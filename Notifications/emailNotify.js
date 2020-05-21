@@ -12,7 +12,7 @@ module.exports = {
   sendEmail: (template) => {
 
     sgMail.send(template).then(() => {
-      console.log('Message sent')
+      console.log('emailNotify.js Sent an Email');
     }).catch((error) => {
       console.log(error.response.body)
       // console.log(error.response.body.errors[0].message)

@@ -58,15 +58,12 @@ router.post("/register", (req, res) => {
       User.findOne({ email }).then(user => {
 
         var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });
-        mytoken.save();
 
         msgToken = 'http://' + "localhost:3000"/*req.headers.host*/ + '/ConfirmAccountToken/' + mytoken.token;
-        console.log(msgToken);
 
         const msg = template.confirmarEmail(email, msgToken);
         sender.sendEmail(msg);
 
-        console.log("EMAIL SENT");
       });
     }
   });
@@ -191,12 +188,10 @@ router.post("/recover", (req, res) => {
     user.save();
 
     msgToken = 'http://' + "localhost:3000"/*req.headers.host*/ + '/resetpassword/' + mytoken.token;
-    console.log(msgToken);
 
-    const msg = template.confirmarEmail(user.email, msgToken);
+    const msg = template.recuperarPassword(user.email, msgToken);
     sender.sendEmail(msg);
 
-    console.log("EMAIL RECOVERY SENT");
     res.json(user);
   });
 
@@ -215,17 +210,23 @@ router.post("/updatePassword", (req, res) => {
     return res.status(400).json(errors);
   }
 
-  const passwordResetToken = req.body.token;
+  const passwordResetToken = req.body.token.token;
   var mypassword = req.body.password;
-  console.log("token -> " + passwordResetToken + "\nPass -> " + mypassword);
 
   // Find user by email
   User.findOne({ passwordResetToken }).then(user => {
   // Check if user exists
-  console.log(user.email);
   if (!user) {
     return res.status(404).json({ tokennotfound: "Token not found" });
   }
+    const createdDate = user.passwordResetExpires;
+    const nowDate = Date.now();
+    const difference = nowDate - createdDate;
+
+    // 12 Horas em milisegundos
+  if(difference >= 12*60*60*1000){
+    return res.status(401).json({tokenexpired: "Token date expired"});
+  } 
 
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(mypassword, salt, (err, hash) => {

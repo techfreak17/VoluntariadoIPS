@@ -41,7 +41,7 @@ class ResetPassword extends Component {
         e.preventDefault();
 
         const passUpdate = {
-            token: this.state.token,
+            token: this.props.match.params,
             password: this.state.password,
             password2: this.state.password2
         };

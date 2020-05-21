@@ -34,6 +34,19 @@ export const confirmToken = (tokenData, history) => dispatch => {
         );
 };
 
+// update password
+export const updatePassword = (passData, history) => dispatch => {
+    axios
+        .post("/api/users/updatePassword", passData)
+        .then(res => history.push("/login")) // re-direct to login on successful register
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
+};
+
 // Login - get user token
 export const loginUser = userData => dispatch => {
     axios

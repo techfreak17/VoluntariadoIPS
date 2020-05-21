@@ -10,6 +10,7 @@ const crypto = require('crypto');
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
+const validatePasswordReset = require("../../validation/recover");
 
 // Load User model
 const User = require("../../models/user");
@@ -59,7 +60,7 @@ router.post("/register", (req, res) => {
         var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });
         mytoken.save();
 
-        msgToken = 'http://' + req.headers.host + '/ConfirmAccountToken/' + mytoken.token;
+        msgToken = 'http://' + "localhost:3000"/*req.headers.host*/ + '/ConfirmAccountToken/' + mytoken.token;
         console.log(msgToken);
 
         const msg = template.confirmarEmail(email, msgToken);
@@ -171,31 +172,74 @@ router.post("/login", (req, res) => {
 // @access Public
 router.post("/recover", (req, res) => {
 
+  const email = req.body.email;
+
+  // Find user by email
+  console.log(email);
+  User.findOne({ email }).then(user => {
+    console.log(user.email);
+    // Check if user exists
+    if (!user) {
+      return res.status(404).json({ emailnotfound: "Email not found" });
+    }
+
+    var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });
+
+    user.passwordResetToken = mytoken.token;
+    user.passwordResetExpires = Date.now();
+
+    user.save();
+
+    msgToken = 'http://' + "localhost:3000"/*req.headers.host*/ + '/resetpassword/' + mytoken.token;
+    console.log(msgToken);
+
+    const msg = template.confirmarEmail(user.email, msgToken);
+    sender.sendEmail(msg);
+
+    console.log("EMAIL RECOVERY SENT");
+    res.json(user);
+  });
+
+});
+
+// @route POST api/users/recover
+// @desc Recover User password
+// @access Public
+router.post("/updatePassword", (req, res) => {
+
   // Form validation
-  const { errors, isValid } = validateLoginInput(req.body);
+  const { errors, isValid } = validatePasswordReset(req.body);
 
   // Check validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
 
-  const email = req.body.email;
+  const passwordResetToken = req.body.token;
+  var mypassword = req.body.password;
+  console.log("token -> " + passwordResetToken + "\nPass -> " + mypassword);
 
   // Find user by email
-  User.findOne({ email }).then(user => {
-    // Check if user exists
-    if (!user) {
-      return res.status(404).json({ emailnotfound: "Email not found" });
-    }
+  User.findOne({ passwordResetToken }).then(user => {
+  // Check if user exists
+  console.log(user.email);
+  if (!user) {
+    return res.status(404).json({ tokennotfound: "Token not found" });
+  }
 
-    //token=generateToken();
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(mypassword, salt, (err, hash) => {
+      if (err) throw err;
+      user.password = hash;
+      user.passwordResetToken = null;
+      user.passwordResetExpires = null;
 
-    const msg = template.confirmarEmail(email, "localhost::3000/resetPassword");
-    sender.sendEmail(msg);
-
-    console.log("EMAIL SENT");
-    res.json(user);
+      user.save()
+        .then(user => res.json(user))
+        .catch(err => console.log(err));
+    });
   });
+});
 });
 
 module.exports = router;

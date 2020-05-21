@@ -18,6 +18,7 @@ import Recover from "./components/auth/Recover";
 import RecoverConfirm from "./components/auth/RecoverConfirm";
 import ConfirmAccount from "./components/auth/ConfirmAccount";
 import ConfirmAccountToken from "./components/auth/ConfirmAccountToken";
+import ResetPassword from "./components/auth/ResetPassword";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -58,6 +59,7 @@ class App extends Component {
             <Route exact path="/recoverconfirm" component={RecoverConfirm} />
             <Route exact path="/ConfirmAccount" component={ConfirmAccount} />
             <Route exact path="/ConfirmAccountToken/:token" component={ConfirmAccountToken} />
+            <Route exact path="/resetpassword/:token" component={ResetPassword} />
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute exact path='/createProject' component={ Create } />

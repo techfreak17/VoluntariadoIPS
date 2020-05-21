@@ -6,31 +6,32 @@ import { Link } from "react-router-dom";
 export default class Index extends Component {
 
   constructor(props) {
-      super(props);
-      this.state = {project: []};
-    }
-    componentDidMount(){
-      axios.get('/api/projects/listProjects')
-        .then(response => {
-          this.setState({ project: response.data });
-        })
-        .catch(function (error) {
-          console.log(error);
-        })
-    }
-    tabRow(){
-      return this.state.project.map(function(object, i){
-          return <TableRow obj={object} key={i} />;
-      });
-    }
+    super(props);
+    this.state = { project: [] };
+  }
+  componentDidMount() {
+    axios.get('/api/projects/listProjects')
+      .then(response => {
+        this.setState({ project: response.data });
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+  }
+  tabRow() {
+    return this.state.project.map(function (object, i) {
+      return <TableRow obj={object} key={i} />;
+    });
+  }
 
-    render() {
-      return (
+  render() {
+    return (
+      <div className="container" style={{marginTop: 100}}>
         <div>
           <h3 align="center">Projetos</h3>
           <p className="grey-text text-darken-1">
-              <Link to="/dashboard">Voltar</Link> <br></br>
-              <Link to="/createProject"> Propor Projeto</Link>
+            <Link to="/dashboard">Voltar</Link> <br></br>
+            <Link to="/createProject"> Propor Projeto</Link>
           </p>
           <table className="table table-striped" style={{ marginTop: 20 }}>
             <thead>
@@ -42,10 +43,11 @@ export default class Index extends Component {
               </tr>
             </thead>
             <tbody>
-              { this.tabRow() }
+              {this.tabRow()}
             </tbody>
           </table>
         </div>
-      );
-    }
+      </div>
+    );
   }
+}

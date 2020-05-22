@@ -1,9 +1,15 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
 
 class Menu extends Component {
     render() {
+        const user  = this.props.auth.isAuthenticated;
+
         return (
             <div className="container ">
+                {user ? (
                 <nav className="nav" style={{
                     width: "70%",
                     position: "fixed",
@@ -20,8 +26,24 @@ class Menu extends Component {
                         </ul>
                     </div>
                 </nav>
+                ) : ( 
+                    <p>Olá</p>
+                )}
             </div>
         );
     }
 }
-export default Menu;
+
+Menu.propTypes = {
+    logoutUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+    auth: state.auth
+});
+
+export default connect(
+    mapStateToProps,
+    { logoutUser }
+)(Menu);

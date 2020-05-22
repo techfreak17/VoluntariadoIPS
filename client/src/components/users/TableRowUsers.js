@@ -18,13 +18,13 @@ class TableRowUsers extends Component {
       return (
           <tr>
             <td>
-              {this.props.obj.number}
-            </td>
-            <td>
               {this.props.obj.name}
             </td>
             <td>
               {this.props.obj.email}
+            </td>
+            <td>
+              {this.props.obj.role}
             </td>
             <td>
               <Link to={"/editUser/" + this.props.obj._id} className="btn btn-primary" style={{backgroundColor: "lightBlue", color: "black"}}>Edit</Link>

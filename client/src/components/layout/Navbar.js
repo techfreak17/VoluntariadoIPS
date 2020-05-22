@@ -16,7 +16,7 @@ class Navbar extends Component {
             <div>
                 {user.name !== undefined ? (
                     <nav className="nav" style={{
-                        width: "100%",
+                        maxWidth: "100%",
                         position: "fixed",
                         top: 0,
                         backgroundColor: "#23395D",
@@ -50,7 +50,7 @@ class Navbar extends Component {
                                         className="img-responsive"
                                         style={{ position: "fixed", left: 0, height: "auto", width: "auto", maxWidth: 200 }} /></a></li>
                                     <li><a href="/login"><i className="material-icons left">person</i>Iniciar Sessão</a></li>
-                                    <li><a href="/register" className="red btn" style={{ borderRadius: 10 }}>Registar</a></li>
+                                    <li><a href="/register" className="green btn" style={{ borderRadius: 10 }}>Registar</a></li>
                                 </ul>
                             </div>
                         </nav>

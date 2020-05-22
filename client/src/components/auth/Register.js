@@ -166,7 +166,7 @@ class Register extends Component {
                                 <span className="red-text">{errors.role}</span>
                             </div>
 
-                            <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+                            <div className="col s12" style={{ paddingLeft: "11.250px", paddingBottom: "60px" }}>
                                 <button
                                     style={{
                                         width: "150px",

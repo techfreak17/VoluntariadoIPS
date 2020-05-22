@@ -19,6 +19,11 @@ class Dashboard extends Component {
                 <div className="row">
                     <div className="col s12 center-align">
                         <h4>
+                            <b>Olá</b> {user.name.split(" ")[0]},
+                            <p className="flow-text grey-text text-darken-1">
+                                Esta é a tua página principal,{" "}
+                                <span style={{ fontFamily: "monospace" }}>Bem-vindo</span> 👏
+                            </p>
                             <b>Bem-Vindo,</b> {user.name}
                         </h4>
                     </div>

@@ -36,10 +36,10 @@ export default class IndexUsers extends Component {
           <table className="table table-striped" style={{ marginTop: 20 }}>
             <thead>
               <tr>
-                <th>Número</th>
                 <th>Nome</th>
                 <th>Email</th>
-                <th colSpan="2">Action</th>
+                <th>Papel</th>
+                <th>Ações</th>
               </tr>
             </thead>
             <tbody>

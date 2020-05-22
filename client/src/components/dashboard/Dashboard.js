@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
-import { Link } from "react-router-dom";
 
 
 class Dashboard extends Component {
@@ -20,10 +19,10 @@ class Dashboard extends Component {
                 <div className="row">
                     <div className="col s12 center-align">
                         <h4>
-                            <b>Hey there,</b> {user.name.split(" ")[0]}
+                            <b>Olá</b> {user.name.split(" ")[0]},
                             <p className="flow-text grey-text text-darken-1">
-                                You are logged into a full-stack{" "}
-                                <span style={{ fontFamily: "monospace" }}>MERN</span> app 👏
+                                Esta é a tua página principal,{" "}
+                                <span style={{ fontFamily: "monospace" }}>Bem-vindo</span> 👏
                             </p>
                         </h4>
 

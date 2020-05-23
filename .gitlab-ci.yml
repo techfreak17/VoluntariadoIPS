@@ -9,3 +9,8 @@ build nodejs:
     - npm install
     - cd client
     - npm install
+
+test nodejs:
+  stage: test
+  image: node:latest
+  script: node ./tests/test.js

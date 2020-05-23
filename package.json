@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "test": "node ./tests/test.js",
     "client-install": "npm install --prefix client",
     "start": "node server.js",
     "server": "nodemon server.js",

@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - build_docker
 
 build nodejs:
   stage: build
@@ -14,3 +15,13 @@ test nodejs:
   stage: test
   image: node:latest
   script: node ./tests/test.js
+
+build docker image:
+  stage: build_docker
+  image: docker:latest
+  services:
+    - docker:dind
+    script:
+      - docker login --username $DOCKER_HUB_USER --password $DOCKER_HUB_TOKEN
+      - docker build --rm -t $DOCKER_HUB_USER/gpvoluntariado:$CI_COMMIT_SHA -f deploy/Dockerfile .
+      - docker push $DOCKER_HUB_USER/gpvoluntariado:$CI_COMMIT_SHA

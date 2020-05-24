@@ -2,6 +2,7 @@ stages:
   - build
   - test
   - build_docker
+  - deploy_kubernetes
 
 build nodejs:
   stage: build
@@ -25,3 +26,16 @@ build docker image:
     - docker login --username $DOCKER_HUB_USER --password $DOCKER_HUB_TOKEN
     - docker build --rm -t $DOCKER_HUB_USER/gpvoluntariado:$CI_COMMIT_SHA -f deploy/Dockerfile .
     - docker push $DOCKER_HUB_USER/gpvoluntariado:$CI_COMMIT_SHA
+
+deploy service:
+  stage: deploy_kubernetes
+  image: google/cloud-sdk:latest
+    - echo $GKE_SERVICE_KEY | base64 -d > service-account.json
+    - gcloud auth activate-service-account --key-file service-account.json --project=voluntariadoips-278217
+    - gcloud config set project voluntariadoips-278217
+    - gcloud config set compute/zone europe-west2-b
+    - gcloud container clusters get-credentials voluntariadoips-cluster
+    - sed -i "s/%%imageTag%%/${CI_COMMIT_SHA}/" deploy/deployment.yaml
+    - sed -i "s/%%dockerUser%%/${DOCKER_HUB_USER}/" deploy/deployment.yaml
+    - kubectl apply -f deploy/namespace.yaml
+    - kubectl apply -f deploy/deployment.yaml

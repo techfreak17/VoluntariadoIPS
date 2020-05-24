@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: voluntariadoips
+  name: voluntariadoips-deployment
+  namespace: voluntariadoips-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: voluntariadoips
+  template:
+    metadata:
+      labels:
+        name: voluntariadoips
+    spec:
+      containers:
+      - name: voluntariadoips-app
+        image: docker.io/%%dockerUser%%/gpvoluntariado:%%imageTag%%
+        imagePullPolicy: Always
+        env:
+        - name: SERVER_ID  #export the pod ID as SERVER_ID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: environment
+          value: dev
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+      imagePullSecrets:
+        - name: docker-registry

@@ -31,7 +31,7 @@ class Navbar extends Component {
                                 <li><a href="/listNotifications"><i className="material-icons">notifications</i></a></li>
 
                                 <li><a href="/listUsers"><i className="material-icons left">person</i>{user.name}</a></li>
-                                <li><button onClick={this.onLogoutClick} className="red btn" style={{ borderRadius: 10 }}>Sair</button></li>
+                                <li><button onClick={this.onLogoutClick} className="red btn" style={{borderRadius: 10, marginLeft: 12, marginBottom: 5 }}>Sair</button></li>
                             </ul>
                         </div>
                     </nav>
@@ -50,7 +50,7 @@ class Navbar extends Component {
                                         className="img-responsive"
                                         style={{ position: "fixed", left: 0, height: "auto", width: "auto", maxWidth: 200 }} /></a></li>
                                     <li><a href="/login"><i className="material-icons left">person</i>Iniciar Sessão</a></li>
-                                    <li><a href="/register" className="green btn" style={{ borderRadius: 10 }}>Registar</a></li>
+                                    <li><a href="/register" className="green btn" style={{ borderRadius: 10, marginBottom: 3 }}>Registar</a></li>
                                 </ul>
                             </div>
                         </nav>

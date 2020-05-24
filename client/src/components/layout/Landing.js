@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+
 class Landing extends Component {
     render() {
         /*
-        var slideIndex = 1;
-        showSlides(slideIndex);
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.slider');
+            var instances = M.Slider.init(elems, options);
+        });
         */
-
         return (
             <div className="container-fluid" style={{ width: "100%" }}>
                 <div className="parallax-container valign-wrapper" style={{ width: "100%", minHeight: 380, lineHeight: 0, color: "white", height: 400, position: "relative", overflow: "hidden" }}>
@@ -27,7 +29,7 @@ class Landing extends Component {
                                         to="/register"
                                         style={{
                                             width: "140px",
-                                            borderRadius: "3px",
+                                            borderRadius: 10,
                                             letterSpacing: "1.5px",
                                             marginLeft: "40%"
                                         }}
@@ -40,7 +42,7 @@ class Landing extends Component {
                                         to="/login"
                                         style={{
                                             width: "140px",
-                                            borderRadius: "3px",
+                                            borderRadius: 40,
                                             letterSpacing: "1.5px",
                                             marginRight: "40%"
                                         }}
@@ -65,39 +67,43 @@ class Landing extends Component {
 
 
 
-                <div className="container">
+                <div className="container-fluid">
 
-                    <div className="slideshow-container">
-                        <div className="mySlides fade">
-                            <div className="numbertext">1 / 3</div>
-                            <img src={require("./images/background1.jpg")} alt="Unsplashed background img 1" style={{ width: "100%" }} />
-                            <div className="text">Caption Text</div>
-                        </div>
-
-                        <div className="mySlides fade">
-                            <div className="numbertext">2 / 3</div>
-                            <img src={require("./images/background1.jpg")} alt="Unsplashed background img 1" style={{ width: "100%" }} />
-                            <div className="text">Caption Two</div>
-                        </div>
-
-                        <div className="mySlides fade">
-                            <div className="numbertext">3 / 3</div>
-                            <img src={require("./images/background1.jpg")} alt="Unsplashed background img 1" style={{ width: "100%" }} />
-                            <div className="text">Caption Three</div>
-                        </div>
-
-                        <a className="prev" href="plusSlides(-1)">&#10094;</a>
-                        <a className="next" href="plusSlides(1)">&#10095;</a>
+                    <div className="slider">
+                        <ul className="slides">
+                            <li>
+                                <img src={require("./images/background1.jpg")} alt="Unsplashed background img 1" />
+                                <div className="caption center-align">
+                                    <h3>This is our big Tagline!</h3>
+                                    <h5 className="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                                </div>
+                            </li>
+                            <li>
+                                <img src={require("./images/background1.jpg")} alt="Unsplashed background img 1" />
+                                <div className="caption left-align">
+                                    <h3>Left Aligned Caption</h3>
+                                    <h5 className="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                                </div>
+                            </li>
+                            <li>
+                                <img src={require("./images/background1.jpg")} alt="Unsplashed background img 1" />
+                                <div className="caption right-align">
+                                    <h3>Right Aligned Caption</h3>
+                                    <h5 className="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                                </div>
+                            </li>
+                            <li>
+                                <img src={require("./images/background1.jpg")} alt="Unsplashed background img 1" />
+                                <div className="caption center-align">
+                                    <h3>This is our big Tagline!</h3>
+                                    <h5 className="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
 
-                    <div style={{ textAlign: "center" }}>
-                        <span className="dot" onclick="currentSlide(1)"></span>
-                        <span className="dot" onclick="currentSlide(2)"></span>
-                        <span className="dot" onclick="currentSlide(3)"></span>
-                    </div>
 
 
-                    
                     <div className="section">
 
                         <div className="row">
@@ -129,27 +135,12 @@ class Landing extends Component {
                         </div>
 
                     </div>
-                    
+
                 </div>
 
 
-            </div>
+            </div >
         );
     }
 }
-
-
-/*
-function showSlides() {
-    var i;
-    var slides = document.getElementsByClassName("mySlides");
-    for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-    }
-    slideIndex++;
-    if (slideIndex > slides.length) { slideIndex = 1 }
-    slides[slideIndex - 1].style.display = "block";
-    setTimeout(showSlides, 5000); // Change image every 2 seconds
-}
-*/
 export default Landing;

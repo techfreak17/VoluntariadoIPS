@@ -42,7 +42,7 @@ class Dashboard extends Component {
                 </div>
 
 
-                <div className="container">
+                <div className="container-fluid">
                     <div className="section">
                         <div className="row">
 

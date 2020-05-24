@@ -57,7 +57,7 @@ class Navbar extends Component {
                             </ul>
                         </div>
                     </nav>
-                ) : (
+                )} : (
                         <nav className="nav" style={{
                             width: "100%",
                             position: "fixed",

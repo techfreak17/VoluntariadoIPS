@@ -7,8 +7,7 @@ const Project = require("../../models/project");
 // @route POST api/projects/create
 // @desc Register user
 // @access Public
-router.post("/createProject", (req, res) => {
-        
+router.post("/createProject", (req, res) => {    
     Project.findOne({title: req.body.title}).then(project => {
         if (project) {
             return res.status(400).json({ title: "Project already exists" });
@@ -35,18 +34,6 @@ router.post("/createProject", (req, res) => {
                     .catch(err => console.log(err));
         }
     });
-});
-
-// Defined get data(index or listing) route
-router.route('/listProjects').get(function (req, res) {
-  Project.find(function(err, projects){
-    if(err){
-      console.log(err);
-    }
-    else {
-      res.json(projects);
-    }
-  });
 });
 
 // Defined edit route
@@ -108,5 +95,27 @@ router.route('/deleteProject/:id').get(function (req, res) {
   });
 });
 
+// Defined get data(index or listing) route
+router.route('/listProjects').get(function (req, res) {
+  Project.find(function(err, projects){
+    if(err){
+      console.log(err);
+    }
+    else {
+      res.json(projects);
+    }
+  });
+});
+
+router.post("/searchProject", (req, res) => {   
+  Project.find({ title: { $regex: req.body.search, $options: "i" } }).then(project => {
+  //Project.find({title: req.body.search}).then(project => {
+      if (project) {
+          res.json(project);
+      } else {
+        res.status(404).send({message: "Not found any project"});
+      }
+  })
+});
 
 module.exports = router;

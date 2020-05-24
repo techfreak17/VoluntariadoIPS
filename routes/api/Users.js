@@ -169,7 +169,6 @@ router.post("/login", (req, res) => {
         // Make sure the user has been verified
         console.log(user.isVerified);
         if (user.isVerified) {
-          console.log("after true");
           // Create JWT Payload
           const payload = {
             id: user.id,

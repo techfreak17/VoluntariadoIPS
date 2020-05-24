@@ -11,11 +11,11 @@ class Navbar extends Component {
 
 
     render() {
-        const user  = this.props.auth.isAuthenticated;
+        const {user}  = this.props.auth;
 
         return (
             <div>
-                {user ? (
+                {user? (
                     <nav className="nav" style={{
                     width: "100%",
                     position: "fixed",
@@ -31,7 +31,7 @@ class Navbar extends Component {
                                 style={{ position: "fixed", left: 0, height: "auto", width: "auto", maxWidth: 200}} /></a></li>
                             <li><a href="/listNotifications"><i className="material-icons">notifications</i></a></li>
 
-                            <li><a href="/listUsers"><i className="material-icons left">person</i></a></li>
+                            <li><a href="/listUsers"><i className="material-icons left">person</i>{user.name}</a></li>
                             <li><button onClick={this.onLogoutClick} className="red btn" style={{ borderRadius: 10 }}>Sair</button></li>
                         </ul>
                     </div>

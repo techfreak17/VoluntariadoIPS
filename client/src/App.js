@@ -14,6 +14,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import Create from './components/projects/Create';
 import Edit from './components/projects/Edit';
 import Index from './components/projects/Index';
+import ProjectDetails from './components/projects/ProjectDetails';
 import Recover from "./components/auth/Recover";
 import RecoverConfirm from "./components/auth/RecoverConfirm";
 import IndexUsers from './components/users/IndexUsers';
@@ -72,6 +73,7 @@ class App extends Component {
               <PrivateRoute path='/listProjects' component={ Index } />
               <PrivateRoute exact path='/createUser' component={ CreateUser } />
               <PrivateRoute path='/editUser/:id' component={ EditUser } />
+              <PrivateRoute path='/getProject/:id' component={ ProjectDetails } />
               <PrivateRoute path='/listUsers' component={ IndexUsers } />
             </Switch>
 

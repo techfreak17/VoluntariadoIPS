@@ -61,7 +61,7 @@ export default class Index extends Component {
             <Link to="/createProject"> Propor Projeto</Link>
           </p>
           <form onSubmit={this.onSubmit}>
-            <input id="myInput" type="text" placeholder="Search.." name="search" onChange={this.onChangeSearch}></input>
+            <input id="myInput" type="text" placeholder="Search..." name="search" onChange={this.onChangeSearch}></input>
             <button type="submit">Pesquisar</button>
           </form>
           <table className="table table-striped" style={{ marginTop: 20 }}>

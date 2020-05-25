@@ -27,7 +27,7 @@ class Menu extends Component {
                     </div>
                 </nav>
                 ) : ( 
-                    <p>Olá</p>
+                    ""
                 )}
             </div>
         );

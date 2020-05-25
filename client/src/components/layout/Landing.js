@@ -9,9 +9,7 @@ import ProjectsRow from "./ProjectsRow"
 class Landing extends Component {
     constructor(props) {
         super(props);
-        this.state = { project: [{ title: "titulo", description: "descricao" }, { title: "titulo", description: "descricao" }, { title: "titulo", description: "descricao" }, { title: "titulo", description: "descricao" }] };
-    }
-    componentDidMount() {
+        this.state = { project: [{ title: "", date: "" }, { title: "", date: "" }, { title: "", date: "desricao" }, { title: "", date: "" }] };
         axios.get('/api/projects/listProjects')
             .then(response => {
                 this.setState({ project: response.data });
@@ -20,6 +18,7 @@ class Landing extends Component {
                 console.log(error);
             })
     }
+    
     render() {
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('.slider');
@@ -29,7 +28,6 @@ class Landing extends Component {
         return (
             <div className="container-fluid" style={{ width: "100%" }}>
                 <div className="slider">
-
                     <ul className="slides">
                         <ProjectsRow obj={this.state.project[0]} className="caption left-align" />
                         <ProjectsRow obj={this.state.project[1]} className="caption center-align" />

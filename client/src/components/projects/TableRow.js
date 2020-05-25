@@ -9,8 +9,8 @@ class TableRow extends Component {
     this.delete = this.delete.bind(this);
     this.myDate = new Date(props.obj.date);
     this.myDate = this.myDate.toLocaleDateString();
-    
   }
+  
   delete() {
     axios.get('/api/projects/deleteProject/' + this.props.obj._id)
       .then(console.log('Deleted'))

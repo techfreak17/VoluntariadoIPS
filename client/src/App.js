@@ -20,6 +20,7 @@ import RecoverConfirm from "./components/auth/RecoverConfirm";
 import IndexUsers from './components/users/IndexUsers';
 import CreateUser from './components/users/CreateUser';
 import EditUser from './components/users/EditUser';
+import UserDetails from './components/users/UserDetails';
 import ConfirmAccount from "./components/auth/ConfirmAccount";
 import ConfirmAccountToken from "./components/auth/ConfirmAccountToken";
 import ResetPassword from "./components/auth/ResetPassword";
@@ -74,6 +75,7 @@ class App extends Component {
               <PrivateRoute exact path='/createUser' component={ CreateUser } />
               <PrivateRoute path='/editUser/:id' component={ EditUser } />
               <PrivateRoute path='/getProject/:id' component={ ProjectDetails } />
+              <PrivateRoute path='/getUser/:id' component={ UserDetails } />
               <PrivateRoute path='/listUsers' component={ IndexUsers } />
             </Switch>
 

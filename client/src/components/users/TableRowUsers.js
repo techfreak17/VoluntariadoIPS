@@ -27,10 +27,13 @@ class TableRowUsers extends Component {
               {this.props.obj.role}
             </td>
             <td>
-              <Link to={"/editUser/" + this.props.obj._id} className="btn btn-primary" style={{backgroundColor: "lightBlue", color: "black"}}>Edit</Link>
+              <Link to={"/getUser/" + this.props.obj._id} className="btn btn-primary" style={{backgroundColor: "#03C04A"}}>Ver</Link>
+           </td>
+            <td>
+              <Link to={"/editUser/" + this.props.obj._id} className="btn btn-primary" style={{backgroundColor: "lightBlue", color: "black"}}>Editar</Link>
             </td>
             <td>
-              <button onClick={this.delete} className="btn btn-danger" style={{backgroundColor: "red"}}>Delete</button>
+              <button onClick={this.delete} className="btn btn-danger" style={{backgroundColor: "#9B1003"}}>Apagar</button>
             </td>
           </tr>
       );

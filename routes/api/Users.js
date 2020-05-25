@@ -385,4 +385,12 @@ router.post("/searchUser", (req, res) => {
   })
 });
 
+// Defined get route
+router.route('/getUser/:id').get(function (req, res) {
+  let id = req.params.id;
+  User.findById(id, function (err, user){
+      res.json(user);
+  });
+});
+
 module.exports = router;

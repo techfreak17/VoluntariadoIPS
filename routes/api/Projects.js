@@ -117,7 +117,7 @@ router.post("/searchProject", (req, res) => {
   })
 });
 
-// Defined edit route
+// Defined get route
 router.route('/getProject/:id').get(function (req, res) {
   let id = req.params.id;
   Project.findById(id, function (err, project){

@@ -8,7 +8,7 @@ class Menu extends Component {
         const user  = this.props.auth.isAuthenticated;
 
         return (
-            <div className="container ">
+            <div className="container">
                 {user ? (
                 <nav className="nav" style={{
                     width: "70%",

@@ -170,7 +170,7 @@ class Register extends Component {
                                 <button
                                     style={{
                                         width: "150px",
-                                        borderRadius: "3px",
+                                        borderRadius: 10,
                                         letterSpacing: "1.5px",
                                         marginTop: "1rem"
                                     }}

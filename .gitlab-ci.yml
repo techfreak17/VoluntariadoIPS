@@ -40,3 +40,5 @@ deploy service:
     - sed -i "s/%%dockerUser%%/${DOCKER_HUB_USER}/" deploy/deployment.yml
     - kubectl apply -f deploy/namespace.yml
     - kubectl apply -f deploy/deployment.yml
+    - kubectl apply -f deploy/service.yml
+    - kubectl apply -f deploy/ingress.yml

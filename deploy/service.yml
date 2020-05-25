@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: voluntariadoips-service
+  namespace: voluntariadoips-dev
+spec:
+  type: NodePort
+  selector:
+    name: voluntariadoips
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000

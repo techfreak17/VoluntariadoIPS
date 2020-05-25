@@ -1,29 +1,54 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import M from "materialize-css";
+import options from "materialize-css";
+import axios from 'axios';
+import ProjectsRow from "./ProjectsRow"
+
 
 class Landing extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { project: [{ title: "titulo", description: "descricao" }, { title: "titulo", description: "descricao" }, { title: "titulo", description: "descricao" }, { title: "titulo", description: "descricao" }] };
+    }
+    componentDidMount() {
+        axios.get('/api/projects/listProjects')
+            .then(response => {
+                this.setState({ project: response.data });
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
     render() {
-        /*
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('.slider');
             var instances = M.Slider.init(elems, options);
         });
-        */
+
         return (
             <div className="container-fluid" style={{ width: "100%" }}>
-                <div className="parallax-container valign-wrapper" style={{ width: "100%", minHeight: 380, lineHeight: 0, color: "white", height: 400, position: "relative", overflow: "hidden" }}>
-                    <div className="section no-pad-bot" style={{ width: "100%" }}>
-                        <div className="container">
-                            <h1 className="header center teal-text text-lighten-2">Bem-vindo à plataforma {" "}
-                                <span style={{ fontFamily: "monospace" }}>VoluntariadoIPS</span></h1>
-                            <div className="row center" style={{ width: "50%", textLighten: 2 }}>
-                                <h5 className="header col s12 ">Pronto para ajudar?
+                <div className="slider">
+
+                    <ul className="slides">
+                        <ProjectsRow obj={this.state.project[0]} className="caption left-align" />
+                        <ProjectsRow obj={this.state.project[1]} className="caption center-align" />
+                        <ProjectsRow obj={this.state.project[2]} className="caption right-align" />
+                    </ul>
+                </div>
+                <div className="container" style={{ width: "60%", backgroundColor: "#23395D", borderRadius: 50, marginTop: 15}}>
+                    <div className="container" style={{borderLeft: 100, borderRight: -40,  }}>
+                        <div className="section">
+                            <h2 className="header center text-lighten-2" style={{fontFamily: "monospace", fontWeight: "bold", color: "#50C878" }}>Plataforma {" "}
+                                <span>VoluntariadoIPS</span></h2>
+                            <div className="row center" style={{ width: "100%", textLighten: 2, fontWeight: "bold", color: "white"}}>
+                                <h5 className="header col s12 " >Pronto para ajudar?
                             <p className="flow-text text-darken-1">
                                         Junte-se a nós em diversos projetos que são
                                         enriquecedores tanto para si como para a comunidade!
                             </p></h5>
                             </div>
-                            <div className="row center" style={{ width: "50%" }}>
+                            <div className="row center" style={{ width: "80%" }}>
                                 <div className="col s6">
                                     <Link
                                         to="/register"
@@ -31,7 +56,7 @@ class Landing extends Component {
                                             width: "140px",
                                             borderRadius: 10,
                                             letterSpacing: "1.5px",
-                                            marginLeft: "40%"
+                                            fontWeight: "bold"
                                         }}
                                         className="btn btn-large waves-effect waves-light hoverable green">
                                         Registar
@@ -44,7 +69,7 @@ class Landing extends Component {
                                             width: "140px",
                                             borderRadius: 40,
                                             letterSpacing: "1.5px",
-                                            marginRight: "40%"
+                                            fontWeight: "bold"
                                         }}
                                         className="btn btn-large waves-effect waves-light hoverable blue">
                                         Log In
@@ -53,58 +78,15 @@ class Landing extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="container-fluid" style={{
-                        position: "absolute",
-                        top: -50,
-                        left: 0,
-                        width: "100%",
-                        height: 700,
-                        zIndex: -1
-                    }}>
-                        <img src={require("./images/background1.jpg")} alt="Unsplashed background img 1" style={{ width: "100%", height: "100%" }} />
-                    </div>
                 </div>
 
 
 
                 <div className="container-fluid">
 
-                    <div className="slider">
-                        <ul className="slides">
-                            <li>
-                                <img src={require("./images/background1.jpg")} alt="Unsplashed background img 1" />
-                                <div className="caption center-align">
-                                    <h3>This is our big Tagline!</h3>
-                                    <h5 className="light grey-text text-lighten-3">Here's our small slogan.</h5>
-                                </div>
-                            </li>
-                            <li>
-                                <img src={require("./images/background1.jpg")} alt="Unsplashed background img 1" />
-                                <div className="caption left-align">
-                                    <h3>Left Aligned Caption</h3>
-                                    <h5 className="light grey-text text-lighten-3">Here's our small slogan.</h5>
-                                </div>
-                            </li>
-                            <li>
-                                <img src={require("./images/background1.jpg")} alt="Unsplashed background img 1" />
-                                <div className="caption right-align">
-                                    <h3>Right Aligned Caption</h3>
-                                    <h5 className="light grey-text text-lighten-3">Here's our small slogan.</h5>
-                                </div>
-                            </li>
-                            <li>
-                                <img src={require("./images/background1.jpg")} alt="Unsplashed background img 1" />
-                                <div className="caption center-align">
-                                    <h3>This is our big Tagline!</h3>
-                                    <h5 className="light grey-text text-lighten-3">Here's our small slogan.</h5>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
 
 
-
-                    <div className="section">
+                    <div className="container">
 
                         <div className="row">
 

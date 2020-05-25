@@ -6,6 +6,7 @@ const keys = require("../../config/keys");
 const template = require('../../Notifications/emailNotificationsTemplates.js');
 const sender = require('../../Notifications/emailNotify.js');
 const crypto = require('crypto');
+const notification= require('./Notifications.js');
 
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
@@ -74,7 +75,7 @@ router.post("/register", (req, res) => {
 
               User.findOne({ email }).then(user => {
             
-            
+                
                 var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });
             
                 msgToken = 'http://' + "localhost:3000"/*req.headers.host*/ + '/ConfirmAccountToken/' + mytoken.token;
@@ -83,7 +84,7 @@ router.post("/register", (req, res) => {
                 console.log(mytoken);
             
                 mytoken.save();
-            
+                notification.createNotification( 'confirmarEmail','', email);
                 const msg = template.confirmarEmail(email, msgToken);
                 sender.sendEmail(msg);
                 res.json(user);
@@ -175,6 +176,7 @@ router.post("/login", (req, res) => {
             id: user.id,
             name: user.name
           };
+          
           // Sign token
           jwt.sign(
             payload,

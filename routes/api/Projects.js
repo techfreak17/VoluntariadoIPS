@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const notification= require('./Notifications.js');
 // Load Project model
 const Project = require("../../models/project");
 
@@ -31,7 +31,10 @@ router.post("/createProject", (req, res) => {
             });
             newProject
                     .save()
-                    .then(project => res.json(project))
+                    .then(project => {
+                     notification.createNotification( 'novoProjecto',req.body.title, req.body.email_person);
+                     res.json(project);
+                    })
                     .catch(err => console.log(err));
         }
     });

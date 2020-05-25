@@ -36,48 +36,47 @@ class Landing extends Component {
                         <ProjectsRow obj={this.state.project[2]} className="caption right-align" />
                     </ul>
                 </div>
-                <div className="container" style={{ width: "60%", backgroundColor: "#23395D", borderRadius: 50, marginTop: 15}}>
-                    <div className="container" style={{borderLeft: 100, borderRight: -40,  }}>
-                        <div className="section">
-                            <h2 className="header center text-lighten-2" style={{fontFamily: "monospace", fontWeight: "bold", color: "#50C878" }}>Plataforma {" "}
-                                <span>VoluntariadoIPS</span></h2>
-                            <div className="row center" style={{ width: "100%", textLighten: 2, fontWeight: "bold", color: "white"}}>
-                                <h5 className="header col s12 " >Pronto para ajudar?
+                <div className="container" style={{ width: "65%", backgroundColor: "#23395D", borderRadius: 50, marginTop: 15, boxShadow: "0 0 10px 2px green" }}>
+                    <div className="section">
+                        <h2 className="header center text-lighten-2" style={{ fontFamily: "monospace", fontWeight: "bold", color: "#50C878" }}>Plataforma {" "}
+                            <span>VoluntariadoIPS</span></h2>
+                        <div className="row center" style={{ width: "100%", textLighten: 2, fontWeight: "bold", color: "white" }}>
+                            <h5 className="header col s12 " >Pronto para ajudar?
                             <p className="flow-text text-darken-1">
-                                        Junte-se a nós em diversos projetos que são
-                                        enriquecedores tanto para si como para a comunidade!
+                                    Junte-se a nós em diversos projetos que são
+                                    enriquecedores tanto para si como para a comunidade!
                             </p></h5>
+                        </div>
+                        <div className="row center" style={{ width: "40%" }}>
+                            <div className="col s6">
+                                <Link
+                                    to="/register"
+                                    style={{
+                                        width: "140px",
+                                        borderRadius: 10,
+                                        letterSpacing: "1.5px",
+                                        fontWeight: "bold"
+                                    }}
+                                    className="btn btn-large waves-effect waves-light hoverable green">
+                                    Registar
+                                </Link>
                             </div>
-                            <div className="row center" style={{ width: "80%" }}>
-                                <div className="col s6">
-                                    <Link
-                                        to="/register"
-                                        style={{
-                                            width: "140px",
-                                            borderRadius: 10,
-                                            letterSpacing: "1.5px",
-                                            fontWeight: "bold"
-                                        }}
-                                        className="btn btn-large waves-effect waves-light hoverable green">
-                                        Registar
+                            <div className="col s6">
+                                <Link
+                                    to="/login"
+                                    style={{
+                                        width: "140px",
+                                        borderRadius: 40,
+                                        letterSpacing: "1.5px",
+                                        fontWeight: "bold"
+                                    }}
+                                    className="btn btn-large waves-effect waves-light hoverable blue">
+                                    Log In
                                 </Link>
-                                </div>
-                                <div className="col s6">
-                                    <Link
-                                        to="/login"
-                                        style={{
-                                            width: "140px",
-                                            borderRadius: 40,
-                                            letterSpacing: "1.5px",
-                                            fontWeight: "bold"
-                                        }}
-                                        className="btn btn-large waves-effect waves-light hoverable blue">
-                                        Log In
-                                </Link>
-                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
 
 

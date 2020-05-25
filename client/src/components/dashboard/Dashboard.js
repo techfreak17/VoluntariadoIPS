@@ -44,17 +44,15 @@ class Dashboard extends Component {
                         <ProjectsRow obj={this.state.project[2]} className="caption right-align" />
                     </ul>
                 </div>
-                <div className="container" style={{ width: "60%", backgroundColor: "#23395D", borderRadius: 50, marginTop: 15 }}>
-                    <div className="container" style={{ borderLeft: 100, borderRight: -40, }}>
+                <div className="container" style={{ width: "65%", backgroundColor: "#23395D", borderRadius: 50, marginTop: 15, boxShadow: "0 0 10px 2px green" }}>
                         <div className="section">
-                            <h2 className="header center text-lighten-2" style={{ fontFamily: "monospace", fontWeight: "bold", color: "#50C878" }}>Bem-vindo à plataforma {" "}
+                            <h2 className="header center text-lighten-2" style={{ fontFamily: "monospace", fontWeight: "bold", color: "#50C878"}}>Bem-vindo à plataforma {" "}
                                 <span style={{ fontFamily: "monospace" }}>VoluntariadoIPS</span></h2>
                             <div className="row center" style={{ width: "100%", textLighten: 2, fontWeight: "bold", color: "white" }}>
                                 <h5 className="header col s12 " ><b>Olá</b> {user.name.split(" ")[0]},
                                 <p className="flow-text text-darken-1" style={{ fontFamily: "monospace" }}>Esta é a tua página principal, Bem-vindo</p>
                                 </h5>
                             </div>
-                        </div>
                     </div>
                 </div>
 

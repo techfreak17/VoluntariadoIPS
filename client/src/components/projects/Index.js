@@ -42,7 +42,6 @@ export default class Index extends Component {
     const obj = {
       search: document.getElementById("myInput").value,
     };
-    //console.log(obj);
     axios.post("/api/projects/searchProject",obj)
     .then(response => {
       this.setState({ project: response.data });

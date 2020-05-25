@@ -375,4 +375,14 @@ router.route('/deleteUser/:id').get(function (req, res) {
   });
 });
 
+router.post("/searchUser", (req, res) => {   
+  User.find({ name: { $regex: req.body.search, $options: "i" } }).then(user => {
+      if (user) {
+          res.json(user);
+      } else {
+        res.status(404).send({message: "Not found any user with that name"});
+      }
+  })
+});
+
 module.exports = router;

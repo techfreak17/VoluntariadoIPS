@@ -7,7 +7,12 @@ export default class IndexUsers extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {user: []};
+      this.onChangeSearch = this.onChangeSearch.bind(this);
+      this.onSubmit = this.onSubmit.bind(this);
+      this.state = {
+        user: [],
+        search: ""
+      };
     }
     componentDidMount(){
       axios.get('/api/users/listUsers')
@@ -18,11 +23,32 @@ export default class IndexUsers extends Component {
           console.log(error);
         })
     }
+
+    onChangeSearch(e){
+      this.setState({
+        search: e.target.value
+      })
+    }
     
     tabRow(){
       return this.state.user.map(function(object, i){
           return <TableRowUsers obj={object} key={i} />;
       });
+    }
+
+    onSubmit(e) {
+      e.preventDefault();
+      const obj = {
+        search: document.getElementById("myInput").value,
+      };
+      axios.post("/api/users/searchUser",obj)
+      .then(response => {
+        this.setState({ user: response.data });
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+      
     }
 
     render() {
@@ -33,6 +59,10 @@ export default class IndexUsers extends Component {
               <Link to="/dashboard">Voltar</Link> <br></br>
               <Link to="/createUser"> Criar Utilizador</Link>
           </p>
+          <form onSubmit={this.onSubmit}>
+            <input id="myInput" type="text" placeholder="Search.." name="search" onChange={this.onChangeSearch}></input>
+            <button type="submit">Pesquisar</button>
+          </form>
           <table className="table table-striped" style={{ marginTop: 20 }}>
             <thead>
               <tr>

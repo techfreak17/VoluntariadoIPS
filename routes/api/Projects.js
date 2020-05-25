@@ -109,11 +109,10 @@ router.route('/listProjects').get(function (req, res) {
 
 router.post("/searchProject", (req, res) => {   
   Project.find({ title: { $regex: req.body.search, $options: "i" } }).then(project => {
-  //Project.find({title: req.body.search}).then(project => {
       if (project) {
           res.json(project);
       } else {
-        res.status(404).send({message: "Not found any project"});
+        res.status(404).send({message: "Not found any project with that title"});
       }
   })
 });

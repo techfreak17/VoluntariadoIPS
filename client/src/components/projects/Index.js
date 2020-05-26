@@ -57,7 +57,7 @@ export default class Index extends Component {
         <div>
           <h3 align="center">Projetos</h3>
           <p className="grey-text text-darken-1">
-            <Link to="/dashboard">Voltar</Link> <br></br>
+            <a href="/dashboard" onClick="window.location.reload()">Voltar</a> <br></br>
             <Link to="/createProject"> Propor Projeto</Link>
           </p>
           <form onSubmit={this.onSubmit}>

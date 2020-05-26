@@ -29,42 +29,41 @@ class Dashboard extends Component {
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('.slider');
             var instances = M.Slider.init(elems, options);
+            console.log(instances);
         });
-        const { user } = this.props.auth;
+
+        //const { user } = this.props.auth;
+        let projectL = [];
+
+        const projectList = () => {
+            for (let i = 0; i < this.state.project.length; i++) {
+                projectL.push(<ProjectsRow obj={this.state.project[i]} key={i} className="caption left-align" />);
+            }
+            return projectL;
+          };
 
         return (
             <div className="container-fluid" style={{ width: "100%" }}>
-
                 <div className="container" style={{ width: "65%", backgroundColor: "#23395D", borderRadius: 50, marginTop: 20, boxShadow: "0 0 10px 2px green", marginBottom: 30}}>
                     <div className="section">
-                        <h2 className="header center text-lighten-2" style={{ fontFamily: "monospace", fontWeight: "bold", color: "#50C878" }}>Bem-vindo à plataforma {" "}
-                            <span style={{ fontFamily: "monospace" }}>VoluntariadoIPS</span></h2>
+                        <h2 className="header center text-lighten-2" style={{ fontFamily: "monospace", fontWeight: "bold", color: "#50C878" }}>Plataforma VoluntariadoIPS</h2>
                         <div className="row center" style={{ width: "100%", textLighten: 2, fontWeight: "bold", color: "white" }}>
-                            <h5 className="header col s12 " ><b>Olá</b> {user.name.split(" ")[0]},
-                                <p className="flow-text text-darken-1" style={{ fontFamily: "monospace" }}>Esta é a tua página principal, Bem-vindo</p>
-                            </h5>
+                            <h5 className="header col s12 " ><b>Página Principal</b></h5>
                         </div>
                     </div>
                 </div>
 
                 <div className="slider">
                     <ul className="slides">
-                        <ProjectsRow obj={this.state.project[0]} className="caption left-align" />
-                        <ProjectsRow obj={this.state.project[1]} className="caption center-align" />
-                        <ProjectsRow obj={this.state.project[2]} className="caption right-align" />
+                        {projectList()}
                     </ul>
                 </div>
-
-
-
-                <div className="container-fluid">
+                 <div className="container-fluid">
 
 
 
                     <div className="container">
-
                         <div className="row">
-
                             <div className="col s12 m4">
                                 <div className="icon-block">
                                     <h2 className="center brown-text"><i className="medium material-icons">flash_on</i></h2>
@@ -88,14 +87,9 @@ class Dashboard extends Component {
                                     <p className="light">We have provided detailed documentation as well as specific code examples to help new users get started. We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
-
-
             </div >
         );
     }

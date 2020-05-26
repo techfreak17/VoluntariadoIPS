@@ -23,102 +23,95 @@ class Landing extends Component {
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('.slider');
             var instances = M.Slider.init(elems, options);
+            console.log(instances);
         });
+
+        let projectL = [];
+
+        const projectList = () => {
+            for (let i = 0; i < this.state.project.length; i++) {
+                projectL.push(<ProjectsRow obj={this.state.project[i]} key={i} className="caption left-align" />);
+            }
+            return projectL;
+          };
 
         return (
             <div className="container-fluid" style={{ width: "100%" }}>
-                <div className="slider">
-                    <ul className="slides">
-                        <ProjectsRow obj={this.state.project[0]} className="caption left-align" />
-                        <ProjectsRow obj={this.state.project[1]} className="caption center-align" />
-                        <ProjectsRow obj={this.state.project[2]} className="caption right-align" />
-                    </ul>
-                </div>
-                <div className="container" style={{ width: "65%", backgroundColor: "#23395D", borderRadius: 50, marginTop: 15, boxShadow: "0 0 10px 2px green" }}>
-                    <div className="section">
-                        <h2 className="header center text-lighten-2" style={{ fontFamily: "monospace", fontWeight: "bold", color: "#50C878" }}>Plataforma {" "}
-                            <span>VoluntariadoIPS</span></h2>
-                        <div className="row center" style={{ width: "100%", textLighten: 2, fontWeight: "bold", color: "white" }}>
-                            <h5 className="header col s12 " >Pronto para ajudar?
-                            <p className="flow-text text-darken-1">
-                                    Junte-se a nós em diversos projetos que são
-                                    enriquecedores tanto para si como para a comunidade!
-                            </p></h5>
+            <div className="slider">
+                <ul className="slides">
+                    {projectList()}
+                </ul>
+            </div>
+            <div className="container" style={{ width: "65%", backgroundColor: "#23395D", borderRadius: 50, marginTop: 15, boxShadow: "0 0 10px 2px green" }}>
+                <div className="section">
+                    <h2 className="header center text-lighten-2" style={{ fontFamily: "monospace", fontWeight: "bold", color: "#50C878" }}>Plataforma {" "}
+                        <span>VoluntariadoIPS</span></h2>
+                    <div className="row center" style={{ width: "100%", textLighten: 2, fontWeight: "bold", color: "white" }}>
+                        <h5 className="header col s12 " >Pronto para ajudar ?
+                        <p className="flow-text text-darken-1">
+                                Junte-se a nós em diversos projetos 
+                                enriquecedores para si e para a comunidade IPS.
+                        </p></h5>
+                    </div>
+                    <div className="row center" style={{ width: "40%" }}>
+                        <div className="col s6">
+                            <Link
+                                to="/register"
+                                style={{
+                                    width: "140px",
+                                    borderRadius: 10,
+                                    letterSpacing: "1.5px",
+                                    fontWeight: "bold"
+                                }}
+                                className="btn btn-large waves-effect waves-light hoverable green">
+                                Registar
+                            </Link>
                         </div>
-                        <div className="row center" style={{ width: "40%" }}>
-                            <div className="col s6">
-                                <Link
-                                    to="/register"
-                                    style={{
-                                        width: "140px",
-                                        borderRadius: 10,
-                                        letterSpacing: "1.5px",
-                                        fontWeight: "bold"
-                                    }}
-                                    className="btn btn-large waves-effect waves-light hoverable green">
-                                    Registar
-                                </Link>
+                        <div className="col s6">
+                            <Link
+                                to="/login"
+                                style={{
+                                    width: "140px",
+                                    borderRadius: 40,
+                                    letterSpacing: "1.5px",
+                                    fontWeight: "bold"
+                                }}
+                                className="btn btn-large waves-effect waves-light hoverable blue">
+                                Log In
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="container-fluid">
+                <div className="container">
+                    <div className="row">
+                        <div className="col s12 m4">
+                            <div className="icon-block">
+                                <h2 className="center brown-text"><img src={require('./images/MOODLE.png')}
+                                    alt="(Não esquecer de verificar no spam)"
+                                    className="img-responsive" style={{ position: "absolute", left: 0, height: "auto", width: "auto", paddingLeft:250}}/></h2>
                             </div>
-                            <div className="col s6">
-                                <Link
-                                    to="/login"
-                                    style={{
-                                        width: "140px",
-                                        borderRadius: 40,
-                                        letterSpacing: "1.5px",
-                                        fontWeight: "bold"
-                                    }}
-                                    className="btn btn-large waves-effect waves-light hoverable blue">
-                                    Log In
-                                </Link>
+                        </div>
+                        <div className="col s12 m4">
+                            <div className="icon-block">
+                            <h2 className="center brown-text"><img src={require('./images/AAIPS.png')}
+                                    alt="(Não esquecer de verificar no spam)"
+                                    className="img-responsive" style={{ position: "absolute", left: 0, height: "auto", width: "auto", paddingLeft:550, paddingTop: 70}}/></h2>
+                            </div>
+                        </div>
+                        <div className="col s12 m4">
+                            <div className="icon-block">
+                            <h2 className="center brown-text"><img src={require('./images/IPS.png')}
+                                    alt="(Não esquecer de verificar no spam)"
+                                    className="img-responsive" style={{ position: "absolute", left: 0, height: "auto", width: "auto", paddingLeft:900, paddingTop: 70}}/></h2>
                             </div>
                         </div>
                     </div>
-
                 </div>
-
-
-
-                <div className="container-fluid">
-
-
-
-                    <div className="container">
-
-                        <div className="row">
-
-                            <div className="col s12 m4">
-                                <div className="icon-block">
-                                    <h2 className="center brown-text"><i className="medium material-icons">flash_on</i></h2>
-                                    <h5 className="center">Speeds up development</h5>
-                                    <p className="light">We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.</p>
-                                </div>
-                            </div>
-
-                            <div className="col s12 m4">
-                                <div className="icon-block">
-                                    <h2 className="center brown-text"><i className="medium material-icons">group</i></h2>
-                                    <h5 className="center">User Experience Focused</h5>
-                                    <p className="light">By utilizing elements and principles of Material Design, we were able to create a framework that incorporates components and animations that provide more feedback to users. Additionally, a single underlying responsive system across all platforms allow for a more unified user experience.</p>
-                                </div>
-                            </div>
-
-                            <div className="col s12 m4">
-                                <div className="icon-block">
-                                    <h2 className="center brown-text"><i className="medium material-icons">settings</i></h2>
-                                    <h5 className="center">Easy to work with</h5>
-                                    <p className="light">We have provided detailed documentation as well as specific code examples to help new users get started. We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-            </div >
+            </div>
+        </div>
         );
     }
 }

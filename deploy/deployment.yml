@@ -30,8 +30,12 @@ spec:
           requests:
             memory: "256Mi"
             cpu: "250m"
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
+        readinessProbe:
+            exec:
+                command:
+                    - cat
+                    - /tmp/healthy
+                initialDelaySeconds: 5
+                periodSeconds: 5
       imagePullSecrets:
         - name: docker-registry

@@ -1,5 +1,7 @@
 const pushTemplates= require("../../models/pushNotificationTemplates");
 const notifications= require("../../models/notifications");
+const express = require("express");
+const router = express.Router();
 
 
 // @desc Criar uma Notificação
@@ -43,6 +45,44 @@ function buildnotification(title,body,texto, email){
   return notif;
 }
 
+function getNotification(userEmail){
+  console.log('entered getnotification');
+    notifications.find({ email: userEmail , isRead: false}, function(err, notif){
+      if(err){
+        console.log('has error');
+        return err;
+      }
+      else{
+        console.log('has something');
+        console.log(notif);
+        return notif;
+      }
+
+    });
+}
+
+router.put('/updateNotification/:id').get(function (req, res) {
+  console.log('entered update Notification');
+  notifications.findOne({_id: req.params.id},function(err, notif){
+    if(err){
+      console.log('error');
+      console.log(err);
+      res.json(err);
+    }
+    else {
+      console.log('has an object');
+      console.log(notif);
+      notif.isRead=true;
+      notif.save();
+      res.json(notif);
+    }
+  });
+});
+
+
+
 module.exports= createNotif ={createNotification};
+module.exports= getNotif ={getNotification};
 //createNotification('semVagas','\"Ajudar o Ambiente\"','180221102@estudantes.ips.pt');
 //createNotification('confirmarEmail','', '180221102@estudantes.ips.pt');
+//getNotification('180221102@estudantes.ips.pt');

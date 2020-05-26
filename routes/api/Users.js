@@ -85,6 +85,7 @@ router.post("/register", (req, res) => {
             
                 mytoken.save();
                 notification.createNotification( 'confirmarEmail','', email);
+                
                 const msg = template.confirmarEmail(email, msgToken);
                 sender.sendEmail(msg);
                 res.json(user);
@@ -176,7 +177,7 @@ router.post("/login", (req, res) => {
             id: user.id,
             name: user.name
           };
-          
+          notification.getNotification(email);
           // Sign token
           jwt.sign(
             payload,

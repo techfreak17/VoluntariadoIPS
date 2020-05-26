@@ -2,6 +2,7 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: voluntariadoips-service
+  namespace: voluntariadoips-dev
 spec:
   rules:
   - host: voluntariadoips.gp.pt

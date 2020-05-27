@@ -59,19 +59,19 @@ export default class Edit extends Component {
         <img src={require('../layout/images/image.jpg')}alt="(Não esquecer de verificar no spam)"className="img-responsive"/>
         </div>
         
-        <div className="card-content" style={{padding:"0px", height: "250px",width: "600px", paddingTop:-20, paddingBottom: 500, paddingLeft:50}}>
-            <h3 style={{fontWeight:"bolder"}}>{this.state.title}</h3>
-            <div style={{padding:"0px", height: "250px",width: "600px", paddingTop:-20, paddingBottom: 500, paddingLeft:70}}>
+        <div className="card-content" style={{padding:"0px", height: "250px",width: "600px", paddingTop:-20, paddingBottom: 500, paddingLeft:50, paddingRight:20}}>
+            <h3 style={{fontWeight:"bolder",color: "#50C878"}}>{this.state.title}</h3>
+            <div style={{padding:"0px", height: "250px",width: "600px", paddingTop:-20, paddingBottom: 500}}>
               <h5  style={{fontWeight:"bolder"}}>Contactos do Responsável:</h5>
-              <p style={{alignItems:"center"}}><i className="material-icons">person</i>{ this.state.contact_person}</p>
-              <p><i className="material-icons">email</i>{ this.state.email_person}</p>
-              <p><i className="material-icons">phone</i>{ this.state.phone_person}</p>
+              <p style={{alignItems:"center"}}><i className="material-icons">person</i> {this.state.contact_person}</p>
+              <p><i className="material-icons">email</i> {this.state.email_person}</p>
+              <p><i className="material-icons">phone</i> {this.state.phone_person}</p>
               <h5  style={{fontWeight:"bolder"}}>Detalhes do Projeto:</h5>
-              <p><i className="material-icons">access_time</i>{ this.state.date}</p>
-              <p><i className="material-icons">description</i>{this.state.description}</p>
-              <p><i className="material-icons">check</i>{this.state.target_audience}</p><br></br>
+              <p><i className="material-icons">access_time</i> {this.state.date}</p>
+              <p><i className="material-icons">description</i> {this.state.description}</p>
+              <p><i className="material-icons">check</i> {this.state.target_audience}</p><br></br>
               <Link to="/listProjects" style={{width: "120px", borderRadius: 10,letterSpacing: "1.5px",fontWeight: "bold",}}
-              className="btn btn-large waves-effect waves-light hoverable green">Voltar</Link>
+              className="btn btn-large waves-effect waves-light hoverable black">Voltar</Link>
             </div>
         </div>
     </div>

@@ -4,22 +4,16 @@ import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import M from "materialize-css";
 import options from "materialize-css";
-import axios from 'axios';
-import ProjectsRow from "../layout/ProjectsRow"
+import Slider from "../layout/Slider"
 
 
 class Dashboard extends Component {
+
     constructor(props) {
         super(props);
-        this.state = { project: [{ title: "", description: "" }, { title: "", description: "" }, { title: "", description: "" }, { title: "", description: "" }] };
-        axios.get('/api/projects/listProjects')
-            .then(response => {
-                this.setState({ project: response.data });
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
+        this.state = { titles: [{ title: "#Dinamizar"}, { title: "#Responsabilizar"}, { title: "#Qualificar"}] };
     }
+
     onLogoutClick = e => {
         e.preventDefault();
         this.props.logoutUser();
@@ -32,14 +26,14 @@ class Dashboard extends Component {
             console.log(instances);
         });
 
-        //const { user } = this.props.auth;
-        let projectL = [];
+        let titleL = [];
 
-        const projectList = () => {
-            for (let i = 0; i < this.state.project.length; i++) {
-                projectL.push(<ProjectsRow obj={this.state.project[i]} key={i} className="caption left-align" />);
+
+        const titleList = () => {
+            for (let i = 0; i < this.state.titles.length; i++) {
+                titleL.push(<Slider obj={this.state.titles[i]} key={i} className="caption left-align" />);
             }
-            return projectL;
+            return titleL;
           };
 
         return (
@@ -48,42 +42,46 @@ class Dashboard extends Component {
                     <div className="section">
                         <h2 className="header center text-lighten-2" style={{ fontFamily: "monospace", fontWeight: "bold", color: "#50C878" }}>Plataforma VoluntariadoIPS</h2>
                         <div className="row center" style={{ width: "100%", textLighten: 2, fontWeight: "bold", color: "white" }}>
-                            <h5 className="header col s12 " ><b>Página Principal</b></h5>
+                            <h3 className="header col s12 " ><b>Bem-Vindo</b></h3>
+                            <h5 className="header col s12 " ><b>Pronto para ajudar ?</b></h5>
                         </div>
                     </div>
                 </div>
 
                 <div className="slider">
                     <ul className="slides">
-                        {projectList()}
+                        {titleList()}
                     </ul>
                 </div>
-                <div className="container-fluid">
+
+                <div className="container-fluid" style={{paddingBottom:200}}>
                 <div className="container">
+                    <div className="row">
                         <div className="col s12 m4">
                             <div className="icon-block">
-                                <a className="navbar-brand" href="https://moodle.ips.pt/1920/"><img src={require('../layout/images/MOODLE.png')}
+                                <h2 className="center brown-text"><img src={require('../layout/images/MOODLE.png')}
                                     alt="(Não esquecer de verificar no spam)"
-                                    className="img-responsive" style={{ position: "absolute", left: 0, height: "auto", width: "auto", paddingLeft:250, paddingBottom: 30}}/></a>
+                                    className="img-responsive" style={{ position: "absolute", left: 0, height: 150, width: "auto", paddingLeft:300}}/></h2>
+                            </div>
+                        </div>
+                        <div className="col s12 m4" >
+                            <div className="icon-block">
+                            <h2 className="center brown-text"><img src={require('../layout/images/AAIPS.png')}
+                                    alt="(Não esquecer de verificar no spam)"
+                                    className="img-responsive" style={{ position: "absolute", left: 0, height: 150, width: "auto", paddingLeft:600, paddingTop: 40}}/></h2>
                             </div>
                         </div>
                         <div className="col s12 m4">
                             <div className="icon-block">
-                                <a className="navbar-brand" href="http://aaips.pt/"><img src={require('../layout/images/AAIPS.png')}
+                            <h2 className="center brown-text"><img src={require('../layout/images/IPS.png')}
                                     alt="(Não esquecer de verificar no spam)"
-                                    className="img-responsive" style={{ position: "absolute", left: 0, height: "auto", width: "auto", paddingLeft:550, paddingTop: 70, paddingBottom: 30}}/></a>
-                            </div>
-                        </div>
-                        <div className="col s12 m4">
-                            <div className="icon-block">
-                                <a className="navbar-brand" href="https://www.ips.pt/ips_si/web_page.inicial"><img src={require('../layout/images/IPS.png')}
-                                    alt="(Não esquecer de verificar no spam)"
-                                    className="img-responsive" style={{ position: "absolute", left: 0, height: "auto", width: "auto", paddingLeft:900, paddingTop: 70, paddingBottom: 30}}/></a>
+                                    className="img-responsive" style={{ position: "absolute", left: 0, height: 150, width: "auto", paddingLeft:950, paddingTop: 40}}/></h2>
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
-            </div >
+        </div >
         );
     }
 }

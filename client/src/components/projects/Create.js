@@ -153,7 +153,7 @@ class Create extends Component {
     return (
       <div style={{ height: "75vh", marginTop: "5%" }} className="container">
         <h3 align="left">Propor Projeto</h3>
-        <form onSubmit={this.onSubmit}>
+        <form>
           <div className="input-field col s12">
             <label>Nome do Projeto:  </label>
             <input
@@ -251,7 +251,9 @@ class Create extends Component {
                   letterSpacing: "1.5px",
                   marginTop: "1rem",
                   backgroundColor: "green"
+                  
                 }}
+                onSubmit={this.onSubmit}
                 type="submit"
                 className="btn btn-large waves-effect waves-light hoverable accent-3">
                 Propor

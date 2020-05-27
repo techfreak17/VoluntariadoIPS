@@ -65,7 +65,7 @@ router.post("/register", (req, res) => {
                 mytoken.save();          
                 const msg = template.confirmarEmail(email, msgToken);
                 sender.sendEmail(msg);
-                res.json(user);            
+                res.json(user);
               });})
             .catch(err => console.log(err));
         });

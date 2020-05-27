@@ -6,6 +6,7 @@ import axios from 'axios';
 import ProjectsRow from "./ProjectsRow"
 
 
+
 class Landing extends Component {
     constructor(props) {
         super(props);
@@ -36,7 +37,7 @@ class Landing extends Component {
           };
 
         return (
-            <div className="container-fluid" style={{ width: "100%" }}>
+            <div className="container-fluid" style={{ width: "100%"}}>
             <div className="slider">
                 <ul className="slides">
                     {projectList()}
@@ -91,21 +92,21 @@ class Landing extends Component {
                             <div className="icon-block">
                                 <h2 className="center brown-text"><img src={require('./images/MOODLE.png')}
                                     alt="(Não esquecer de verificar no spam)"
-                                    className="img-responsive" style={{ position: "absolute", left: 0, height: "auto", width: "auto", paddingLeft:250}}/></h2>
+                                    className="img-responsive" style={{ position: "absolute", left: 0, height: 150, width: "auto", paddingLeft:300}}/></h2>
                             </div>
                         </div>
-                        <div className="col s12 m4">
+                        <div className="col s12 m4" >
                             <div className="icon-block">
                             <h2 className="center brown-text"><img src={require('./images/AAIPS.png')}
                                     alt="(Não esquecer de verificar no spam)"
-                                    className="img-responsive" style={{ position: "absolute", left: 0, height: "auto", width: "auto", paddingLeft:550, paddingTop: 70}}/></h2>
+                                    className="img-responsive" style={{ position: "absolute", left: 0, height: 150, width: "auto", paddingLeft:600, paddingTop: 40}}/></h2>
                             </div>
                         </div>
                         <div className="col s12 m4">
                             <div className="icon-block">
                             <h2 className="center brown-text"><img src={require('./images/IPS.png')}
                                     alt="(Não esquecer de verificar no spam)"
-                                    className="img-responsive" style={{ position: "absolute", left: 0, height: "auto", width: "auto", paddingLeft:900, paddingTop: 70}}/></h2>
+                                    className="img-responsive" style={{ position: "absolute", left: 0, height: 150, width: "auto", paddingLeft:950, paddingTop: 40}}/></h2>
                             </div>
                         </div>
                     </div>

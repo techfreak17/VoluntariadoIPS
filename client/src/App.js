@@ -7,7 +7,6 @@ import { Provider } from "react-redux";
 import store from "./store";
 import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
-import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
@@ -25,6 +24,8 @@ import ConfirmAccount from "./components/auth/ConfirmAccount";
 import ConfirmAccountToken from "./components/auth/ConfirmAccountToken";
 import ResetPassword from "./components/auth/ResetPassword";
 import Menu from "./components/layout/Menu";
+import RegisterVoluntary from "./components/auth/RegisterVoluntary";
+import RegisterCompany from "./components/auth/RegisterCompany";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -60,7 +61,8 @@ class App extends Component {
             <Navbar />
             <Menu />
             <Route exact path="/" component={Landing} />
-            <Route exact path="/register" component={Register} />
+            <Route exact path="/registerVoluntary" component={RegisterVoluntary} />
+            <Route exact path="/registerCompany" component={RegisterCompany} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/recover" component={Recover} />
             <Route exact path="/recoverconfirm" component={RecoverConfirm} />

@@ -10,7 +10,7 @@ class Slider extends Component {
     render() {
         return (
             <li>
-                <img src={require("./images/Voluntariado.png")} alt="Unsplashed background img 1" />
+                <img src={require("./images/Voluntariado1.jpg")} alt="Unsplashed background img 1" />
                 <div className={this.props.className}>
                     <h3 style={{ fontFamily: "monospace", fontWeight: "bold" }}>{this.props.obj.title}</h3>
                 </div>

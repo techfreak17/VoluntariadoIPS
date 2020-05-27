@@ -48,7 +48,7 @@ class Navbar extends Component {
                                         className="img-responsive"
                                         style={{ position: "absolute", left: 0, height: "auto", width: "auto", maxWidth: 200 }} /></a></li>
                                     <li><a href="/login"><i className="material-icons left">person</i>Iniciar Sessão</a></li>
-                                    <li><a href="/register" className="green btn" style={{ borderRadius: 10, marginBottom: 3 }}>Registar</a></li>
+                                    <li><a href="/registerVoluntary" className="green btn" style={{ borderRadius: 10, marginBottom: 3 }}>Registar</a></li>
                                 </ul>
                             </div>
                         </nav>

@@ -53,11 +53,12 @@ class Landing extends Component {
                                 Junte-se a nós em diversos projetos 
                                 enriquecedores para si e para a comunidade IPS.
                         </p></h5>
+                        <h4 style={{color:"#E1C699"}}>Registe-se</h4>
                     </div>
                     <div className="row center" style={{ width: "40%" }}>
                         <div className="col s6">
                             <Link
-                                to="/register"
+                                to="/registerCompany"
                                 style={{
                                     width: "140px",
                                     borderRadius: 10,
@@ -65,20 +66,21 @@ class Landing extends Component {
                                     fontWeight: "bold"
                                 }}
                                 className="btn btn-large waves-effect waves-light hoverable green">
-                                Registar
+                                Empresa
                             </Link>
                         </div>
                         <div className="col s6">
                             <Link
-                                to="/login"
+                                to="/registerVoluntary"
                                 style={{
-                                    width: "140px",
-                                    borderRadius: 40,
+                                    width: "170px",
+                                    borderRadius: 10,
                                     letterSpacing: "1.5px",
                                     fontWeight: "bold"
+                                    
                                 }}
-                                className="btn btn-large waves-effect waves-light hoverable blue">
-                                Log In
+                                className="btn btn-large waves-effect waves-light hoverable green">
+                                Voluntário
                             </Link>
                         </div>
                     </div>

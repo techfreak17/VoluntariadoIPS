@@ -9,11 +9,14 @@ const crypto = require('crypto');
 
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
+const validateRegisterInputVoluntary = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 const validatePasswordReset = require("../../validation/recover");
 
 // Load User model
 const User = require("../../models/user");
+const Voluntary = require("../../models/voluntary");
+const Company = require("../../models/company");
 const Token = require("../../models/token");
 
 function emailSend(user) {
@@ -28,12 +31,12 @@ function emailSend(user) {
   });
 };
 
-// @route POST api/users/register
+// @route POST api/users/registerVoluntary
 // @desc Register user
 // @access Public
-router.post("/register", (req, res) => {
+router.post("/registerVoluntary", (req, res) => {
   // Form validation
-  const { errors, isValid } = validateRegisterInput(req.body);
+  const { errors, isValid } = validateRegisterInputVoluntary(req.body);
   // Check validation
   if (!isValid) {
     return res.status(400).json(errors);
@@ -43,7 +46,7 @@ router.post("/register", (req, res) => {
       return res.status(400).json({ email: "Email already exists" });
     } else {
       const newUser = new User({
-        number: req.body.number,
+        username: req.body.username,
         name: req.body.name,
         role: req.body.role,
         email: req.body.email,
@@ -66,10 +69,85 @@ router.post("/register", (req, res) => {
                 const msg = template.confirmarEmail(email, msgToken);
                 sender.sendEmail(msg);
                 res.json(user);
+                const newVoluntary = new Voluntary({
+                  name: req.body.name,
+                  email: req.body.email,
+                  phone: req.body.phone,
+                  address: req.body.address,
+                  birthDate: req.body.birthDate,
+                  memberIPS: req.body.memberIPS,
+                  schoolIPS: req.body.schoolIPS,
+                  courseIPS: req.body.courseIPS,
+                  interestAreas: req.body.interestAreas,
+                  reasons: req.body.reasons,
+                  observations: req.body.observations,
+                  authorization: req.body.authorization,
+                  userID: user._id
+                });       
+                newVoluntary.save();
               });})
             .catch(err => console.log(err));
         });
-      });    
+      });
+    }
+  });
+});
+
+// @route POST api/users/registerCompany
+// @desc Register user
+// @access Public
+router.post("/registerCompany", (req, res) => {
+  // Form validation
+  const { errors, isValid } = validateRegisterInputCompany(req.body);
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+  User.findOne({ email: req.body.email }).then(user => {
+    if (user) {
+      return res.status(400).json({ email: "Email already exists" });
+    } else {
+      const newUser = new User({
+        username: req.body.username,
+        name: req.body.name,
+        role: req.body.role,
+        email: req.body.email,
+        password: req.body.password
+      });
+
+      // Hash password before saving in database
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
+          if (err) throw err;
+          newUser.password = hash;
+          newUser
+            .save()
+            //.then(user => res.json(user))
+            .then(user => {  const email = user.email;
+              User.findOne({ email }).then(user => {        
+                var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });          
+                msgToken = 'http://' + "localhost:3000"/*req.headers.host*/ + '/ConfirmAccountToken/' + mytoken.token;           
+                mytoken.save();          
+                const msg = template.confirmarEmail(email, msgToken);
+                sender.sendEmail(msg);
+                res.json(user);
+                const newCompany = new Company({
+                  name: req.body.name,
+                  email: req.body.email,
+                  phone: req.body.phone,
+                  address: req.body.address,
+                  birthDate: req.body.birthDate,
+                  companyAddress: req.body.companyAddress,
+                  companyName: req.body.companyName,
+                  observations: req.body.observations,
+                  authorization: req.body.authorization,
+                  userID: user._id
+                });       
+                newCompany.save();
+              });})
+            .catch(err => console.log(err));
+        });
+      });
     }
   });
 });

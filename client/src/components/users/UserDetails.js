@@ -22,7 +22,7 @@ export default class Edit extends Component {
         this.myDate = new Date(response.data.date);
         this.myDate = this.myDate.toLocaleDateString();
         this.setState({
-            number: response.data.number,
+            username: response.data.username,
             name: response.data.name,
             email: response.data.email,
             role: response.data.role,
@@ -45,7 +45,7 @@ export default class Edit extends Component {
           <div style={{padding:"0px", height: "250px",width: "600px", paddingTop:-20, paddingBottom: 500}}>
             <h5  style={{fontWeight:"bolder"}}>Detalhes do Utilizador:</h5>
             <p><i className="material-icons">email</i> {this.state.email}</p>
-            <p><i className="material-icons">phone</i> {this.state.number}</p>
+            <p><i className="material-icons">phone</i> {this.state.username}</p>
             <p><i className="material-icons">pan_tool</i> {this.state.role}</p><br></br>
             <Link to="/listUsers" style={{width: "120px", borderRadius: 10,letterSpacing: "1.5px",fontWeight: "bold",}}
             className="btn btn-large waves-effect waves-light hoverable black">Voltar</Link>

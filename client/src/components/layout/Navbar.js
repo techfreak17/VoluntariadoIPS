@@ -2,19 +2,41 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
+import axios from 'axios';
 
 class Navbar extends Component {
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+            username: "",
+            id: this.props.auth.user.id
+        }
+      }
     onLogoutClick = e => {
         e.preventDefault();
         this.props.logoutUser();
     };
+
+    
+    componentDidMount() {
+        axios.get('/api/users/getUser/' + this.state.id)
+          .then(response => {
+            this.setState({
+                username: response.data.username,
+            });
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+      }
 
 
     render() {
         const { user } = this.props.auth;
         return (
             <div>
-                {user !== undefined ? (
+                {user.id !== undefined ? (
                     <nav className="nav" style={{
                         maxWidth: "100%",
                         top: 0,
@@ -29,7 +51,7 @@ class Navbar extends Component {
                                     style={{ position: "absolute", left: 0, height: "auto", width: "auto", maxWidth: 200 }} /></a></li>
                                 <li><a href="/listNotifications"><i className="material-icons">notifications</i></a></li>
 
-                                <li><a href="/listUsers"><i className="material-icons left">person</i>Utilizador</a></li>
+                                <li><a href="/listUsers"><i className="material-icons left">person</i>{this.state.username}</a></li>
                                 <li><button onClick={this.onLogoutClick} className="red btn" style={{borderRadius: 10, marginLeft: 12, marginBottom: 5}}>Sair</button></li>
                             </ul>
                         </div>

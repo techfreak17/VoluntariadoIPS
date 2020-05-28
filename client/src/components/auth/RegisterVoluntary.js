@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { registerVoluntary } from "../../actions/authActions";
 import classnames from "classnames";
+import M from "materialize-css";
+import options from "materialize-css";
 
 class RegisterVoluntary extends Component {
     constructor() {
@@ -21,12 +23,14 @@ class RegisterVoluntary extends Component {
             memberIPS: "",
             schoolIPS: "",
             courseIPS: "",
-            interestAreas: "",
-            reasons: "",
+            interestAreas: [],
+            reasons: [],
             observations: "",
             authorization: "",
             errors: {}
         };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleChange1 = this.handleChange1.bind(this);
     }
 
     componentDidMount() {
@@ -48,6 +52,17 @@ class RegisterVoluntary extends Component {
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
     };
+
+    handleChange(event) {
+        //this.setState({value: event.option});
+        this.setState({interestAreas: Array.from(event.target.selectedOptions, (item) => item.value)});
+      }
+
+    handleChange1(event) {
+        //this.setState({value: event.option});
+        this.setState({reasons: Array.from(event.target.selectedOptions, (item) => item.value)});
+      }
+
 
     onSubmit = e => {
         e.preventDefault();
@@ -71,32 +86,36 @@ class RegisterVoluntary extends Component {
             authorization: true,
         };
 
-        console.log(newUser);
-
         this.props.registerVoluntary(newUser, this.props.history);
     };
 
     render() {
         const { errors } = this.state;
 
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems, options);
+            console.log(instances);
+        });
+
         return (
-            <div className="container" style={{marginTop: "5%"}}>
+            <div className="container" style={{ marginTop: "5%" }}>
                 <div className="row">
                     <div className="col s8 offset-s2">
-                        <a href="/" className="btn-flat waves-effect" onClick="window.location.reload(true);">
+                        <a href="/" className="btn-flat waves-effect" onClick="window.location.reload()">
                             <i className="material-icons left">keyboard_backspace</i>
                             Voltar
                         </a>
 
-                        <div className="col s12" style={{ paddingLeft: "11.250px"}}>
+                        <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                             <h4>
-                                <b>Registar-se como Voluntário </b>
+                                <b>Registe-se como Voluntário </b>
                             </h4>
-                            <p className="grey-text text-darken-1">
+                            <p className="grey-text text-darken-1" style={{fontWeight:"bolder"}}>
                                 Já tem conta? <Link to="/login">Log in</Link>
                             </p>
-                            <p className="grey-text text-darken-1" style={{fontWeight:"bolder"}}> 
-                                Registar-se como Empresa? <Link to="/registerCompany">Registar</Link>
+                            <p className="grey-text text-darken-1" style={{ fontWeight: "bolder" }}>
+                                Registe-se como Empresa? <Link to="/registerCompany">Registar</Link>
                             </p>
                         </div>
 
@@ -275,12 +294,8 @@ class RegisterVoluntary extends Component {
 
                             <div className="input-field col s12">
                                 <label>Áreas Interesse *</label><br></br><br></br>
-                                <select onChange={this.onChange}
-                                    value={this.state.interestAreas}
-                                    error={errors.interestAreas}
-                                    id="interestAreas"
-                                    type="text"
-                                    className="browser-default">
+                                <select multiple={true} value={this.state.interestAreas} onChange={this.handleChange}
+                                    error={errors.interestAreas}>
                                     <option value="" disabled selected>Selecionar Opções</option>
                                     <option value="Atividades Académicas">Atividades Académicas (por ex. apoio às matrículas…)</option>
                                     <option value="Ambiental">Ambiental (por ex. ações de sensibilização, de limpeza…</option>
@@ -298,17 +313,13 @@ class RegisterVoluntary extends Component {
 
                             <div className="input-field col s12">
                                 <label>Razões para querer ser voluntário *</label><br></br><br></br>
-                                <select onChange={this.onChange}
-                                    value={this.state.reasons}
-                                    error={errors.reasons}
-                                    id="reasons"
-                                    type="text"
-                                    className="browser-default">
+                                <select multiple={true} value={this.state.reasons} onChange={this.handleChange1}
+                                    error={errors.reasons}>
                                     <option value="" disabled selected>Selecionar Opções</option>
                                     <option value="Convívio Social">Pelo convívio social</option>
                                     <option value="Futuro Profissional">Porque pode ser vantajoso para o futuro profissional</option>
                                     <option value="Integração Social">Pela possibilidade de integração social</option>
-                                    <option value="Novas Experiências">Para ter novas experiênciaS</option>
+                                    <option value="Novas Experiências">Para ter novas experiências</option>
                                     <option value="Ajudar os Outros">Porque gosto de ajudar os outros</option>
                                     <option value="Incentivado por outros">Porque fui incentivado(a) por outras pessoas</option>
                                     <option value="Conhece pessoas que também estão/estiveram no voluntariado">Porque conheço pessoas que já realizaram atividades de voluntariado no IPS</option>
@@ -318,7 +329,7 @@ class RegisterVoluntary extends Component {
                                 </select>
                                 <span className="red-text">{errors.reasons}</span>
                             </div>
-                            
+
                             <div className="input-field col s12">
                                 <input
                                     onChange={this.onChange}
@@ -335,31 +346,31 @@ class RegisterVoluntary extends Component {
                             </div>
 
                             <div className="input-field col s12">
+                                <b>Autorização RGPD *</b>
                                 <label>
-                                    Autorização RGPD *
-                                <input
-                                    name="authorization"
-                                    type="checkbox"
-                                    checked={this.state.authorization}
-                                    onChange={this.onChange} />
+                                    <br></br>
+                                    <input type="checkbox" />
+                                    <span>Consinto, ao abrigo do Regulamento Geral de Proteção de Dados (RGPD), a utilização dos meus dados pessoais, fornecidos no formulário, ficando informado/a do direito a retirar o consentimento a qualquer momento e que o tratamento de dados é da responsabilidade do IPS, sendo-lhe aplicada a Política de Proteção de Dados do IPS.</span>
+                                    <br></br>
+                                    <a href="http://www.si.ips.pt/ips_si/web_base.gera_pagina?P_pagina=40723" target="_blank">(Disponível aqui)</a>
                                 </label>
                             </div>
                         </form>
-                            <div className="col s12" style={{ paddingLeft: "11.250px", paddingBottom: "60px" }}>
-                                <br></br><br></br><br></br><br></br>
-                                <button
-                                    style={{
-                                        width: "150px",
-                                        borderRadius: 10,
-                                        letterSpacing: "1.5px",
-                                        marginTop: "1rem"
-                                    }}
-                                    type="submit"
-                                    onClick={this.onSubmit}
-                                    className="btn btn-large waves-effect waves-light hoverable blue accent-3">
-                                    Registar
+                        <div className="col s12" style={{ paddingLeft: "11.250px", paddingBottom: "60px" }}>
+                            <br></br><br></br><br></br><br></br><br></br>
+                            <button
+                                style={{
+                                    width: "150px",
+                                    borderRadius: 10,
+                                    letterSpacing: "1.5px",
+                                    marginTop: "1rem"
+                                }}
+                                type="submit"
+                                onClick={this.onSubmit}
+                                className="btn btn-large waves-effect waves-light hoverable blue accent-3">
+                                Registar
                                 </button>
-                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

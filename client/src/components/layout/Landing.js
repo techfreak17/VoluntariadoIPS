@@ -53,7 +53,7 @@ class Landing extends Component {
                                 Junte-se a nós em diversos projetos 
                                 enriquecedores para si e para a comunidade IPS.
                         </p></h5>
-                        <h4 style={{color:"#E1C699"}}>Registe-se</h4>
+                        <h5 style={{color:"#E1C699"}}>Registe-se</h5>
                     </div>
                     <div className="row center" style={{ width: "40%" }}>
                         <div className="col s6">
@@ -70,8 +70,8 @@ class Landing extends Component {
                             </Link>
                         </div>
                         <div className="col s6">
-                            <Link
-                                to="/registerVoluntary"
+                            <a
+                                href="/registerVoluntary"
                                 style={{
                                     width: "170px",
                                     borderRadius: 10,
@@ -79,9 +79,10 @@ class Landing extends Component {
                                     fontWeight: "bold"
                                     
                                 }}
+                                onClick = "window.location.reload()"
                                 className="btn btn-large waves-effect waves-light hoverable green">
                                 Voluntário
-                            </Link>
+                            </a>
                         </div>
                     </div>
                 </div>

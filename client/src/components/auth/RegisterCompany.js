@@ -77,20 +77,20 @@ class RegisterCompany extends Component {
             <div className="container" style={{marginTop: "5%"}}>
                 <div className="row">
                     <div className="col s8 offset-s2">
-                        <a href="/" className="btn-flat waves-effect" onClick="window.location.reload(true);">
+                        <a href="/" className="btn-flat waves-effect" onClick="window.location.reload()">
                             <i className="material-icons left">keyboard_backspace</i>
                             Voltar
                         </a>
 
                         <div className="col s12" style={{ paddingLeft: "11.250px"}}>
                             <h4>
-                                <b>Registar-se como Empresa </b>
+                                <b>Registe-se como Empresa </b>
                             </h4>
-                            <p className="grey-text text-darken-1">
+                            <p className="grey-text text-darken-1" style={{fontWeight:"bolder"}}>
                                 Já tem conta? <Link to="/login">Log in</Link>
                             </p>
                             <p className="grey-text text-darken-1" style={{fontWeight:"bolder"}}>
-                                Registar-se como Voluntário? <Link to="/registerVoluntary">Registar</Link>
+                                Registe-se como Voluntário <Link to="/registerVoluntary">Registar</Link>
                             </p>
                         </div>
 
@@ -244,9 +244,7 @@ class RegisterCompany extends Component {
                                 <label htmlFor="name">Morada (Concelho) Empresa</label>
                                 <span className="red-text">{errors.companyAddress}</span>
                             </div>
-
-
-                            
+        
                             <div className="input-field col s12">
                                 <input
                                     onChange={this.onChange}
@@ -263,18 +261,18 @@ class RegisterCompany extends Component {
                             </div>
 
                             <div className="input-field col s12">
+                                <b>Autorização RGPD *</b>
                                 <label>
-                                    Autorização RGPD *
-                                <input
-                                    name="authorization"
-                                    type="checkbox"
-                                    checked={this.state.authorization}
-                                    onChange={this.onChange} />
+                                    <br></br>
+                                    <input type="checkbox" />
+                                    <span>Consinto, ao abrigo do Regulamento Geral de Proteção de Dados (RGPD), a utilização dos meus dados pessoais, fornecidos no formulário, ficando informado/a do direito a retirar o consentimento a qualquer momento e que o tratamento de dados é da responsabilidade do IPS, sendo-lhe aplicada a Política de Proteção de Dados do IPS.</span>
+                                    <br></br>
+                                    <a href="http://www.si.ips.pt/ips_si/web_base.gera_pagina?P_pagina=40723" target="_blank">(Disponível aqui)</a>
                                 </label>
                             </div>
                         </form>
                             <div className="col s12" style={{ paddingLeft: "11.250px", paddingBottom: "60px" }}>
-                                <br></br><br></br><br></br><br></br>
+                                <br></br><br></br><br></br><br></br><br></br>
                                 <button
                                     style={{
                                         width: "150px",

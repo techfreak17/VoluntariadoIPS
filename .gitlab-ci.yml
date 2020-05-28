@@ -32,7 +32,7 @@ deploy service:
     - echo $GKE_SERVICE_KEY | base64 -d > service-account.json
     - gcloud auth activate-service-account --key-file service-account.json --project=voluntariadoips-278217
     - gcloud config set project voluntariadoips-278217
-    - gcloud config set compute/zone europe-west2-b
+    - gcloud config set compute/zone us-west1-b
     - gcloud container clusters get-credentials voluntariadoips-cluster
     - sed -i "s/%%imageTag%%/${CI_COMMIT_SHA}/" deploy/deployment.yml
     - sed -i "s/%%dockerUser%%/${DOCKER_HUB_USER}/" deploy/deployment.yml

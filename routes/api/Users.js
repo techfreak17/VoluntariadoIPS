@@ -10,6 +10,7 @@ const crypto = require('crypto');
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
 const validateRegisterInputVoluntary = require("../../validation/register");
+const validateRegisterInputCompany = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 const validatePasswordReset = require("../../validation/recover");
 
@@ -396,10 +397,34 @@ router.post("/searchUser", (req, res) => {
 });
 
 // Defined get route
+router.route('/getUserDetails/:id').get(function (req, res) {
+  let id = req.params.id;
+  User.findById(id, function (err, user){
+      if(user.role == "Voluntário"){
+        Voluntary.findOne({ userID: user._id }).then(voluntary => {
+          if (voluntary) {
+            res.json(voluntary);
+          } else {
+            return res.status(400).json({ email: "Such data doesn´t exist" });
+          };
+        })
+      }else{
+        Company.findOne({ userID: user._id }).then(company => {
+          if (company) {
+            res.json(company);
+          } else {
+            return res.status(400).json({ email: "Such data doesn´t exist" });
+          };
+        })
+      }
+  });
+});
+
+// Defined get route
 router.route('/getUser/:id').get(function (req, res) {
   let id = req.params.id;
   User.findById(id, function (err, user){
-      res.json(user);
+    res.json(user);
   });
 });
 

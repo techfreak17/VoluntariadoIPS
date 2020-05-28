@@ -49,7 +49,6 @@ const CompanySchema = new Schema({
         type: Schema.ObjectId,
         ref: 'Users',
 		validate: {
-			isAsync: true,
 			validator: function(v) {
 				return FKHelper(mongoose.model('Users'), v);
 			},

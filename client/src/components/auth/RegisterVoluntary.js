@@ -54,12 +54,10 @@ class RegisterVoluntary extends Component {
     };
 
     handleChange(event) {
-        //this.setState({value: event.option});
         this.setState({interestAreas: Array.from(event.target.selectedOptions, (item) => item.value)});
       }
 
     handleChange1(event) {
-        //this.setState({value: event.option});
         this.setState({reasons: Array.from(event.target.selectedOptions, (item) => item.value)});
       }
 
@@ -352,7 +350,7 @@ class RegisterVoluntary extends Component {
                                     <input type="checkbox" />
                                     <span>Consinto, ao abrigo do Regulamento Geral de Proteção de Dados (RGPD), a utilização dos meus dados pessoais, fornecidos no formulário, ficando informado/a do direito a retirar o consentimento a qualquer momento e que o tratamento de dados é da responsabilidade do IPS, sendo-lhe aplicada a Política de Proteção de Dados do IPS.</span>
                                     <br></br>
-                                    <a href="http://www.si.ips.pt/ips_si/web_base.gera_pagina?P_pagina=40723" target="_blank">(Disponível aqui)</a>
+                                    <a href="http://www.si.ips.pt/ips_si/web_base.gera_pagina?P_pagina=40723" target="_blank" rel="noopener noreferrer">(Disponível aqui)</a>
                                 </label>
                             </div>
                         </form>

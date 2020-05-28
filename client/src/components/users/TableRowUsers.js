@@ -18,7 +18,7 @@ class TableRowUsers extends Component {
       return (
           <tr>
             <td>
-              {this.props.obj.name}
+              {this.props.obj.username}
             </td>
             <td>
               {this.props.obj.email}

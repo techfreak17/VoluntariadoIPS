@@ -6,6 +6,7 @@ var path = require('path');
 
 
 const users = require("./routes/api/Users");
+const projects = require("./routes/api/Projects");
 
 const app = express();
 // Bodyparser middleware
@@ -41,6 +42,7 @@ require("./config/passport")(passport);
 
 // Routes
 app.use("/api/users", users);
+app.use("/api/projects", projects);
 
 const root = path.join(__dirname, "client", "build");
 app.use(express.static(root));

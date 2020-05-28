@@ -9,9 +9,48 @@ import {
 } from "./types";
 
 // Register User
-export const registerUser = (userData, history) => dispatch => {
+export const registerVoluntary = (userData, history) => dispatch => {
     axios
-        .post("/api/users/register", userData)
+        .post("/api/users/registerVoluntary", userData)
+        .then(res => history.push("/confirmAccount")) // re-direct to login on successful register
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
+};
+
+// Register User
+export const registerCompany = (userData, history) => dispatch => {
+    axios
+        .post("/api/users/registerCompany", userData)
+        .then(res => history.push("/confirmAccount")) // re-direct to login on successful register
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
+};
+
+// Register User
+export const confirmToken = (tokenData, history) => dispatch => {
+    axios
+        .post("/api/users/confirmtoken", tokenData)
+        .then(res => history.push("/login")) // re-direct to login on successful register
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
+};
+
+// update password
+export const updatePassword = (passData, history) => dispatch => {
+    axios
+        .post("/api/users/updatePassword", passData)
         .then(res => history.push("/login")) // re-direct to login on successful register
         .catch(err =>
             dispatch({
@@ -41,6 +80,19 @@ export const loginUser = userData => dispatch => {
             // Set current user
             dispatch(setCurrentUser(decoded));
         })
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
+};
+
+// Recover User
+export const recoverUser = (userData, history) => dispatch => {
+    axios
+        .post("/api/users/recover", userData)
+        .then(res => history.push("/recoverconfirm")) // re-direct to page after email sent
         .catch(err =>
             dispatch({
                 type: GET_ERRORS,

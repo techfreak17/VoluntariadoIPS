@@ -1,16 +1,13 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+
 // Create Schema
 const UserSchema = new Schema({
-    number: {
-        type: Number,
-        required: true
-    },
-    name: {
+    role: {
         type: String,
         required: true
     },
-    role: {
+    username: {
         type: String,
         required: true
     },
@@ -21,6 +18,19 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    isVerified: {
+        type: Boolean,
+        required: false,
+        default: false
+    },
+    passwordResetToken: {
+        type: String,
+        required: false
+    },
+    passwordResetExpires: {
+        type: Date,
+        required: false
     }
 });
-module.exports = User = mongoose.model("Users", UserSchema);
+module.exports = mongoose.model("Users", UserSchema);

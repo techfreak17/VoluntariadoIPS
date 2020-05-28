@@ -1,8 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const uri = require("./config/keys").mongoURI;
 const bodyParser = require("body-parser");
 const passport = require("passport");
+var path = require('path');
+
 
 const users = require("./routes/api/Users");
 

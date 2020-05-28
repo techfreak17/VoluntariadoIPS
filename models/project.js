@@ -28,13 +28,13 @@ const ProjectSchema = new Schema({
         type: String,
         required: true
     },
-    requiredFormation:{
+    requiredFormation: {
         type: Boolean,
-        required:true
+        required: true
     },
-    formation:{
+    formation: {
         type: String,
-        required:true
+        required: false
     },
     date: {
         type: Date,
@@ -44,9 +44,9 @@ const ProjectSchema = new Schema({
         type: Array,
         required: true
     },
-    related_companies: {
-        type: Array,
-        required: false
+    logo: {
+        data: Buffer,
+        contentType: String
     },
     observations: {
         type: String,
@@ -60,12 +60,12 @@ const ProjectSchema = new Schema({
     userID: {
         type: Schema.ObjectId,
         ref: 'Users',
-		validate: {
-			validator: function(v) {
-				return FKHelper(mongoose.model('Users'), v);
-			},
-			message: `Users doesn't exist`
-		}
+        validate: {
+            validator: function (v) {
+                return FKHelper(mongoose.model('Users'), v);
+            },
+            message: `Users doesn't exist`
+        }
     }
 });
 module.exports = mongoose.model("Projects", ProjectSchema);

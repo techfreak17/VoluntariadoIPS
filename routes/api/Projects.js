@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const multer = require('multer');
+//const upload = multer({dest: '/uploads/'});
 
 // Load Project model
 const Project = require("../../models/project");
@@ -7,26 +9,26 @@ const Project = require("../../models/project");
 // @route POST api/projects/create
 // @desc Register user
 // @access Public
-router.post("/createProject", (req, res) => {    
+router.post("/createProject",(req, res) => {    
     Project.findOne({title: req.body.title}).then(project => {
         if (project) {
             return res.status(400).json({ title: "Project already exists" });
         } else {
+            console.log(req.body);
             const newProject = new Project({
                 title: req.body.title,
-                contact_person: req.body.contact_person,
-                email_person: req.body.email_person,
-                phone_person: req.body.phone_person,
                 synopsis: req.body.synopsis,
+                intervationArea: req.body.intervationArea,
                 target_audience: req.body.target_audience,
                 objectives: req.body.objectives,
-                date: (req.body.date) ? req.body.date : null,
-                areas: req.body.areas,
                 description: req.body.description,
-                related_entities: req.body.related_entities,
+                requiredFormation: req.body.requiredFormation,
+                formation: req.body.formation,
+                date: req.body.date,
+                interestAreas: req.body.interestAreas,
+                photo: req.body.photo,
                 observations: req.body.observations,
-                authorization: req.body.authorization,
-                user_in_charge: req.body.user_in_charge
+                authorization: req.body.authorization
             });
             newProject
                     .save()

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createProject } from "../../actions/projectActions";
-import { Link } from "react-router-dom";
 import classnames from "classnames";
 import M from "materialize-css";
 import options from "materialize-css";
@@ -18,18 +17,37 @@ class Create extends Component {
       target_audience: "",
       objectives: "",
       description: "",
-      requiredFormation: true,
+      requiredFormation: false,
       formation: "",
       date: "",
       interestAreas: [],
-      related_companies: [],
+      photo: "",
       observations: "",
-      authorization: true,
+      authorization: false,
       errors: {}
     }
-
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onImageChange = this.onImageChange.bind(this);
+  }
+
+  onImageChange(event) {
+    if (event.target.files && event.target.files[0]) {
+      this.setState({ photo: event.target.files[0] });
+    }
+  }
+  
+  
+  toggleChange = () => {
+    this.setState({
+      authorization: !this.state.authorization,
+    });
+  }
+
+  toggleChange1 = () => {
+    this.setState({
+      requiredFormation: !this.state.requiredFormation,
+    });
   }
 
   onChange = e => {
@@ -49,12 +67,11 @@ class Create extends Component {
   }
 
   onSubmit(e) {
-    console.log(document.getElementById("entity").value)
     e.preventDefault();
     const obj = {
       title: this.state.title,
       synopsis: this.state.synopsis,
-      intervationArea: this.state.interestArea,
+      intervationArea: this.state.intervationArea,
       target_audience: this.state.target_audience,
       objectives: this.state.objectives,
       description: this.state.description,
@@ -62,10 +79,12 @@ class Create extends Component {
       formation: this.state.formation,
       date: this.state.date,
       interestAreas: this.state.interestAreas,
-      related_companies: this.state.related_companies,
+      photo: this.state.photo,
       observations: this.state.observations,
-      authorization: (this.state.authorization === "true"),
+      authorization: this.state.authorization
     };
+
+    console.log(obj);
 
     this.props.createProject(obj, this.props.history);
 
@@ -80,8 +99,8 @@ class Create extends Component {
       formation: "",
       date: "",
       interestAreas: [],
-      related_companies: [],
       observations: "",
+      photo: "",
       authorization: "",
       errors: {}
     })
@@ -96,18 +115,13 @@ class Create extends Component {
       console.log(instances);
     });
 
-    document.addEventListener('DOMContentLoaded', function () {
-      var elems = document.querySelectorAll('.chips');
-      var instances = M.Chips.init(elems, options);
-      console.log(instances);
-    });
 
     return (
       <div className="container" style={{ marginTop: "5%" }}>
         <div className="row">
           <div className="col s8 offset-s2">
 
-            <a href="/listProjects" className="btn-flat waves-effect" onClick="window.location.reload()">
+            <a href="/listProjects" className="btn-flat waves-effect">
               <i className="material-icons left">keyboard_backspace</i>Voltar
             </a>
 
@@ -210,14 +224,8 @@ class Create extends Component {
                 <b>Exigência de formação específica* *</b>
                 <p>
                   <label>
-                    <input type="checkbox" />
+                    <input type="checkbox" checked={this.state.requiredFormation} onChange={this.toggleChange1}/>
                     <span>Sim</span>
-                  </label>
-                </p>
-                <p>
-                  <label>
-                    <input type="checkbox" />
-                    <span>Não</span>
                   </label>
                 </p>
               </div>
@@ -272,16 +280,6 @@ class Create extends Component {
               </div>
 
               <div className="input-field col s12">
-                <label>Entidades Envolvidas</label><br></br>
-                <div className="chips">
-                  <input id="entity" className="custom-class" onChange={this.onChange}></input>
-                </div>
-
-                <span className="red-text">{errors.related_companies}</span>
-              </div>
-
-
-              <div className="input-field col s12">
                 <input
                   onChange={this.onChange}
                   value={this.state.observations}
@@ -297,10 +295,23 @@ class Create extends Component {
               </div>
 
               <div className="input-field col s12">
+              <label htmlFor="name">Logótipo</label><br></br><br></br>
+                <span className="red-text">{errors.photo}</span>
+                <input
+                  onChange={this.onImageChange}
+                  error={errors.photo}
+                  id="photo"
+                  type="file"
+                  className="inputfile"
+                  ref={c => this.img = c}
+                />
+              </div>
+
+              <div className="input-field col s12">
                 <b>Autorização RGPD *</b>
                 <label>
                   <br></br>
-                  <input type="checkbox" />
+                  <input type="checkbox" checked={this.state.authorization} onChange={this.toggleChange}/>
                   <span>Consinto, ao abrigo do Regulamento Geral de Proteção de Dados (RGPD), a utilização dos meus dados pessoais, fornecidos no formulário, ficando informado/a do direito a retirar o consentimento a qualquer momento e que o tratamento de dados é da responsabilidade do IPS, sendo-lhe aplicada a Política de Proteção de Dados do IPS.</span>
                   <br></br>
                   <a href="http://www.si.ips.pt/ips_si/web_base.gera_pagina?P_pagina=40723" rel="noopener noreferrer" target="_blank">(Disponível aqui)</a>
@@ -309,18 +320,9 @@ class Create extends Component {
             </form>
             <div className="col s12" style={{ paddingLeft: "11.250px", paddingBottom: "60px" }}>
               <br></br><br></br><br></br><br></br><br></br>
-              <button
-                style={{
-                  width: "150px",
-                  borderRadius: 10,
-                  letterSpacing: "1.5px",
-                  marginTop: "1rem"
-                }}
-                type="submit"
-                onClick={this.onSubmit}
-                className="btn btn-large waves-effect waves-light hoverable blue accent-3">
-                Registar
-                                </button>
+              <button style={{ width: "150px", borderRadius: 10, letterSpacing: "1.5px", marginTop: "1rem" }}
+                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Registar
+              </button>
             </div>
           </div>
         </div>

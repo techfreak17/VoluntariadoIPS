@@ -15,6 +15,7 @@ app.use(
     })
 );
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // DB Config
 const db = require("./config/keys").mongoURI;
@@ -41,8 +42,11 @@ require("./config/passport")(passport);
 // Routes
 app.use("/api/users", users);
 
+const root = path.join(__dirname, "client", "build");
+app.use(express.static(root));
+
 app.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname, "./client/build/index.html"));
+    res.sendFile("index.html", {root});
   });
 
 const port = process.env.PORT || 3000; // process.env.port is Heroku's port if you choose to deploy the app there

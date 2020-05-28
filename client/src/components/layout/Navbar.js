@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import PushNotifications from "../pushNotifications/PushNotifications.js";
+import PushNotificationsToast from "../pushNotifications/PushNotificationToast.js";
 
 
 class Navbar extends Component {
@@ -30,7 +31,8 @@ class Navbar extends Component {
                             alt="(Não esquecer de verificar no spam)"
                             className="img-responsive"
                             style={{ position: "fixed", left: 0, height: "auto", width: "auto", maxWidth: 200}} /></a></li>
-                        <li><PushNotifications></PushNotifications></li>
+                        <li><PushNotificationsToast></PushNotificationsToast></li> 
+                        {/*<li><PushNotifications></PushNotifications></li> */}
                         <li><a href="/listUsers"><i className="material-icons left">person</i>User</a></li>
                         <li><button onClick={this.onLogoutClick} className="red btn" style={{ borderRadius: 10 }}>Sair</button></li>
                     </ul>

@@ -10,7 +10,7 @@ class TableRow extends Component {
     this.myDate = new Date(props.obj.date);
     this.myDate = this.myDate.toLocaleDateString();
   }
-  
+
   delete() {
     axios.get('/api/projects/deleteProject/' + this.props.obj._id)
       .then(console.log('Deleted'))
@@ -31,13 +31,13 @@ class TableRow extends Component {
           {this.props.obj.description}
         </td>
         <td>
-          <Link to={"/getProject/" + this.props.obj._id} className="btn btn-primary" style={{backgroundColor: "#03C04A"}}>Ver</Link>
+          <Link to={"/getProject/" + this.props.obj._id} className="btn btn-primary" style={{ backgroundColor: "#03C04A" }}>Ver</Link>
         </td>
         <td>
-          <Link to={"/editProject/" + this.props.obj._id} className="btn btn-primary" style={{backgroundColor: "lightBlue", color: "black"}}>Editar</Link>
+          <Link to={"/editProject/" + this.props.obj._id} className="btn btn-primary" style={{ backgroundColor: "lightBlue", color: "black" }}>Editar</Link>
         </td>
         <td>
-          <button onClick={this.delete} className="btn btn-danger" style={{backgroundColor: "#9B1003"}}>Apagar</button>
+          <button onClick={this.delete} className="btn btn-danger" style={{ backgroundColor: "#9B1003" }}>Apagar</button>
         </td>
       </tr>
     );

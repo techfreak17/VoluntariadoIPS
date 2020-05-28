@@ -10,4 +10,4 @@ spec:
       paths:
       - backend:
           serviceName: voluntariadoips-service
-          servicePort: 80
+          servicePort: 3000

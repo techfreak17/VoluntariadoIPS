@@ -9,8 +9,6 @@ build nodejs:
   image: node:latest
   script:
     - npm install
-    - cd client
-    - npm install
 
 test nodejs:
   stage: test

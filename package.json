@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix client",
-    "start": "node routes/api/Notifications.js",
+    "start": "node client/src/components/pushNotifications/PushNotifications.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
@@ -27,6 +27,7 @@
     "nodemailer": "^2.7.2",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
+    "styled-components": "^5.1.1",
     "validator": "^13.0.0",
     "vue": "^2.6.11"
   },

@@ -4,9 +4,9 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN cd client || npm install
+RUN npm install || cd client || npm install || cd ..
 
 COPY . .
 
-EXPOSE 5000
-CMD [ "npm", "start" ]
+EXPOSE 3000
+CMD [ "npm", "run", "dev" ]

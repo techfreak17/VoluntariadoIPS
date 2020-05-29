@@ -267,7 +267,7 @@ class RegisterCompany extends Component {
                                     <input type="checkbox" />
                                     <span>Consinto, ao abrigo do Regulamento Geral de Proteção de Dados (RGPD), a utilização dos meus dados pessoais, fornecidos no formulário, ficando informado/a do direito a retirar o consentimento a qualquer momento e que o tratamento de dados é da responsabilidade do IPS, sendo-lhe aplicada a Política de Proteção de Dados do IPS.</span>
                                     <br></br>
-                                    <a href="http://www.si.ips.pt/ips_si/web_base.gera_pagina?P_pagina=40723" target="_blank">(Disponível aqui)</a>
+                                    <a href="http://www.si.ips.pt/ips_si/web_base.gera_pagina?P_pagina=40723" target="">(Disponível aqui)</a>
                                 </label>
                             </div>
                         </form>

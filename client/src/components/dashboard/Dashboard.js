@@ -5,13 +5,21 @@ import { logoutUser } from "../../actions/authActions";
 import M from "materialize-css";
 import options from "materialize-css";
 import Slider from "../layout/Slider"
+import axios from 'axios';
 
 
 class Dashboard extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { titles: [{ title: "#Dinamizar"}, { title: "#Responsabilizar"}, { title: "#Qualificar"}] };
+        this.state = { titles: [{ title: "#Dinamizar", date: "" }, { title: "#Responsabilizar", date: "" }, { title: "#Qualificar", date: "" }, { title: "", date: "" }] };
+        axios.get('/api/projects/listProjects')
+            .then(response => {
+                this.setState({ project: response.data });
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
     }
 
     onLogoutClick = e => {
@@ -31,60 +39,57 @@ class Dashboard extends Component {
 
         const titleList = () => {
             for (let i = 0; i < this.state.titles.length; i++) {
-                titleL.push(<Slider obj={this.state.titles[i]} key={i} className="caption left-align" />);
+                titleL.push(<Slider obj={this.state.titles[i]} key={i} />);
             }
             return titleL;
-          };
+        };
 
         return (
             <div className="container-fluid" style={{ width: "100%" }}>
-                <div className="container" style={{ width: "65%", backgroundColor: "#23395D", borderRadius: 50, marginTop: 20, boxShadow: "0 0 10px 2px green", marginBottom: 30}}>
+                <div className="container" style={{ width: "50%", backgroundColor: "#23395D", borderRadius: 50, marginTop: 40, marginBottom: 40, boxShadow: "0 0 15px 3px green" }}>
                     <div className="section">
                         <h2 className="header center text-lighten-2" style={{ fontFamily: "monospace", fontWeight: "bold", color: "#50C878" }}>Plataforma VoluntariadoIPS</h2>
-                        <div className="row center" style={{ width: "100%", textLighten: 2, fontWeight: "bold", color: "white" }}>
-                            <h3 className="header col s12 " ><b>Bem-Vindo</b></h3>
-                            <h5 className="header col s12 " ><b>Pronto para ajudar ?</b></h5>
+                        <div className="row center" style={{ width: "100%", textLighten: 2, fontWeight: "bold", color: "#eadbd4" }}>
+                            <h5 className="header col s12 "><b>Bem-Vindo</b>
+                                <p>Pronto para ajudar ?</p></h5>
+                            <a className="btn white-text" href="/listProjects" style={{ borderRadius: 20, backgroundColor: "#50C878" }}>Ver Projetos</a>
                         </div>
                     </div>
                 </div>
 
-                <div className="slider">
-                    <ul className="slides">
+
+                <div className="container center" style={{ marginTop: 20, marginBottom: 20, backgroundColor: "#eadbd4", padding: 30, paddingTop: 3, borderRadius: 50, boxShadow: "0 0 15px 10px #23395D" }}>
+                    <h2 style={{ fontFamily: "monospace", fontWeight: "bold", color: "#23395D" }}>Os Meus Projetos</h2>
+                    <div className="carousel carousel-slider center">
                         {titleList()}
-                    </ul>
-                </div>
-
-                <div className="container-fluid" style={{paddingBottom:200}}>
-                <div className="container">
-                    <div className="row">
-                        <div className="col s12 m4">
-                            <div className="icon-block">
-                                <h2 className="center brown-text"><img src={require('../layout/images/MOODLE.png')}
-                                    alt="(Não esquecer de verificar no spam)"
-                                    className="img-responsive" style={{ position: "absolute", left: 0, height: 150, width: "auto", paddingLeft:300}}/></h2>
-                            </div>
-                        </div>
-                        <div className="col s12 m4" >
-                            <div className="icon-block">
-                            <h2 className="center brown-text"><img src={require('../layout/images/AAIPS.png')}
-                                    alt="(Não esquecer de verificar no spam)"
-                                    className="img-responsive" style={{ position: "absolute", left: 0, height: 150, width: "auto", paddingLeft:600, paddingTop: 40}}/></h2>
-                            </div>
-                        </div>
-                        <div className="col s12 m4">
-                            <div className="icon-block">
-                            <h2 className="center brown-text"><img src={require('../layout/images/IPS.png')}
-                                    alt="(Não esquecer de verificar no spam)"
-                                    className="img-responsive" style={{ position: "absolute", left: 0, height: 150, width: "auto", paddingLeft:950, paddingTop: 40}}/></h2>
-                            </div>
-                        </div>
                     </div>
                 </div>
-            </div>
-        </div >
+
+
+                <div className="container" style={{ marginBottom: 70, display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <a className="img" href="https://moodle.ips.pt/1920/" style={{ paddingRight: 100 }}>
+                        <img src={require('../layout/images/MOODLE.png')}
+                            alt="Moodle" />
+                    </a>
+                    <a className="img" href="http://aaips.pt/">
+                        <img src={require('../layout/images/AAIPS.png')}
+                            alt="AAIPS" />
+                    </a>
+                    <a className="img" href="https://www.ips.pt/ips_si/web_page.inicial" style={{ paddingLeft: 100 }}>
+                        <img src={require('../layout/images/IPS.png')}
+                            alt="IPS" />
+                    </a>
+                </div>
+            </div >
         );
     }
 }
+document.addEventListener('DOMContentLoaded', function () {
+    var elems = document.querySelectorAll('.carousel');
+    var instances = M.Carousel.init(elems, options);
+    console.log(instances);
+});
+
 Dashboard.propTypes = {
     logoutUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired

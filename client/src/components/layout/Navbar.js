@@ -7,29 +7,29 @@ import axios from 'axios';
 class Navbar extends Component {
     constructor(props) {
         super(props);
-    
+
         this.state = {
             username: "",
             id: this.props.auth.user.id
         }
-      }
+    }
     onLogoutClick = e => {
         e.preventDefault();
         this.props.logoutUser();
     };
 
-    
+
     componentDidMount() {
         axios.get('/api/users/getUser/' + this.state.id)
-          .then(response => {
-            this.setState({
-                username: response.data.username,
-            });
-          })
-          .catch(function (error) {
-            console.log(error);
-          })
-      }
+            .then(response => {
+                this.setState({
+                    username: response.data.username,
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
 
 
     render() {
@@ -52,7 +52,7 @@ class Navbar extends Component {
                                 <li><a href="/listNotifications"><i className="material-icons">notifications</i></a></li>
 
                                 <li><a href="/listUsers"><i className="material-icons left">person</i>{this.state.username}</a></li>
-                                <li><button onClick={this.onLogoutClick} className="red btn" style={{borderRadius: 10, marginLeft: 12, marginBottom: 5}}>Sair</button></li>
+                                <li><button onClick={this.onLogoutClick} className="red btn" style={{ borderRadius: 10, marginLeft: 12, marginBottom: 5 }}>Sair</button></li>
                             </ul>
                         </div>
                     </nav>

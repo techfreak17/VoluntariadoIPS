@@ -19,7 +19,7 @@ class Landing extends Component {
                 console.log(error);
             })
     }
-    
+
     render() {
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('.slider');
@@ -34,88 +34,73 @@ class Landing extends Component {
                 projectL.push(<ProjectsRow obj={this.state.project[i]} key={i} className="caption left-align" />);
             }
             return projectL;
-          };
+        };
 
         return (
-            <div className="container-fluid" style={{ width: "100%"}}>
-            <div className="slider">
-                <ul className="slides">
-                    {projectList()}
-                </ul>
-            </div>
-            <div className="container" style={{ width: "65%", backgroundColor: "#23395D", borderRadius: 50, marginTop: 15, boxShadow: "0 0 10px 2px green" }}>
-                <div className="section">
-                    <h2 className="header center text-lighten-2" style={{ fontFamily: "monospace", fontWeight: "bold", color: "#50C878" }}>Plataforma {" "}
-                        <span>VoluntariadoIPS</span></h2>
-                    <div className="row center" style={{ width: "100%", textLighten: 2, fontWeight: "bold", color: "white" }}>
-                        <h5 className="header col s12 " >Pronto para ajudar ?
-                        <p className="flow-text text-darken-1">
-                                Junte-se a nós em diversos projetos 
-                                enriquecedores para si e para a comunidade IPS.
-                        </p></h5>
-                        <h5 style={{color:"#E1C699"}}>Registe-se</h5>
-                    </div>
-                    <div className="row center" style={{ width: "40%" }}>
-                        <div className="col s6">
-                            <Link
-                                to="/registerCompany"
-                                style={{
-                                    width: "140px",
-                                    borderRadius: 10,
-                                    letterSpacing: "1.5px",
-                                    fontWeight: "bold"
-                                }}
-                                className="btn btn-large waves-effect waves-light hoverable green">
-                                Empresa
-                            </Link>
-                        </div>
-                        <div className="col s6">
-                            <a
-                                href="/registerVoluntary"
-                                style={{
-                                    width: "170px",
-                                    borderRadius: 10,
-                                    letterSpacing: "1.5px",
-                                    fontWeight: "bold"
-                                    
-                                }}
-                                onClick = "window.location.reload()"
-                                className="btn btn-large waves-effect waves-light hoverable green">
-                                Voluntário
-                            </a>
-                        </div>
-                    </div>
+            <div className="container-fluid" style={{ width: "100%" }}>
+                <div className="slider">
+                    <ul className="slides">
+                        {projectList()}
+                    </ul>
                 </div>
-            </div>
 
-            <div className="container-fluid">
-                <div className="container">
-                    <div className="row">
-                        <div className="col s12 m4">
-                            <div className="icon-block">
-                                <h2 className="center brown-text"><img src={require('./images/MOODLE.png')}
-                                    alt="(Não esquecer de verificar no spam)"
-                                    className="img-responsive" style={{ position: "absolute", left: 0, height: 150, width: "auto", paddingLeft:300}}/></h2>
-                            </div>
+                <div className="container" style={{ width: "60%", backgroundColor: "#23395D", borderRadius: 50, marginTop: 25, marginBottom: 30, boxShadow: "0 0 15px 3px green" }}>
+                    <div className="section">
+                        <h2 className="header center text-lighten-2" style={{ fontFamily: "monospace", fontWeight: "bold", color: "#50C878" }}>Plataforma {" "}
+                            <span>VoluntariadoIPS</span></h2>
+                        <div className="row center" style={{ width: "100%", textLighten: 2, fontWeight: "bold", color: "#eadbd4" }}>
+                            <h5 className="header col s12 " >Pronto para ajudar ?
+                        <p className="flow-text text-darken-1">
+                                    Junte-se a nós em diversos projetos
+                                    enriquecedores para si e para a comunidade IPS.
+                        </p></h5>
+                            <h5 style={{ color: "#eadbd4", fontWeight: "bold"}}>REGISTE-SE</h5>
                         </div>
-                        <div className="col s12 m4" >
-                            <div className="icon-block">
-                            <h2 className="center brown-text"><img src={require('./images/AAIPS.png')}
-                                    alt="(Não esquecer de verificar no spam)"
-                                    className="img-responsive" style={{ position: "absolute", left: 0, height: 150, width: "auto", paddingLeft:600, paddingTop: 40}}/></h2>
+                        <div className="row center" style={{ width: "40%" }}>
+                            <div className="col s6">
+                                <Link
+                                    to="/registerCompany"
+                                    style={{
+                                        width: "140px",
+                                        borderRadius: 10,
+                                        letterSpacing: "1.5px",
+                                        fontWeight: "bold"
+                                    }}
+                                    className="btn btn-large waves-effect waves-light hoverable green">
+                                    Empresa
+                                </Link>
                             </div>
-                        </div>
-                        <div className="col s12 m4">
-                            <div className="icon-block">
-                            <h2 className="center brown-text"><img src={require('./images/IPS.png')}
-                                    alt="(Não esquecer de verificar no spam)"
-                                    className="img-responsive" style={{ position: "absolute", left: 0, height: 150, width: "auto", paddingLeft:950, paddingTop: 40}}/></h2>
+                            <div className="col s6">
+                                <a href="/registerVoluntary"
+                                    style={{
+                                        width: "170px",
+                                        borderRadius: 10,
+                                        letterSpacing: "1.5px",
+                                        fontWeight: "bold"
+                                    }}
+                                    onClick="window.location.reload()"
+                                    className="btn btn-large waves-effect waves-light hoverable green">
+                                    Voluntário</a>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div className="container" style={{ marginBottom: 20, display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <a className="img" href="https://moodle.ips.pt/1920/" style={{ paddingRight: 100 }}>
+                        <img src={require('../layout/images/MOODLE.png')}
+                            alt="Moodle" />
+                    </a>
+                    <a className="img" href="http://aaips.pt/">
+                        <img src={require('../layout/images/AAIPS.png')}
+                            alt="AAIPS" />
+                    </a>
+                    <a className="img" href="https://www.ips.pt/ips_si/web_page.inicial" style={{ paddingLeft: 100 }}>
+                        <img src={require('../layout/images/IPS.png')}
+                            alt="IPS" />
+                    </a>
+                </div>
             </div>
-        </div>
         );
     }
 }

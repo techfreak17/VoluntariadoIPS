@@ -5,7 +5,7 @@ class ProjectsRow extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { project: [{ title: "", date: "" }, { title: "", date: "" }, { title: "", date: "desricao" }, { title: "", date: "" }] };
+        this.state = { project: [{ title: "", date: "" }, { title: "", date: "" }, { title: "", date: "" }, { title: "", date: "" }] };
     }
 
     componentDidMount() {

@@ -5,30 +5,30 @@ import { logoutUser } from "../../actions/authActions";
 
 class Menu extends Component {
     render() {
-        const user  = this.props.auth.isAuthenticated;
+        const user = this.props.auth.isAuthenticated;
 
         return (
             <div className="container">
                 {user ? (
-                <nav className="nav" style={{
-                    width: "70%",
-                    position: "fixed",
-                    bottom: 0,
-                    backgroundColor: "#23395D",
-                    zIndex: "10"
-                }}>
-                    <div className="nav-wrapper">
-                        <ul id="nav-mobile" className="left">
-                            <li><a href="/dashboard"><i className="material-icons">home</i></a></li>
-                            <li><a href="/listProjects">Projetos</a></li>
-                            <li><a href="/listUsers">Utilizadores</a></li>
-                            <li><a href="..."> </a></li>
-                        </ul>
-                    </div>
-                </nav>
-                ) : ( 
-                    ""
-                )}
+                    <nav className="nav" style={{
+                        width: "67.27%",
+                        position: "fixed",
+                        bottom: 0,
+                        backgroundColor: "#23395D",
+                        zIndex: "10"
+                    }}>
+                        <div className="nav-wrapper">
+                            <ul id="nav-mobile" className="left">
+                                <li><a href="/dashboard"><i className="material-icons">home</i></a></li>
+                                <li><a href="/listProjects">Projetos</a></li>
+                                <li><a href="/listUsers">Utilizadores</a></li>
+                                <li><a href="..."> </a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                ) : (
+                        ""
+                    )}
             </div>
         );
     }

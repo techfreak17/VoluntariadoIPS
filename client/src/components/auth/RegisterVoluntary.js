@@ -87,10 +87,6 @@ class RegisterVoluntary extends Component {
         this.props.registerVoluntary(newUser, this.props.history);
     };
 
-    reload() {
-        window.location.reload();
-    }
-
     render() {
         const { errors } = this.state;
 
@@ -104,7 +100,7 @@ class RegisterVoluntary extends Component {
             <div className="container" style={{ marginTop: "5%" }}>
                 <div className="row">
                     <div className="col s8 offset-s2">
-                        <a href="/" className="btn-flat waves-effect" onClick={this.reload()}>
+                        <a href="/" className="btn-flat waves-effect">
                             <i className="material-icons left">keyboard_backspace</i>
                             Voltar
                         </a>
@@ -250,7 +246,7 @@ class RegisterVoluntary extends Component {
                                     id="memberIPS"
                                     type="text"
                                     className="browser-default">
-                                    <option value="" disabled selected>Selecionar Opção</option>
+                                    <option disabled>Selecionar Opção</option>
                                     <option value="Estudante">Estudante</option>
                                     <option value="Diplomado">Diplomado</option>
                                     <option value="Docente">Docente</option>
@@ -269,7 +265,7 @@ class RegisterVoluntary extends Component {
                                     id="schoolIPS"
                                     type="text"
                                     className="browser-default">
-                                    <option value="" disabled selected>Selecionar Opção</option>
+                                    <option disabled>Selecionar Opção</option>
                                     <option value="EST-Setúbal">Escola Superior de Tecnologia de Setúbal</option>
                                     <option value="ESE">Escola Superior de Educação</option>
                                     <option value="ESCE">Escola Superior de Ciências Empresariais</option>
@@ -298,7 +294,7 @@ class RegisterVoluntary extends Component {
                                 <label>Áreas Interesse *</label><br></br><br></br>
                                 <select multiple={true} value={this.state.interestAreas} onChange={this.handleChange}
                                     error={errors.interestAreas}>
-                                    <option value="" disabled selected>Selecionar Opções</option>
+                                    <option disabled>Selecionar Opções</option>
                                     <option value="Atividades Académicas">Atividades Académicas (por ex. apoio às matrículas…)</option>
                                     <option value="Ambiental">Ambiental (por ex. ações de sensibilização, de limpeza…</option>
                                     <option value="Apoio a Eventos">Apoio a Eventos</option>
@@ -317,7 +313,7 @@ class RegisterVoluntary extends Component {
                                 <label>Razões para querer ser voluntário *</label><br></br><br></br>
                                 <select multiple={true} value={this.state.reasons} onChange={this.handleChange1}
                                     error={errors.reasons}>
-                                    <option value="" disabled selected>Selecionar Opções</option>
+                                    <option disabled>Selecionar Opções</option>
                                     <option value="Convívio Social">Pelo convívio social</option>
                                     <option value="Futuro Profissional">Porque pode ser vantajoso para o futuro profissional</option>
                                     <option value="Integração Social">Pela possibilidade de integração social</option>

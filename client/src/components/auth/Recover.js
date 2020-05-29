@@ -46,10 +46,6 @@ class Recover extends Component {
         this.props.recoverUser(forgotenUser, this.props.history);
     };
 
-    reload() {
-        window.location.reload();
-    }
-
     render() {
         const { errors } = this.state;
 
@@ -57,7 +53,7 @@ class Recover extends Component {
             <div className="container" style={{ marginTop: "5%" }}>
                 <div className="row">
                     <div className="col s8 offset-s2">
-                        <a href="/" className="btn-flat waves-effect" onClick={this.reload()}>
+                        <a href="/" className="btn-flat waves-effect">
                             <i className="material-icons left">keyboard_backspace</i>
                             Voltar
                         </a>

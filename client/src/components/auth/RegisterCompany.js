@@ -21,10 +21,16 @@ class RegisterCompany extends Component {
             companyName: "",
             companyAddress: "",
             observations: "",
-            authorization: "",
+            authorization: false,
             errors: {}
         };
     }
+
+    toggleChangeAuthorization = () => {
+        this.setState({
+          authorization: !this.state.authorization,
+        });
+      }
 
     componentDidMount() {
         // If logged in and user navigates to Register page, should redirect them to dashboard
@@ -62,10 +68,8 @@ class RegisterCompany extends Component {
             companyAddress: this.state.companyAddress,
             companyName: this.state.companyName,
             observations: this.state.observations,
-            authorization: true,
+            authorization: this.state.authorization,
         };
-
-        console.log(newUser);
 
         this.props.registerCompany(newUser, this.props.history);
     };
@@ -264,7 +268,7 @@ class RegisterCompany extends Component {
                                 <b>Autorização RGPD *</b>
                                 <label>
                                     <br></br>
-                                    <input type="checkbox" />
+                                    <input type="checkbox" checked={this.state.authorization} onChange={this.toggleChangeAuthorization} />
                                     <span>Consinto, ao abrigo do Regulamento Geral de Proteção de Dados (RGPD), a utilização dos meus dados pessoais, fornecidos no formulário, ficando informado/a do direito a retirar o consentimento a qualquer momento e que o tratamento de dados é da responsabilidade do IPS, sendo-lhe aplicada a Política de Proteção de Dados do IPS.</span>
                                     <br></br>
                                     <a href="http://www.si.ips.pt/ips_si/web_base.gera_pagina?P_pagina=40723" rel="noopener noreferrer" target="_blank">(Disponível aqui)</a>

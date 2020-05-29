@@ -41,13 +41,13 @@ class Create extends Component {
     
   }
 
-  toggleChange = () => {
+  toggleChangeAuthorization = () => {
     this.setState({
       authorization: !this.state.authorization,
     });
   }
 
-  toggleChange1 = () => {
+  toggleChangeRequiredFormation = () => {
     this.setState({
       requiredFormation: !this.state.requiredFormation,
     });
@@ -228,7 +228,7 @@ class Create extends Component {
                 <b>Exigência de formação específica* *</b>
                 <p>
                   <label>
-                    <input type="checkbox" checked={this.state.requiredFormation} onChange={this.toggleChange1} />
+                    <input type="checkbox" checked={this.state.requiredFormation} onChange={this.toggleChangeRequiredFormation} />
                     <span>Sim</span>
                   </label>
                 </p>
@@ -313,7 +313,7 @@ class Create extends Component {
                 <b>Autorização RGPD *</b>
                 <label>
                   <br></br>
-                  <input type="checkbox" checked={this.state.authorization} onChange={this.toggleChange} />
+                  <input type="checkbox" checked={this.state.authorization} onChange={this.toggleChangeAuthorization} />
                   <span>Consinto, ao abrigo do Regulamento Geral de Proteção de Dados (RGPD), a utilização dos meus dados pessoais, fornecidos no formulário, ficando informado/a do direito a retirar o consentimento a qualquer momento e que o tratamento de dados é da responsabilidade do IPS, sendo-lhe aplicada a Política de Proteção de Dados do IPS.</span>
                   <br></br>
                   <a href="http://www.si.ips.pt/ips_si/web_base.gera_pagina?P_pagina=40723" rel="noopener noreferrer" target="_blank">(Disponível aqui)</a>

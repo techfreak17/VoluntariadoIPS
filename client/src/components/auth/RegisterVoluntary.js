@@ -26,12 +26,18 @@ class RegisterVoluntary extends Component {
             interestAreas: [],
             reasons: [],
             observations: "",
-            authorization: "",
+            authorization: false,
             errors: {}
         };
-        this.handleChange = this.handleChange.bind(this);
-        this.handleChange1 = this.handleChange1.bind(this);
+        this.handleChangeInterestAreas = this.handleChangeInterestAreas.bind(this);
+        this.handleChangeReasons = this.handleChangeReasons.bind(this);
     }
+
+    toggleChangeAuthorization = () => {
+        this.setState({
+          authorization: !this.state.authorization,
+        });
+      }
 
     componentDidMount() {
         // If logged in and user navigates to Register page, should redirect them to dashboard
@@ -53,11 +59,11 @@ class RegisterVoluntary extends Component {
         this.setState({ [e.target.id]: e.target.value });
     };
 
-    handleChange(event) {
+    handleChangeInterestAreas(event) {
         this.setState({ interestAreas: Array.from(event.target.selectedOptions, (item) => item.value) });
     }
 
-    handleChange1(event) {
+    handleChangeReasons(event) {
         this.setState({ reasons: Array.from(event.target.selectedOptions, (item) => item.value) });
     }
 
@@ -81,7 +87,7 @@ class RegisterVoluntary extends Component {
             interestAreas: this.state.interestAreas,
             reasons: this.state.reasons,
             observations: this.state.observations,
-            authorization: true,
+            authorization: this.state.authorization,
         };
 
         this.props.registerVoluntary(newUser, this.props.history);
@@ -292,7 +298,7 @@ class RegisterVoluntary extends Component {
 
                             <div className="input-field col s12">
                                 <label>Áreas Interesse *</label><br></br><br></br>
-                                <select multiple={true} value={this.state.interestAreas} onChange={this.handleChange}
+                                <select multiple={true} value={this.state.interestAreas} onChange={this.handleChangeInterestAreas}
                                     error={errors.interestAreas}>
                                     <option disabled>Selecionar Opções</option>
                                     <option value="Atividades Académicas">Atividades Académicas (por ex. apoio às matrículas…)</option>
@@ -311,7 +317,7 @@ class RegisterVoluntary extends Component {
 
                             <div className="input-field col s12">
                                 <label>Razões para querer ser voluntário *</label><br></br><br></br>
-                                <select multiple={true} value={this.state.reasons} onChange={this.handleChange1}
+                                <select multiple={true} value={this.state.reasons} onChange={this.handleChangeReasons}
                                     error={errors.reasons}>
                                     <option disabled>Selecionar Opções</option>
                                     <option value="Convívio Social">Pelo convívio social</option>
@@ -347,7 +353,7 @@ class RegisterVoluntary extends Component {
                                 <b>Autorização RGPD *</b>
                                 <label>
                                     <br></br>
-                                    <input type="checkbox" />
+                                    <input type="checkbox" checked={this.state.authorization} onChange={this.toggleChangeAuthorization}/>
                                     <span>Consinto, ao abrigo do Regulamento Geral de Proteção de Dados (RGPD), a utilização dos meus dados pessoais, fornecidos no formulário, ficando informado/a do direito a retirar o consentimento a qualquer momento e que o tratamento de dados é da responsabilidade do IPS, sendo-lhe aplicada a Política de Proteção de Dados do IPS.</span>
                                     <br></br>
                                     <a href="http://www.si.ips.pt/ips_si/web_base.gera_pagina?P_pagina=40723" target="_blank" rel="noopener noreferrer">(Disponível aqui)</a>

@@ -24,7 +24,7 @@ function emailSend(user) {
 
   User.findOne({ email }).then(user => {
     var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });
-    msgToken = 'http://' + "localhost:3000"/*req.headers.host*/ + '/ConfirmAccountToken/' + mytoken.token;
+    msgToken = 'http://' + req.headers.host + '/ConfirmAccountToken/' + mytoken.token;
     mytoken.save();
     const msg = template.confirmarEmail(email, msgToken);
     sender.sendEmail(msg);
@@ -64,7 +64,7 @@ router.post("/registerVoluntary", (req, res) => {
             .then(user => {  const email = user.email;
               User.findOne({ email }).then(user => {        
                 var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });          
-                msgToken = 'http://' + "localhost:3000"/*req.headers.host*/ + '/ConfirmAccountToken/' + mytoken.token;           
+                msgToken = 'http://' + req.headers.host + '/ConfirmAccountToken/' + mytoken.token;           
                 mytoken.save();          
                 const msg = template.confirmarEmail(email, msgToken);
                 sender.sendEmail(msg);
@@ -126,7 +126,7 @@ router.post("/registerCompany", (req, res) => {
             .then(user => {  const email = user.email;
               User.findOne({ email }).then(user => {        
                 var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });          
-                msgToken = 'http://' + "localhost:3000"/*req.headers.host*/ + '/ConfirmAccountToken/' + mytoken.token;           
+                msgToken = 'http://' + req.headers.host + '/ConfirmAccountToken/' + mytoken.token;           
                 mytoken.save();          
                 const msg = template.confirmarEmail(email, msgToken);
                 sender.sendEmail(msg);
@@ -247,7 +247,7 @@ router.post("/recover", (req, res) => {
     user.passwordResetToken = mytoken.token;
     user.passwordResetExpires = Date.now();
     user.save();
-    msgToken = 'http://' + "localhost:3000"/*req.headers.host*/ + '/resetpassword/' + mytoken.token;
+    msgToken = 'http://' + req.headers.host + '/resetpassword/' + mytoken.token;
     const msg = template.recuperarPassword(user.email, msgToken);
     sender.sendEmail(msg);
     res.json(user);

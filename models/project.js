@@ -13,7 +13,7 @@ const ProjectSchema = new Schema({
         required: true
     },
     intervationArea: {
-        type: Array,
+        type: String,
         required: false
     },
     target_audience: {

@@ -51,13 +51,17 @@ export default class Index extends Component {
     })
   }
 
+  reload(){
+    window.location.reload();
+  }
+
   render() {
     return (
       <div className="container" style={{marginTop: "5%", paddingBottom: 70}}>
         <div>
           <h3 align="center">Projetos</h3>
           <p className="grey-text text-darken-1">
-            <a href="/dashboard" onClick="window.location.reload()">Voltar</a> <br></br>
+            <a href="/dashboard" onClick={this.reload()}>Voltar</a> <br></br>
             <Link to="/createProject"> Propor Projeto</Link>
           </p>
           <form onSubmit={this.onSubmit}>

@@ -9,7 +9,6 @@ import options from "materialize-css";
 class Create extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       title: "",
       synopsis: "",
@@ -24,20 +23,24 @@ class Create extends Component {
       photo: "",
       observations: "",
       authorization: false,
+      userID: this.props.auth.user.id,
       errors: {}
     }
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.onImageChange = this.onImageChange.bind(this);
+    this.uploadFile = this.uploadFile.bind(this);
   }
 
-  onImageChange(event) {
-    if (event.target.files && event.target.files[0]) {
-      this.setState({ photo: event.target.files[0] });
-    }
+  uploadFile(event) {
+    console.log(event.target.files[0]);
+
+    const data = new FormData();
+    data.append('file', event.target.files[0]);
+    data.append('name', 'some value user types');
+    data.append('description', 'some value user types');
+    
   }
-  
-  
+
   toggleChange = () => {
     this.setState({
       authorization: !this.state.authorization,
@@ -81,7 +84,8 @@ class Create extends Component {
       interestAreas: this.state.interestAreas,
       photo: this.state.photo,
       observations: this.state.observations,
-      authorization: this.state.authorization
+      authorization: this.state.authorization,
+      userID: this.state.userID
     };
 
     console.log(obj);
@@ -224,7 +228,7 @@ class Create extends Component {
                 <b>Exigência de formação específica* *</b>
                 <p>
                   <label>
-                    <input type="checkbox" checked={this.state.requiredFormation} onChange={this.toggleChange1}/>
+                    <input type="checkbox" checked={this.state.requiredFormation} onChange={this.toggleChange1} />
                     <span>Sim</span>
                   </label>
                 </p>
@@ -295,15 +299,13 @@ class Create extends Component {
               </div>
 
               <div className="input-field col s12">
-              <label htmlFor="name">Logótipo</label><br></br><br></br>
+                <label htmlFor="name">Logótipo</label><br></br><br></br>
                 <span className="red-text">{errors.photo}</span>
                 <input
-                  onChange={this.onImageChange}
-                  error={errors.photo}
-                  id="photo"
+                  accept="image/*"
                   type="file"
                   className="inputfile"
-                  ref={c => this.img = c}
+                  onChange={this.uploadFile}
                 />
               </div>
 
@@ -311,7 +313,7 @@ class Create extends Component {
                 <b>Autorização RGPD *</b>
                 <label>
                   <br></br>
-                  <input type="checkbox" checked={this.state.authorization} onChange={this.toggleChange}/>
+                  <input type="checkbox" checked={this.state.authorization} onChange={this.toggleChange} />
                   <span>Consinto, ao abrigo do Regulamento Geral de Proteção de Dados (RGPD), a utilização dos meus dados pessoais, fornecidos no formulário, ficando informado/a do direito a retirar o consentimento a qualquer momento e que o tratamento de dados é da responsabilidade do IPS, sendo-lhe aplicada a Política de Proteção de Dados do IPS.</span>
                   <br></br>
                   <a href="http://www.si.ips.pt/ips_si/web_base.gera_pagina?P_pagina=40723" rel="noopener noreferrer" target="_blank">(Disponível aqui)</a>

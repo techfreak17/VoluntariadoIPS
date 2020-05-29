@@ -54,12 +54,12 @@ class RegisterVoluntary extends Component {
     };
 
     handleChange(event) {
-        this.setState({interestAreas: Array.from(event.target.selectedOptions, (item) => item.value)});
-      }
+        this.setState({ interestAreas: Array.from(event.target.selectedOptions, (item) => item.value) });
+    }
 
     handleChange1(event) {
-        this.setState({reasons: Array.from(event.target.selectedOptions, (item) => item.value)});
-      }
+        this.setState({ reasons: Array.from(event.target.selectedOptions, (item) => item.value) });
+    }
 
 
     onSubmit = e => {
@@ -87,6 +87,10 @@ class RegisterVoluntary extends Component {
         this.props.registerVoluntary(newUser, this.props.history);
     };
 
+    reload() {
+        window.location.reload();
+    }
+
     render() {
         const { errors } = this.state;
 
@@ -100,7 +104,7 @@ class RegisterVoluntary extends Component {
             <div className="container" style={{ marginTop: "5%" }}>
                 <div className="row">
                     <div className="col s8 offset-s2">
-                        <a href="/" className="btn-flat waves-effect" onClick="window.location.reload()">
+                        <a href="/" className="btn-flat waves-effect" onClick={this.reload()}>
                             <i className="material-icons left">keyboard_backspace</i>
                             Voltar
                         </a>
@@ -109,7 +113,7 @@ class RegisterVoluntary extends Component {
                             <h4>
                                 <b>Registe-se como Voluntário </b>
                             </h4>
-                            <p className="grey-text text-darken-1" style={{fontWeight:"bolder"}}>
+                            <p className="grey-text text-darken-1" style={{ fontWeight: "bolder" }}>
                                 Já tem conta? <Link to="/login">Log in</Link>
                             </p>
                             <p className="grey-text text-darken-1" style={{ fontWeight: "bolder" }}>

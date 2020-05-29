@@ -1,57 +1,64 @@
 const express = require("express");
 const router = express.Router();
 const multer = require('multer');
-//const upload = multer({dest: '/uploads/'});
 
-// Load Project model
 const Project = require("../../models/project");
 
 // @route POST api/projects/create
 // @desc Register user
 // @access Public
-router.post("/createProject",(req, res) => {    
-    Project.findOne({title: req.body.title}).then(project => {
-        if (project) {
-            return res.status(400).json({ title: "Project already exists" });
-        } else {
-            console.log(req.body);
-            const newProject = new Project({
-                title: req.body.title,
-                synopsis: req.body.synopsis,
-                intervationArea: req.body.intervationArea,
-                target_audience: req.body.target_audience,
-                objectives: req.body.objectives,
-                description: req.body.description,
-                requiredFormation: req.body.requiredFormation,
-                formation: req.body.formation,
-                date: req.body.date,
-                interestAreas: req.body.interestAreas,
-                photo: req.body.photo,
-                observations: req.body.observations,
-                authorization: req.body.authorization
-            });
-            newProject
-                    .save()
-                    .then(project => res.json(project))
-                    .catch(err => console.log(err));
-        }
-    });
+router.post("/createProject", (req, res) => {
+  console.log(req.body.photo);
+  /*var img = fs.readFileSync(req.file.path);
+  var enconde_image = img.toString('base64');
+  var finalImg = {
+    contentType: req.file.mimetype,
+    path: req.file.path,
+    image: new Buffer(enconde_image, 'base64')
+  };*/
+  Project.findOne({ title: req.body.title }).then(project => {
+    if (project) {
+      return res.status(400).json({ title: "Project already exists" });
+    } else {
+      console.log(req.body);
+      const newProject = new Project({
+        title: req.body.title,
+        synopsis: req.body.synopsis,
+        intervationArea: req.body.intervationArea,
+        target_audience: req.body.target_audience,
+        objectives: req.body.objectives,
+        description: req.body.description,
+        requiredFormation: req.body.requiredFormation,
+        formation: req.body.formation,
+        date: req.body.date,
+        interestAreas: req.body.interestAreas,
+        photo: req.body.photo,
+        observations: req.body.observations,
+        authorization: req.body.authorization,
+        userID: req.body.userID
+      });
+      newProject
+        .save()
+        .then(project => res.json(project))
+        .catch(err => console.log(err));
+    }
+  });
 });
 
 // Defined edit route
 router.route('/editProject/:id').get(function (req, res) {
   let id = req.params.id;
-  Project.findById(id, function (err, project){
-      res.json(project);
+  Project.findById(id, function (err, project) {
+    res.json(project);
   });
 });
 
 //  Defined update route
 router.route('/updateProject/:id').post(function (req, res) {
-  Project.findById(req.params.id, function(err, project) {
-  if (!project)
-    res.status(404).send("data is not found");
-  else {
+  Project.findById(req.params.id, function (err, project) {
+    if (!project)
+      res.status(404).send("data is not found");
+    else {
       project.title = req.body.title;
       project.contact_person = req.body.contact_person;
       project.email_person = req.body.email_person;
@@ -67,40 +74,42 @@ router.route('/updateProject/:id').post(function (req, res) {
       project.authorization = req.body.authorization;
       project.user_in_charge = req.body.user_in_charge;
 
-      project.updateOne({ title: project.title,
-         contact_person: project.contact_person,
-         email_person: project.email_person,
-         phone_person: project.phone_person,
-         synopsis: project.synopsis,
-         target_audience: project.target_audience,
-         objectives: project.objectives,
-         date: project.date,
-         areas: project.areas,
-         description: project.description,
-         related_entities: project.related_entities,
-         observations: project.observations,
-         authorization: project.authorization,
-         user_in_charge: project.user_in_charge}
-         )
-      .catch(err => {
-        res.status(400).send("unable to update the database");
-      });
-  }
-});
+      project.updateOne({
+        title: project.title,
+        contact_person: project.contact_person,
+        email_person: project.email_person,
+        phone_person: project.phone_person,
+        synopsis: project.synopsis,
+        target_audience: project.target_audience,
+        objectives: project.objectives,
+        date: project.date,
+        areas: project.areas,
+        description: project.description,
+        related_entities: project.related_entities,
+        observations: project.observations,
+        authorization: project.authorization,
+        user_in_charge: project.user_in_charge
+      }
+      )
+        .catch(err => {
+          res.status(400).send("unable to update the database");
+        });
+    }
+  });
 });
 
 // Defined delete | remove | destroy route
 router.route('/deleteProject/:id').get(function (req, res) {
-  Project.findByIdAndRemove({_id: req.params.id}, function(err, project){
-      if(err) res.json(err);
-      else res.json('Successfully removed');
+  Project.findByIdAndRemove({ _id: req.params.id }, function (err, project) {
+    if (err) res.json(err);
+    else res.json('Successfully removed');
   });
 });
 
 // Defined get data(index or listing) route
 router.route('/listProjects').get(function (req, res) {
-  Project.find(function(err, projects){
-    if(err){
+  Project.find(function (err, projects) {
+    if (err) {
       console.log(err);
     }
     else {
@@ -109,21 +118,21 @@ router.route('/listProjects').get(function (req, res) {
   });
 });
 
-router.post("/searchProject", (req, res) => {   
+router.post("/searchProject", (req, res) => {
   Project.find({ title: { $regex: req.body.search, $options: "i" } }).then(project => {
-      if (project) {
-          res.json(project);
-      } else {
-        res.status(404).send({message: "Not found any project with that title"});
-      }
+    if (project) {
+      res.json(project);
+    } else {
+      res.status(404).send({ message: "Not found any project with that title" });
+    }
   })
 });
 
 // Defined get route
 router.route('/getProject/:id').get(function (req, res) {
   let id = req.params.id;
-  Project.findById(id, function (err, project){
-      res.json(project);
+  Project.findById(id, function (err, project) {
+    res.json(project);
   });
 });
 

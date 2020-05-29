@@ -47,16 +47,19 @@ export default class IndexUsers extends Component {
       })
       .catch(function (error) {
         console.log(error);
-      })
-      
+      })  
     }
+
+    reload() {
+      window.location.reload();
+  }
 
     render() {
       return (
         <div className="container" style={{marginTop: "5%", paddingBottom: 70}}>
           <h3 align="center">Utilizadores</h3>
           <p className="grey-text text-darken-1">
-             <a href="/dashboard" onClick="window.location.reload()">Voltar</a> <br></br>
+             <a href="/dashboard" onClick={this.reload()}>Voltar</a> <br></br>
               <Link to="/createUser"> Criar Utilizador</Link>
           </p>
           <form onSubmit={this.onSubmit}>

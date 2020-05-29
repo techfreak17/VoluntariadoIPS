@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { updatePassword } from "../../actions/authActions";
@@ -50,13 +50,17 @@ class ResetPassword extends Component {
         this.props.updatePassword(passUpdate, this.props.history);
     };
 
+    reload() {
+        window.location.reload();
+    }
+
     render() {
         const { errors } = this.state;
         return (
             <div className="container">
                 <div className="row">
                     <div className="col s8 offset-s2">
-                        <a href="/" className="btn-flat waves-effect" onClick="window.location.reload(true);">
+                        <a href="/" className="btn-flat waves-effect" onClick={this.reload()}>
                             <i className="material-icons left">keyboard_backspace</i>
                             Voltar
                         </a>

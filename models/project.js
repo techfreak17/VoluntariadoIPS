@@ -44,6 +44,10 @@ const ProjectSchema = new Schema({
         type: Array,
         required: true
     },
+    relatedEntities:{
+        type: Array,
+        required: false
+    },
     logo: {
         data: Buffer,
         contentType: String

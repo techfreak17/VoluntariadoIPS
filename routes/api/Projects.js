@@ -3,6 +3,8 @@ const router = express.Router();
 const multer = require('multer');
 
 const Project = require("../../models/project");
+const User = require("../../models/user");
+const Company = require("../../models/company");
 
 // @route POST api/projects/create
 // @desc Register user
@@ -20,7 +22,6 @@ router.post("/createProject", (req, res) => {
     if (project) {
       return res.status(400).json({ title: "Project already exists" });
     } else {
-      console.log(req.body);
       const newProject = new Project({
         title: req.body.title,
         synopsis: req.body.synopsis,
@@ -133,6 +134,47 @@ router.route('/getProject/:id').get(function (req, res) {
   let id = req.params.id;
   Project.findById(id, function (err, project) {
     res.json(project);
+  });
+});
+
+
+// Defined get route
+router.route('/getUser/:id').get(function (req, res) {
+  let id = req.params.id;
+  Project.findById(id, function (err, project) {
+    let newId = project.userID;
+    User.findOne({ _id: newId }).then(user => {
+      res.json(user);
+    })
+  });
+});
+
+router.route('/getCompanies/').get(function (req, res) {
+  Company.find({}, { companyName: 1, _id: 0 }).then(companyData => {
+    if (companyData) {
+      res.json(companyData);
+    } else {
+      res.status(404).send({ message: "Not found any company with that name" });
+    }
+  });
+});
+
+// Defined get route
+router.route('/getUserDetails/:id').get(function (req, res) {
+  let id = req.params.id;
+  Project.findById(id, function (err, project) {
+    let newId = project.userID;
+    User.findOne({ _id: newId }).then(user => {
+      if (user.role === "Empresa") {
+        Company.findOne({ userID: user._id }).then(voluntary => {
+          if (voluntary) {
+            res.json(voluntary);
+          } else {
+            return res.status(400).json({ email: "Such data doesn´t exist" });
+          };
+        })
+      }
+    })
   });
 });
 

@@ -5,6 +5,7 @@ import { createProject } from "../../actions/projectActions";
 import classnames from "classnames";
 import M from "materialize-css";
 import options from "materialize-css";
+import axios from 'axios';
 
 class Create extends Component {
   constructor(props) {
@@ -21,15 +22,31 @@ class Create extends Component {
       date: "",
       interestAreas: [],
       photo: "",
+      relatedEntities: [],
       observations: "",
       authorization: false,
       userID: this.props.auth.user.id,
       errors: {}
     }
+    
+    this.handleChangeInterestAreas = this.handleChangeInterestAreas.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.uploadFile = this.uploadFile.bind(this);
   }
+
+  /**componentDidMount() {
+    axios.get('/api/projects/getCompanies')
+      .then(response => {
+        this.setState({
+          relatedEntities: (response.data)
+        });
+        console.log(this.state.companies);
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+  }*/
 
   uploadFile(event) {
     console.log(event.target.files[0]);
@@ -38,7 +55,7 @@ class Create extends Component {
     data.append('file', event.target.files[0]);
     data.append('name', 'some value user types');
     data.append('description', 'some value user types');
-    
+
   }
 
   toggleChangeAuthorization = () => {
@@ -57,9 +74,9 @@ class Create extends Component {
     this.setState({ [e.target.id]: e.target.value });
   };
 
-  handleChange(event) {
+  handleChangeInterestAreas(event) {
     this.setState({ interestAreas: Array.from(event.target.selectedOptions, (item) => item.value) });
-  }
+}
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
@@ -71,6 +88,9 @@ class Create extends Component {
 
   onSubmit(e) {
     e.preventDefault();
+    var array = [];
+    array = this.addButton;
+    console.log(array);
     const obj = {
       title: this.state.title,
       synopsis: this.state.synopsis,
@@ -85,10 +105,9 @@ class Create extends Component {
       photo: this.state.photo,
       observations: this.state.observations,
       authorization: this.state.authorization,
+      relatedEntities: this.state.relatedEntities,
       userID: this.state.userID
     };
-
-    console.log(obj);
 
     this.props.createProject(obj, this.props.history);
 
@@ -106,9 +125,33 @@ class Create extends Component {
       observations: "",
       photo: "",
       authorization: "",
+      relatedEntities: "",
       errors: {}
     })
   }
+
+  addCompany(e){
+    e.preventDefault();
+    this.setState({relatedEntities: [...this.state.relatedEntities,""]})
+  }
+
+  handleChange(e,index){
+    this.state.relatedEntities[index] = e.target.value
+    this.setState({relatedEntities: this.state.relatedEntities})
+  }
+
+  handleRemove(e,index){
+    e.preventDefault();
+    this.state.relatedEntities.splice(index,1)
+    console.log(this.state.relatedEntities)
+    this.setState({relatedEntities: this.state.relatedEntities})
+  }
+
+  handleSubmit(e){
+    e.preventDefault();
+   console.log(this.state);
+  }
+  
 
   render() {
     const { errors } = this.state;
@@ -118,7 +161,6 @@ class Create extends Component {
       var instances = M.FormSelect.init(elems, options);
       console.log(instances);
     });
-
 
     return (
       <div className="container" style={{ marginTop: "5%" }}>
@@ -266,7 +308,7 @@ class Create extends Component {
 
               <div className="input-field col s12">
                 <label>Para a concretização do Projeto/Atividades, em que áreas necessita de voluntários*</label><br></br><br></br>
-                <select multiple={true} value={this.state.interestAreas} onChange={this.handleChange}
+                <select multiple={true} value={this.state.interestAreas} onChange={this.handleChangeInterestAreas}
                   error={errors.interestAreas} className='dropdown-content'>
                   <option disabled>Selecionar Opções</option>
                   <option value="Atividades Académicas">Atividades Académicas (por ex. apoio às matrículas…)</option>
@@ -299,6 +341,25 @@ class Create extends Component {
               </div>
 
               <div className="input-field col s12">
+                <label>Entidades Envolvidas</label><br></br><br></br>
+               {
+                 this.state.relatedEntities.map((company,index)=>{
+                   return(
+                       <div key={index}>
+                         <input onChange= {(e)=>this.handleChange(e,index)} value={company}></input>
+                         <button onClick= {(e)=>this.handleRemove(e,index)}>Remove</button>
+                       </div>
+                   )
+                 })
+               }
+               <br></br>
+               <button onClick={(e)=>this.addCompany(e)}>Add Company</button><br></br><br></br>
+
+               <button onClick= {(e)=>this.handleSubmit(e)}>Submit</button>
+              </div>
+
+
+              <div className="input-field col s12">
                 <label htmlFor="name">Logótipo</label><br></br><br></br>
                 <span className="red-text">{errors.photo}</span>
                 <input
@@ -328,8 +389,8 @@ class Create extends Component {
             </div>
           </div>
         </div>
-      </div>
-    )
+      </div >
+    );
   }
 }
 

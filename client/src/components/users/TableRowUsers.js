@@ -18,19 +18,22 @@ class TableRowUsers extends Component {
       return (
           <tr>
             <td>
-              {this.props.obj.number}
-            </td>
-            <td>
               {this.props.obj.name}
             </td>
             <td>
               {this.props.obj.email}
             </td>
             <td>
-              <Link to={"/editUser/" + this.props.obj._id} className="btn btn-primary" style={{backgroundColor: "lightBlue", color: "black"}}>Edit</Link>
+              {this.props.obj.role}
             </td>
             <td>
-              <button onClick={this.delete} className="btn btn-danger" style={{backgroundColor: "red"}}>Delete</button>
+              <Link to={"/getUser/" + this.props.obj._id} className="btn btn-primary" style={{backgroundColor: "#03C04A"}}>Ver</Link>
+           </td>
+            <td>
+              <Link to={"/editUser/" + this.props.obj._id} className="btn btn-primary" style={{backgroundColor: "lightBlue", color: "black"}}>Editar</Link>
+            </td>
+            <td>
+              <button onClick={this.delete} className="btn btn-danger" style={{backgroundColor: "#9B1003"}}>Apagar</button>
             </td>
           </tr>
       );

@@ -19,9 +19,8 @@ class Login extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.auth.isAuthenticated) {
             this.props.history.push("/dashboard"); // push user to dashboard when they login
+            window.location.reload();
         }
-
-
         if (nextProps.errors) {
             this.setState({
                 errors: nextProps.errors
@@ -49,18 +48,17 @@ class Login extends Component {
             <div className="container">
                 <div style={{marginTop: "10%"}} className="row">
                     <div className="col s8 offset-s2">
-                        <Link to="/" className="btn-flat waves-effect">
+                        <a href="/" className="btn-flat waves-effect" onClick="window.location.reload(true);">
                             <i className="material-icons left">keyboard_backspace</i>
                             Voltar
-                        </Link>
-
+                        </a>
+                        
                         <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                             <h4>
                                 <b>Login </b>
                             </h4>
-
                             <p className="grey-text text-darken-1">
-                                Não tem conta? <Link to="/register">Clique aqui</Link>
+                                Não tem conta? <Link to="/registerVoluntary">Clique aqui</Link>
                             </p>
                         </div>
                         <form noValidate onSubmit={this.onSubmit}>
@@ -102,7 +100,7 @@ class Login extends Component {
                                 <button
                                     style={{
                                         width: "150px",
-                                        borderRadius: "3px",
+                                        borderRadius: 10,
                                         letterSpacing: "1.5px",
                                         marginTop: "1rem"
                                     }}

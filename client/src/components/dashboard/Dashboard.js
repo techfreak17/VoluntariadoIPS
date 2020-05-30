@@ -2,48 +2,93 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
-import { Link } from "react-router-dom";
+import M from "materialize-css";
+import options from "materialize-css";
+import Slider from "../layout/Slider"
+import axios from 'axios';
 
 
 class Dashboard extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = { titles: [{ title: "#Dinamizar", date: "" }, { title: "#Responsabilizar", date: "" }, { title: "#Qualificar", date: "" }, { title: "", date: "" }] };
+        axios.get('/api/projects/listProjects')
+            .then(response => {
+                this.setState({ project: response.data });
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
     onLogoutClick = e => {
         e.preventDefault();
         this.props.logoutUser();
     };
 
     render() {
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.slider');
+            var instances = M.Slider.init(elems, options);
+            console.log(instances);
+        });
 
-        const { user } = this.props.auth;
+        let titleL = [];
+
+
+        const titleList = () => {
+            for (let i = 0; i < this.state.titles.length; i++) {
+                titleL.push(<Slider obj={this.state.titles[i]} key={i} />);
+            }
+            return titleL;
+        };
 
         return (
-            <div style={{height: "75vh"}} className="container valign-wrapper"> 
-                <div className="row">
-                    <div className="col s12 center-align">
-                        <h4>
-                            <b>Hey there,</b> {user.name.split(" ")[0]}
-                            <p className="flow-text grey-text text-darken-1">
-                                You are logged into a full-stack{" "}
-                                <span style={{ fontFamily: "monospace" }}>MERN</span> app 👏
-                            </p>
-                        </h4>
-
-                        <button
-                            style={{
-                                width: "150px",
-                                borderRadius: "3px",
-                                letterSpacing: "1.5px",
-                                marginTop: "1rem"
-                            }}
-                            onClick={this.onLogoutClick}
-                            className="btn btn-large waves-effect waves-light hoverable blue accent-3">
-                            Logout
-                        </button>
+            <div className="container-fluid" style={{ width: "100%" }}>
+                <div className="container" style={{ width: "50%", backgroundColor: "#23395D", borderRadius: 50, marginTop: 40, marginBottom: 40, boxShadow: "0 0 15px 3px green" }}>
+                    <div className="section">
+                        <h2 className="header center text-lighten-2" style={{ fontFamily: "monospace", fontWeight: "bold", color: "#50C878" }}>Plataforma VoluntariadoIPS</h2>
+                        <div className="row center" style={{ width: "100%", textLighten: 2, fontWeight: "bold", color: "#eadbd4" }}>
+                            <h5 className="header col s12 "><b>Bem-Vindo</b>
+                                <p>Pronto para ajudar ?</p></h5>
+                            <a className="btn white-text" href="/listProjects" style={{ borderRadius: 20, backgroundColor: "#50C878" }}>Ver Projetos</a>
+                        </div>
                     </div>
                 </div>
-            </div>
+
+
+                <div className="container center" style={{ marginTop: 20, marginBottom: 20, backgroundColor: "#eadbd4", padding: 30, paddingTop: 3, borderRadius: 50, boxShadow: "0 0 15px 10px #23395D" }}>
+                    <h2 style={{ fontFamily: "monospace", fontWeight: "bold", color: "#23395D" }}>Os Meus Projetos</h2>
+                    <div className="carousel carousel-slider center">
+                        {titleList()}
+                    </div>
+                </div>
+
+
+                <div className="container" style={{ marginBottom: 70, display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <a className="img" href="https://moodle.ips.pt/1920/" style={{ paddingRight: 100 }}>
+                        <img src={require('../layout/images/MOODLE.png')}
+                            alt="Moodle" />
+                    </a>
+                    <a className="img" href="http://aaips.pt/">
+                        <img src={require('../layout/images/AAIPS.png')}
+                            alt="AAIPS" />
+                    </a>
+                    <a className="img" href="https://www.ips.pt/ips_si/web_page.inicial" style={{ paddingLeft: 100 }}>
+                        <img src={require('../layout/images/IPS.png')}
+                            alt="IPS" />
+                    </a>
+                </div>
+            </div >
         );
     }
 }
+document.addEventListener('DOMContentLoaded', function () {
+    var elems = document.querySelectorAll('.carousel');
+    var instances = M.Carousel.init(elems, options);
+    console.log(instances);
+});
 
 Dashboard.propTypes = {
     logoutUser: PropTypes.func.isRequired,

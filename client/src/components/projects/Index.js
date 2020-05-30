@@ -7,21 +7,48 @@ export default class Index extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { project: [] };
+    this.onChangeSearch = this.onChangeSearch.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.state = { 
+      project: [],
+      search: ""
+    };
   }
   componentDidMount() {
     axios.get('/api/projects/listProjects')
       .then(response => {
-        this.setState({ project: response.data });
+        this.setState({ 
+            project: response.data
+          });
       })
       .catch(function (error) {
         console.log(error);
       })
   }
+  onChangeSearch(e){
+    this.setState({
+      search: e.target.value
+    })
+  }
+
   tabRow() {
     return this.state.project.map(function (object, i) {
       return <TableRow obj={object} key={i} />;
     });
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+    const obj = {
+      search: document.getElementById("myInput").value,
+    };
+    axios.post("/api/projects/searchProject",obj)
+    .then(response => {
+      this.setState({ project: response.data });
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
   }
 
   render() {
@@ -30,9 +57,13 @@ export default class Index extends Component {
         <div>
           <h3 align="center">Projetos</h3>
           <p className="grey-text text-darken-1">
-            <Link to="/dashboard">Voltar</Link> <br></br>
+            <a href="/dashboard" onClick="window.location.reload()">Voltar</a> <br></br>
             <Link to="/createProject"> Propor Projeto</Link>
           </p>
+          <form onSubmit={this.onSubmit}>
+            <input id="myInput" type="text" placeholder="Search..." name="search" onChange={this.onChangeSearch}></input>
+            <button type="submit">Pesquisar</button>
+          </form>
           <table className="table table-striped" style={{ marginTop: 20 }}>
             <thead>
               <tr>

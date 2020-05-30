@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import {withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
@@ -10,14 +10,13 @@ class ConfirmAccount extends Component {
         this.state = {
         };
     }
-
     componentDidMount() {
         // If logged in and user navigates to Register page, should redirect them to dashboard
         if (this.props.auth.isAuthenticated) {
             this.props.history.push("/dashboard");
+            window.location.reload();
         }
     }
-
     componentWillReceiveProps(nextProps) {
         if (nextProps.errors) {
             this.setState({
@@ -32,11 +31,10 @@ class ConfirmAccount extends Component {
             <div className="container" style={{marginTop: "5%"}}>
                 <div className="row">
                     <div className="col s8 offset-s2">
-
-                        <Link to="/" className="btn-flat waves-effect">
+                        <a href="/" className="btn-flat waves-effect" onClick="window.location.reload(true)">
                             <i className="material-icons left">keyboard_backspace</i>
-                            Voltar ao inicio
-                        </Link>
+                            Voltar
+                        </a>
 
                         <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                             <h4>

@@ -10,53 +10,44 @@ const notification= require('./Notifications.js');
 
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
+const validateRegisterInputVoluntary = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 const validatePasswordReset = require("../../validation/recover");
 
 // Load User model
 const User = require("../../models/user");
+const Voluntary = require("../../models/voluntary");
+const Company = require("../../models/company");
 const Token = require("../../models/token");
 
 function emailSend(user) {
   const email = user.email;
 
   User.findOne({ email }).then(user => {
-
-
     var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });
-
-    msgToken = 'http://' + "localhost:3000"/*req.headers.host*/ + '/ConfirmAccountToken/' + mytoken.token;
-    console.log("mytoken");
-
-    console.log(mytoken);
-
+    msgToken = 'http://' + req.headers.host + '/ConfirmAccountToken/' + mytoken.token;
     mytoken.save();
-
     const msg = template.confirmarEmail(email, msgToken);
     sender.sendEmail(msg);
-
   });
 };
 
-// @route POST api/users/register
+// @route POST api/users/registerVoluntary
 // @desc Register user
 // @access Public
-router.post("/register", (req, res) => {
-
+router.post("/registerVoluntary", (req, res) => {
   // Form validation
-  const { errors, isValid } = validateRegisterInput(req.body);
-
+  const { errors, isValid } = validateRegisterInputVoluntary(req.body);
   // Check validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
-
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
       return res.status(400).json({ email: "Email already exists" });
     } else {
       const newUser = new User({
-        number: req.body.number,
+        username: req.body.username,
         name: req.body.name,
         role: req.body.role,
         email: req.body.email,
@@ -72,30 +63,92 @@ router.post("/register", (req, res) => {
             .save()
             //.then(user => res.json(user))
             .then(user => {  const email = user.email;
-
-              User.findOne({ email }).then(user => {
-            
-                
-                var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });
-            
-                msgToken = 'http://' + "localhost:3000"/*req.headers.host*/ + '/ConfirmAccountToken/' + mytoken.token;
-                console.log("mytoken");
-            
-                console.log(mytoken);
-            
-                mytoken.save();
-                notification.createNotification( 'confirmarEmail','', email);
-                
+              User.findOne({ email }).then(user => {        
+                var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });          
+                msgToken = 'http://' + req.headers.host + '/ConfirmAccountToken/' + mytoken.token;           
+                mytoken.save();          
                 const msg = template.confirmarEmail(email, msgToken);
                 sender.sendEmail(msg);
                 res.json(user);
-            
+                const newVoluntary = new Voluntary({
+                  name: req.body.name,
+                  email: req.body.email,
+                  phone: req.body.phone,
+                  address: req.body.address,
+                  birthDate: req.body.birthDate,
+                  memberIPS: req.body.memberIPS,
+                  schoolIPS: req.body.schoolIPS,
+                  courseIPS: req.body.courseIPS,
+                  interestAreas: req.body.interestAreas,
+                  reasons: req.body.reasons,
+                  observations: req.body.observations,
+                  authorization: req.body.authorization,
+                  userID: user._id
+                });       
+                newVoluntary.save();
               });})
             .catch(err => console.log(err));
         });
       });
+    }
+  });
+});
 
-     
+// @route POST api/users/registerCompany
+// @desc Register user
+// @access Public
+router.post("/registerCompany", (req, res) => {
+  // Form validation
+  const { errors, isValid } = validateRegisterInputCompany(req.body);
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+  User.findOne({ email: req.body.email }).then(user => {
+    if (user) {
+      return res.status(400).json({ email: "Email already exists" });
+    } else {
+      const newUser = new User({
+        username: req.body.username,
+        name: req.body.name,
+        role: req.body.role,
+        email: req.body.email,
+        password: req.body.password
+      });
+
+      // Hash password before saving in database
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
+          if (err) throw err;
+          newUser.password = hash;
+          newUser
+            .save()
+            //.then(user => res.json(user))
+            .then(user => {  const email = user.email;
+              User.findOne({ email }).then(user => {        
+                var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });          
+                msgToken = 'http://' + req.headers.host + '/ConfirmAccountToken/' + mytoken.token;           
+                mytoken.save();          
+                const msg = template.confirmarEmail(email, msgToken);
+                sender.sendEmail(msg);
+                res.json(user);
+                const newCompany = new Company({
+                  name: req.body.name,
+                  email: req.body.email,
+                  phone: req.body.phone,
+                  address: req.body.address,
+                  birthDate: req.body.birthDate,
+                  companyAddress: req.body.companyAddress,
+                  companyName: req.body.companyName,
+                  observations: req.body.observations,
+                  authorization: req.body.authorization,
+                  userID: user._id
+                });       
+                newCompany.save();
+              });})
+            .catch(err => console.log(err));
+        });
+      });
     }
   });
 });
@@ -106,38 +159,22 @@ router.post("/register", (req, res) => {
 // @desc Recover User password
 // @access Public
 router.post("/confirmtoken", (req, res) => {
-
-  console.log("Got into backend ");
-
   var reqToken = req.body.token.token;
   reqToken = reqToken.toString();
-  console.log("token -> " + reqToken);
-
   Token.findOne({token: reqToken }).then(token => {
     if (!token) {
-      console.log("Invalid token");
       return res.status(404).json({ tokennotfound: "Token not found" });
     }
-
-    console.log("Valid token");
     const email = token._userEmail;
-    console.log("Token email -> " + email);
-
     User.findOne({ email }).then(user => {
-      console.log("Found user");
-
       user.updateOne(
         { isVerified: true })
         .catch(err => {
           res.status(400).send("unable to update the database");
         });
-
-      console.log("Updated user");
       res.json(user);
     });
-
   });
-
 });
 
 
@@ -145,18 +182,14 @@ router.post("/confirmtoken", (req, res) => {
 // @desc Login user and return JWT token
 // @access Public
 router.post("/login", (req, res) => {
-
   // Form validation
   const { errors, isValid } = validateLoginInput(req.body);
-
   // Check validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
-
   const email = req.body.email;
   const password = req.body.password;
-
   // Find user by email
   User.findOne({ email }).then(user => {
     // Check if user exists
@@ -167,11 +200,8 @@ router.post("/login", (req, res) => {
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
         // User matched
-
         // Make sure the user has been verified
-        console.log(user.isVerified);
         if (user.isVerified) {
-          console.log("after true");
           // Create JWT Payload
           const payload = {
             id: user.id,
@@ -195,7 +225,6 @@ router.post("/login", (req, res) => {
         } else {
           return res.status(401).json({ notverified: 'Your account has not been verified.' });
         }
-
       } else {
         return res
           .status(400)
@@ -209,30 +238,20 @@ router.post("/login", (req, res) => {
 // @desc Recover User password
 // @access Public
 router.post("/recover", (req, res) => {
-
   const email = req.body.email;
-
   // Find user by email
-  console.log(email);
   User.findOne({ email }).then(user => {
-    console.log(user.email);
     // Check if user exists
     if (!user) {
       return res.status(404).json({ emailnotfound: "Email not found" });
     }
-
     var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });
-
     user.passwordResetToken = mytoken.token;
     user.passwordResetExpires = Date.now();
-
     user.save();
-
-    msgToken = 'http://' + "localhost:3000"/*req.headers.host*/ + '/resetpassword/' + mytoken.token;
-
+    msgToken = 'http://' + req.headers.host + '/resetpassword/' + mytoken.token;
     const msg = template.recuperarPassword(user.email, msgToken);
     sender.sendEmail(msg);
-
     res.json(user);
   });
 
@@ -242,18 +261,14 @@ router.post("/recover", (req, res) => {
 // @desc Recover User password
 // @access Public
 router.post("/updatePassword", (req, res) => {
-
   // Form validation
   const { errors, isValid } = validatePasswordReset(req.body);
-
   // Check validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
-
   const passwordResetToken = req.body.token.token;
   var mypassword = req.body.password;
-
   // Find user by email
   User.findOne({ passwordResetToken }).then(user => {
     // Check if user exists
@@ -263,19 +278,16 @@ router.post("/updatePassword", (req, res) => {
     const createdDate = user.passwordResetExpires;
     const nowDate = Date.now();
     const difference = nowDate - createdDate;
-
     // 12 Horas em milisegundos
     if (difference >= 12 * 60 * 60 * 1000) {
       return res.status(401).json({ tokenexpired: "Token date expired" });
     }
-
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(mypassword, salt, (err, hash) => {
         if (err) throw err;
         user.password = hash;
         user.passwordResetToken = null;
         user.passwordResetExpires = null;
-
         user.save()
           .then(user => res.json(user))
           .catch(err => console.log(err));
@@ -288,15 +300,12 @@ router.post("/updatePassword", (req, res) => {
 // @desc Create user
 // @access Public
 router.post("/createUser", (req, res) => {
-
   // Form validation
   const { errors, isValid } = validateRegisterInput(req.body);
-
   // Check validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
-
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
       return res.status(400).json({ email: "Email already exists" });
@@ -308,7 +317,6 @@ router.post("/createUser", (req, res) => {
         email: req.body.email,
         password: req.body.password
       });
-
       // Hash password before saving in database
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -376,6 +384,24 @@ router.route('/deleteUser/:id').get(function (req, res) {
   User.findByIdAndRemove({ _id: req.params.id }, function (err, user) {
     if (err) res.json(err);
     else res.json('Successfully removed');
+  });
+});
+
+router.post("/searchUser", (req, res) => {   
+  User.find({ name: { $regex: req.body.search, $options: "i" } }).then(user => {
+      if (user) {
+          res.json(user);
+      } else {
+        res.status(404).send({message: "Not found any user with that name"});
+      }
+  })
+});
+
+// Defined get route
+router.route('/getUser/:id').get(function (req, res) {
+  let id = req.params.id;
+  User.findById(id, function (err, user){
+      res.json(user);
   });
 });
 

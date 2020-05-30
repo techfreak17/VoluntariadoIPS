@@ -1,49 +1,104 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import M from "materialize-css";
+import options from "materialize-css";
+import axios from 'axios';
+import ProjectsRow from "./ProjectsRow"
+
+
+
 class Landing extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { project: [{ title: "", date: "" }, { title: "", date: "" }, { title: "", date: "desricao" }, { title: "", date: "" }] };
+        axios.get('/api/projects/listProjects')
+            .then(response => {
+                this.setState({ project: response.data });
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
     render() {
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.slider');
+            var instances = M.Slider.init(elems, options);
+            console.log(instances);
+        });
+
+        let projectL = [];
+
+        const projectList = () => {
+            for (let i = 0; i < this.state.project.length; i++) {
+                projectL.push(<ProjectsRow obj={this.state.project[i]} key={i} className="caption left-align" />);
+            }
+            return projectL;
+        };
+
         return (
-            <div style={{ height: "75vh", marginTop: "2%"}} className="container valign-wrapper">
-                <div className="row">
-                    <div className="col s12 center-align">
-                        <h4>
-                            Bem-vindo à plataforma {" "}
-                            <span style={{ fontFamily: "monospace" }}>VoluntariadoIPS</span>
-                            .
-                        </h4>
-                        <h5>
-                            Pronto para ajudar?
-                        </h5>
-                        <p className="flow-text grey-text text-darken-1">
-                            Junte-se a nós em diversos projetos que são
-                            enriquecedores tanto para si como para a comunidade!
-                        </p>
-                        <br />
-                        <div className="col s6">
-                            <Link
-                                to="/register"
-                                style={{
-                                    width: "140px",
-                                    borderRadius: "3px",
-                                    letterSpacing: "1.5px"
-                                }}
-                                className="btn btn-large waves-effect waves-light hoverable waves-light red">
-                                Registar
-                            </Link>
+            <div className="container-fluid" style={{ width: "100%" }}>
+                <div className="slider">
+                    <ul className="slides">
+                        {projectList()}
+                    </ul>
+                </div>
+
+                <div className="container" style={{ width: "60%", backgroundColor: "#23395D", borderRadius: 50, marginTop: 25, marginBottom: 30, boxShadow: "0 0 15px 3px green" }}>
+                    <div className="section">
+                        <h2 className="header center text-lighten-2" style={{ fontFamily: "monospace", fontWeight: "bold", color: "#50C878" }}>Plataforma {" "}
+                            <span>VoluntariadoIPS</span></h2>
+                        <div className="row center" style={{ width: "100%", textLighten: 2, fontWeight: "bold", color: "#eadbd4" }}>
+                            <h5 className="header col s12 " >Pronto para ajudar ?
+                        <p className="flow-text text-darken-1">
+                                    Junte-se a nós em diversos projetos
+                                    enriquecedores para si e para a comunidade IPS.
+                        </p></h5>
+                            <h5 style={{ color: "#eadbd4", fontWeight: "bold"}}>REGISTE-SE</h5>
                         </div>
-                        <div className="col s6">
-                            <Link
-                                to="/login"
-                                style={{
-                                    width: "140px",
-                                    borderRadius: "3px",
-                                    letterSpacing: "1.5px"
-                                }}
-                                className="btn btn-large btn-flat waves-effect hoverable blue white-text">
-                                Log In
-                            </Link>
+                        <div className="row center" style={{ width: "40%" }}>
+                            <div className="col s6">
+                                <Link
+                                    to="/registerCompany"
+                                    style={{
+                                        width: "140px",
+                                        borderRadius: 10,
+                                        letterSpacing: "1.5px",
+                                        fontWeight: "bold"
+                                    }}
+                                    className="btn btn-large waves-effect waves-light hoverable green">
+                                    Empresa
+                                </Link>
+                            </div>
+                            <div className="col s6">
+                                <a href="/registerVoluntary"
+                                    style={{
+                                        width: "170px",
+                                        borderRadius: 10,
+                                        letterSpacing: "1.5px",
+                                        fontWeight: "bold"
+                                    }}
+                                    onClick="window.location.reload()"
+                                    className="btn btn-large waves-effect waves-light hoverable green">
+                                    Voluntário</a>
+                            </div>
                         </div>
                     </div>
+                </div>
+
+                <div className="container" style={{ marginBottom: 20, display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <a className="img" href="https://moodle.ips.pt/1920/" style={{ paddingRight: 100 }}>
+                        <img src={require('../layout/images/MOODLE.png')}
+                            alt="Moodle" />
+                    </a>
+                    <a className="img" href="http://aaips.pt/">
+                        <img src={require('../layout/images/AAIPS.png')}
+                            alt="AAIPS" />
+                    </a>
+                    <a className="img" href="https://www.ips.pt/ips_si/web_page.inicial" style={{ paddingLeft: 100 }}>
+                        <img src={require('../layout/images/IPS.png')}
+                            alt="IPS" />
+                    </a>
                 </div>
             </div>
         );

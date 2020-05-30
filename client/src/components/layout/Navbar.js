@@ -2,11 +2,17 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
-import PushNotifications from "../pushNotifications/PushNotifications.js";
-import PushNotificationsToast from "../pushNotifications/PushNotificationToast.js";
-
+import axios from 'axios';
 
 class Navbar extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            username: "",
+            id: this.props.auth.user.id
+        }
+    }
     onLogoutClick = e => {
         e.preventDefault();
         this.props.logoutUser();
@@ -14,30 +20,64 @@ class Navbar extends Component {
  
 
 
+    componentDidMount() {
+        axios.get('/api/users/getUser/' + this.state.id)
+            .then(response => {
+                this.setState({
+                    username: response.data.username,
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
+
     render() {
         const { user } = this.props.auth;
-
         return (
-            <nav className="nav" style={{
-                width: "100%",
-                position: "fixed",
-                top: 0,
-                backgroundColor: "#23395D",
-                zIndex: "10"
-            }}>
-                <div className="nav-wrapper">
-                    <ul id="nav-mobile" className="right">
-                        <li><a className="navbar-brand" href="/dashboard"><img src={require('./images/logo.png')}
-                            alt="(Não esquecer de verificar no spam)"
-                            className="img-responsive"
-                            style={{ position: "fixed", left: 0, height: "auto", width: "auto", maxWidth: 200}} /></a></li>
-                        <li><PushNotificationsToast></PushNotificationsToast></li> 
-                        {/*<li><PushNotifications></PushNotifications></li> */}
-                        <li><a href="/listUsers"><i className="material-icons left">person</i>User</a></li>
-                        <li><button onClick={this.onLogoutClick} className="red btn" style={{ borderRadius: 10 }}>Sair</button></li>
-                    </ul>
-                </div>
-            </nav>
+            <div>
+                {user.id !== undefined ? (
+                    <nav className="nav" style={{
+                        maxWidth: "100%",
+                        top: 0,
+                        backgroundColor: "#23395D",
+                        zIndex: "10"
+                    }}>
+                        <div className="nav-wrapper">
+                            <ul id="nav-mobile" className="right">
+                                <li><a className="navbar-brand" href="/dashboard"><img src={require('./images/logo.png')}
+                                    alt="(Não esquecer de verificar no spam)"
+                                    className="img-responsive"
+                                    style={{ position: "absolute", left: 0, height: "auto", width: "auto", maxWidth: 200 }} /></a></li>
+                                <li><PushNotificationsToast></PushNotificationsToast></li>    
+                                <li><a href="/listNotifications"><i className="material-icons">notifications</i></a></li>
+
+                                <li><a href="/listUsers"><i className="material-icons left">person</i>{this.state.username}</a></li>
+                                <li><button onClick={this.onLogoutClick} className="red btn" style={{ borderRadius: 10, marginLeft: 12, marginBottom: 5 }}>Sair</button></li>
+                            </ul>
+                        </div>
+                    </nav>
+                ) : (
+                        <nav className="nav" style={{
+                            width: "100%",
+                            top: 0,
+                            backgroundColor: "#23395D",
+                            zIndex: "10"
+                        }}>
+                            <div className="nav-wrapper">
+                                <ul id="nav-mobile" className="right">
+                                    <li><a className="navbar-brand" href="/"><img src={require('./images/logo.png')}
+                                        alt="(Não esquecer de verificar no spam)"
+                                        className="img-responsive"
+                                        style={{ position: "absolute", left: 0, height: "auto", width: "auto", maxWidth: 200 }} /></a></li>
+                                    <li><a href="/login"><i className="material-icons left">person</i>Iniciar Sessão</a></li>
+                                    <li><a href="/registerVoluntary" className="green btn" style={{ borderRadius: 10, marginBottom: 3 }}>Registar</a></li>
+                                </ul>
+                            </div>
+                        </nav>
+                    )}
+            </div>
         );
     }
 }

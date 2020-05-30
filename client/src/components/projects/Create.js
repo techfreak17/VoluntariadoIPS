@@ -5,7 +5,6 @@ import { createProject } from "../../actions/projectActions";
 import classnames from "classnames";
 import M from "materialize-css";
 import options from "materialize-css";
-import axios from 'axios';
 
 class Create extends Component {
   constructor(props) {
@@ -30,24 +29,10 @@ class Create extends Component {
     }
 
     this.handleChangeInterestAreas = this.handleChangeInterestAreas.bind(this);
-    //this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.uploadFile = this.uploadFile.bind(this);
     this.onChangeRelatedEntities = this.onChangeRelatedEntities.bind(this);
   }
-
-  /**componentDidMount() {
-    axios.get('/api/projects/getCompanies')
-      .then(response => {
-        this.setState({
-          relatedEntities: (response.data)
-        });
-        console.log(this.state.companies);
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-  }*/
 
   uploadFile(event) {
     console.log(event.target.files[0]);
@@ -129,37 +114,10 @@ class Create extends Component {
     })
   }
 
-  /*
-  addCompany(e){
-    e.preventDefault();
-    this.setState({relatedEntities: [...this.state.relatedEntities,""]})
-  }
-
-  handleChange(e,index){
-    this.state.relatedEntities[index] = e.target.value
-    this.setState({relatedEntities: this.state.relatedEntities})
-  }
-
-  handleRemove(e,index){
-    e.preventDefault();
-    this.state.relatedEntities.splice(index,1)
-    console.log(this.state.relatedEntities)
-    this.setState({relatedEntities: this.state.relatedEntities})
-  }
-
-  handleSubmit(e){
-    e.preventDefault();
-   console.log(this.state);
-  }*/
-
   onChangeRelatedEntities = e => {
     var input = e.target.value;
     var point = ",";
-    var semiColon = ";";
-    var space = " ";
     var inputList = input.split(point); 
-    var inputList = input.split(semiColon); 
-    var inputList = input.split(space); 
     console.log(inputList);
     this.setState({ [e.target.id]: inputList});
     console.log(this.state.relatedEntities);
@@ -352,26 +310,6 @@ class Create extends Component {
                 <label htmlFor="name">Observações</label>
                 <span className="red-text">{errors.observations}</span>
               </div>
-
-              {/*
-              <div className="input-field col s12">
-                <label>Entidades Envolvidas</label><br></br><br></br>
-               {
-                 this.state.relatedEntities.map((company,index)=>{
-                   return(
-                       <div key={index}>
-                         <input onChange= {(e)=>this.handleChange(e,index)} value={company}></input>
-                         <button onClick= {(e)=>this.handleRemove(e,index)}>Remove</button>
-                       </div>
-                   )
-                 })
-               }
-               <br></br>
-               <button onClick={(e)=>this.addCompany(e)}>Add Company</button><br></br><br></br>
-
-               <button onClick= {(e)=>this.handleSubmit(e)}>Submit</button>
-              </div>
-              */}
 
               <div className="input-field col s12">
                 <input

@@ -22,6 +22,7 @@ router.post("/createProject", (req, res) => {
     if (project) {
       return res.status(400).json({ title: "Project already exists" });
     } else {
+      console.log(req.body.related_entities);
       const newProject = new Project({
         title: req.body.title,
         synopsis: req.body.synopsis,
@@ -36,6 +37,7 @@ router.post("/createProject", (req, res) => {
         photo: req.body.photo,
         observations: req.body.observations,
         authorization: req.body.authorization,
+        relatedEntities: req.body.relatedEntities,
         userID: req.body.userID
       });
       newProject

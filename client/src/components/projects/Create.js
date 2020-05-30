@@ -28,11 +28,12 @@ class Create extends Component {
       userID: this.props.auth.user.id,
       errors: {}
     }
-    
+
     this.handleChangeInterestAreas = this.handleChangeInterestAreas.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    //this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.uploadFile = this.uploadFile.bind(this);
+    this.onChangeRelatedEntities = this.onChangeRelatedEntities.bind(this);
   }
 
   /**componentDidMount() {
@@ -76,7 +77,7 @@ class Create extends Component {
 
   handleChangeInterestAreas(event) {
     this.setState({ interestAreas: Array.from(event.target.selectedOptions, (item) => item.value) });
-}
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
@@ -88,9 +89,7 @@ class Create extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    var array = [];
-    array = this.addButton;
-    console.log(array);
+    console.log(this.state.relatedEntities);
     const obj = {
       title: this.state.title,
       synopsis: this.state.synopsis,
@@ -130,6 +129,7 @@ class Create extends Component {
     })
   }
 
+  /*
   addCompany(e){
     e.preventDefault();
     this.setState({relatedEntities: [...this.state.relatedEntities,""]})
@@ -150,8 +150,21 @@ class Create extends Component {
   handleSubmit(e){
     e.preventDefault();
    console.log(this.state);
-  }
-  
+  }*/
+
+  onChangeRelatedEntities = e => {
+    var input = e.target.value;
+    var point = ",";
+    var semiColon = ";";
+    var space = " ";
+    var inputList = input.split(point); 
+    var inputList = input.split(semiColon); 
+    var inputList = input.split(space); 
+    console.log(inputList);
+    this.setState({ [e.target.id]: inputList});
+    console.log(this.state.relatedEntities);
+  };
+
 
   render() {
     const { errors } = this.state;
@@ -340,6 +353,7 @@ class Create extends Component {
                 <span className="red-text">{errors.observations}</span>
               </div>
 
+              {/*
               <div className="input-field col s12">
                 <label>Entidades Envolvidas</label><br></br><br></br>
                {
@@ -357,7 +371,22 @@ class Create extends Component {
 
                <button onClick= {(e)=>this.handleSubmit(e)}>Submit</button>
               </div>
+              */}
 
+              <div className="input-field col s12">
+                <input
+                  onChange={this.onChangeRelatedEntities}
+                  value={this.state.relatedEntities}
+                  error={errors.relatedEntities}
+                  id="relatedEntities"
+                  type="text"
+                  className={classnames("", {
+                    invalid: errors.relatedEntities
+                  })}
+                />
+                <label htmlFor="name">Entidades Envolvidas (ex: Siemens, Google, Vodafone)</label>
+                <span className="red-text">{errors.objectives}</span>
+              </div>
 
               <div className="input-field col s12">
                 <label htmlFor="name">Logótipo</label><br></br><br></br>

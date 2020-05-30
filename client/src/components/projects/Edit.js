@@ -1,41 +1,28 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
+import classnames from "classnames";
 
 export default class Edit extends Component {
   constructor(props) {
     super(props);
-    this.onChangeTitle = this.onChangeTitle.bind(this);
-    this.onChangeSynopsis = this.onChangeSynopsis.bind(this);
-    this.onChangeTarget = this.onChangeTarget.bind(this);
-    this.onChangeObjectives = this.onChangeObjectives.bind(this);
-    this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.onChangeDate = this.onChangeDate.bind(this);
-    this.onChangeAreas = this.onChangeAreas.bind(this);
-    this.onChangeObservations = this.onChangeObservations.bind(this);
-    this.onChangeAuthorization = this.onChangeAuthorization.bind(this);
-    this.onChangeUserInCharge = this.onChangeUserInCharge.bind(this);
-    this.onChangeContactPerson = this.onChangeContactPerson.bind(this);
-    this.onChangeEmailPerson = this.onChangeEmailPerson.bind(this);
-    this.onChangePhonePerson = this.onChangePhonePerson.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-
     this.state = {
       title: "",
-      contact_person: "",
-      email_person: "",
-      phone_person: "",
       synopsis: "",
+      intervationArea: "",
       target_audience: "",
       objectives: "",
-      date: "",
-      areas: "",
       description: "",
-      related_entities: "",
+      requiredFormation: false,
+      formation: "",
+      date: "",
+      interestAreas: [],
+      photo: "",
+      relatedEntities: [],
       observations: "",
-      authorization: "",
-      user_in_charge: ""
     }
+
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -43,19 +30,18 @@ export default class Edit extends Component {
       .then(response => {
         this.setState({
           title: response.data.title,
-          contact_person: response.data.contact_person,
-          email_person: response.data.email_person,
-          phone_person: response.data.phone_person,
           synopsis: response.data.synopsis,
-          target_audience: response.data.target_audience,
+          intervationArea: response.data.intervationArea,
+          target_audience: response.data.taget,
           objectives: response.data.objectives,
-          date: response.data.date,
-          areas: response.data.areas,
           description: response.data.description,
-          related_entities: response.data.related_entities,
+          requiredFormation: response.data.requiredFormation,
+          formation: response.data.formation,
+          date: response.data.date,
+          interestAreas: response.data.interestAreas,
+          photo: response.data.photo,
+          relatedEntities: response.data.relatedEntities,
           observations: response.data.observations,
-          authorization: response.data.authorization,
-          user_in_charge: response.data.user_in_charge,
         });
       })
       .catch(function (error) {
@@ -63,76 +49,9 @@ export default class Edit extends Component {
       })
   }
 
-  onChangeTitle(e) {
-    this.setState({
-      title: e.target.value
-    });
-  }
-  onChangeSynopsis(e) {
-    this.setState({
-      synopsis: e.target.value
-    })
-  }
-  onChangeTarget(e) {
-    this.setState({
-      target_audience: e.target.value
-    })
-  }
-  onChangeObjectives(e) {
-    this.setState({
-      objectives: e.target.value
-    })
-  }
-  onChangeDescription(e) {
-    this.setState({
-      description: e.target.value
-    })
-  }
-  onChangeDate(e) {
-    this.setState({
-      date: e.target.value
-    })
-  }
-  onChangeAreas(e) {
-    this.setState({
-      areas: e.target.value
-    })
-  }
-  onChangeRelatedEntities(e) {
-    this.setState({
-      related_entities: e.target.value
-    })
-  }
-  onChangeObservations(e) {
-    this.setState({
-      observations: e.target.value
-    })
-  }
-  onChangeAuthorization(e) {
-    this.setState({
-      authorization: e.target.value
-    })
-  }
-  onChangeUserInCharge(e) {
-    this.setState({
-      user_in_charge: e.target.value
-    })
-  }
-  onChangeContactPerson(e) {
-    this.setState({
-      contact_person: e.target.value
-    })
-  }
-  onChangeEmailPerson(e) {
-    this.setState({
-      email_person: e.target.value
-    })
-  }
-  onChangePhonePerson(e) {
-    this.setState({
-      phone_person: e.target.value
-    })
-  }
+  onChange = e => {
+    this.setState({ [e.target.id]: e.target.value });
+  };
 
   onSubmit(e) {
     e.preventDefault();
@@ -162,126 +81,173 @@ export default class Edit extends Component {
     return (
       <div style={{ height: "75vh", marginTop: "5%" }} className="container">
         <h3 align="left">Editar Detalhes</h3>
-        <form onSubmit={this.onSubmit}>
-          <div className="form-group">
-            <label>Nome do Projeto:  </label>
+        <form noValidate>
+          <div className="input-field col s12">
+          <label>Designação do Projeto/Atividade *</label><br></br><br></br>
             <input
-              type="text"
-              className="form-control"
+              onChange={this.onChange}
               value={this.state.title}
-              onChange={this.onChangeTitle}
+              id="title"
+              type="text"
             />
           </div>
-          <div className="form-group">
-            <label>Pessoa de Contacto: </label>
-            <input type="text"
-              className="form-control"
-              value={this.state.contact_person}
-              onChange={this.onChangeContactPerson}
-            />
-          </div>
-          <div className="form-group">
-            <label>Email: </label>
-            <input type="email"
-              className="form-control"
-              value={this.state.email_person}
-              onChange={this.onChangeEmailPerson}
-            />
-          </div>
-          <div className="form-group">
-            <label>Telemóvel: </label>
-            <input type="number"
-              className="form-control"
-              value={this.state.phone_person}
-              onChange={this.onChangePhonePerson}
-            />
-          </div>
-          <div className="form-group">
-            <label>Resumo do Projeto: </label>
-            <input type="text"
-              className="form-control"
+
+          <div className="input-field col s12">
+          <label>Resumo do Projeto/Atividade *</label><br></br><br></br>
+            <input
+              onChange={this.onChange}
               value={this.state.synopsis}
-              onChange={this.onChangeSynopsis}
+              id="synopsis"
+              type="text"
             />
           </div>
-          <div className="form-group">
-            <label>Áreas Intervenção: </label>
-            <input type="text"
-              className="form-control"
-              value={this.state.areas}
-              onChange={this.onChangeAreas}
+
+          <div className="input-field col s12">
+          <label>Área de Intervenção *</label><br></br><br></br>
+            <input
+              onChange={this.onChange}
+              value={this.state.intervationArea}
+              id="intervationArea"
+              type="text"
             />
           </div>
-          <div className="form-group">
-            <label>Público Alvo: </label>
-            <input type="text"
-              className="form-control"
+
+          <div className="input-field col s12">
+          <label>Público Alvo (Beneficiários) *</label><br></br><br></br>
+            <input
+              onChange={this.onChange}
               value={this.state.target_audience}
-              onChange={this.onChangeTarget}
+              id="target_audience"
+              type="text"
             />
           </div>
-          <div className="form-group">
-            <label>Objetivos: </label>
-            <input type="text"
-              className="form-control"
+
+          <div className="input-field col s12">
+          <label>Objetivos</label><br></br><br></br>
+            <input
+              onChange={this.onChange}
               value={this.state.objectives}
-              onChange={this.onChangeObjectives}
+              id="objectives"
+              type="text"
             />
           </div>
-          <div className="form-group">
-            <label>Descrição das Atividades: </label>
-            <input type="text"
-              className="form-control"
+
+          <div className="input-field col s12">
+          <label>Descrição das Atividades *</label><br></br><br></br>
+            <input
+              onChange={this.onChange}
               value={this.state.description}
-              onChange={this.onChangeDescription}
+              id="description"
+              type="text"
             />
           </div>
-          <div className="form-group">
-            <label>Observações </label>
-            <input type="text"
-              className="form-control"
-              value={this.state.observations}
-              onChange={this.onChangeObservations}
+
+          <div className="input-field col s12">
+            <b>Exigência de formação específica* *</b>
+            <p>
+              <label>
+                <input type="checkbox" checked={this.state.requiredFormation} onChange={this.toggleChangeRequiredFormation} />
+                <span>Sim</span>
+              </label>
+            </p>
+          </div>
+
+          <div className="input-field col s12">
+          <label>Se <b>sim</b>, Que tipo de formação ? *</label><br></br>
+            <input
+              onChange={this.onChange}
+              value={this.state.formation}
+              id="formation"
+              type="text"
             />
           </div>
-          <div className="form-group">
-            <label>Data </label>
-            <input type="date"
-              className="form-control"
+
+          <div className="input-field col s12">
+            <label htmlFor="name">Data/Horário Previsto *</label><br></br><br></br>
+            <input
+              onChange={this.onChange}
               value={this.state.date}
-              onChange={this.onChangeDate}
+              id="date"
+              type="datetime-local"
             />
           </div>
-          <div className="col s12 center-align row" style={{paddingBottom: 60}}>
-            <div className="col s6">
-              <button
-                style={{
-                  width: "150px",
-                  borderRadius: "3px",
-                  letterSpacing: "1.5px",
-                  marginTop: "1rem",
-                  backgroundColor: "green"
-                }}
-                type="submit"
-                className="btn btn-large waves-effect waves-light hoverable accent-3">
-                Submeter
-                </button>
-            </div>
-            <div className="col s6">
-              <button
-                style={{
-                  width: "150px",
-                  borderRadius: "3px",
-                  letterSpacing: "1.5px",
-                  marginTop: "1rem",
-                  backgroundColor: "red"
-                }}
-                className="btn btn-large waves-effect waves-light hoverable accent-3">
-                <Link to="/listProjects" style={{ color: "white" }}>Cancelar</Link>
-              </button>
-            </div>
+
+          <div className="input-field col s12">
+            <label>Para a concretização do Projeto/Atividades, em que áreas necessita de voluntários*</label><br></br><br></br>
+            <select multiple={true} value={this.state.interestAreas} onChange={this.handleChangeInterestAreas} className='dropdown-content'>
+              <option disabled>Selecionar Opções</option>
+              <option value="Atividades Académicas">Atividades Académicas (por ex. apoio às matrículas…)</option>
+              <option value="Ambiental">Ambiental (por ex. ações de sensibilização, de limpeza…</option>
+              <option value="Apoio a Eventos">Apoio a Eventos</option>
+              <option value="Informática">Informática (por ex. criação de sites, de bases de dados, formação…)</option>
+              <option value="Comunicação">Comunicação (por ex. divulgação nas Escolas Secundárias/Profissionais, Futurália…)</option>
+              <option value="Cultural">Cultural (por ex. teatro; música...)</option>
+              <option value="Desporto">Desporto (por ex. apoio a eventos desportivos, caminhadas…)</option>
+              <option value="Educação">Educação (por ex. estudo acompanhado, alfabetização…)</option>
+              <option value="Saúde">Saúde (por ex. rastreios, ações de sensibilização…)</option>
+              <option value="Social">Social (por ex. apoio a idosos, a crianças, Banco Alimentar…)</option>
+            </select>
+          </div>
+
+          <div className="input-field col s12">
+          <label>Observações</label><br></br><br></br>
+            <input
+              onChange={this.onChange}
+              value={this.state.observations}
+              id="observations"
+              type="text"
+            />
+          </div>
+
+          <div className="input-field col s12">
+          <label>Entidades Envolvidas (ex: Siemens, Google, Vodafone)</label><br></br><br></br>
+            <input
+              onChange={this.onChangeRelatedEntities}
+              value={this.state.relatedEntities}
+              id="relatedEntities"
+              type="text"
+            />
+          </div>
+
+          <div className="input-field col s12">
+            <label htmlFor="name">Logótipo</label><br></br><br></br>
+            <input
+              accept="image/*"
+              type="file"
+              className="inputfile"
+              onChange={this.uploadFile}
+            />
           </div>
         </form>
+        <div className="col s12 center-align row" style={{ paddingBottom: 60 }}>
+          <div className="col s6">
+            <button
+              style={{
+                width: "150px",
+                borderRadius: "3px",
+                letterSpacing: "1.5px",
+                marginTop: "1rem",
+                backgroundColor: "green"
+              }}
+              type="submit"
+              className="btn btn-large waves-effect waves-light hoverable accent-3">
+              Submeter
+                </button>
+          </div>
+          <div className="col s6">
+            <button
+              style={{
+                width: "150px",
+                borderRadius: "3px",
+                letterSpacing: "1.5px",
+                marginTop: "1rem",
+                backgroundColor: "red"
+              }}
+              className="btn btn-large waves-effect waves-light hoverable accent-3">
+              <Link to="/listProjects" style={{ color: "white" }}>Cancelar</Link>
+            </button>
+          </div>
+        </div>
       </div>
     )
   }

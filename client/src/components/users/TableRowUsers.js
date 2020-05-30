@@ -18,7 +18,7 @@ class TableRowUsers extends Component {
       return (
           <tr>
             <td>
-              {this.props.obj.name}
+              {this.props.obj.username}
             </td>
             <td>
               {this.props.obj.email}
@@ -27,13 +27,13 @@ class TableRowUsers extends Component {
               {this.props.obj.role}
             </td>
             <td>
-              <Link to={"/getUser/" + this.props.obj._id} className="btn btn-primary" style={{backgroundColor: "#03C04A"}}>Ver</Link>
+              <Link to={"/getUser/" + this.props.obj._id} className="btn btn-primary" style={{backgroundColor: "#B9BBB6"}}><i className="material-icons" style={{ color: "black" }}>search</i></Link>
            </td>
             <td>
-              <Link to={"/editUser/" + this.props.obj._id} className="btn btn-primary" style={{backgroundColor: "lightBlue", color: "black"}}>Editar</Link>
+              <Link to={"/editUser/" + this.props.obj._id} className="btn btn-primary" style={{backgroundColor: "#B9BBB6", color: "black"}}><i className="material-icons" style={{ color: "black" }}>edit</i></Link>
             </td>
             <td>
-              <button onClick={this.delete} className="btn btn-danger" style={{backgroundColor: "#9B1003"}}>Apagar</button>
+              <button onClick={this.delete} className="btn btn-danger" style={{backgroundColor: "#B9BBB6"}}><i className="material-icons" style={{ color: "black" }}>delete</i></button>
             </td>
           </tr>
       );

@@ -50,10 +50,10 @@ class Recover extends Component {
         const { errors } = this.state;
 
         return (
-            <div className="container" style={{marginTop: "5%"}}>
+            <div className="container" style={{ marginTop: "5%" }}>
                 <div className="row">
                     <div className="col s8 offset-s2">
-                        <a href="/" className="btn-flat waves-effect" onClick="window.location.reload(true);">
+                        <a href="/" className="btn-flat waves-effect">
                             <i className="material-icons left">keyboard_backspace</i>
                             Voltar
                         </a>

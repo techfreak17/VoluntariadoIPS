@@ -11,13 +11,6 @@ const Company = require("../../models/company");
 // @access Public
 router.post("/createProject", (req, res) => {
   console.log(req.body.photo);
-  /*var img = fs.readFileSync(req.file.path);
-  var enconde_image = img.toString('base64');
-  var finalImg = {
-    contentType: req.file.mimetype,
-    path: req.file.path,
-    image: new Buffer(enconde_image, 'base64')
-  };*/
   Project.findOne({ title: req.body.title }).then(project => {
     if (project) {
       return res.status(400).json({ title: "Project already exists" });
@@ -141,7 +134,7 @@ router.route('/getProject/:id').get(function (req, res) {
 
 
 // Defined get route
-router.route('/getUser/:id').get(function (req, res) {
+router.route('/getProjectUser/:id').get(function (req, res) {
   let id = req.params.id;
   Project.findById(id, function (err, project) {
     let newId = project.userID;
@@ -151,18 +144,8 @@ router.route('/getUser/:id').get(function (req, res) {
   });
 });
 
-router.route('/getCompanies/').get(function (req, res) {
-  Company.find({}, { companyName: 1, _id: 0 }).then(companyData => {
-    if (companyData) {
-      res.json(companyData);
-    } else {
-      res.status(404).send({ message: "Not found any company with that name" });
-    }
-  });
-});
-
 // Defined get route
-router.route('/getUserDetails/:id').get(function (req, res) {
+router.route('/getProjectUserDetails/:id').get(function (req, res) {
   let id = req.params.id;
   Project.findById(id, function (err, project) {
     let newId = project.userID;

@@ -28,8 +28,8 @@ export default class Edit extends Component {
   componentDidMount() {
     axios.all([
       axios.get('/api/projects/getProject/' + this.props.match.params.id),
-      axios.get('/api/projects/getUser/' + this.props.match.params.id),
-      axios.get('/api/projects/getUserDetails/' + this.props.match.params.id),
+      axios.get('/api/projects/getProjectUser/' + this.props.match.params.id),
+      axios.get('/api/projects/getProjectUserDetails/' + this.props.match.params.id),
     ])
       .then(responseArr => {
         this.myDate = new Date(responseArr[0].data.date);

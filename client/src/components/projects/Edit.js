@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
-import classnames from "classnames";
+import M from "materialize-css";
+import options from "materialize-css";
 
 export default class Edit extends Component {
   constructor(props) {
@@ -13,13 +14,11 @@ export default class Edit extends Component {
       target_audience: "",
       objectives: "",
       description: "",
-      requiredFormation: false,
-      formation: "",
       date: "",
       interestAreas: [],
       photo: "",
-      relatedEntities: [],
       observations: "",
+      relatedEntities: [],
     }
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -32,16 +31,13 @@ export default class Edit extends Component {
           title: response.data.title,
           synopsis: response.data.synopsis,
           intervationArea: response.data.intervationArea,
-          target_audience: response.data.taget,
+          target_audience: response.data.target_audience,
           objectives: response.data.objectives,
           description: response.data.description,
-          requiredFormation: response.data.requiredFormation,
-          formation: response.data.formation,
           date: response.data.date,
-          interestAreas: response.data.interestAreas,
           photo: response.data.photo,
-          relatedEntities: response.data.relatedEntities,
           observations: response.data.observations,
+          relatedEntities: response.data.relatedEntities
         });
       })
       .catch(function (error) {
@@ -57,19 +53,15 @@ export default class Edit extends Component {
     e.preventDefault();
     const obj = {
       title: this.state.title,
-      contact_person: this.state.contact_person,
-      email_person: this.state.email_person,
-      phone_person: this.state.phone_person,
       synopsis: this.state.synopsis,
+      intervationArea: this.state.intervationArea,
       target_audience: this.state.target_audience,
       objectives: this.state.objectives,
-      date: this.state.date,
-      areas: this.state.areas,
       description: this.state.description,
-      related_entities: this.state.related_entities,
+      date: this.state.date,
+      photo: this.state.photo,
       observations: this.state.observations,
-      authorization: this.state.authorization,
-      user_in_charge: this.user_in_charge
+      relatedEntities: this.state.relatedEntities
     };
     axios.post('/api/projects/updateProject/' + this.props.match.params.id, obj)
       .then(res => console.log(res.data));
@@ -78,12 +70,18 @@ export default class Edit extends Component {
   }
 
   render() {
+    document.addEventListener('DOMContentLoaded', function () {
+      var elems = document.querySelectorAll('select');
+      var instances = M.FormSelect.init(elems, options);
+      console.log(instances);
+    });
+
     return (
       <div style={{ height: "75vh", marginTop: "5%" }} className="container">
         <h3 align="left">Editar Detalhes</h3>
         <form noValidate>
           <div className="input-field col s12">
-          <label>Designação do Projeto/Atividade *</label><br></br><br></br>
+            <label>Designação do Projeto/Atividade *</label><br></br><br></br>
             <input
               onChange={this.onChange}
               value={this.state.title}
@@ -93,7 +91,7 @@ export default class Edit extends Component {
           </div>
 
           <div className="input-field col s12">
-          <label>Resumo do Projeto/Atividade *</label><br></br><br></br>
+            <label>Resumo do Projeto/Atividade *</label><br></br><br></br>
             <input
               onChange={this.onChange}
               value={this.state.synopsis}
@@ -103,7 +101,7 @@ export default class Edit extends Component {
           </div>
 
           <div className="input-field col s12">
-          <label>Área de Intervenção *</label><br></br><br></br>
+            <label>Área de Intervenção *</label><br></br><br></br>
             <input
               onChange={this.onChange}
               value={this.state.intervationArea}
@@ -113,7 +111,7 @@ export default class Edit extends Component {
           </div>
 
           <div className="input-field col s12">
-          <label>Público Alvo (Beneficiários) *</label><br></br><br></br>
+            <label>Público Alvo (Beneficiários) *</label><br></br><br></br>
             <input
               onChange={this.onChange}
               value={this.state.target_audience}
@@ -123,7 +121,7 @@ export default class Edit extends Component {
           </div>
 
           <div className="input-field col s12">
-          <label>Objetivos</label><br></br><br></br>
+            <label>Objetivos</label><br></br><br></br>
             <input
               onChange={this.onChange}
               value={this.state.objectives}
@@ -133,31 +131,11 @@ export default class Edit extends Component {
           </div>
 
           <div className="input-field col s12">
-          <label>Descrição das Atividades *</label><br></br><br></br>
+            <label>Descrição das Atividades *</label><br></br><br></br>
             <input
               onChange={this.onChange}
               value={this.state.description}
               id="description"
-              type="text"
-            />
-          </div>
-
-          <div className="input-field col s12">
-            <b>Exigência de formação específica* *</b>
-            <p>
-              <label>
-                <input type="checkbox" checked={this.state.requiredFormation} onChange={this.toggleChangeRequiredFormation} />
-                <span>Sim</span>
-              </label>
-            </p>
-          </div>
-
-          <div className="input-field col s12">
-          <label>Se <b>sim</b>, Que tipo de formação ? *</label><br></br>
-            <input
-              onChange={this.onChange}
-              value={this.state.formation}
-              id="formation"
               type="text"
             />
           </div>
@@ -190,7 +168,7 @@ export default class Edit extends Component {
           </div>
 
           <div className="input-field col s12">
-          <label>Observações</label><br></br><br></br>
+            <label>Observações</label><br></br><br></br>
             <input
               onChange={this.onChange}
               value={this.state.observations}
@@ -200,7 +178,7 @@ export default class Edit extends Component {
           </div>
 
           <div className="input-field col s12">
-          <label>Entidades Envolvidas (ex: Siemens, Google, Vodafone)</label><br></br><br></br>
+            <label>Entidades Envolvidas (ex: Siemens, Google, Vodafone)</label><br></br><br></br>
             <input
               onChange={this.onChangeRelatedEntities}
               value={this.state.relatedEntities}
@@ -229,6 +207,7 @@ export default class Edit extends Component {
                 marginTop: "1rem",
                 backgroundColor: "green"
               }}
+              onClick={this.onSubmit}
               type="submit"
               className="btn btn-large waves-effect waves-light hoverable accent-3">
               Submeter

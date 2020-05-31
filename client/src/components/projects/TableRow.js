@@ -28,7 +28,7 @@ class TableRow extends Component {
           {this.myDate}
         </td>
         <td>
-          {this.props.obj.description}
+          {this.props.obj.synopsis}
         </td>
         <td>
           <Link to={"/getProject/" + this.props.obj._id} className="btn btn-primary" style={{backgroundColor: "#B9BBB6"}}><i className="material-icons" style={{ color: "black" }}>search</i></Link>
@@ -36,6 +36,7 @@ class TableRow extends Component {
         <td>
           <Link to={"/editProject/" + this.props.obj._id} className="btn btn-primary" style={{backgroundColor: "#B9BBB6", color: "black"}}><i className="material-icons" style={{ color: "black" }}>edit</i></Link>
         </td>
+        
         <td>
           <button onClick={this.delete} className="btn btn-danger" style={{backgroundColor: "#B9BBB6"}}><i className="material-icons" style={{ color: "black" }}>delete</i></button>
         </td>

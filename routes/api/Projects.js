@@ -23,15 +23,11 @@ router.post("/createProject", (req, res) => {
         target_audience: req.body.target_audience,
         objectives: req.body.objectives,
         description: req.body.description,
-        requiredFormation: req.body.requiredFormation,
-        formation: req.body.formation,
         date: req.body.date,
         interestAreas: req.body.interestAreas,
         photo: req.body.photo,
         observations: req.body.observations,
-        authorization: req.body.authorization,
-        relatedEntities: req.body.relatedEntities,
-        userID: req.body.userID
+        relatedEntities: req.body.relatedEntities
       });
       newProject
         .save()
@@ -56,35 +52,27 @@ router.route('/updateProject/:id').post(function (req, res) {
       res.status(404).send("data is not found");
     else {
       project.title = req.body.title;
-      project.contact_person = req.body.contact_person;
-      project.email_person = req.body.email_person;
-      project.phone_person = req.body.phone_person;
-      project.synopsis = req.body.synopsis;
-      project.target_audience = req.body.target_audience;
-      project.objectives = req.body.objectives;
-      project.date = (req.body.date) ? req.body.date : null;
-      project.areas = req.body.areas;
-      project.description = req.body.description;
-      project.related_entities = req.body.related_entities;
-      project.observations = req.body.observations;
-      project.authorization = req.body.authorization;
-      project.user_in_charge = req.body.user_in_charge;
+      project.synopsis= req.body.synopsis,
+      project.intervationArea= req.body.intervationArea,
+      project.target_audience= req.body.target_audience,
+      project.objectives= req.body.objectives,
+      project.description= req.body.description,
+      project.date= (req.body.date) ? req.body.date : null,
+      project.interestAreas = req.body.interestAreas,
+      project.observations= req.body.observations,
+      project.relatedEntities= req.body.relatedEntities
 
       project.updateOne({
         title: project.title,
-        contact_person: project.contact_person,
-        email_person: project.email_person,
-        phone_person: project.phone_person,
         synopsis: project.synopsis,
+        intervationArea: project.intervationArea,
         target_audience: project.target_audience,
         objectives: project.objectives,
-        date: project.date,
-        areas: project.areas,
         description: project.description,
-        related_entities: project.related_entities,
+        date: project.date,
+        interestAreas: project.interestAreas,
         observations: project.observations,
-        authorization: project.authorization,
-        user_in_charge: project.user_in_charge
+        relatedEntities: project.relatedEntities,
       }
       )
         .catch(err => {

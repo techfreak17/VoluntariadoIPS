@@ -30,7 +30,7 @@ const ProjectSchema = new Schema({
     },
     requiredFormation: {
         type: Boolean,
-        required: true
+        required: false
     },
     formation: {
         type: String,

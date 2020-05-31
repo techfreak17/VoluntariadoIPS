@@ -10,7 +10,7 @@ import ProjectsRow from "./ProjectsRow"
 class Landing extends Component {
     constructor(props) {
         super(props);
-        this.state = { project: [{ title: "", date: "" }, { title: "", date: "" }, { title: "", date: "desricao" }, { title: "", date: "" }] };
+        this.state = { project: [] };
         axios.get('/api/projects/listProjects')
             .then(response => {
                 this.setState({ project: response.data });

@@ -74,7 +74,6 @@ class Create extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    console.log(this.state.relatedEntities);
     const obj = {
       title: this.state.title,
       synopsis: this.state.synopsis,

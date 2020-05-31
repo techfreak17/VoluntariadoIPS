@@ -2,7 +2,7 @@ const pushTemplates= require("../../models/pushNotificationTemplates");
 const notifications= require("../../models/notifications");
 const express = require("express");
 const router = express.Router();
-
+const User = require("../../models/user");
 
 // @desc Criar uma Notificação
 // @access Interno
@@ -45,6 +45,23 @@ function buildnotification(title,body,texto, email){
   return notif;
 }
 
+router.get('/getNotification/:id', function (req, res){
+  User.findOne({_id: req.param.id},function (err, email){
+    if(err){
+      console.log('error');
+      console.log(err);
+      res.json(err);
+    }
+    else{
+      console.log('has an object');
+      console.log(email);
+      res.send(getNotification(email)); 
+    }
+  })
+});
+
+
+
 function getNotification(userEmail){
   console.log('entered getnotification');
     notifications.find({ email: userEmail , isRead: false}, function(err, notif){
@@ -59,7 +76,7 @@ function getNotification(userEmail){
       }
 
     });
-}
+  }
 
 router.put('/updateNotification/:id').get(function (req, res) {
   console.log('entered update Notification');
@@ -73,8 +90,8 @@ router.put('/updateNotification/:id').get(function (req, res) {
       console.log('has an object');
       console.log(notif);
       notif.isRead=true;
-      notif.save();
-      res.json(notif);
+      notif.save()
+      .then(x=>res.json(x));
     }
   });
 });

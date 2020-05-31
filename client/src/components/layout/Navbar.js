@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import axios from 'axios';
+import PushNotificationsToast from "../pushNotifications/PushNotificationToast.js"
 
 class Navbar extends Component {
     constructor(props) {

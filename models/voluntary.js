@@ -26,11 +26,11 @@ const VoluntarySchema = new Schema({
     },
     memberIPS: {
         type: String,
-        required: true
+        required: false
     },
     schoolIPS: {
         type: String,
-        required: true
+        required: false
     },
     courseIPS: {
         type: String,

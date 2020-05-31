@@ -139,9 +139,9 @@ router.route('/getProjectUserDetails/:id').get(function (req, res) {
     let newId = project.userID;
     User.findOne({ _id: newId }).then(user => {
       if (user.role === "Empresa") {
-        Company.findOne({ userID: user._id }).then(voluntary => {
-          if (voluntary) {
-            res.json(voluntary);
+        Company.findOne({ userID: user._id }).then(company => {
+          if (company) {
+            res.json(company);
           } else {
             return res.status(400).json({ email: "Such data doesn´t exist" });
           };

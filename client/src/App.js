@@ -17,7 +17,8 @@ import ProjectDetails from './components/projects/ProjectDetails';
 import Recover from "./components/auth/Recover";
 import RecoverConfirm from "./components/auth/RecoverConfirm";
 import IndexUsers from './components/users/IndexUsers';
-import CreateUser from './components/users/CreateUser';
+import CreateCompanyUser from './components/users/CreateCompanyUser';
+import CreateVoluntaryUser from './components/users/CreateVoluntaryUser';
 import EditUser from './components/users/EditUser';
 import UserDetails from './components/users/UserDetails';
 import ConfirmAccount from "./components/auth/ConfirmAccount";
@@ -74,7 +75,8 @@ class App extends Component {
               <PrivateRoute exact path='/createProject' component={ Create } />
               <PrivateRoute path='/editProject/:id' component={ Edit } />
               <PrivateRoute path='/listProjects' component={ Index } />
-              <PrivateRoute exact path='/createUser' component={ CreateUser } />
+              <PrivateRoute exact path='/createVoluntaryUser' component={ CreateVoluntaryUser } />
+              <PrivateRoute exact path='/createCompanyUser' component={ CreateCompanyUser } />
               <PrivateRoute path='/editUser/:id' component={ EditUser } />
               <PrivateRoute path='/getProject/:id' component={ ProjectDetails } />
               <PrivateRoute path='/getUser/:id' component={ UserDetails } />

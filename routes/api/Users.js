@@ -36,6 +36,7 @@ function emailSend(user) {
 // @desc Register user
 // @access Public
 router.post("/registerVoluntary", (req, res) => {
+  console.log(req.body);
   // Form validation
   const { errors, isValid } = validateRegisterInputVoluntary(req.body);
   // Check validation

@@ -56,7 +56,8 @@ export default class IndexUsers extends Component {
         <h3 align="center">Utilizadores</h3>
         <p className="grey-text text-darken-1">
           <a href="/dashboard">Voltar</a> <br></br>
-          <Link to="/createUser"> Criar Utilizador</Link>
+          <Link to="/createVoluntaryUser"> Criar Voluntário</Link><br></br>
+          <Link to="/createCompanyUser"> Criar Empresa</Link>
         </p>
         <form onSubmit={this.onSubmit}>
           <input id="myInput" type="text" placeholder="Search.." name="search" onChange={this.onChangeSearch}></input>

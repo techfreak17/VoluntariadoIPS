@@ -1,15 +1,14 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { registerVoluntary } from "../../actions/authActions";
+import { createVoluntary } from "../../actions/createActions";
 import classnames from "classnames";
 import M from "materialize-css";
 import options from "materialize-css";
 
-class RegisterVoluntary extends Component {
-    constructor() {
-        super();
+class CreateVoluntaryUser extends Component {
+    constructor(props) {
+        super(props);
         this.state = {
             email: "",
             password: "",
@@ -26,33 +25,11 @@ class RegisterVoluntary extends Component {
             interestAreas: [],
             reasons: [],
             observations: "",
-            authorization: false,
             errors: {}
         };
+
         this.handleChangeInterestAreas = this.handleChangeInterestAreas.bind(this);
         this.handleChangeReasons = this.handleChangeReasons.bind(this);
-    }
-
-    toggleChangeAuthorization = () => {
-        this.setState({
-          authorization: !this.state.authorization,
-        });
-      }
-
-    componentDidMount() {
-        // If logged in and user navigates to Register page, should redirect them to dashboard
-        if (this.props.auth.isAuthenticated) {
-            this.props.history.push("/dashboard");
-            window.location.reload();
-        }
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.errors) {
-            this.setState({
-                errors: nextProps.errors
-            });
-        }
     }
 
     onChange = e => {
@@ -67,6 +44,13 @@ class RegisterVoluntary extends Component {
         this.setState({ reasons: Array.from(event.target.selectedOptions, (item) => item.value) });
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+            this.setState({
+                errors: nextProps.errors
+            });
+        }
+    }
 
     onSubmit = e => {
         e.preventDefault();
@@ -87,11 +71,12 @@ class RegisterVoluntary extends Component {
             interestAreas: this.state.interestAreas,
             reasons: this.state.reasons,
             observations: this.state.observations,
-            authorization: this.state.authorization,
         };
 
-        this.props.registerVoluntary(newUser, this.props.history);
+        this.props.createVoluntary(newUser, this.props.history);
     };
+
+
 
     render() {
         const { errors } = this.state;
@@ -106,21 +91,15 @@ class RegisterVoluntary extends Component {
             <div className="container" style={{ marginTop: "5%" }}>
                 <div className="row">
                     <div className="col s8 offset-s2">
-                        <a href="/" className="btn-flat waves-effect">
+                        <a href="/listUsers" className="btn-flat waves-effect">
                             <i className="material-icons left">keyboard_backspace</i>
                             Voltar
                         </a>
 
                         <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                             <h4>
-                                <b>Registe-se como Voluntário </b>
+                                <b>Criar Voluntário</b>
                             </h4>
-                            <p className="grey-text text-darken-1" style={{ fontWeight: "bolder" }}>
-                                Já tem conta? <Link to="/login">Log in</Link>
-                            </p>
-                            <p className="grey-text text-darken-1" style={{ fontWeight: "bolder" }}>
-                                Registe-se como Empresa? <Link to="/registerCompany">Registar</Link>
-                            </p>
                         </div>
 
                         <form noValidate>
@@ -250,8 +229,7 @@ class RegisterVoluntary extends Component {
                                     value={this.state.memberIPS}
                                     error={errors.memberIPS}
                                     id="memberIPS"
-                                    type="text"
-                                    className="browser-default">
+                                    type="text">
                                     <option value="" disabled selected>Selecionar Opção</option>
                                     <option value="Estudante">Estudante</option>
                                     <option value="Diplomado">Diplomado</option>
@@ -269,8 +247,7 @@ class RegisterVoluntary extends Component {
                                     value={this.state.schoolIPS}
                                     error={errors.schoolIPS}
                                     id="schoolIPS"
-                                    type="text"
-                                    className="browser-default">
+                                    type="text">
                                     <option value="" disabled selected>Selecionar Opção</option>
                                     <option value="EST-Setúbal">Escola Superior de Tecnologia de Setúbal</option>
                                     <option value="ESE">Escola Superior de Educação</option>
@@ -349,19 +326,9 @@ class RegisterVoluntary extends Component {
                                 <span className="red-text">{errors.observations}</span>
                             </div>
 
-                            <div className="input-field col s12">
-                                <b>Autorização RGPD *</b>
-                                <label>
-                                    <br></br>
-                                    <input type="checkbox" checked={this.state.authorization} onChange={this.toggleChangeAuthorization}/>
-                                    <span>Consinto, ao abrigo do Regulamento Geral de Proteção de Dados (RGPD), a utilização dos meus dados pessoais, fornecidos no formulário, ficando informado/a do direito a retirar o consentimento a qualquer momento e que o tratamento de dados é da responsabilidade do IPS, sendo-lhe aplicada a Política de Proteção de Dados do IPS.</span>
-                                    <br></br>
-                                    <a href="http://www.si.ips.pt/ips_si/web_base.gera_pagina?P_pagina=40723" target="_blank" rel="noopener noreferrer">(Disponível aqui)</a>
-                                </label>
-                            </div>
                         </form>
                         <div className="col s12" style={{ paddingLeft: "11.250px", paddingBottom: "60px" }}>
-                            <br></br><br></br><br></br><br></br><br></br>
+                            <br></br>
                             <button
                                 style={{
                                     width: "150px",
@@ -382,8 +349,8 @@ class RegisterVoluntary extends Component {
     }
 }
 
-RegisterVoluntary.propTypes = {
-    registerVoluntary: PropTypes.func.isRequired,
+CreateVoluntaryUser.propTypes = {
+    createVoluntary: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };
@@ -395,5 +362,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { registerVoluntary }
-)(withRouter(RegisterVoluntary));
+    { createVoluntary }
+)(CreateVoluntaryUser);

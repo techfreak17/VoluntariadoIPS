@@ -10,14 +10,14 @@ import ProjectsRow from "./ProjectsRow"
 class Landing extends Component {
     constructor(props) {
         super(props);
-        this.state = { project: [] };
+        this.state = { project: [{ title: "", date: "", synopsis:"" }, { title: "", date: "",synopsis:"" }, { title: "", date: "",synopsis:"" }, { title: "", date: "",synopsis:"" }] };
         axios.get('/api/projects/listProjects')
-            .then(response => {
-                this.setState({ project: response.data });
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
+        .then(response => {
+            this.setState({ project: response.data });
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
     }
 
     render() {
@@ -87,15 +87,15 @@ class Landing extends Component {
                 </div>
 
                 <div className="container" style={{ marginBottom: 20, display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    <a className="img" href="https://moodle.ips.pt/1920/" style={{ paddingRight: 100 }}>
+                    <a className="img" href="https://moodle.ips.pt/1920/" style={{ paddingRight: 100 }} rel="noopener noreferrer" target="_blank">
                         <img src={require('../layout/images/MOODLE.png')}
                             alt="Moodle" />
                     </a>
-                    <a className="img" href="http://aaips.pt/">
+                    <a className="img" href="http://aaips.pt/" rel="noopener noreferrer" target="_blank">
                         <img src={require('../layout/images/AAIPS.png')}
                             alt="AAIPS" />
                     </a>
-                    <a className="img" href="https://www.ips.pt/ips_si/web_page.inicial" style={{ paddingLeft: 100 }}>
+                    <a className="img" href="https://www.ips.pt/ips_si/web_page.inicial" style={{ paddingLeft: 100 }} rel="noopener noreferrer" target="_blank">
                         <img src={require('../layout/images/IPS.png')}
                             alt="IPS" />
                     </a>

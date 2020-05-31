@@ -21,19 +21,28 @@ export default class EditUser extends Component {
   }
 
   componentDidMount() {
-    axios.get('/api/users/editUser/' + this.props.match.params.id)
-      .then(response => {
+    axios.all([
+      axios.get('/api/users/getUserDetails/' + this.props.match.params.id),
+      axios.get('/api/users/getUser/' + this.props.match.params.id)
+    ])
+      .then(responseArr => {
+        this.myDate = new Date(responseArr[0].data.birthDate);
+        this.myDate = this.myDate.toLocaleDateString();
+        console.log(responseArr[0].data);
         this.setState({
-          number: response.data.number,
-          name: response.data.name,
-          email: response.data.email,
-          role: response.data.role,
-          password: response.data.password
+          name: responseArr[0].data.name,
+          email: responseArr[0].data.email,
+          phone: responseArr[0].data.phone,
+          address: responseArr[0].data.address,
+          member: responseArr[0].data.memberIPS,
+          school: responseArr[0].data.schoolIPS,
+          course: responseArr[0].data.courseIPS,
+          companyAddress: responseArr[0].data.companyAddress,
+          companyName: responseArr[0].data.companyName,
+          role: responseArr[1].data.role
         });
       })
-      .catch(function (error) {
-        console.log(error);
-      })
+      .catch (error => console.log(error));
   }
 
   onChangeNumber(e) {

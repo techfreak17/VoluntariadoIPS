@@ -36,7 +36,6 @@ function emailSend(user) {
 // @desc Register user
 // @access Public
 router.post("/registerVoluntary", (req, res) => {
-  console.log(req.body);
   // Form validation
   const { errors, isValid } = validateRegisterInputVoluntary(req.body);
   // Check validation
@@ -62,7 +61,6 @@ router.post("/registerVoluntary", (req, res) => {
           newUser.password = hash;
           newUser
             .save()
-            //.then(user => res.json(user))
             .then(user => {  const email = user.email;
               User.findOne({ email }).then(user => {        
                 var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });          

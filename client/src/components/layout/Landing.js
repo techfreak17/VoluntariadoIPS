@@ -48,13 +48,13 @@ class Landing extends Component {
                     <div className="section">
                         <h2 className="header center text-lighten-2" style={{ fontFamily: "monospace", fontWeight: "bold", color: "#50C878" }}>Plataforma {" "}
                             <span>VoluntariadoIPS</span></h2>
-                        <div className="row center" style={{ width: "100%", textLighten: 2, fontWeight: "bold", color: "#eadbd4" }}>
+                        <div className="row center" style={{ width: "100%", textLighten: 2, fontWeight: "bold", color: "#FEF4E8" }}>
                             <h5 className="header col s12 " >Pronto para ajudar ?
                         <p className="flow-text text-darken-1">
                                     Junte-se a nós em diversos projetos
                                     enriquecedores para si e para a comunidade IPS.
                         </p></h5>
-                            <h5 style={{ color: "#eadbd4", fontWeight: "bold"}}>REGISTE-SE</h5>
+                            <h5 style={{ color: "#FEF4E8", fontWeight: "bold"}}>REGISTE-SE</h5>
                         </div>
                         <div className="row center" style={{ width: "40%" }}>
                             <div className="col s6">

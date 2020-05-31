@@ -71,20 +71,22 @@ export default class Edit extends Component {
     return (
       <div>
         {this.state.role === "Empresa" ? (
-          <div className="card" style={{ backgroundColor: "#f4f4f4", width: "600px", height: "1000px", margin: "10px auto", boxShadow: "1px 1px 10px 1px " }}>
-            <div className="card-header" style={{ overflow: "hidden", height: "300px", width: "600px" }}>
+
+          <div className="card" style={{ backgroundColor: "#FEF4E8", width: "850px", height: "900px", margin: "10px auto", marginBottom: "75px", boxShadow: "1px 1px 10px 5px #" }}>
+
+            <div className="card-header center" style={{ overflow: "hidden", height: "40%", width: "100%" }}>
+              <h2 style={{ fontWeight: "bold"}}>{this.state.title}</h2>
               <img src={require('../layout/images/image.jpg')} alt="(Não esquecer de verificar no spam)" className="img-responsive" />
             </div>
 
-            <div className="card-content" style={{ padding: "0px", height: "250px", width: "1000px", paddingTop: -20, paddingBottom: 500, paddingLeft: 50, paddingRight: 20 }}>
-              <h3 style={{ fontWeight: "bolder", color: "#50C878" }}>{this.state.title}</h3>
-              <div style={{ padding: "0px", height: "250px", width: "600px", paddingTop: -20, paddingBottom: 500 }}>
+            <div className="card-content" style={{ height: "250px", width: "1000px", paddingLeft: 40, paddingRight: 20 }}>
+              <div style={{ height: "250px", width: "600px" }}>
                 <h5 style={{ fontWeight: "bolder" }}>Contactos do Responsável:</h5>
-                <p style={{ alignItems: "center" }}><i className="material-icons">person</i> {this.state.name}</p>
-                <p><i className="material-icons">email</i> {this.state.email}</p>
-                <p><i className="material-icons">phone</i> {this.state.phone}</p>
+                <p style={{ display: "flex", alignItems: "center" }}><i className="material-icons">person</i>{this.state.name}</p>
+                <p style={{ display: "flex", alignItems: "center" }}><i className="material-icons">email</i>{this.state.email}</p>
+                <p style={{ display: "flex", alignItems: "center" }}><i className="material-icons">phone</i>{this.state.phone}</p>
                 <h5 style={{ fontWeight: "bolder" }}>Detalhes do Projeto:</h5>
-                <p><i className="material-icons">access_time</i> {this.myDate}</p>
+                <p style={{ display: "flex", alignItems: "center" }}><i className="material-icons">access_time</i>{this.myDate}</p>
                 <p><b>Descrição:</b> {this.state.description}</p>
                 <p><b>Público Alvo:</b> {this.state.target_audience}</p>
                 <p><b>Objetivos:</b> {this.state.objectives}</p>
@@ -107,11 +109,11 @@ export default class Edit extends Component {
                 <h3 style={{ fontWeight: "bolder", color: "#50C878" }}>{this.state.title}</h3>
                 <div style={{ padding: "0px", height: "250px", width: "600px", paddingTop: -20, paddingBottom: 500 }}>
                   <h5 style={{ fontWeight: "bolder" }}>Contactos do Responsável:</h5>
-                  <p style={{ alignItems: "center" }}><i className="material-icons">person</i> {this.state.name}</p>
-                  <p><i className="material-icons">email</i> {this.state.email}</p>
-                  <p><i className="material-icons">phone</i> {this.state.phone}</p>
+                  <p style={{ display: "flex", alignItems: "center" }}><i className="material-icons">person</i> {this.state.name}</p>
+                  <p style={{ display: "flex", alignItems: "center" }}><i className="material-icons">email</i> {this.state.email}</p>
+                  <p style={{ display: "flex", alignItems: "center" }}><i className="material-icons">phone</i> {this.state.phone}</p>
                   <h5 style={{ fontWeight: "bolder" }}>Detalhes do Projeto:</h5>
-                  <p><i className="material-icons">access_time</i> {this.state.date}</p>
+                  <p style={{ display: "flex", alignItems: "center" }}><i className="material-icons">access_time</i> {this.state.date}</p>
                   <p><b>Descrição</b> {this.state.description}</p>
                   <Link to="/listProjects" style={{ width: "120px", borderRadius: 10, letterSpacing: "1.5px", fontWeight: "bold", }}
                     className="btn btn-large waves-effect waves-light hoverable black">Voltar</Link>

@@ -53,11 +53,14 @@ export default class Index extends Component {
 
   render() {
     return (
-      <div className="container" style={{ marginTop: "5%", paddingBottom: 70 }}>
+      <div className="container" style={{ paddingBottom: 70 }}>
         <div>
           <h1 className="center">Projetos</h1>
           <p className="grey-text text-darken-1">
-            <a href="/dashboard" onClick="window.location.reload()">Voltar</a>
+            <a href="/" className="btn-flat waves-effect">
+              <i className="material-icons left">keyboard_backspace</i>
+              Voltar
+            </a>
             <Link to="/createProject"
               className="right btn waves-effect waves-light hoverable"
               style={{
@@ -67,8 +70,8 @@ export default class Index extends Component {
               }}>Propor novo Projeto</Link>
           </p>
           <form onSubmit={this.onSubmit}>
-            <input id="myInput" type="text" placeholder="Search..." name="search" onChange={this.onChangeSearch}></input>
-            <button type="submit">Pesquisar</button>
+            <input id="myInput" type="text" placeholder="Pesquisar..." name="search" onChange={this.onChangeSearch} style={{borderBottom: "3px solid #23395D"}}></input>
+            <button type="submit" className="btn waves-effect waves-light hoverable" style={{backgroundColor: "#DDDDDD", color: "black", height: 35}}>Pesquisar</button>
           </form>
           <table className="table table-striped" style={{ marginTop: 20 }}>
             <thead>

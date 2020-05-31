@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
-import classnames from "classnames";
 
 export default class Edit extends Component {
   constructor(props) {

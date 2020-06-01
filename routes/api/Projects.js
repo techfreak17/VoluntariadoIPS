@@ -10,7 +10,6 @@ const Company = require("../../models/company");
 // @desc Register user
 // @access Public
 router.post("/createProject", (req, res) => {
-  console.log(req.body.photo);
   Project.findOne({ title: req.body.title }).then(project => {
     if (project) {
       return res.status(400).json({ title: "Project already exists" });
@@ -52,15 +51,15 @@ router.route('/updateProject/:id').post(function (req, res) {
       res.status(404).send("data is not found");
     else {
       project.title = req.body.title;
-      project.synopsis= req.body.synopsis,
-      project.intervationArea= req.body.intervationArea,
-      project.target_audience= req.body.target_audience,
-      project.objectives= req.body.objectives,
-      project.description= req.body.description,
-      project.date= (req.body.date) ? req.body.date : null,
-      project.interestAreas = req.body.interestAreas,
-      project.observations= req.body.observations,
-      project.relatedEntities= req.body.relatedEntities
+      project.synopsis = req.body.synopsis,
+        project.intervationArea = req.body.intervationArea,
+        project.target_audience = req.body.target_audience,
+        project.objectives = req.body.objectives,
+        project.description = req.body.description,
+        project.date = (req.body.date) ? req.body.date : null,
+        project.interestAreas = req.body.interestAreas,
+        project.observations = req.body.observations,
+        project.relatedEntities = req.body.relatedEntities
 
       project.updateOne({
         title: project.title,
@@ -137,18 +136,14 @@ router.route('/getProjectUserDetails/:id').get(function (req, res) {
   let id = req.params.id;
   Project.findById(id, function (err, project) {
     let newId = project.userID;
-    User.findOne({ _id: newId }).then(user => {
-      if (user.role === "Empresa") {
-        Company.findOne({ userID: user._id }).then(company => {
-          if (company) {
-            res.json(company);
-          } else {
-            return res.status(400).json({ email: "Such data doesn´t exist" });
-          };
-        })
-      }
+    Company.findOne({ userID: newId }).then(company => {
+      if (company) {
+        res.json(company);
+      } else {
+        return res.status(400).json({ email: "Such data doesn´t exist" });
+      };
     })
-  });
+});
 });
 
 module.exports = router;

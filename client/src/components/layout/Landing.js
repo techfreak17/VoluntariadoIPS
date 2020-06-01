@@ -48,13 +48,13 @@ class Landing extends Component {
                     <div className="section">
                         <h2 className="header center text-lighten-2" style={{ fontFamily: "monospace", fontWeight: "bold", color: "#50C878" }}>Plataforma {" "}
                             <span>VoluntariadoIPS</span></h2>
-                        <div className="row center" style={{ width: "100%", textLighten: 2, fontWeight: "bold", color: "#eadbd4" }}>
+                        <div className="row center" style={{ width: "100%", textLighten: 2, fontWeight: "bold", color: "#FEF4E8" }}>
                             <h5 className="header col s12 " >Pronto para ajudar ?
                         <p className="flow-text text-darken-1">
                                     Junte-se a nós em diversos projetos
                                     enriquecedores para si e para a comunidade IPS.
                         </p></h5>
-                            <h5 style={{ color: "#eadbd4", fontWeight: "bold"}}>REGISTE-SE</h5>
+                            <h5 style={{ color: "#FEF4E8", fontWeight: "bold"}}>REGISTE-SE</h5>
                         </div>
                         <div className="row center" style={{ width: "40%" }}>
                             <div className="col s6">
@@ -87,7 +87,7 @@ class Landing extends Component {
                 </div>
 
                 <div className="container" style={{ marginBottom: 20, display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    <a className="img" href="https://moodle.ips.pt/1920/" style={{ paddingRight: 100 }} rel="noopener noreferrer" target="_blank">
+                    <a className="img" href="https://moodle.ips.pt/1920/" rel="noopener noreferrer" target="_blank" style={{ paddingRight: 100 }}>
                         <img src={require('../layout/images/MOODLE.png')}
                             alt="Moodle" />
                     </a>
@@ -95,7 +95,7 @@ class Landing extends Component {
                         <img src={require('../layout/images/AAIPS.png')}
                             alt="AAIPS" />
                     </a>
-                    <a className="img" href="https://www.ips.pt/ips_si/web_page.inicial" style={{ paddingLeft: 100 }} rel="noopener noreferrer" target="_blank">
+                    <a className="img" href="https://www.ips.pt/ips_si/web_page.inicial" rel="noopener noreferrer" target="_blank" style={{ paddingLeft: 100 }}>
                         <img src={require('../layout/images/IPS.png')}
                             alt="IPS" />
                     </a>

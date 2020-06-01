@@ -51,7 +51,7 @@ class Dashboard extends Component {
                 <div className="container" style={{ width: "50%", backgroundColor: "#23395D", borderRadius: 50, marginTop: 40, marginBottom: 40, boxShadow: "0 0 15px 3px green" }}>
                     <div className="section">
                         <h2 className="header center text-lighten-2" style={{ fontFamily: "monospace", fontWeight: "bold", color: "#50C878" }}>Plataforma VoluntariadoIPS</h2>
-                        <div className="row center" style={{ width: "100%", textLighten: 2, fontWeight: "bold", color: "#eadbd4" }}>
+                        <div className="row center" style={{ width: "100%", textLighten: 2, fontWeight: "bold", color: "#FEF4E8" }}>
                             <h5 className="header col s12 "><b>Bem-Vindo</b>
                                 <p>Pronto para ajudar ?</p></h5>
                             <a className="btn white-text" href="/listProjects" style={{ borderRadius: 20, backgroundColor: "#50C878" }}>Ver Projetos</a>
@@ -60,9 +60,9 @@ class Dashboard extends Component {
                 </div>
 
 
-                <div className="container center" style={{ marginTop: 20, marginBottom: 20, backgroundColor: "#eadbd4", padding: 30, paddingTop: 3, borderRadius: 50, boxShadow: "0 0 15px 10px #23395D" }}>
+                <div className="container center" style={{ marginTop: 50, marginBottom: 20, backgroundColor: "#FEF4E8", padding: 30, paddingTop: 3, borderRadius: 50, boxShadow: "0 0 15px 10px #23395D" }}>
                     <h2 style={{ fontFamily: "monospace", fontWeight: "bold", color: "#23395D" }}>Os Meus Projetos</h2>
-                    <div className="carousel carousel-slider center">
+                    <div className="carousel carousel-slider center" style={{ borderRadius: 30}}>
                         {titleList()}
                     </div>
                 </div>

@@ -249,6 +249,7 @@ export default class Edit extends Component {
               </div>
             </div>
           </div>
+          
         </div>
       </div>
     )

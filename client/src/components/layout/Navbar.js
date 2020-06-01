@@ -50,7 +50,6 @@ class Navbar extends Component {
                                     className="img-responsive"
                                     style={{ position: "absolute", left: 0, height: "auto", width: "auto", maxWidth: 200 }} /></a></li>
                                 <li><a href="/listNotifications"><i className="material-icons">notifications</i></a></li>
-
                                 <li><a href="/listUsers"><i className="material-icons left">person</i>{this.state.username}</a></li>
                                 <li><button onClick={this.onLogoutClick} className="red btn" style={{ borderRadius: 10, marginLeft: 12, marginBottom: 5 }}>Sair</button></li>
                             </ul>

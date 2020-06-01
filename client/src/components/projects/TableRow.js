@@ -31,14 +31,9 @@ class TableRow extends Component {
           {this.props.obj.synopsis}
         </td>
         <td>
-          <Link to={"/getProject/" + this.props.obj._id} className="btn btn-primary" style={{backgroundColor: "#B9BBB6"}}><i className="material-icons" style={{ color: "black" }}>search</i></Link>
-        </td>
-        <td>
-          <Link to={"/editProject/" + this.props.obj._id} className="btn btn-primary" style={{backgroundColor: "#B9BBB6", color: "black"}}><i className="material-icons" style={{ color: "black" }}>edit</i></Link>
-        </td>
-        
-        <td>
-          <button onClick={this.delete} className="btn btn-danger" style={{backgroundColor: "#B9BBB6"}}><i className="material-icons" style={{ color: "black" }}>delete</i></button>
+          <Link to={"/getProject/" + this.props.obj._id} className="btn btn-primary" style={{ width: "15%", backgroundColor: "#D6E6F2", color: "black" }}><i className="material-icons">search</i></Link>
+          <Link to={"/editProject/" + this.props.obj._id} className="btn btn-primary" style={{ width: "15%", backgroundColor: "lightGrey", color: "black", marginLeft: 40 }}><i className="material-icons">edit</i></Link>
+          <button onClick={this.delete} className="btn btn-danger" style={{ width: "15%", backgroundColor: "red", marginLeft: 40, color: "black" }}><i className="material-icons">delete</i></button>
         </td>
       </tr>
     );

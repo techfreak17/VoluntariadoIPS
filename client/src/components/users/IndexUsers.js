@@ -52,19 +52,32 @@ export default class IndexUsers extends Component {
 
   render() {
     return (
-      <div className="container" style={{ marginTop: "5%", paddingBottom: 70 }}>
-        <h3 align="center">Utilizadores</h3>
+      <div className="container" style={{ paddingBottom: 70 }}>
+        <h1 align="center">Utilizadores</h1>
         <p className="grey-text text-darken-1">
-          <a href="/dashboard">Voltar</a> <br></br>
-          <Link to="/createVoluntaryUser"> Criar Voluntário</Link><br></br>
-          <Link to="/createCompanyUser"> Criar Empresa</Link>
+          <a href="/dashboard" className="btn-flat waves-effect">
+            <i className="material-icons left">keyboard_backspace</i>
+                      Voltar
+                    </a> <br></br>
+          <Link to="/createVoluntaryUser" className="right btn waves-effect waves-light hoverable"
+            style={{
+              borderRadius: 5,
+              letterSpacing: "1px",
+              backgroundColor: "#23395D"
+            }}> Criar Voluntário</Link><br></br>
+          <Link to="/createCompanyUser" className="right btn waves-effect waves-light hoverable"
+            style={{
+              borderRadius: 5,
+              letterSpacing: "1px",
+              backgroundColor: "#23395D"
+            }}> Criar Empresa</Link>
         </p>
         <form onSubmit={this.onSubmit}>
-          <input id="myInput" type="text" placeholder="Search.." name="search" onChange={this.onChangeSearch}></input>
-          <button type="submit">Pesquisar</button>
+          <input id="myInput" type="text" placeholder="Pesquisar..." name="search" onChange={this.onChangeSearch} style={{ borderBottom: "3px solid #23395D" }}></input>
+          <button type="submit" className="btn waves-effect waves-light hoverable" style={{ backgroundColor: "#DDDDDD", color: "black", height: 35 }}>Pesquisar</button>
         </form>
         <table className="table table-striped" style={{ marginTop: 20 }}>
-          <thead>
+          <thead className>
             <tr>
               <th>Username</th>
               <th>Email</th>

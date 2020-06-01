@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 
 const Project = require("../../models/project");
+const SubmitedProject = require("../../models/submitedProject");
 const User = require("../../models/user");
 const Company = require("../../models/company");
 
@@ -35,6 +36,37 @@ router.post("/createProject", (req, res) => {
     }
   });
 });
+
+// @route POST api/projects/submitProject
+// @desc Register temporary project
+// @access Public
+router.post("/submitProject", (req, res) => {
+  SubmitedProject.findOne({ title: req.body.title }).then(project => {
+    if (project) {
+      return res.status(400).json({ title: "Project already exists" });
+    } else {
+      console.log(req.body.related_entities);
+      const newProject = new SubmitedProject({
+        title: req.body.title,
+        synopsis: req.body.synopsis,
+        intervationArea: req.body.intervationArea,
+        target_audience: req.body.target_audience,
+        objectives: req.body.objectives,
+        description: req.body.description,
+        date: req.body.date,
+        interestAreas: req.body.interestAreas,
+        photo: req.body.photo,
+        observations: req.body.observations,
+        relatedEntities: req.body.relatedEntities
+      });
+      newProject
+        .save()
+        .then(project => res.json(project))
+        .catch(err => console.log(err));
+    }
+  });
+});
+
 
 // Defined edit route
 router.route('/editProject/:id').get(function (req, res) {

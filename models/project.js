@@ -61,7 +61,7 @@ const ProjectSchema = new Schema({
         required: true,
         default: false
     },
-    userID: {
+    responsible_ID: {
         type: Schema.ObjectId,
         ref: 'Users',
         validate: {
@@ -70,6 +70,10 @@ const ProjectSchema = new Schema({
             },
             message: `Users doesn't exist`
         }
+    },
+    enroled_IDs: {
+        type: Array,
+        required: false
     }
 });
 module.exports = mongoose.model("Projects", ProjectSchema);

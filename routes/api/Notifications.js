@@ -4,6 +4,8 @@ const express = require("express");
 const router = express.Router();
 const User = require("../../models/user");
 
+
+
 // @desc Criar uma Notificação
 // @access Interno
 function createNotification ( type, texto, email){
@@ -34,6 +36,8 @@ function createNotification ( type, texto, email){
 }
 
 
+// @desc builds a Notification
+// @access Public
 function buildnotification(title,body,texto, email){
   const notif= new notifications;
   console.log('entered build');
@@ -45,6 +49,10 @@ function buildnotification(title,body,texto, email){
   return notif;
 }
 
+
+// @route GET api/notifications/getNotification/:id
+// @desc Get Notification
+// @access Public
 router.get('/getNotification/:id', function (req, res){
   User.findOne({_id: req.param.id},function (err, email){
     if(err){
@@ -61,7 +69,8 @@ router.get('/getNotification/:id', function (req, res){
 });
 
 
-
+// @desc Gets a notification with an email
+// @access Public
 function getNotification(userEmail){
   console.log('entered getnotification');
     notifications.find({ email: userEmail , isRead: false}, function(err, notif){
@@ -73,11 +82,13 @@ function getNotification(userEmail){
         console.log('has something');
         console.log(notif);
         return notif;
-      }
-
+      }    
     });
   }
 
+// @route GET api/notifications/updateNotification/:id
+// @desc updates a notification from 'not read' to 'read'
+// @access Public
 router.put('/updateNotification/:id').get(function (req, res) {
   console.log('entered update Notification');
   notifications.findOne({_id: req.params.id},function(err, notif){

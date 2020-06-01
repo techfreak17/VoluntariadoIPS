@@ -167,15 +167,13 @@ router.route('/getUserDetails/:id').get(function (req, res) {
   Project.findById(id, function (err, project) {
     let newId = project.userID;
     User.findOne({ _id: newId }).then(user => {
-      if (user.role === "Empresa") {
-        Company.findOne({ userID: user._id }).then(voluntary => {
-          if (voluntary) {
-            res.json(voluntary);
-          } else {
-            return res.status(400).json({ email: "Such data doesn´t exist" });
-          };
-        })
-      }
+      Company.findOne({ userID: user._id }).then(voluntary => {
+        if (voluntary) {
+          res.json(voluntary);
+        } else {
+          return res.status(400).json({ email: "Such data doesn´t exist" });
+        };
+      })
     })
   });
 });

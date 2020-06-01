@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createUser } from "../../actions/userActions";
@@ -57,131 +56,112 @@ class CreateUser extends Component {
         const { errors } = this.state;
 
         return (
-            <div style={{ height: "75vh", marginTop: "5%" }} className="container">
-                <h3 align="left">Criar Utilizador</h3>
+            <div style={{ marginTop: "1%" }} className="container">
+                <div className="container col s8 offset-s2">
+                    <h3>Criar Utilizador</h3>
 
-                <form noValidate onSubmit={this.onSubmit}>
-                    <div className="input-field col s12">
-                        <input
-                            onChange={this.onChange}
-                            value={this.state.number}
-                            error={errors.number}
-                            id="number"
-                            type="number"
-                            className={classnames("", {
-                                invalid: errors.number
-                            })}
-                        />
-                        <label htmlFor="number">Número</label>
-                        <span className="red-text">{errors.number}</span>
-                    </div>
-
-                    <div className="input-field col s12">
-                        <input
-                            onChange={this.onChange}
-                            value={this.state.name}
-                            error={errors.name}
-                            id="name"
-                            type="text"
-                            className={classnames("", {
-                                invalid: errors.name
-                            })}
-                        />
-                        <label htmlFor="name">Nome</label>
-                        <span className="red-text">{errors.name}</span>
-                    </div>
-
-                    <div className="input-field col s12">
-                        <input
-                            onChange={this.onChange}
-                            value={this.state.email}
-                            error={errors.email}
-                            id="email"
-                            type="email"
-                            className={classnames("", {
-                                invalid: errors.email
-                            })}
-                        />
-                        <label htmlFor="email">Email</label>
-                        <span className="red-text">{errors.email}</span>
-                    </div>
-
-                    <div className="input-field col s12">
-                        <input
-                            onChange={this.onChange}
-                            value={this.state.password}
-                            error={errors.password}
-                            id="password"
-                            type="password"
-                            className={classnames("", {
-                                invalid: errors.password
-                            })}
-                        />
-                        <label htmlFor="password">Password</label>
-                        <span className="red-text">{errors.password}</span>
-                    </div>
-
-                    <div className="input-field col s12">
-                        <input
-                            onChange={this.onChange}
-                            value={this.state.password2}
-                            error={errors.password2}
-                            id="password2"
-                            type="password"
-                            className={classnames("", {
-                                invalid: errors.password2
-                            })}
-                        />
-                        <label htmlFor="password2">Confirmar Password</label>
-                        <span className="red-text">{errors.password2}</span>
-                    </div>
-
-                    <div className="input-field col s12">
-                        <select onChange={this.onChange}
-                            value={this.state.role}
-                            error={errors.role}
-                            id="role"
-                            type="text"
-                            className="browser-default">
-
-                            <option value="" disabled selected>Selecionar Role</option>
-                            <option value="Voluntário">Voluntário</option>
-                            <option value="Empresa">Empresa</option>
-                        </select>
-                        <span className="red-text">{errors.role}</span>
-                    </div>
-
-                    <div className="col s12 center-align row" style={{paddingBottom: 60}}>
-                        <div className="col s6">
-                            <button
-                                style={{
-                                    width: "150px",
-                                    borderRadius: "3px",
-                                    letterSpacing: "1.5px",
-                                    marginTop: "1rem",
-                                    backgroundColor: "green"
-                                }}
-                                type="submit"
-                                className="btn btn-large waves-effect waves-light hoverable accent-3">
-                                Criar
-                            </button>
+                    <form noValidate onSubmit={this.onSubmit}>
+                        <div className="input-field col s12">
+                            <input
+                                onChange={this.onChange}
+                                value={this.state.number}
+                                error={errors.number}
+                                id="number"
+                                type="number"
+                                className={classnames("", {
+                                    invalid: errors.number
+                                })}
+                            />
+                            <label htmlFor="number">Número</label>
+                            <span className="red-text">{errors.number}</span>
                         </div>
-                        <div className="col s6">
-                            <button
-                                style={{
-                                    width: "150px",
-                                    borderRadius: "3px",
-                                    letterSpacing: "1.5px",
-                                    marginTop: "1rem",
-                                    backgroundColor: "red"
-                                }}
-                                className="btn btn-large waves-effect waves-light hoverable accent-3">
-                                <Link to="/listUsers" style={{ color: "white" }}>Cancelar</Link>
-                            </button>
+
+                        <div className="input-field col s12">
+                            <input
+                                onChange={this.onChange}
+                                value={this.state.name}
+                                error={errors.name}
+                                id="name"
+                                type="text"
+                                className={classnames("", {
+                                    invalid: errors.name
+                                })}
+                            />
+                            <label htmlFor="name">Nome</label>
+                            <span className="red-text">{errors.name}</span>
                         </div>
-                    </div>
-                </form>
-            </div>
+
+                        <div className="input-field col s12">
+                            <input
+                                onChange={this.onChange}
+                                value={this.state.email}
+                                error={errors.email}
+                                id="email"
+                                type="email"
+                                className={classnames("", {
+                                    invalid: errors.email
+                                })}
+                            />
+                            <label htmlFor="email">Email</label>
+                            <span className="red-text">{errors.email}</span>
+                        </div>
+
+                        <div className="input-field col s12">
+                            <input
+                                onChange={this.onChange}
+                                value={this.state.password}
+                                error={errors.password}
+                                id="password"
+                                type="password"
+                                className={classnames("", {
+                                    invalid: errors.password
+                                })}
+                            />
+                            <label htmlFor="password">Password</label>
+                            <span className="red-text">{errors.password}</span>
+                        </div>
+
+                        <div className="input-field col s12">
+                            <input
+                                onChange={this.onChange}
+                                value={this.state.password2}
+                                error={errors.password2}
+                                id="password2"
+                                type="password"
+                                className={classnames("", {
+                                    invalid: errors.password2
+                                })}
+                            />
+                            <label htmlFor="password2">Confirmar Password</label>
+                            <span className="red-text">{errors.password2}</span>
+                        </div>
+
+                        <div className="input-field col s12">
+                            <select onChange={this.onChange}
+                                value={this.state.role}
+                                error={errors.role}
+                                id="role"
+                                type="text"
+                                className="browser-default">
+
+                                <option value="" disabled selected>Selecionar Role</option>
+                                <option value="Voluntário">Voluntário</option>
+                                <option value="Empresa">Empresa</option>
+                            </select>
+                            <span className="red-text">{errors.role}</span>
+                        </div>
+
+                        <div className="col s12 " style={{ paddingBottom: 60 }}>
+                            <button style={{ width: "150px", borderRadius: 10, letterSpacing: "1.5px", marginTop: "1rem", marginLeft: "16%" }}
+                                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Criar
+                        </button>
+                            <a style={{ width: "150px", borderRadius: 10, letterSpacing: "1.5px", marginTop: "1rem", backgroundColor: "red", marginRight: "16%" }}
+                                href="/listUsers" className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
+                        </a>
+                        </div>
+                    </form>
+                </div >
+            </div >
         );
     }
 }

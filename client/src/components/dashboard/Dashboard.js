@@ -67,15 +67,15 @@ class Dashboard extends Component {
 
 
                 <div className="container" style={{ marginBottom: 70, display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    <a className="img" href="https://moodle.ips.pt/1920/" style={{ paddingRight: 100 }}>
+                    <a className="img" href="https://moodle.ips.pt/1920/" rel="noopener noreferrer" target="_blank" style={{ paddingRight: 100 }}>
                         <img src={require('../layout/images/MOODLE.png')}
                             alt="Moodle" />
                     </a>
-                    <a className="img" href="http://aaips.pt/">
+                    <a className="img" href="http://aaips.pt/" rel="noopener noreferrer" target="_blank">
                         <img src={require('../layout/images/AAIPS.png')}
                             alt="AAIPS" />
                     </a>
-                    <a className="img" href="https://www.ips.pt/ips_si/web_page.inicial" style={{ paddingLeft: 100 }}>
+                    <a className="img" href="https://www.ips.pt/ips_si/web_page.inicial" rel="noopener noreferrer" target="_blank" style={{ paddingLeft: 100 }}>
                         <img src={require('../layout/images/IPS.png')}
                             alt="IPS" />
                     </a>

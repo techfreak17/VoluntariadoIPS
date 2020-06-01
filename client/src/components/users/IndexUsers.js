@@ -55,11 +55,11 @@ export default class IndexUsers extends Component {
       <div className="container" style={{ paddingBottom: 70 }}>
         <h1 align="center">Utilizadores</h1>
         <p className="grey-text text-darken-1">
-          <a href="/" className="btn-flat waves-effect">
+          <a href="/dashboard" className="btn-flat waves-effect">
             <i className="material-icons left">keyboard_backspace</i>
               Voltar
             </a>
-          <Link to="/createProject"
+          <Link to="/createUser"
             className="right btn waves-effect waves-light hoverable"
             style={{
               borderRadius: 5,

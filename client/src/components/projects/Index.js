@@ -57,7 +57,7 @@ export default class Index extends Component {
         <div>
           <h1 className="center">Projetos</h1>
           <p className="grey-text text-darken-1">
-            <a href="/" className="btn-flat waves-effect">
+            <a href="/dashboard" className="btn-flat waves-effect">
               <i className="material-icons left">keyboard_backspace</i>
               Voltar
             </a>
@@ -79,7 +79,7 @@ export default class Index extends Component {
                 <th>Título</th>
                 <th>Data</th>
                 <th>Descrição</th>
-                <th colSpan="2">Action</th>
+                <th colSpan="2">Ação</th>
               </tr>
             </thead>
             <tbody>

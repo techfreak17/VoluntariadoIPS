@@ -117,9 +117,9 @@ class Create extends Component {
   onChangeRelatedEntities = e => {
     var input = e.target.value;
     var point = ",";
-    var inputList = input.split(point); 
+    var inputList = input.split(point);
     console.log(inputList);
-    this.setState({ [e.target.id]: inputList});
+    this.setState({ [e.target.id]: inputList });
     console.log(this.state.relatedEntities);
   };
 
@@ -134,16 +134,12 @@ class Create extends Component {
     });
 
     return (
-      <div className="container" style={{ marginTop: "5%" }}>
+      <div className="container">
         <div className="row">
           <div className="col s8 offset-s2">
 
-            <a href="/listProjects" className="btn-flat waves-effect">
-              <i className="material-icons left">keyboard_backspace</i>Voltar
-            </a>
-
             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-              <h3 align="left">Propor Projeto</h3>
+              <h3>Propor Projeto</h3>
             </div>
 
             <form noValidate>
@@ -348,11 +344,14 @@ class Create extends Component {
                 </label>
               </div>
             </form>
-            <div className="col s12" style={{ paddingLeft: "11.250px", paddingBottom: "60px" }}>
+            <div className="col s12" style={{ marginTop: "1%", paddingBottom: 60 }}>
               <br></br><br></br><br></br><br></br><br></br>
-              <button style={{ width: "150px", borderRadius: 10, letterSpacing: "1.5px", marginTop: "1rem" }}
-                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Registar
+              <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "16%" }}
+                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Submeter
               </button>
+              <a style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "16%" }}
+                href="/listProjects" className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
+              </a>
             </div>
           </div>
         </div>

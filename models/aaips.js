@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const FKHelper = require('./helpers/foreign-key-helper');
 
 // Create Schema
-const CompanySchema = new Schema({
+const AAIPSSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -24,28 +24,7 @@ const CompanySchema = new Schema({
         type: Date,
         required: true
     },
-    observations: {
-        type: String,
-        required: false
-    },
-    companyName:{
-        type: String,
-        required: true
-    },
-    companyAddress:{
-        type: String,
-        required: true
-    },
-    authorization: {
-        type: Boolean,
-        required: true,
-        default: false
-    },
-    listProjects:{
-        type: Array,
-        required: true
-    },
-    responsibleID: {
+    userID: {
         type: Schema.ObjectId,
         ref: 'Users',
 		validate: {
@@ -56,4 +35,4 @@ const CompanySchema = new Schema({
 		}
     }
 });
-module.exports = Company = mongoose.model("Company", CompanySchema);
+module.exports = mongoose.model("AAIPS", AAIPSSchema);

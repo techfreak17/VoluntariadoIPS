@@ -7,9 +7,9 @@ const SubmitedProject = require("../../models/submitedProject");
 const User = require("../../models/user");
 const Company = require("../../models/company");
 
-// @route POST api/projects/create
-// @desc Register user
-// @access Public
+// @route POST api/projects/createProject
+// @desc Create Project - Administrator
+// @access Private
 router.post("/createProject", (req, res) => {
   Project.findOne({ title: req.body.title }).then(project => {
     if (project) {
@@ -38,8 +38,8 @@ router.post("/createProject", (req, res) => {
 });
 
 // @route POST api/projects/submitProject
-// @desc Register temporary project
-// @access Public
+// @desc Submit Project - Company and AAIPS
+// @access Private
 router.post("/submitProject", (req, res) => {
   SubmitedProject.findOne({ title: req.body.title }).then(project => {
     if (project) {
@@ -67,8 +67,9 @@ router.post("/submitProject", (req, res) => {
   });
 });
 
-
-// Defined edit route
+// @route GET api/projects/editProject
+// @desc Edit Project - Administrator
+// @access Private
 router.route('/editProject/:id').get(function (req, res) {
   let id = req.params.id;
   Project.findById(id, function (err, project) {
@@ -76,7 +77,9 @@ router.route('/editProject/:id').get(function (req, res) {
   });
 });
 
-//  Defined update route
+// @route POST api/projects/updateProject
+// @desc Update Project - Administrator
+// @access Private
 router.route('/updateProject/:id').post(function (req, res) {
   Project.findById(req.params.id, function (err, project) {
     if (!project)
@@ -113,7 +116,9 @@ router.route('/updateProject/:id').post(function (req, res) {
   });
 });
 
-// Defined delete | remove | destroy route
+// @route GET api/projects/deleteProject
+// @desc Delete Project - Administrator
+// @access Private
 router.route('/deleteProject/:id').get(function (req, res) {
   Project.findByIdAndRemove({ _id: req.params.id }, function (err, project) {
     if (err) res.json(err);
@@ -121,7 +126,9 @@ router.route('/deleteProject/:id').get(function (req, res) {
   });
 });
 
-// Defined get data(index or listing) route
+// @route GET api/projects/listProjects
+// @desc Get List of Projects
+// @access Private
 router.route('/listProjects').get(function (req, res) {
   Project.find(function (err, projects) {
     if (err) {
@@ -133,6 +140,9 @@ router.route('/listProjects').get(function (req, res) {
   });
 });
 
+// @route GET api/projects/searchProject
+// @desc Search Project
+// @access Private
 router.post("/searchProject", (req, res) => {
   Project.find({ title: { $regex: req.body.search, $options: "i" } }).then(project => {
     if (project) {
@@ -143,7 +153,9 @@ router.post("/searchProject", (req, res) => {
   })
 });
 
-// Defined get route
+// @route GET api/projects/getProject/:id
+// @desc Get Project
+// @access Private
 router.route('/getProject/:id').get(function (req, res) {
   let id = req.params.id;
   Project.findById(id, function (err, project) {
@@ -151,24 +163,27 @@ router.route('/getProject/:id').get(function (req, res) {
   });
 });
 
-
-// Defined get route
+// @route GET api/projects/getProjectUser/:id
+// @desc Get Project User
+// @access Private
 router.route('/getProjectUser/:id').get(function (req, res) {
   let id = req.params.id;
   Project.findById(id, function (err, project) {
-    let newId = project.userID;
+    let newId = project.responsibleID;
     User.findOne({ _id: newId }).then(user => {
       res.json(user);
     })
   });
 });
 
-// Defined get route
+// @route GET api/projects/getProjectUserDetails/:id
+// @desc Get Project User Details
+// @access Private
 router.route('/getProjectUserDetails/:id').get(function (req, res) {
   let id = req.params.id;
   Project.findById(id, function (err, project) {
-    let newId = project.userID;
-    Company.findOne({ userID: newId }).then(company => {
+    let newId = project.responsibleID;
+    Company.findOne({ responsibleID: newId }).then(company => {
       if (company) {
         res.json(company);
       } else {

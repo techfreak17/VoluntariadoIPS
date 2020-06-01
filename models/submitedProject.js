@@ -61,7 +61,7 @@ const SubmitedProjectSchema = new Schema({
         required: true,
         default: false
     },
-    responsible_ID: {
+    responsibleID: {
         type: Schema.ObjectId,
         ref: 'Users',
         validate: {

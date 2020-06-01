@@ -9,6 +9,8 @@ import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
 import Login from "./components/auth/Login";
 import PrivateRoute from "./components/private-route/PrivateRoute";
+import EntityRoute from "./components/private-route/EntityRoute";
+import AdminRoute from "./components/private-route/AdminRoute";
 import Dashboard from "./components/dashboard/Dashboard";
 import Create from './components/projects/Create';
 import Edit from './components/projects/Edit';
@@ -71,14 +73,14 @@ class App extends Component {
             <Route exact path="/resetpassword/:token" component={ResetPassword} />
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
-              <PrivateRoute exact path='/createProject' component={ Create } />
-              <PrivateRoute path='/editProject/:id' component={ Edit } />
+              <EntityRoute exact path='/createProject' component={ Create } />
+              <EntityRoute path='/editProject/:id' component={ Edit } />
               <PrivateRoute path='/listProjects' component={ Index } />
-              <PrivateRoute exact path='/createUser' component={ CreateUser } />
+              <AdminRoute exact path='/createUser' component={ CreateUser } />
               <PrivateRoute path='/editUser/:id' component={ EditUser } />
               <PrivateRoute path='/getProject/:id' component={ ProjectDetails } />
-              <PrivateRoute path='/getUser/:id' component={ UserDetails } />
-              <PrivateRoute path='/listUsers' component={ IndexUsers } />
+              <EntityRoute path='/getUser/:id' component={ UserDetails } />
+              <EntityRoute path='/listUsers' component={ IndexUsers } />
             </Switch>
 
           </div>

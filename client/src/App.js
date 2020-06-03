@@ -72,7 +72,7 @@ class App extends Component {
             <Route exact path="/ConfirmAccount" component={ConfirmAccount} />
             <Route exact path="/ConfirmAccountToken/:token" component={ConfirmAccountToken} />
             <Route exact path="/resetpassword/:token" component={ResetPassword} />
-            <Route exact path="/baseProfile" component={baseProfile}/>
+            <Route exact path="/baseProfile/:id" component={baseProfile}/>
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <EntityRoute exact path='/createProject' component={ Create } />

@@ -19,37 +19,29 @@ class baseProfile extends Component {
           companyAddress: "",
           companyName: "",
           role: "",
-          id: this.props.auth.user.id,
           errors: {}
         };
         
     }
 
     componentDidMount() {
-        // If logged in and user navigates to Register page, should redirect them to dashboard
-       // if (!this.props.auth.isAuthenticated) {
-       //     this.props.history.push("/dashboard");
-        //}
-        axios
-        .get("/api/Users/getUserDetails/"+this.state.id)
-        .then(response=>{
-            this.setState({
-                name: response[0].data.name,
-                email: response[0].data.email,
-                phone: response[0].data.phone,
-                address: response[0].data.address,
-                member: response[0].data.memberIPS,
-                school: response[0].data.schoolIPS,
-                course: response[0].data.courseIPS,
-                companyAddress: response[0].data.companyAddress,
-                companyName: response[0].data.companyName,
-                role: response[1].data.role
+       
+
+            axios.get('/api/users/getUserDetails/' + this.props.match.params.id)
+            .then(responseArr => {
+              this.setState({
+                name: responseArr.data.name,
+                email: responseArr.data.email,
+                phone: responseArr.data.phone,
+                address: responseArr.data.address,
+                member: responseArr.data.memberIPS,
+                school: responseArr.data.schoolIPS,
+                course: responseArr.data.courseIPS,
+                companyAddress: responseArr.data.companyAddress,
+                companyName: responseArr.data.companyName,
+                role: this.props.auth.user.role
+              });
             });
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-        
     }
 
     componentWillReceiveProps(nextProps) {
@@ -95,7 +87,7 @@ class baseProfile extends Component {
                             <input value={this.state.course}></input>
                             <h5 style={{fontWeight: 'bold'}}>Áreas de Interesse</h5>
                             <input value={this.state.companyName}></input>
-                            <button style={{float: 'right'}}>Confirmar</button>
+                            <button style={{float: 'right'}}>Editar Perfil</button>
                         </div>
 
                     </div>

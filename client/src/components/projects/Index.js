@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import TableRow from './TableRow';
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
 
-export default class Index extends Component {
+class Index extends Component {
 
   constructor(props) {
     super(props);
@@ -61,17 +64,36 @@ export default class Index extends Component {
               <i className="material-icons left">keyboard_backspace</i>
               Voltar
             </a>
-            <Link to="/createProject"
-              className="right btn waves-effect waves-light hoverable"
-              style={{
-                borderRadius: 5,
-                letterSpacing: "1px",
-                backgroundColor: "#23395D"
-              }}>Propor novo Projeto</Link>
+            {(() => {
+              if (this.props.auth.user.role === "Empresa") {
+                return (
+                  <Link to="/createProject"
+                    className="right btn waves-effect waves-light hoverable"
+                    style={{
+                      borderRadius: 5,
+                      letterSpacing: "1px",
+                      backgroundColor: "#23395D"
+                    }}>Propor novo Projeto</Link>
+                )
+              }
+            })()}
+                        {(() => {
+              if (this.props.auth.user.role === "Administrador") {
+                return (
+                  <Link to="/createProject"
+                    className="right btn waves-effect waves-light hoverable"
+                    style={{
+                      borderRadius: 5,
+                      letterSpacing: "1px",
+                      backgroundColor: "#23395D"
+                    }}>Criar novo Projeto</Link>
+                )
+              }
+            })()}
           </p>
           <form onSubmit={this.onSubmit}>
-            <input id="myInput" type="text" placeholder="Pesquisar..." name="search" onChange={this.onChangeSearch} style={{borderBottom: "3px solid #23395D"}}></input>
-            <button type="submit" className="btn waves-effect waves-light hoverable" style={{backgroundColor: "#DDDDDD", color: "black", height: 35}}>Pesquisar</button>
+            <input id="myInput" type="text" placeholder="Pesquisar..." name="search" onChange={this.onChangeSearch} style={{ borderBottom: "3px solid #23395D" }}></input>
+            <button type="submit" className="btn waves-effect waves-light hoverable" style={{ backgroundColor: "#DDDDDD", color: "black", height: 35 }}>Pesquisar</button>
           </form>
           <table className="table table-striped" style={{ marginTop: 20 }}>
             <thead>
@@ -91,3 +113,16 @@ export default class Index extends Component {
     );
   }
 }
+
+Index.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(Index);

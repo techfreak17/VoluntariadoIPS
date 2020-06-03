@@ -2,23 +2,24 @@ const express = require("express");
 const router = express.Router();
 
 // Load User model
+const Voluntary = require("../../models/voluntary");
 const User = require("../../models/user");
-const Company = require("../../models/company");
 
-// @route GET api/companies/getCompanyUserDetails/:id
-// @desc Get Company User Details
+// @route GET api/voluntaries/getAAIPSUserDetails/:id
+// @desc Get AAIPS User Details
 // @access Private
-router.route('/getCompanyUserDetails/:id').get(function (req, res) {
+router.route('/getAAIPSUserDetails/:id').get(function (req, res) {
     let id = req.params.id;
     User.findById(id, function (err, user) {
-        Company.findOne({ userID: user._id }).then(company => {
-            if (company) {
-                res.json(company);
+        Voluntary.findOne({ userID: user._id }).then(voluntary => {
+            if (voluntary) {
+                res.json(voluntary);
             } else {
                 return res.status(400).json({ user: "Such data doesn´t exist" });
             };
         })
     });
 });
+
 
 module.exports = router;

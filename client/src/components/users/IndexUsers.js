@@ -64,7 +64,8 @@ export default class IndexUsers extends Component {
               borderRadius: 5,
               letterSpacing: "1px",
               backgroundColor: "#23395D"
-            }}> Criar Voluntário</Link><br></br>
+            }}> Criar Voluntário</Link> 
+            
           <Link to="/createCompanyUser" className="right btn waves-effect waves-light hoverable"
             style={{
               borderRadius: 5,

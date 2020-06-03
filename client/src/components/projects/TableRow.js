@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
 
 class TableRow extends Component {
 
@@ -32,12 +35,35 @@ class TableRow extends Component {
         </td>
         <td>
           <Link to={"/getProject/" + this.props.obj._id} className="btn btn-primary" style={{ width: "15%", backgroundColor: "#D6E6F2", color: "black" }}><i className="material-icons">search</i></Link>
-          <Link to={"/editProject/" + this.props.obj._id} className="btn btn-primary" style={{ width: "15%", backgroundColor: "lightGrey", color: "black", marginLeft: 40 }}><i className="material-icons">edit</i></Link>
-          <button onClick={this.delete} className="btn btn-danger" style={{ width: "15%", backgroundColor: "red", marginLeft: 40, color: "black" }}><i className="material-icons">delete</i></button>
+          {(() => {
+              if (this.props.auth.user.role === "Administrador") {
+                return (
+                  <Link to={"/editProject/" + this.props.obj._id} className="btn btn-primary" style={{ width: "15%", backgroundColor: "lightGrey", color: "black", marginLeft: 40 }}><i className="material-icons">edit</i></Link>
+                )
+              }
+            })()}
+            {(() => {
+              if (this.props.auth.user.role === "Administrador") {
+                return (
+                  <button onClick={this.delete} className="btn btn-danger" style={{ width: "15%", backgroundColor: "red", marginLeft: 40, color: "black" }}><i className="material-icons">delete</i></button>
+                )
+              }
+            })()}
         </td>
       </tr>
     );
   }
 }
 
-export default TableRow;
+TableRow.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(TableRow);

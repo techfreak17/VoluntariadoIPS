@@ -153,7 +153,6 @@ router.post("/registerCompany", (req, res) => {
 });
 
 
-
 // @route POST api/users/confirmtoken
 // @desc Recover User password
 // @access Public
@@ -175,7 +174,6 @@ router.post("/confirmtoken", (req, res) => {
     });
   });
 });
-
 
 // @route POST api/users/login
 // @desc Login user and return JWT token
@@ -295,43 +293,9 @@ router.post("/updatePassword", (req, res) => {
   });
 });
 
-// @route POST api/users/createUser
-// @desc Create user
-// @access Public
-router.post("/createUser", (req, res) => {
-  // Form validation
-  const { errors, isValid } = validateRegisterInput(req.body);
-  // Check validation
-  if (!isValid) {
-    return res.status(400).json(errors);
-  }
-  User.findOne({ email: req.body.email }).then(user => {
-    if (user) {
-      return res.status(400).json({ email: "Email already exists" });
-    } else {
-      const newUser = new User({
-        number: req.body.number,
-        name: req.body.name,
-        role: req.body.role,
-        email: req.body.email,
-        password: req.body.password
-      });
-      // Hash password before saving in database
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
-          if (err) throw err;
-          newUser.password = hash;
-          newUser
-            .save()
-            .then(user => res.json(user))
-            .catch(err => console.log(err));
-        });
-      });
-    }
-  });
-});
-
-// Defined get data(index or listing) route
+// @route GET api/users/listUsers
+// @desc Get List Users
+// @access Private
 router.route('/listUsers').get(function (req, res) {
   User.find(function (err, users) {
     if (err) {
@@ -343,49 +307,9 @@ router.route('/listUsers').get(function (req, res) {
   });
 });
 
-
-// Defined edit route
-router.route('/editUser/:id').get(function (req, res) {
-  let id = req.params.id;
-  User.findById(id, function (err, user) {
-    res.json(user);
-  });
-});
-
-router.route('/updateUser/:id').post(function (req, res) {
-  User.findById(req.params.id, function (err, user) {
-    if (!user)
-      res.status(404).send("data is not found");
-    else {
-      user.name = req.body.name;
-      user.number = req.body.number;
-      user.email = req.body.email;
-      user.role = req.body.role;
-      user.password = req.body.password;
-
-      user.updateOne({
-        name: user.name,
-        number: user.number,
-        email: user.email,
-        role: user.role,
-        password: user.password
-      }
-      )
-        .catch(err => {
-          res.status(400).send("unable to update the database");
-        });
-    }
-  });
-});
-
-// Defined delete | remove | destroy route
-router.route('/deleteUser/:id').get(function (req, res) {
-  User.findByIdAndRemove({ _id: req.params.id }, function (err, user) {
-    if (err) res.json(err);
-    else res.json('Successfully removed');
-  });
-});
-
+// @route POST api/users/searchUser
+// @desc Search User
+// @access Private
 router.post("/searchUser", (req, res) => {   
   User.find({ name: { $regex: req.body.search, $options: "i" } }).then(user => {
       if (user) {
@@ -396,7 +320,9 @@ router.post("/searchUser", (req, res) => {
   })
 });
 
-// Defined get route
+// @route GET api/users/getUserDetails/:id
+// @desc Get User Details
+// @access Private
 router.route('/getUserDetails/:id').get(function (req, res) {
   let id = req.params.id;
   User.findById(id, function (err, user){
@@ -420,7 +346,9 @@ router.route('/getUserDetails/:id').get(function (req, res) {
   });
 });
 
-// Defined get route
+// @route GET api/users/getUser/:id
+// @desc Get User
+// @access Private
 router.route('/getUser/:id').get(function (req, res) {
   let id = req.params.id;
   User.findById(id, function (err, user){

@@ -235,15 +235,17 @@ router.route('/updateUser/:id').post(function (req, res) {
 // @access Private
 router.route('/deleteUser/:id').get(function (req, res) {
   User.findByIdAndRemove({ _id: req.params.id }, function (err, user) {
-    if (err) res.json(err);
+    if (err) {
+      res.json(err);
+    }
     else {
       if (user.role === "Voluntário") {
-        Voluntary.findByIdAndRemove({ email: user.email }, function (err, voluntary) {
+        Voluntary.findOneAndRemove({ email: user.email }, function (err, voluntary) {
           if (err) res.json(err);
           else res.json('Successfully removed');
         });
       } else if (user.role === "Empresa") {
-        Company.findByIdAndRemove({ email: user.email }, function (err, company) {
+        Company.findOneAndRemove({ email: user.email }, function (err, company) {
           if (err) res.json(err);
           else res.json('Successfully removed');
         });

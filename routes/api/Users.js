@@ -326,7 +326,7 @@ router.post("/searchUser", (req, res) => {
 router.route('/getUserDetails/:id').get(function (req, res) {
   let id = req.params.id;
   User.findById(id, function (err, user){
-      if(user.role == "Voluntário"){
+      if(user.role === "Voluntário"){
         Voluntary.findOne({ userID: user._id }).then(voluntary => {
           if (voluntary) {
             res.json(voluntary);
@@ -334,8 +334,8 @@ router.route('/getUserDetails/:id').get(function (req, res) {
             return res.status(400).json({ email: "Such data doesn´t exist" });
           };
         })
-      }else{
-        Company.findOne({ userID: user._id }).then(company => {
+      }else if (user.role === "Empresa"){
+        Company.findOne({ responsibleID: user._id }).then(company => {
           if (company) {
             res.json(company);
           } else {

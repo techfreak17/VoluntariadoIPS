@@ -28,6 +28,7 @@ class Index extends Component {
         console.log(error);
       })
   }
+  
   onChangeSearch(e) {
     this.setState({
       search: e.target.value

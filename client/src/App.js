@@ -28,6 +28,7 @@ import ResetPassword from "./components/auth/ResetPassword";
 import Menu from "./components/layout/Menu";
 import RegisterVoluntary from "./components/auth/RegisterVoluntary";
 import RegisterCompany from "./components/auth/RegisterCompany";
+import baseProfile from "./components/profile/baseProfile";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -71,6 +72,7 @@ class App extends Component {
             <Route exact path="/ConfirmAccount" component={ConfirmAccount} />
             <Route exact path="/ConfirmAccountToken/:token" component={ConfirmAccountToken} />
             <Route exact path="/resetpassword/:token" component={ResetPassword} />
+            <Route exact path="/baseProfile" component={baseProfile}/>
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <EntityRoute exact path='/createProject' component={ Create } />

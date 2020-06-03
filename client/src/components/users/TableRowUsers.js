@@ -9,7 +9,7 @@ class TableRowUsers extends Component {
           this.delete = this.delete.bind(this);
       }
       delete() {
-          axios.get('/api/users/deleteUser/' + this.props.obj._id)
+          axios.get('/api/admin/deleteUser/' + this.props.obj._id)
               .then(console.log('Deleted'))
               .catch(err => console.log(err))
           window.location.reload();

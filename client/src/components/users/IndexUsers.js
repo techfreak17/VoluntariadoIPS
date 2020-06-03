@@ -78,7 +78,7 @@ export default class IndexUsers extends Component {
           <button type="submit" className="btn waves-effect waves-light hoverable" style={{ backgroundColor: "#DDDDDD", color: "black", height: 35 }}>Pesquisar</button>
         </form>
         <table className="table table-striped" style={{ marginTop: 20 }}>
-          <thead className>
+          <thead>
             <tr>
               <th>Username</th>
               <th>Email</th>

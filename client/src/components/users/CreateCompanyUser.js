@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { registerCompany } from "../../actions/authActions";
+import { createCompany } from "../../actions/createActions";
 import classnames from "classnames";
 
 class CreateCompanyUser extends Component {
@@ -56,7 +56,7 @@ class CreateCompanyUser extends Component {
             authorization: this.state.authorization,
         };
 
-        this.props.registerCompany(newUser, this.props.history);
+        this.props.createCompany(newUser, this.props.history);
     };
 
     render() {
@@ -245,7 +245,7 @@ class CreateCompanyUser extends Component {
 
                         </form>
                             <div className="col s12" style={{ paddingLeft: "11.250px", paddingBottom: "60px" }}>
-                                <br></br><br></br><br></br><br></br><br></br>
+                                <br></br>
                                 <button
                                     style={{
                                         width: "150px",
@@ -267,7 +267,7 @@ class CreateCompanyUser extends Component {
 }
 
 CreateCompanyUser.propTypes = {
-    registerCompany: PropTypes.func.isRequired,
+    createCompany: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };
@@ -279,5 +279,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { registerCompany }
+    { createCompany }
 )(withRouter(CreateCompanyUser));

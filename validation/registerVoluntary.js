@@ -1,7 +1,7 @@
 const Validator = require("validator");
 const isEmpty = require("is-empty");
 
-module.exports = function validateRegisterInputCompany(data) {
+module.exports = function validateRegisterInputVoluntary(data) {
     let errors = {};
 
     // Convert empty fields to an empty string so we can use validator functions
@@ -14,11 +14,13 @@ module.exports = function validateRegisterInputCompany(data) {
     data.phone = !isEmpty(data.phone) ? data.phone : "";
     data.address = !isEmpty(data.address) ? data.address : "";
     data.birthDate = !isEmpty(data.birthDate) ? data.birthDate : "";
-    data.companyAddress = !isEmpty(data.companyAddress) ? data.companyAddress : "";
-    data.companyName = !isEmpty(data.companyName) ? data.companyName : "";
+    data.memberIPS = !isEmpty(data.memberIPS) ? data.memberIPS : "";
+    data.schoolIPS = !isEmpty(data.schoolIPS) ? data.schoolIPS : "";
+    data.interestAreas = !isEmpty(data.interestAreas) ? data.interestAreas : "";
+    data.reasons =  !isEmpty(data.reasons) ? data.reasons : "";
 
     //Username checks
-    if (Validator.isEmpty(data.username)) {
+    if (Validator.isEmpty(data.username)){
         errors.username = "Deverá preencher o campo Username";
     }
 
@@ -37,14 +39,24 @@ module.exports = function validateRegisterInputCompany(data) {
         errors.birthDate = "Deverá preencher o campo Data Nascimento";
     }
 
-    // birthDate checks
-    if (Validator.isEmpty(data.companyAddress)) {
-        errors.companyAddress = "Deverá preencher o campo Morada (Concelho) Empresa";
+    // memberIPS checks
+    if (Validator.isEmpty(data.memberIPS)) {
+        errors.memberIPS = "Deverá preencher o campo Membro Comunidade IPS";
     }
 
-    // birthDate checks
-    if (Validator.isEmpty(data.companyName)) {
-        errors.companyName = "Deverá preencher o campo Nome Empresa";
+    // schoolIPS checks
+    if (Validator.isEmpty(data.schoolIPS)) {
+        errors.schoolIPS = "Deverá preencher o campo Escola/Serviço";
+    }
+
+    // interestAreas checks
+    if (Validator.isEmpty(data.interestAreas)) {
+        errors.interestAreas = "Deverá preencher o campo Áreas Interesse";
+    }
+
+    // reasons checks
+    if (Validator.isEmpty(data.reasons)) {
+        errors.reasons = "Deverá preencher o campo Razões Para Querer Ser Voluntário";
     }
 
     // Email checks

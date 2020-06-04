@@ -14,7 +14,8 @@ const VoluntarySchema = new Schema({
     },
     phone: {
         type: Number,
-        required: true
+        required: true,
+        unique: true
     },
     address: {
         type: String,

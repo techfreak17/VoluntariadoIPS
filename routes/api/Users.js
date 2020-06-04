@@ -8,8 +8,7 @@ const sender = require('../../Notifications/emailNotify.js');
 const crypto = require('crypto');
 
 // Load input validation
-const validateRegisterInput = require("../../validation/register");
-const validateRegisterInputVoluntary = require("../../validation/register");
+const validateRegisterInputVoluntary = require("../../validation/registerVoluntary");
 const validateRegisterInputCompany = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 const validatePasswordReset = require("../../validation/recover");
@@ -99,6 +98,7 @@ router.post("/registerVoluntary", (req, res) => {
 router.post("/registerCompany", (req, res) => {
   // Form validation
   const { errors, isValid } = validateRegisterInputCompany(req.body);
+  console.log(errors);
   // Check validation
   if (!isValid) {
     return res.status(400).json(errors);

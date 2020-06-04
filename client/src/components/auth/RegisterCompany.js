@@ -245,7 +245,7 @@ class RegisterCompany extends Component {
                                         invalid: errors.companyAddress
                                     })}
                                 />
-                                <label htmlFor="name">Morada (Concelho) Empresa</label>
+                                <label htmlFor="name">Morada (Concelho) Empresa *</label>
                                 <span className="red-text">{errors.companyAddress}</span>
                             </div>
         

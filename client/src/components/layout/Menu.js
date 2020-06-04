@@ -21,7 +21,20 @@ class Menu extends Component {
                             <ul id="nav-mobile" className="left">
                                 <li><a href="/dashboard"><i className="material-icons">home</i></a></li>
                                 <li><a href="/listProjects">Projetos</a></li>
-                                <li><a href="/listUsers">Utilizadores</a></li>
+                                {(() => {
+                                    if (this.props.auth.user.role === "Administrador") {
+                                        return (
+                                            <li><a href="/listSubmitedProjects">Propostas</a></li>
+                                        )
+                                    }
+                                })()}
+                                {(() => {
+                                    if (this.props.auth.user.role === "Administrador") {
+                                        return (
+                                            <li><a href="/listUsers">Utilizadores</a></li>
+                                        )
+                                    }
+                                })()}
                                 <li><a href="..."> </a></li>
                             </ul>
                         </div>

@@ -52,7 +52,7 @@ class Login extends Component {
             <div className="container">
                 <div style={{marginTop: "10%"}} className="row">
                     <div className="col s8 offset-s2">
-                        <a href="/" className="btn-flat waves-effect" onClick="window.location.reload(true);">
+                        <a href="/" className="btn-flat waves-effect">
                             <i className="material-icons left">keyboard_backspace</i>
                             Voltar
                         </a>

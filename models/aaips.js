@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const FKHelper = require('./helpers/foreign-key-helper');
 
 // Create Schema
-const VoluntarySchema = new Schema({
+const AAIPSSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -24,35 +24,6 @@ const VoluntarySchema = new Schema({
         type: Date,
         required: true
     },
-    memberIPS: {
-        type: String,
-        required: true
-    },
-    schoolIPS: {
-        type: String,
-        required: true
-    },
-    courseIPS: {
-        type: String,
-        required: false
-    },
-    interestAreas: {
-        type: Array,
-        required: true
-    },
-    reasons: {
-        type: Array,
-        required: true
-    },
-    observations: {
-        type: String,
-        required: false
-    },
-    authorization: {
-        type: Boolean,
-        required: true,
-        default: false
-    },
     userID: {
         type: Schema.ObjectId,
         ref: 'Users',
@@ -64,4 +35,4 @@ const VoluntarySchema = new Schema({
 		}
     }
 });
-module.exports = mongoose.model("Voluntary", VoluntarySchema);
+module.exports = mongoose.model("AAIPS", AAIPSSchema);

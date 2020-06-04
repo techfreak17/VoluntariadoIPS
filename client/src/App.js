@@ -9,16 +9,20 @@ import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
 import Login from "./components/auth/Login";
 import PrivateRoute from "./components/private-route/PrivateRoute";
+import EntityRoute from "./components/private-route/EntityRoute";
+import AdminRoute from "./components/private-route/AdminRoute";
 import Dashboard from "./components/dashboard/Dashboard";
 import Create from './components/projects/Create';
 import Edit from './components/projects/Edit';
-import Index from './components/projects/Index';
+import IndexProjects from './components/projects/Index';
 import ProjectDetails from './components/projects/ProjectDetails';
 import Recover from "./components/auth/Recover";
 import RecoverConfirm from "./components/auth/RecoverConfirm";
 import IndexUsers from './components/users/IndexUsers';
-import CreateUser from './components/users/CreateUser';
-import EditUser from './components/users/EditUser';
+import CreateCompanyUser from './components/users/CreateCompanyUser';
+import CreateVoluntaryUser from './components/users/CreateVoluntaryUser';
+import EditVoluntary from './components/users/EditVoluntary';
+import EditCompany from './components/users/EditCompany';
 import UserDetails from './components/users/UserDetails';
 import ConfirmAccount from "./components/auth/ConfirmAccount";
 import ConfirmAccountToken from "./components/auth/ConfirmAccountToken";
@@ -26,6 +30,9 @@ import ResetPassword from "./components/auth/ResetPassword";
 import Menu from "./components/layout/Menu";
 import RegisterVoluntary from "./components/auth/RegisterVoluntary";
 import RegisterCompany from "./components/auth/RegisterCompany";
+import IndexSubmitedProjects from "./components/submitedProjects/IndexSubmitedProjects";
+import CreateSubmitedProject from "./components/submitedProjects/CreateSubmitedProject";
+import SubmitedProjectDetails from "./components/submitedProjects/SubmitedProjectDetails";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -71,14 +78,19 @@ class App extends Component {
             <Route exact path="/resetpassword/:token" component={ResetPassword} />
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
-              <PrivateRoute exact path='/createProject' component={ Create } />
-              <PrivateRoute path='/editProject/:id' component={ Edit } />
-              <PrivateRoute path='/listProjects' component={ Index } />
-              <PrivateRoute exact path='/createUser' component={ CreateUser } />
-              <PrivateRoute path='/editUser/:id' component={ EditUser } />
+              <EntityRoute exact path='/createProject' component={ Create } />
+              <EntityRoute path='/editProject/:id' component={ Edit } />
+              <PrivateRoute path='/listProjects' component={ IndexProjects } />
+              <AdminRoute exact path='/createCompanyUser' component={ CreateCompanyUser } />
+              <AdminRoute exact path='/createVoluntaryUser' component={ CreateVoluntaryUser } />
+              <PrivateRoute path='/editVoluntary/:id' component={ EditVoluntary } />
+              <PrivateRoute path='/editCompany/:id' component={ EditCompany } />
               <PrivateRoute path='/getProject/:id' component={ ProjectDetails } />
-              <PrivateRoute path='/getUser/:id' component={ UserDetails } />
-              <PrivateRoute path='/listUsers' component={ IndexUsers } />
+              <EntityRoute path='/getUser/:id' component={ UserDetails } />
+              <EntityRoute path='/listUsers' component={ IndexUsers } />
+              <AdminRoute path='/listSubmitedProjects' component={ IndexSubmitedProjects } />
+              <EntityRoute path='/submitProject' component={ CreateSubmitedProject } />
+              <AdminRoute path='/getSubmitedProject/:id' component={ SubmitedProjectDetails } />
             </Switch>
 
           </div>

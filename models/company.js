@@ -45,11 +45,10 @@ const CompanySchema = new Schema({
         type: Array,
         required: true
     },
-    userID: {
+    responsibleID: {
         type: Schema.ObjectId,
         ref: 'Users',
 		validate: {
-			isAsync: true,
 			validator: function(v) {
 				return FKHelper(mongoose.model('Users'), v);
 			},

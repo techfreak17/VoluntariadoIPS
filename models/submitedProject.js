@@ -3,46 +3,54 @@ const Schema = mongoose.Schema;
 const FKHelper = require('./helpers/foreign-key-helper');
 
 // Create Schema
-const VoluntarySchema = new Schema({
-    name: {
+const SubmitedProjectSchema = new Schema({
+    title: {
         type: String,
         required: true
     },
-    email: {
+    synopsis: {
         type: String,
         required: true
     },
-    phone: {
-        type: Number,
-        required: true
-    },
-    address: {
+    intervationArea: {
         type: String,
         required: false
     },
-    birthDate: {
+    target_audience: {
+        type: String,
+        required: true
+    },
+    objectives: {
+        type: String,
+        required: false
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    requiredFormation: {
+        type: Boolean,
+        required: false
+    },
+    formation: {
+        type: String,
+        required: false
+    },
+    date: {
         type: Date,
         required: true
-    },
-    memberIPS: {
-        type: String,
-        required: true
-    },
-    schoolIPS: {
-        type: String,
-        required: true
-    },
-    courseIPS: {
-        type: String,
-        required: false
     },
     interestAreas: {
         type: Array,
         required: true
     },
-    reasons: {
+    relatedEntities:{
         type: Array,
-        required: true
+        required: false
+    },
+    logo: {
+        data: Buffer,
+        contentType: String
     },
     observations: {
         type: String,
@@ -53,15 +61,16 @@ const VoluntarySchema = new Schema({
         required: true,
         default: false
     },
-    userID: {
+    responsibleID: {
         type: Schema.ObjectId,
         ref: 'Users',
-		validate: {
-			validator: function(v) {
-				return FKHelper(mongoose.model('Users'), v);
-			},
-			message: `Users doesn't exist`
-		}
+        validate: {
+            validator: function (v) {
+                return FKHelper(mongoose.model('Users'), v);
+            },
+            message: `Users doesn't exist`
+        }
     }
 });
-module.exports = mongoose.model("Voluntary", VoluntarySchema);
+
+module.exports = mongoose.model("SubmitedProjects", SubmitedProjectSchema);

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 
 
-export default class ProjectDetails extends Component {
+export default class Edit extends Component {
   constructor(props) {
     super(props);
 
@@ -27,14 +27,16 @@ export default class ProjectDetails extends Component {
 
   componentDidMount() {
     axios.all([
-      axios.get('/api/projects/getProject/' + this.props.match.params.id),
-      axios.get('/api/projects/getProjectUser/' + this.props.match.params.id),
-      axios.get('/api/projects/getProjectUserDetails/' + this.props.match.params.id),
+      axios.get('/api/submitedProjects/getSubmitedProject/' + this.props.match.params.id),
+      axios.get('/api/submitedProjects/getSubmitedProjectUser/' + this.props.match.params.id),
+      axios.get('/api/submitedProjects/getSubmitedProjectUserDetails/' + this.props.match.params.id),
     ])
       .then(responseArr => {
         this.myDate = new Date(responseArr[0].data.date);
         console.log(this.myDate);
         this.myDate = this.myDate.toLocaleString();
+        console.log(this.myDate);
+        console.log(responseArr[0].data);
         this.setState({
           name: responseArr[2].data.name,
           email: responseArr[2].data.email,
@@ -52,6 +54,8 @@ export default class ProjectDetails extends Component {
           role: responseArr[1].data.role,
         });
         var ul = document.getElementById("friendsList");
+
+        console.log(this.state.interestAreas);
 
         for (var i = 0; i < this.state.interestAreas.length; i++) {
           var name = this.state.interestAreas[i];
@@ -94,10 +98,11 @@ export default class ProjectDetails extends Component {
               <ul id="friendsList"><b>Áreas:</b></ul>
             </div>
 
-            <Link to="/listProjects" style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold", }}
+            <Link to="/listSubmitedProjects" style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold", }}
               className="btn btn-large waves-effect waves-light hoverable black center">Voltar</Link>
           </div>
         </div>
+
       </div>
     );
   }

@@ -1,27 +1,26 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import TableRow from './TableRow';
-import { Link } from "react-router-dom";
+import SubmitedProjectsRow from './SubmitedProjectsRow';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 
-class Index extends Component {
+class IndexSubmitedProjects extends Component {
 
   constructor(props) {
     super(props);
     this.onChangeSearch = this.onChangeSearch.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.state = {
-      project: [],
+      submitedProjects: [],
       search: ""
     };
   }
   componentDidMount() {
-    axios.get('/api/projects/listProjects')
+    axios.get('/api/submitedProjects/listSubmitedProjects')
       .then(response => {
         this.setState({
-          project: response.data
+            submitedProjects: response.data
         });
       })
       .catch(function (error) {
@@ -36,8 +35,8 @@ class Index extends Component {
   }
 
   tabRow() {
-    return this.state.project.map(function (object, i) {
-      return <TableRow obj={object} key={i} />;
+    return this.state.submitedProjects.map(function (object, i) {
+      return <SubmitedProjectsRow obj={object} key={i} />;
     });
   }
 
@@ -46,9 +45,9 @@ class Index extends Component {
     const obj = {
       search: document.getElementById("myInput").value,
     };
-    axios.post("/api/projects/searchProject", obj)
+    axios.post("/api/submitedProjects/searchSubmitedProject", obj)
       .then(response => {
-        this.setState({ project: response.data });
+        this.setState({ submitedProjects: response.data });
       })
       .catch(function (error) {
         console.log(error);
@@ -59,38 +58,12 @@ class Index extends Component {
     return (
       <div className="container" style={{ paddingBottom: 70 }}>
         <div>
-          <h1 className="center">Projetos</h1>
+          <h1 className="center">Propostas de Projetos</h1>
           <p className="grey-text text-darken-1">
             <a href="/dashboard" className="btn-flat waves-effect">
               <i className="material-icons left">keyboard_backspace</i>
               Voltar
             </a>
-            {(() => {
-              if (this.props.auth.user.role === "Empresa") {
-                return (
-                  <Link to="/submitProject"
-                    className="right btn waves-effect waves-light hoverable"
-                    style={{
-                      borderRadius: 5,
-                      letterSpacing: "1px",
-                      backgroundColor: "#23395D"
-                    }}>Propor novo Projeto</Link>
-                )
-              }
-            })()}
-                        {(() => {
-              if (this.props.auth.user.role === "Administrador") {
-                return (
-                  <Link to="/createProject"
-                    className="right btn waves-effect waves-light hoverable"
-                    style={{
-                      borderRadius: 5,
-                      letterSpacing: "1px",
-                      backgroundColor: "#23395D"
-                    }}>Criar novo Projeto</Link>
-                )
-              }
-            })()}
           </p>
           <form onSubmit={this.onSubmit}>
             <input id="myInput" type="text" placeholder="Pesquisar..." name="search" onChange={this.onChangeSearch} style={{ borderBottom: "3px solid #23395D" }}></input>
@@ -99,9 +72,9 @@ class Index extends Component {
           <table className="table table-striped" style={{ marginTop: 20 }}>
             <thead>
               <tr>
-                <th>Título</th>
+                <th>Nome Proposta Projeto</th>
+                <th>Resumo</th>
                 <th>Data</th>
-                <th>Descrição</th>
                 <th colSpan="2">Ações</th>
               </tr>
             </thead>
@@ -115,7 +88,7 @@ class Index extends Component {
   }
 }
 
-Index.propTypes = {
+IndexSubmitedProjects.propTypes = {
   auth: PropTypes.object.isRequired
 };
 
@@ -126,4 +99,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { logoutUser }
-)(Index);
+)(IndexSubmitedProjects);

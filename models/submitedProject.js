@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const FKHelper = require('./helpers/foreign-key-helper');
 
 // Create Schema
-const ProjectSchema = new Schema({
+const SubmitedProjectSchema = new Schema({
     title: {
         type: String,
         required: true
@@ -70,10 +70,7 @@ const ProjectSchema = new Schema({
             },
             message: `Users doesn't exist`
         }
-    },
-    enroled_IDs: {
-        type: Array,
-        required: false
     }
 });
-module.exports = mongoose.model("Projects", ProjectSchema);
+
+module.exports = mongoose.model("SubmitedProjects", SubmitedProjectSchema);

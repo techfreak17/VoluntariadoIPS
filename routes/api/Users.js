@@ -44,7 +44,7 @@ router.post("/registerVoluntary", (req, res) => {
   }
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
-      return res.status(400).json({ email: "Email already exists" });
+      return res.status(400).json({ email: "Email já existe" });
     } else {
       const newUser = new User({
         username: req.body.username,
@@ -105,7 +105,7 @@ router.post("/registerCompany", (req, res) => {
   }
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
-      return res.status(400).json({ email: "Email already exists" });
+      return res.status(400).json({ email: "Email já existe" });
     } else {
       const newUser = new User({
         username: req.body.username,
@@ -161,14 +161,14 @@ router.post("/confirmtoken", (req, res) => {
   reqToken = reqToken.toString();
   Token.findOne({token: reqToken }).then(token => {
     if (!token) {
-      return res.status(404).json({ tokennotfound: "Token not found" });
+      return res.status(404).json({ tokennotfound: "Token nâo encontrado" });
     }
     const email = token._userEmail;
     User.findOne({ email }).then(user => {
       user.updateOne(
         { isVerified: true })
         .catch(err => {
-          res.status(400).send("unable to update the database");
+          res.status(400).send("Não foi possível atualizar a base de dados");
         });
       res.json(user);
     });
@@ -191,7 +191,7 @@ router.post("/login", (req, res) => {
   User.findOne({ email }).then(user => {
     // Check if user exists
     if (!user) {
-      return res.status(404).json({ emailnotfound: "Email not found" });
+      return res.status(404).json({ emailnotfound: "Email não encontrado" });
     }
     // Check password
     bcrypt.compare(password, user.password).then(isMatch => {
@@ -220,12 +220,12 @@ router.post("/login", (req, res) => {
             }
           );
         } else {
-          return res.status(401).json({ notverified: 'Your account has not been verified.' });
+          return res.status(401).json({ notverified: 'A tua conta ainda não foi verificada.' });
         }
       } else {
         return res
           .status(400)
-          .json({ passwordincorrect: "Password incorrect" });
+          .json({ passwordincorrect: "Combinação Email/Password inválida" });
       }
     });
   });

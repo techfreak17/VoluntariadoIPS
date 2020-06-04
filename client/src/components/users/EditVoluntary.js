@@ -206,7 +206,7 @@ export default class EditVoluntary extends Component {
                   value={this.state.memberIPS}
                   id="memberIPS"
                   type="text">
-                  <option value="" disabled selected>Selecionar Opção</option>
+                  <option disabled>Selecionar Opção</option>
                   <option value="Estudante">Estudante</option>
                   <option value="Diplomado">Diplomado</option>
                   <option value="Docente">Docente</option>
@@ -222,7 +222,7 @@ export default class EditVoluntary extends Component {
                   value={this.state.schoolIPS}
                   id="schoolIPS"
                   type="text">
-                  <option value="" disabled selected>Selecionar Opção</option>
+                  <option disabled>Selecionar Opção</option>
                   <option value="EST-Setúbal">Escola Superior de Tecnologia de Setúbal</option>
                   <option value="ESE">Escola Superior de Educação</option>
                   <option value="ESCE">Escola Superior de Ciências Empresariais</option>

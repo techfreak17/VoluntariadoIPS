@@ -27,8 +27,25 @@ export default class Edit extends Component {
   }
 
   componentDidMount() {
+    if (window.localStorage) {
+      if (!localStorage.getItem('firstLoad')) {
+        localStorage['firstLoad'] = true;
+        window.location.reload();
+      }
+      else
+        localStorage.removeItem('firstLoad');
+    }
     axios.get('/api/projects/editProject/' + this.props.match.params.id)
       .then(response => {
+        var pdate = new Date(response.data.date);
+        var year = pdate.getFullYear();
+        var month = pdate.getMonth();
+        var d = pdate.getDate();
+        var mm = month < 10 ? '0' + month : month;
+        var dd = d < 10 ? '0' + d : d;
+        var h = pdate.getHours();
+        var m = pdate.getMinutes();
+        pdate = '' + year + "-" + mm + "-" + dd + "T" + h + ":" + m;
         this.setState({
           title: response.data.title,
           synopsis: response.data.synopsis,
@@ -36,7 +53,7 @@ export default class Edit extends Component {
           target_audience: response.data.target_audience,
           objectives: response.data.objectives,
           description: response.data.description,
-          date: response.data.date,
+          date: pdate,
           interestAreas: response.data.interestAreas,
           photo: response.data.photo,
           observations: response.data.observations,
@@ -82,9 +99,9 @@ export default class Edit extends Component {
   onChangeRelatedEntities = e => {
     var input = e.target.value;
     var point = ",";
-    var inputList = input.split(point); 
+    var inputList = input.split(point);
     console.log(inputList);
-    this.setState({ [e.target.id]: inputList});
+    this.setState({ [e.target.id]: inputList });
     console.log(this.state.relatedEntities);
   };
 
@@ -249,7 +266,7 @@ export default class Edit extends Component {
               </div>
             </div>
           </div>
-          
+
         </div>
       </div>
     )

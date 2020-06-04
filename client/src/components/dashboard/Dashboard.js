@@ -12,7 +12,24 @@ class Dashboard extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { titles: [{ title: "#Dinamizar", date: "" }, { title: "#Responsabilizar", date: "" }, { title: "#Qualificar", date: "" }, { title: "", date: "" }]};
+        this.state = { titles: [{ title: "#Dinamizar", date: "" }, { title: "#Responsabilizar", date: "" }, { title: "#Qualificar", date: "" }, { title: "", date: "" }] };
+    }
+
+
+    onLogoutClick = e => {
+        e.preventDefault();
+        this.props.logoutUser();
+    };
+
+    componentDidMount() {
+        if (window.localStorage) {
+            if (!localStorage.getItem('firstLoad')) {
+                localStorage['firstLoad'] = true;
+                window.location.reload();
+            }
+            else
+                localStorage.removeItem('firstLoad');
+        }
         axios.get('/api/projects/listProjects')
             .then(response => {
                 this.setState({ titles: response.data });
@@ -21,12 +38,6 @@ class Dashboard extends Component {
                 console.log(error);
             })
     }
-    
-
-    onLogoutClick = e => {
-        e.preventDefault();
-        this.props.logoutUser();
-    };
 
     render() {
         document.addEventListener('DOMContentLoaded', function () {
@@ -63,7 +74,7 @@ class Dashboard extends Component {
 
                 <div className="container center" style={{ marginTop: 50, marginBottom: 20, backgroundColor: "#FEF4E8", padding: 30, paddingTop: 3, borderRadius: 50, boxShadow: "0 0 15px 10px #23395D" }}>
                     <h2 style={{ fontFamily: "monospace", fontWeight: "bold", color: "#23395D" }}>Os Meus Projetos</h2>
-                    <div className="carousel carousel-slider center" style={{ borderRadius: 30}}>
+                    <div className="carousel carousel-slider center" style={{ borderRadius: 30 }}>
                         {titleList()}
                     </div>
                 </div>

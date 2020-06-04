@@ -35,12 +35,19 @@ class RegisterVoluntary extends Component {
 
     toggleChangeAuthorization = () => {
         this.setState({
-          authorization: !this.state.authorization,
+            authorization: !this.state.authorization,
         });
-      }
+    }
 
     componentDidMount() {
-        // If logged in and user navigates to Register page, should redirect them to dashboard
+        if (window.localStorage) {
+            if (!localStorage.getItem('firstLoad')) {
+                localStorage['firstLoad'] = true;
+                window.location.reload();
+            }
+            else
+                localStorage.removeItem('firstLoad');
+        }
         if (this.props.auth.isAuthenticated) {
             this.props.history.push("/dashboard");
             window.location.reload();
@@ -245,13 +252,12 @@ class RegisterVoluntary extends Component {
                             </div>
 
                             <div className="input-field col s12">
-                                <label htmlFor="name">Membro da Comunidade IPS *</label><br></br><br></br>
+                                <label htmlFor="name">Membro da Comunidade IPS *</label><br></br>
                                 <select onChange={this.onChange}
                                     value={this.state.memberIPS}
                                     error={errors.memberIPS}
                                     id="memberIPS"
                                     type="text">
-                                    <option value="" disabled selected>Selecionar Opção</option>
                                     <option value="Estudante">Estudante</option>
                                     <option value="Diplomado">Diplomado</option>
                                     <option value="Docente">Docente</option>
@@ -263,13 +269,12 @@ class RegisterVoluntary extends Component {
                             </div>
 
                             <div className="input-field col s12">
-                                <label htmlFor="name">Escola/Serviço *</label><br></br><br></br>
+                                <label htmlFor="name">Escola/Serviço *</label><br></br>
                                 <select onChange={this.onChange}
                                     value={this.state.schoolIPS}
                                     error={errors.schoolIPS}
                                     id="schoolIPS"
                                     type="text">
-                                    <option value="" disabled selected>Selecionar Opção</option>
                                     <option value="EST-Setúbal">Escola Superior de Tecnologia de Setúbal</option>
                                     <option value="ESE">Escola Superior de Educação</option>
                                     <option value="ESCE">Escola Superior de Ciências Empresariais</option>
@@ -295,7 +300,7 @@ class RegisterVoluntary extends Component {
                             </div>
 
                             <div className="input-field col s12">
-                                <label>Áreas Interesse *</label><br></br><br></br>
+                                <label>Áreas Interesse *</label><br></br>
                                 <select multiple={true} value={this.state.interestAreas} onChange={this.handleChangeInterestAreas}
                                     error={errors.interestAreas}>
                                     <option disabled>Selecionar Opções</option>
@@ -314,7 +319,7 @@ class RegisterVoluntary extends Component {
                             </div>
 
                             <div className="input-field col s12">
-                                <label>Razões para querer ser voluntário *</label><br></br><br></br>
+                                <label>Razões para querer ser voluntário *</label><br></br>
                                 <select multiple={true} value={this.state.reasons} onChange={this.handleChangeReasons}
                                     error={errors.reasons}>
                                     <option disabled>Selecionar Opções</option>
@@ -351,7 +356,7 @@ class RegisterVoluntary extends Component {
                                 <b>Autorização RGPD *</b>
                                 <label>
                                     <br></br>
-                                    <input type="checkbox" checked={this.state.authorization} onChange={this.toggleChangeAuthorization}/>
+                                    <input type="checkbox" checked={this.state.authorization} onChange={this.toggleChangeAuthorization} />
                                     <span>Consinto, ao abrigo do Regulamento Geral de Proteção de Dados (RGPD), a utilização dos meus dados pessoais, fornecidos no formulário, ficando informado/a do direito a retirar o consentimento a qualquer momento e que o tratamento de dados é da responsabilidade do IPS, sendo-lhe aplicada a Política de Proteção de Dados do IPS.</span>
                                     <br></br>
                                     <a href="http://www.si.ips.pt/ips_si/web_base.gera_pagina?P_pagina=40723" target="_blank" rel="noopener noreferrer">(Disponível aqui)</a>

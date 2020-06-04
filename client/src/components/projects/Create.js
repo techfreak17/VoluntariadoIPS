@@ -284,7 +284,7 @@ render() {
             </div>
 
             <div className="input-field col s12">
-              <label>Para a concretização do Projeto/Atividades, em que áreas necessita de voluntários*</label><br></br><br></br>
+              <label>Para a concretização do Projeto/Atividades, em que áreas necessita de voluntários*</label><br></br>
               <select multiple={true} value={this.state.interestAreas} onChange={this.handleChangeInterestAreas}
                 error={errors.interestAreas} className='dropdown-content'>
                 <option disabled>Selecionar Opções</option>

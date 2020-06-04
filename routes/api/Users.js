@@ -207,7 +207,7 @@ router.post("/login", (req, res) => {
             id: user.id,
             name: user.name
           };
-          notification.getNotification(email);
+          //notification.getNotification(email);
           // Sign token
           jwt.sign(
             payload,

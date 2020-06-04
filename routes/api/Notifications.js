@@ -2,8 +2,6 @@ const pushTemplates= require("../../models/pushNotificationTemplates");
 const notifications= require("../../models/notifications");
 const express = require("express");
 const router = express.Router();
-const User = require("../../models/user");
-
 
 
 // @desc Criar uma Notificação
@@ -36,8 +34,6 @@ function createNotification ( type, texto, email){
 }
 
 
-// @desc builds a Notification
-// @access Public
 function buildnotification(title,body,texto, email){
   const notif= new notifications;
   console.log('entered build');
@@ -49,28 +45,6 @@ function buildnotification(title,body,texto, email){
   return notif;
 }
 
-
-// @route GET api/notifications/getNotification/:id
-// @desc Get Notification
-// @access Public
-router.get('/getNotification/:id', function (req, res){
-  User.findOne({_id: req.param.id},function (err, email){
-    if(err){
-      console.log('error');
-      console.log(err);
-      res.json(err);
-    }
-    else{
-      console.log('has an object');
-      console.log(email);
-      res.send(getNotification(email)); 
-    }
-  })
-});
-
-
-// @desc Gets a notification with an email
-// @access Public
 function getNotification(userEmail){
   console.log('entered getnotification');
     notifications.find({ email: userEmail , isRead: false}, function(err, notif){
@@ -82,13 +56,29 @@ function getNotification(userEmail){
         console.log('has something');
         console.log(notif);
         return notif;
-      }    
-    });
-  }
+      }
 
-// @route GET api/notifications/updateNotification/:id
-// @desc updates a notification from 'not read' to 'read'
-// @access Public
+    });
+}
+
+router.route('/listNotifications').get(function (req, res) {
+  notifications.find(function (err, notif) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      res.json(notif);
+    }
+  });
+});
+
+//router.route('/deleteNotif/:id').get(function (req, res) {
+  //notifications.findByIdAndRemove({ _id: req.params.id }, function (err, user) {
+    //if (err) res.json(err);
+    //else res.json('Successfully removed');
+  //});
+//});
+
 router.put('/updateNotification/:id').get(function (req, res) {
   console.log('entered update Notification');
   notifications.findOne({_id: req.params.id},function(err, notif){
@@ -101,10 +91,21 @@ router.put('/updateNotification/:id').get(function (req, res) {
       console.log('has an object');
       console.log(notif);
       notif.isRead=true;
-      notif.save()
-      .then(x=>res.json(x));
+      notif.save();
+      res.json(notif);
     }
   });
+});
+
+
+router.post("/createNotification", (req, res) => {
+
+  const newNotif = new notifications;
+    
+    newNotif.body=req.body.body
+    newNotif.date=new Date();
+    newNotif.email=req.body.email;
+  
 });
 
 
@@ -114,3 +115,5 @@ module.exports= getNotif ={getNotification};
 //createNotification('semVagas','\"Ajudar o Ambiente\"','180221102@estudantes.ips.pt');
 //createNotification('confirmarEmail','', '180221102@estudantes.ips.pt');
 //getNotification('180221102@estudantes.ips.pt');
+
+module.exports = router;

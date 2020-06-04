@@ -317,6 +317,7 @@ router.post("/createUser", (req, res) => {
         email: req.body.email,
         password: req.body.password
       });
+      
       // Hash password before saving in database
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -324,7 +325,12 @@ router.post("/createUser", (req, res) => {
           newUser.password = hash;
           newUser
             .save()
-            .then(user => res.json(user))
+            .then(user => { 
+              
+              notification.createNotification( 'confirmarEmail','', req.body.email);
+              res.json(user)
+            })
+            
             .catch(err => console.log(err));
         });
       });

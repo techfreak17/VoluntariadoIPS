@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import classnames from "classnames";
+import  createNotification  from "../../actions/notifyAction";
 
 
 class Login extends Component {
@@ -13,6 +14,7 @@ class Login extends Component {
             email: "",
             password: "",
             errors: {}
+            
         };
     }
 
@@ -38,8 +40,14 @@ class Login extends Component {
             email: this.state.email,
             password: this.state.password
         };
+
+        const notifData = {
+            body: this.state.notifBody,
+            email: this.state.email
+            
+        };
         this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
-        
+       
     };
 
     render() {

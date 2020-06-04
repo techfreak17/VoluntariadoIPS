@@ -245,13 +245,12 @@ class RegisterVoluntary extends Component {
                             </div>
 
                             <div className="input-field col s12">
-                                <label>Membro da Comunidade IPS *</label><br></br><br></br>
+                                <label htmlFor="name">Membro da Comunidade IPS *</label><br></br><br></br>
                                 <select onChange={this.onChange}
                                     value={this.state.memberIPS}
                                     error={errors.memberIPS}
                                     id="memberIPS"
-                                    type="text"
-                                    className="browser-default">
+                                    type="text">
                                     <option value="" disabled selected>Selecionar Opção</option>
                                     <option value="Estudante">Estudante</option>
                                     <option value="Diplomado">Diplomado</option>
@@ -264,13 +263,12 @@ class RegisterVoluntary extends Component {
                             </div>
 
                             <div className="input-field col s12">
-                                <label>Escola/Serviço *</label><br></br><br></br>
+                                <label htmlFor="name">Escola/Serviço *</label><br></br><br></br>
                                 <select onChange={this.onChange}
                                     value={this.state.schoolIPS}
                                     error={errors.schoolIPS}
                                     id="schoolIPS"
-                                    type="text"
-                                    className="browser-default">
+                                    type="text">
                                     <option value="" disabled selected>Selecionar Opção</option>
                                     <option value="EST-Setúbal">Escola Superior de Tecnologia de Setúbal</option>
                                     <option value="ESE">Escola Superior de Educação</option>

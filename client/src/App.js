@@ -21,7 +21,8 @@ import RecoverConfirm from "./components/auth/RecoverConfirm";
 import IndexUsers from './components/users/IndexUsers';
 import CreateCompanyUser from './components/users/CreateCompanyUser';
 import CreateVoluntaryUser from './components/users/CreateVoluntaryUser';
-import EditUser from './components/users/EditUser';
+import EditVoluntary from './components/users/EditVoluntary';
+import EditCompany from './components/users/EditCompany';
 import UserDetails from './components/users/UserDetails';
 import ConfirmAccount from "./components/auth/ConfirmAccount";
 import ConfirmAccountToken from "./components/auth/ConfirmAccountToken";
@@ -79,7 +80,8 @@ class App extends Component {
               <PrivateRoute path='/listProjects' component={ IndexProjects } />
               <AdminRoute exact path='/createCompanyUser' component={ CreateCompanyUser } />
               <AdminRoute exact path='/createVoluntaryUser' component={ CreateVoluntaryUser } />
-              <PrivateRoute path='/editUser/:id' component={ EditUser } />
+              <PrivateRoute path='/editVoluntary/:id' component={ EditVoluntary } />
+              <PrivateRoute path='/editCompany/:id' component={ EditCompany } />
               <PrivateRoute path='/getProject/:id' component={ ProjectDetails } />
               <EntityRoute path='/getUser/:id' component={ UserDetails } />
               <EntityRoute path='/listUsers' component={ IndexUsers } />

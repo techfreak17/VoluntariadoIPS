@@ -10,14 +10,25 @@ import ProjectsRow from "./ProjectsRow"
 class Landing extends Component {
     constructor(props) {
         super(props);
-        this.state = { project: [{ title: "", date: "", synopsis:"" }, { title: "", date: "",synopsis:"" }, { title: "", date: "",synopsis:"" }, { title: "", date: "",synopsis:"" }] };
+        this.state = { project: [{ title: "", date: "", synopsis: "" }, { title: "", date: "", synopsis: "" }, { title: "", date: "", synopsis: "" }, { title: "", date: "", synopsis: "" }] };
+    }
+
+    componentDidMount() {
+        if (window.localStorage) {
+            if (!localStorage.getItem('firstLoad')) {
+                localStorage['firstLoad'] = true;
+                window.location.reload();
+            }
+            else
+                localStorage.removeItem('firstLoad');
+        }
         axios.get('/api/projects/listProjects')
-        .then(response => {
-            this.setState({ project: response.data });
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
+            .then(response => {
+                this.setState({ project: response.data });
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
     }
 
     render() {
@@ -54,7 +65,7 @@ class Landing extends Component {
                                     Junte-se a nós em diversos projetos
                                     enriquecedores para si e para a comunidade IPS.
                         </p></h5>
-                            <h5 style={{ color: "#FEF4E8", fontWeight: "bold"}}>REGISTE-SE</h5>
+                            <h5 style={{ color: "#FEF4E8", fontWeight: "bold" }}>REGISTE-SE</h5>
                         </div>
                         <div className="row center" style={{ width: "40%" }}>
                             <div className="col s6">
@@ -78,7 +89,6 @@ class Landing extends Component {
                                         letterSpacing: "1.5px",
                                         fontWeight: "bold"
                                     }}
-                                    onClick="window.location.reload()"
                                     className="btn btn-large waves-effect waves-light hoverable green">
                                     Voluntário</a>
                             </div>

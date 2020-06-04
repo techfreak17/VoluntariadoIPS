@@ -98,7 +98,6 @@ router.post("/registerVoluntary", (req, res) => {
 router.post("/registerCompany", (req, res) => {
   // Form validation
   const { errors, isValid } = validateRegisterInputCompany(req.body);
-  console.log(errors);
   // Check validation
   if (!isValid) {
     return res.status(400).json(errors);

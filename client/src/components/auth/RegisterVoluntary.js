@@ -308,7 +308,7 @@ class RegisterVoluntary extends Component {
 
                             <div className="input-field col s12">
                                 <label>Áreas Interesse *</label><br></br>
-                                <select multiple={true} value={this.state.interestAreas} onChange={this.handleChangeInterestAreas}
+                                <select required multiple={true} value={this.state.interestAreas} onChange={this.handleChangeInterestAreas}
                                     error={errors.interestAreas}
                                     className={classnames("", {
                                         invalid: errors.interestAreas
@@ -330,7 +330,7 @@ class RegisterVoluntary extends Component {
 
                             <div className="input-field col s12">
                                 <label>Razões Para Querer Ser Voluntário *</label><br></br>
-                                <select multiple={true} value={this.state.reasons} onChange={this.handleChangeReasons}
+                                <select required multiple={true} value={this.state.reasons} onChange={this.handleChangeReasons}
                                     error={errors.reasons}
                                     className={classnames("", {
                                         invalid: errors.reasons

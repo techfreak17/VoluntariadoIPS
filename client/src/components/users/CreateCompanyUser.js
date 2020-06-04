@@ -256,7 +256,7 @@ class CreateCompanyUser extends Component {
                                     type="submit"
                                     onClick={this.onSubmit}
                                     className="btn btn-large waves-effect waves-light hoverable blue accent-3">
-                                    Registar
+                                    Criar
                                 </button>
                             </div>
                     </div>

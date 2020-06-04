@@ -20,7 +20,9 @@ export default class EditVoluntary extends Component {
       role: "",
       observations: "",
       username: "",
-      birthDate: ""
+      birthDate: "",
+      password: "",
+      password2: ""
     }
 
     this.onChange = this.onChange.bind(this);
@@ -94,7 +96,9 @@ export default class EditVoluntary extends Component {
       role: this.state.role,
       observations: this.state.observations,
       username: this.state.username,
-      birthDate: this.state.birthDate
+      birthDate: this.state.birthDate,
+      password: this.state.password,
+      password2: this.state.password2
     };
     axios.post('/api/admin/updateUser/' + this.props.match.params.id, obj)
       .then(res => console.log(res.data));

@@ -152,15 +152,20 @@ router.route('/updateUser/:id').post(function (req, res) {
       user.email = req.body.email;
       user.username = req.body.username;
       user.password = req.body.password;
-
-      user.updateOne({
-        email: user.email,
-        username: user.username,
-        password: user.password,
-      })
-        .catch(err => {
-          res.status(400).send("unable to update the database");
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(user.password, salt, (err, hash) => {
+          if (err) throw err;
+            user.updateOne({
+              email: user.email,
+              username: user.username,
+              password: hash,
+            })
+              .catch(err => {
+                res.status(400).send("unable to update the database");
+              });
         });
+      });
+
       if (user.role === "Voluntário") {
         Voluntary.findOne({ email: user.email }).then(voluntary => {
           if (voluntary) {

@@ -48,8 +48,6 @@ class Dashboard extends Component {
 
         let titleL = [];
 
-        console.log(this.props.auth.user.role);
-
         const titleList = () => {
             for (let i = 0; i < this.state.titles.length; i++) {
                 titleL.push(<Slider obj={this.state.titles[i]} key={i} />);

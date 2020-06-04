@@ -24,7 +24,7 @@ class Create extends Component {
       relatedEntities: [],
       observations: "",
       authorization: false,
-      userID: this.props.auth.user.id,
+      responsibleID: this.props.auth.user.id,
       errors: {}
     }
 
@@ -100,7 +100,7 @@ onSubmit(e) {
     observations: this.state.observations,
     authorization: this.state.authorization,
     relatedEntities: this.state.relatedEntities,
-    userID: this.state.userID
+    responsibleID: this.state.responsibleID
   };
 
   this.props.createProject(obj, this.props.history);
@@ -120,6 +120,7 @@ onSubmit(e) {
     photo: "",
     authorization: "",
     relatedEntities: "",
+    responsibleID: "",
     errors: {}
   })
 }
@@ -128,9 +129,7 @@ onChangeRelatedEntities = e => {
   var input = e.target.value;
   var point = ",";
   var inputList = input.split(point);
-  console.log(inputList);
   this.setState({ [e.target.id]: inputList });
-  console.log(this.state.relatedEntities);
 };
 
 
@@ -149,7 +148,7 @@ render() {
         <div className="col s8 offset-s2">
 
           <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-            <h3>Propor Projeto</h3>
+            <h3>Criar Projeto</h3>
           </div>
 
           <form noValidate>

@@ -230,7 +230,7 @@ router.route('/updateUser/:id').post(function (req, res) {
   });
 });
 
-// @route GET api/admin/deleteUser/:ud
+// @route GET api/admin/deleteUser/:id
 // @desc Delete Voluntary User
 // @access Private
 router.route('/deleteUser/:id').get(function (req, res) {

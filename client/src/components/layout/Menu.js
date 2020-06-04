@@ -24,10 +24,17 @@ class Menu extends Component {
                                 {(() => {
                                     if (this.props.auth.user.role === "Administrador") {
                                         return (
+                                            <li><a href="/listSubmitedProjects">Propostas</a></li>
+                                        )
+                                    }
+                                })()}
+                                {(() => {
+                                    if (this.props.auth.user.role === "Administrador") {
+                                        return (
                                             <li><a href="/listUsers">Utilizadores</a></li>
                                         )
                                     }
-                                })()}                     
+                                })()}
                                 <li><a href="..."> </a></li>
                             </ul>
                         </div>

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link } from "react-router-dom";
 import M from "materialize-css";
 import options from "materialize-css";
 
@@ -235,35 +234,13 @@ export default class Edit extends Component {
                 />
               </div>
             </form>
-            <div className="col s12 center-align row" style={{ paddingBottom: 60 }}>
-              <div className="col s6">
-                <button
-                  style={{
-                    width: "150px",
-                    borderRadius: "3px",
-                    letterSpacing: "1.5px",
-                    marginTop: "1rem",
-                    backgroundColor: "green"
-                  }}
-                  onClick={this.onSubmit}
-                  type="submit"
-                  className="btn btn-large waves-effect waves-light hoverable accent-3">
-                  Submeter
-                </button>
-              </div>
-              <div className="col s6">
-                <button
-                  style={{
-                    width: "150px",
-                    borderRadius: "3px",
-                    letterSpacing: "1.5px",
-                    marginTop: "1rem",
-                    backgroundColor: "red"
-                  }}
-                  className="btn btn-large waves-effect waves-light hoverable accent-3">
-                  <Link to="/listProjects" style={{ color: "white" }}>Cancelar</Link>
-                </button>
-              </div>
+            <div className="col s12" style={{ marginTop: "1%", paddingBottom: 60 }}>
+              <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "16%" }}
+                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Submeter
+              </button>
+              <a style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "16%" }}
+                href="/listProjects" className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
+              </a>
             </div>
           </div>
 

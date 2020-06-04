@@ -5,6 +5,7 @@ const router = express.Router();
 const SubmitedProject = require("../../models/submitedProject");
 const User = require("../../models/user");
 const Company = require("../../models/company");
+const Project = require("../../models/project");
 
 // @route POST api/submitedProjects/submitCreateProject
 // @desc Submit Create Project - Company and AAIPS
@@ -26,7 +27,10 @@ router.post("/submitCreateProject", (req, res) => {
         interestAreas: req.body.interestAreas,
         photo: req.body.photo,
         observations: req.body.observations,
-        relatedEntities: req.body.relatedEntities
+        relatedEntities: req.body.relatedEntities,
+        responsibleID: req.body.responsibleID,
+        requiredFormation: req.body.requiredFormation,
+        formation: req.body.formation
       });
       newSubmitedProject
         .save()
@@ -89,7 +93,7 @@ router.route('/submitUpdateProject/:id').post(function (req, res) {
 // @desc Submit Delete Project - Company and AAIPS
 // @access Private
 router.route('/submitDeleteProject/:id').get(function (req, res) {
-  Project.findByIdAndRemove({ _id: req.params.id }, function (err, project) {
+  SubmitedProject.findByIdAndRemove({ _id: req.params.id }, function (err, project) {
     if (err) res.json(err);
     else res.json('Successfully removed');
   });
@@ -162,5 +166,41 @@ router.route('/getSubmitedProjectUserDetails/:id').get(function (req, res) {
   });
 });
 
+// @route POST api/submitedProjects/acceptSubmitedProject/:d
+// @desc Accept Submited Project
+// @access Private
+router.route('/acceptSubmitedProject/:id').post(function (req, res) {
+  SubmitedProject.findByIdAndRemove({ _id: req.params.id }, function (err, project) {
+    if (err) {
+      res.json(err);
+    }
+    else {
+      const newProject = new Project({
+        title: project.title,
+        synopsis: project.synopsis,
+        intervationArea: project.intervationArea,
+        target_audience: project.target_audience,
+        objectives: project.objectives,
+        description: project.description,
+        date: project.date,
+        interestAreas: project.interestAreas,
+        photo: project.photo,
+        observations: project.observations,
+        relatedEntities: project.relatedEntities,
+        responsibleID: project.responsibleID,
+        requiredFormation: project.requiredFormation,
+        formation: project.formation
+      });
+      newProject
+        .save()
+        .then(newProject => res.json(newProject))
+        .catch(err => console.log(err));
+    }
+  });
+  SubmitedProject.findByIdAndRemove({ _id: req.params.id }, function (err, project) {
+    if (err) res.json(err);
+    else res.json('Successfully removed');
+  });
+});
 
 module.exports = router;

@@ -30,6 +30,9 @@ import ResetPassword from "./components/auth/ResetPassword";
 import Menu from "./components/layout/Menu";
 import RegisterVoluntary from "./components/auth/RegisterVoluntary";
 import RegisterCompany from "./components/auth/RegisterCompany";
+import IndexSubmitedProjects from "./components/submitedProjects/IndexSubmitedProjects";
+import CreateSubmitedProject from "./components/submitedProjects/CreateSubmitedProject";
+import SubmitedProjectDetails from "./components/submitedProjects/SubmitedProjectDetails";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -85,6 +88,9 @@ class App extends Component {
               <PrivateRoute path='/getProject/:id' component={ ProjectDetails } />
               <EntityRoute path='/getUser/:id' component={ UserDetails } />
               <EntityRoute path='/listUsers' component={ IndexUsers } />
+              <AdminRoute path='/listSubmitedProjects' component={ IndexSubmitedProjects } />
+              <EntityRoute path='/submitProject' component={ CreateSubmitedProject } />
+              <AdminRoute path='/getSubmitedProject/:id' component={ SubmitedProjectDetails } />
             </Switch>
 
           </div>

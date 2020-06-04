@@ -25,7 +25,10 @@ router.post("/createProject", (req, res) => {
         interestAreas: req.body.interestAreas,
         photo: req.body.photo,
         observations: req.body.observations,
-        relatedEntities: req.body.relatedEntities
+        relatedEntities: req.body.relatedEntities,
+        responsibleID: req.body.responsibleID,
+        requiredFormation: req.body.requiredFormation,
+        formation: req.body.formation
       });
       newProject
         .save()

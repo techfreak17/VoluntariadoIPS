@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 //import pushTemplates from '../../models/pushNotificationTemplates';
-import { createNotification } from "../../actions/notifyAction";
 
 
 

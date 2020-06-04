@@ -64,7 +64,6 @@ export default class ProjectDetails extends Component {
   }
 
   render() {
-    console.log("Estou no project details");
     return (
       <div>
         <div className="card" style={{ backgroundColor: "#FEF4E8", width: 900, margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px black" }}>

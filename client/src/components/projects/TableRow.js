@@ -36,19 +36,26 @@ class TableRow extends Component {
         <td>
           <Link to={"/getProject/" + this.props.obj._id} className="btn btn-primary" style={{ width: "15%", backgroundColor: "#D6E6F2", color: "black" }}><i className="material-icons">search</i></Link>
           {(() => {
-              if (this.props.auth.user.role === "Administrador") {
-                return (
-                  <Link to={"/editProject/" + this.props.obj._id} className="btn btn-primary" style={{ width: "15%", backgroundColor: "lightGrey", color: "black", marginLeft: 40 }}><i className="material-icons">edit</i></Link>
-                )
-              }
-            })()}
-            {(() => {
-              if (this.props.auth.user.role === "Administrador") {
-                return (
-                  <button onClick={this.delete} className="btn btn-danger" style={{ width: "15%", backgroundColor: "red", marginLeft: 40, color: "black" }}><i className="material-icons">delete</i></button>
-                )
-              }
-            })()}
+            if (this.props.auth.user.role === "Administrador") {
+              return (
+                <Link to={"/editProject/" + this.props.obj._id} className="btn btn-primary" style={{ width: "15%", backgroundColor: "lightGrey", color: "black", marginLeft: 40 }}><i className="material-icons">edit</i></Link>
+              )
+            }
+          })()}
+          {(() => {
+            if (this.props.auth.user.role === "Administrador") {
+              return (
+                <button onClick={this.delete} className="btn btn-danger" style={{ width: "15%", backgroundColor: "red", marginLeft: 40, color: "black" }}><i className="material-icons">delete</i></button>
+              )
+            }
+          })()}
+          {(() => {
+            if (this.props.auth.user.role === "Voluntário") {
+              return (
+                <button className="btn btn-danger" style={{ width: "15%", backgroundColor: "green", marginLeft: 40, color: "white" }}><i className="material-icons">add</i></button>
+              )
+            }
+          })()}
         </td>
       </tr>
     );

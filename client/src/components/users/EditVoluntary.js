@@ -71,8 +71,8 @@ export default class EditVoluntary extends Component {
       .catch(error => console.log(error));
   }
 
-  onChange (event) {
-    this.setState({value: event.target.value });
+  onChange = e => {
+    this.setState({ [e.target.id]: e.target.value });
   };
 
   handleChangeInterestAreas(event) {
@@ -90,15 +90,15 @@ export default class EditVoluntary extends Component {
       email: this.state.email,
       phone: this.state.phone,
       address: this.state.address,
-      member: this.state.member,
-      school: this.state.school,
-      course: this.state.course,
-      role: this.state.role,
+      memberIPS: this.state.member,
+      schoolIPS: this.state.school,
+      courseIPS: this.state.course,
+      interestAreas: this.state.interestAreas,
+      reasons: this.state.reasons,
       observations: this.state.observations,
       username: this.state.username,
       birthDate: this.state.birthDate,
-      password: this.state.password,
-      password2: this.state.password2
+      role: this.state.role
     };
     axios
       .post('/api/admin/updateUser/' + this.props.match.params.id, obj)
@@ -216,7 +216,7 @@ export default class EditVoluntary extends Component {
               </div>
 
               <div className="input-field col s12">
-              <label htmlFor="name">Membro da Comunidade IPS</label><br></br>
+                <label htmlFor="name">Membro da Comunidade IPS</label><br></br>
                 <select onChange={this.onChange}
                   value={this.state.memberIPS}
                   error={errors.memberIPS}
@@ -257,7 +257,7 @@ export default class EditVoluntary extends Component {
               </div>
 
               <div className="input-field col s12">
-              <label htmlFor="name">Curso/Formação em</label>
+                <label htmlFor="name">Curso/Formação em</label><br></br>
                 <input
                   onChange={this.onChange}
                   value={this.state.courseIPS}

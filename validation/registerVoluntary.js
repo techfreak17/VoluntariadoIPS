@@ -20,6 +20,8 @@ module.exports = function validateRegisterInputVoluntary(data) {
     arrInterestAreas = data.interestAreas;
     let arrReasons = new Array();
     arrReasons = data.reasons;
+    let number = new Int32Array; 
+    number = data.phone
 
     //Username checks
     if (Validator.isEmpty(data.username)){
@@ -32,7 +34,7 @@ module.exports = function validateRegisterInputVoluntary(data) {
     }
 
     // phone checks
-    if (Validator.isEmpty(data.phone)) {
+    if (number.length === 0) {
         errors.phone = "Deverá preencher o campo Telemóvel";
     }
 
@@ -85,7 +87,7 @@ module.exports = function validateRegisterInputVoluntary(data) {
         errors.password2 = "Password deverá ter no mínimo 6 caracteres";
     }
 
-    if (!Validator.isLength(data.phone, { min: 9, max: 9 })) {
+    if (number.length < 9 || number.length > 9) {
         errors.phone = "Telemóvel deverá ter 9 dígitos";
     }
 

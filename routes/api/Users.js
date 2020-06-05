@@ -19,18 +19,6 @@ const Voluntary = require("../../models/voluntary");
 const Company = require("../../models/company");
 const Token = require("../../models/token");
 
-function emailSend(user) {
-  const email = user.email;
-
-  User.findOne({ email }).then(user => {
-    var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });
-    msgToken = 'http://' + req.headers.host + '/ConfirmAccountToken/' + mytoken.token;
-    mytoken.save();
-    const msg = template.confirmarEmail(email, msgToken);
-    sender.sendEmail(msg);
-  });
-};
-
 // @route POST api/users/registerVoluntary
 // @desc Register user
 // @access Public

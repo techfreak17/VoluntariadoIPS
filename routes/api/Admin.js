@@ -8,7 +8,6 @@ const crypto = require('crypto');
 // Load input validation
 const validateRegisterInputVoluntary = require("../../validation/registerVoluntary");
 const validateRegisterInputCompany = require("../../validation/register");
-const validateCreateProject = require("../../validation/createProject")
 
 // Load User model
 const User = require("../../models/user");
@@ -39,7 +38,6 @@ router.route('/editUser/:id').get(function (req, res) {
   let id = req.params.id;
   User.findById(id, function (err, user) {
     res.json(user);
-    console.log(user);
   });
 });
 

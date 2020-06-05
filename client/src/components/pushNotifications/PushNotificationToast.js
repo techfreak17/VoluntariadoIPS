@@ -1,7 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Axios from "axios";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 //import pushTemplates from '../../models/pushNotificationTemplates';
 
 
@@ -14,7 +16,7 @@ import Axios from "axios";
 
 
 toast.configure()
-export default class PushNotifications extends React.Component {
+class PushNotificationToast extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -25,7 +27,7 @@ export default class PushNotifications extends React.Component {
     }
 
     componentDidMount(){
-        Axios.get('/api/users/listUsers')
+        Axios.get('/api/notifications/listNotifications/' + this.props.auth.user.id)
           .then(response => {
             this.setState({ msgs: response.data});
           })
@@ -36,8 +38,8 @@ export default class PushNotifications extends React.Component {
 
     notify = () => {
         if(this.state.msgs[this.state.position]){
-            toast(this.state.msgs[this.state.position], {position: "bottom-right"});
-            this.state.position++;
+            toast(this.state.msgs[this.state.position].body, {position: "bottom-right"});
+            this.setState({position: this.state.position +1});
         }else{
             toast('Não existem notificações', {position: "bottom-right"});
         }
@@ -50,4 +52,20 @@ export default class PushNotifications extends React.Component {
         );
     }
 
+
+
 }
+
+PushNotificationToast.propTypes = {
+    
+    auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+    auth: state.auth
+});
+
+export default connect(
+    mapStateToProps
+    
+)(PushNotificationToast);

@@ -1,5 +1,6 @@
 const pushTemplates= require("../../models/pushNotificationTemplates");
 const notifications= require("../../models/notifications");
+const User = require("../../models/user");
 const express = require("express");
 const router = express.Router();
 
@@ -61,15 +62,19 @@ function getNotification(userEmail){
     });
 }
 
-router.route('/listNotifications').get(function (req, res) {
-  notifications.find(function (err, notif) {
-    if (err) {
-      console.log(err);
-    }
-    else {
-      res.json(notif);
-    }
-  });
+router.route('/listNotifications/:id').get(function (req, res) {
+  const id = req.params.id;
+  User.findById(id, function(err,user){
+    notifications.find({email: user.email}, function (err, notif) {
+      if (err) {
+        console.log(err);
+      }
+      else {
+        res.json(notif);
+      }
+    });
+  })
+  
 });
 
 //router.route('/deleteNotif/:id').get(function (req, res) {

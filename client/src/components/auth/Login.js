@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import classnames from "classnames";
-import  createNotification  from "../../actions/notifyAction";
+
 
 
 class Login extends Component {
@@ -41,9 +41,9 @@ class Login extends Component {
             password: this.state.password
         };
 
-    
+        
         this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
-       
+      
     };
 
     render() {
@@ -52,7 +52,7 @@ class Login extends Component {
             <div className="container">
                 <div style={{marginTop: "10%"}} className="row">
                     <div className="col s8 offset-s2">
-                        <a href="/" className="btn-flat waves-effect">
+                        <a href="/" className="btn-flat waves-effect" >
                             <i className="material-icons left">keyboard_backspace</i>
                             Voltar
                         </a>

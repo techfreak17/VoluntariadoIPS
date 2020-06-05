@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import M from "materialize-css";
 import options from "materialize-css";
+import classnames from "classnames";
 
 export default class EditVoluntary extends Component {
     constructor(props) {
@@ -17,7 +18,8 @@ export default class EditVoluntary extends Component {
             role: "",
             observations: "",
             username: "",
-            birthDate: ""
+            birthDate: "",
+            errors: {}
         }
 
         this.onChange = this.onChange.bind(this);
@@ -45,7 +47,7 @@ export default class EditVoluntary extends Component {
                 var month = date.getMonth();
                 var d = date.getDate();
                 var mm = month < 10 ? '0' + month : month;
-                var dd = d < 10 ? '0' +  d: d;
+                var dd = d < 10 ? '0' + d : d;
                 date = '' + year + "-" + mm + "-" + dd;
                 this.setState({
                     name: responseArr[0].data.name,
@@ -96,6 +98,8 @@ export default class EditVoluntary extends Component {
     }
 
     render() {
+        const { errors } = this.state;
+
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('select');
             var instances = M.FormSelect.init(elems, options);
@@ -119,7 +123,12 @@ export default class EditVoluntary extends Component {
                                     value={this.state.username}
                                     id="username"
                                     type="text"
+                                    error={errors.username}
+                                    className={classnames("", {
+                                        invalid: errors.username
+                                    })}
                                 />
+                                <span className="red-text">{errors.username}</span>
                             </div>
 
                             <div className="input-field col s12">
@@ -129,27 +138,12 @@ export default class EditVoluntary extends Component {
                                     value={this.state.email}
                                     id="email"
                                     type="email"
+                                    error={errors.email}
+                                    className={classnames("", {
+                                        invalid: errors.email
+                                    })}
                                 />
-                            </div>
-
-                            <div className="input-field col s12">
-                                <label htmlFor="password">Password</label><br></br>
-                                <input
-                                    onChange={this.onChange}
-                                    value={this.state.password}
-                                    id="password"
-                                    type="password"
-                                />
-                            </div>
-
-                            <div className="input-field col s12">
-                                <label htmlFor="password2">Confirmar Password</label><br></br>
-                                <input
-                                    onChange={this.onChange}
-                                    value={this.state.password2}
-                                    id="password2"
-                                    type="password"
-                                />
+                                <span className="red-text">{errors.email}</span>
                             </div>
 
                             <div className="input-field col s12">
@@ -159,7 +153,12 @@ export default class EditVoluntary extends Component {
                                     value={this.state.name}
                                     id="name"
                                     type="text"
+                                    error={errors.name}
+                                    className={classnames("", {
+                                        invalid: errors.name
+                                    })}
                                 />
+                                <span className="red-text">{errors.name}</span>
                             </div>
 
                             <div className="input-field col s12">
@@ -169,7 +168,12 @@ export default class EditVoluntary extends Component {
                                     value={this.state.phone}
                                     id="phone"
                                     type="number"
+                                    error={errors.phone}
+                                    className={classnames("", {
+                                        invalid: errors.phone
+                                    })}
                                 />
+                                <span className="red-text">{errors.phone}</span>
                             </div>
 
                             <div className="input-field col s12">
@@ -179,7 +183,12 @@ export default class EditVoluntary extends Component {
                                     value={this.state.address}
                                     id="address"
                                     type="text"
+                                    error={errors.address}
+                                    className={classnames("", {
+                                        invalid: errors.address
+                                    })}
                                 />
+                                <span className="red-text">{errors.address}</span>
                             </div>
 
                             <div className="input-field col s12">
@@ -189,7 +198,12 @@ export default class EditVoluntary extends Component {
                                     value={this.state.birthDate}
                                     id="birthDate"
                                     type="date"
+                                    error={errors.birthDate}
+                                    className={classnames("", {
+                                        invalid: errors.birthDate
+                                    })}
                                 />
+                                <span className="red-text">{errors.birthDate}</span>
                             </div>
 
                             <div className="input-field col s12">
@@ -199,8 +213,12 @@ export default class EditVoluntary extends Component {
                                     value={this.state.companyName}
                                     id="companyName"
                                     type="text"
+                                    error={errors.companyName}
+                                    className={classnames("", {
+                                        invalid: errors.companyName
+                                    })}
                                 />
-
+                                <span className="red-text">{errors.companyName}</span>
                             </div>
 
                             <div className="input-field col s12">
@@ -210,7 +228,12 @@ export default class EditVoluntary extends Component {
                                     value={this.state.companyAddress}
                                     id="companyAddress"
                                     type="text"
+                                    error={errors.companyAddress}
+                                    className={classnames("", {
+                                        invalid: errors.companyAddress
+                                    })}
                                 />
+                                <span className="red-text">{errors.companyAddress}</span>
                             </div>
 
                             <div className="input-field col s12">
@@ -220,7 +243,12 @@ export default class EditVoluntary extends Component {
                                     value={this.state.observations}
                                     id="observations"
                                     type="text"
+                                    error={errors.observations}
+                                    className={classnames("", {
+                                        invalid: errors.observations
+                                    })}
                                 />
+                                 <span className="red-text">{errors.observations}</span>
                             </div>
 
                         </form>

@@ -2,27 +2,27 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import M from "materialize-css";
 import options from "materialize-css";
+import classnames from "classnames";
 
 export default class EditVoluntary extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      name: "",
       email: "",
+      username: "",
+      name: "",
       phone: "",
       address: "",
+      birthDate: "",
       memberIPS: "",
       schoolIPS: "",
       courseIPS: "",
       interestAreas: [],
       reasons: [],
-      role: "",
       observations: "",
-      username: "",
-      birthDate: "",
-      password: "",
-      password2: ""
+      authorization: false,
+      errors: {}
     }
 
     this.onChange = this.onChange.bind(this);
@@ -50,7 +50,7 @@ export default class EditVoluntary extends Component {
         var month = date.getMonth();
         var d = date.getDate();
         var mm = month < 10 ? '0' + month : month;
-        var dd = d < 10 ? '0' +  d: d;
+        var dd = d < 10 ? '0' + d : d;
         date = '' + year + "-" + mm + "-" + dd;
         this.setState({
           name: responseArr[0].data.name,
@@ -71,8 +71,8 @@ export default class EditVoluntary extends Component {
       .catch(error => console.log(error));
   }
 
-  onChange = e => {
-    this.setState({ [e.target.id]: e.target.value });
+  onChange (event) {
+    this.setState({value: event.target.value });
   };
 
   handleChangeInterestAreas(event) {
@@ -100,13 +100,14 @@ export default class EditVoluntary extends Component {
       password: this.state.password,
       password2: this.state.password2
     };
-    axios.post('/api/admin/updateUser/' + this.props.match.params.id, obj)
+    axios
+      .post('/api/admin/updateUser/' + this.props.match.params.id, obj)
       .then(res => console.log(res.data));
-    this.props.history.push('/listUsers');
-    window.location.reload();
   }
 
   render() {
+    const { errors } = this.state;
+
     document.addEventListener('DOMContentLoaded', function () {
       var elems = document.querySelectorAll('select');
       var instances = M.FormSelect.init(elems, options);
@@ -131,7 +132,12 @@ export default class EditVoluntary extends Component {
                   value={this.state.username}
                   id="username"
                   type="text"
+                  error={errors.username}
+                  className={classnames("", {
+                    invalid: errors.username
+                  })}
                 />
+                <span className="red-text">{errors.username}</span>
               </div>
 
               <div className="input-field col s12">
@@ -141,27 +147,12 @@ export default class EditVoluntary extends Component {
                   value={this.state.email}
                   id="email"
                   type="email"
+                  error={errors.email}
+                  className={classnames("", {
+                    invalid: errors.email
+                  })}
                 />
-              </div>
-
-              <div className="input-field col s12">
-                <label htmlFor="password">Password</label><br></br>
-                <input
-                  onChange={this.onChange}
-                  value={this.state.password}
-                  id="password"
-                  type="password"
-                />
-              </div>
-
-              <div className="input-field col s12">
-                <label htmlFor="password2">Confirmar Password</label><br></br>
-                <input
-                  onChange={this.onChange}
-                  value={this.state.password2}
-                  id="password2"
-                  type="password"
-                />
+                <span className="red-text">{errors.email}</span>
               </div>
 
               <div className="input-field col s12">
@@ -171,7 +162,12 @@ export default class EditVoluntary extends Component {
                   value={this.state.name}
                   id="name"
                   type="text"
+                  error={errors.name}
+                  className={classnames("", {
+                    invalid: errors.name
+                  })}
                 />
+                <span className="red-text">{errors.name}</span>
               </div>
 
               <div className="input-field col s12">
@@ -181,7 +177,12 @@ export default class EditVoluntary extends Component {
                   value={this.state.phone}
                   id="phone"
                   type="number"
+                  error={errors.phone}
+                  className={classnames("", {
+                    invalid: errors.phone
+                  })}
                 />
+                <span className="red-text">{errors.phone}</span>
               </div>
 
               <div className="input-field col s12">
@@ -191,7 +192,12 @@ export default class EditVoluntary extends Component {
                   value={this.state.address}
                   id="address"
                   type="text"
+                  error={errors.address}
+                  className={classnames("", {
+                    invalid: errors.address
+                  })}
                 />
+                <span className="red-text">{errors.address}</span>
               </div>
 
               <div className="input-field col s12">
@@ -201,16 +207,25 @@ export default class EditVoluntary extends Component {
                   value={this.state.birthDate}
                   id="birthDate"
                   type="date"
+                  error={errors.birthDate}
+                  className={classnames("", {
+                    invalid: errors.birthDate
+                  })}
                 />
+                <span className="red-text">{errors.birthDate}</span>
               </div>
 
               <div className="input-field col s12">
-                <label htmlFor="name">Membro da Comunidade IPS</label><br></br>
+              <label htmlFor="name">Membro da Comunidade IPS</label><br></br>
                 <select onChange={this.onChange}
                   value={this.state.memberIPS}
+                  error={errors.memberIPS}
                   id="memberIPS"
-                  type="text">
-                  <option disabled>Selecionar Opção</option>
+                  type="text"
+                  className={classnames("", {
+                    invalid: errors.memberIPS
+                  })}>
+                  <option value="" disabled>Selecionar Opção</option>
                   <option value="Estudante">Estudante</option>
                   <option value="Diplomado">Diplomado</option>
                   <option value="Docente">Docente</option>
@@ -218,6 +233,7 @@ export default class EditVoluntary extends Component {
                   <option value="Bolseiro">Bolseiro</option>
                   <option value="Aposentado">Aposentado</option>
                 </select>
+                <span className="red-text">{errors.memberIPS}</span>
               </div>
 
               <div className="input-field col s12">
@@ -225,30 +241,44 @@ export default class EditVoluntary extends Component {
                 <select onChange={this.onChange}
                   value={this.state.schoolIPS}
                   id="schoolIPS"
-                  type="text">
-                  <option disabled>Selecionar Opção</option>
+                  type="text"
+                  error={errors.schoolIPS}
+                  className={classnames("", {
+                    invalid: errors.schoolIPS
+                  })}>
+                  <option value="" disabled>Selecionar Opção</option>
                   <option value="EST-Setúbal">Escola Superior de Tecnologia de Setúbal</option>
                   <option value="ESE">Escola Superior de Educação</option>
                   <option value="ESCE">Escola Superior de Ciências Empresariais</option>
                   <option value="ESS">Escola Superior de Saúde</option>
                   <option value="EST-Barreiro">Escola Superior de Tecnologia do Barreiro</option>
                 </select>
+                <span className="red-text">{errors.schoolIPS}</span>
               </div>
 
               <div className="input-field col s12">
-                <label htmlFor="name">Curso/Formação em</label><br></br>
+              <label htmlFor="name">Curso/Formação em</label>
                 <input
                   onChange={this.onChange}
                   value={this.state.courseIPS}
+                  error={errors.courseIPS}
                   id="courseIPS"
                   type="text"
+                  className={classnames("", {
+                    invalid: errors.courseIPS
+                  })}
                 />
+                <span className="red-text">{errors.courseIPS}</span>
               </div>
 
               <div className="input-field col s12">
                 <label htmlFor="name">Áreas Interesse</label><br></br>
-                <select multiple={true} value={this.state.interestAreas} onChange={this.handleChangeInterestAreas}>
-                  <option disabled>Selecionar Opções</option>
+                <select required multiple={true} value={this.state.interestAreas} onChange={this.handleChangeInterestAreas}
+                  error={errors.interestAreas}
+                  className={classnames("", {
+                    invalid: errors.interestAreas
+                  })}>
+                  <option value="" disabled>Selecionar Opções</option>
                   <option value="Atividades Académicas">Atividades Académicas (por ex. apoio às matrículas…)</option>
                   <option value="Ambiental">Ambiental (por ex. ações de sensibilização, de limpeza…</option>
                   <option value="Apoio a Eventos">Apoio a Eventos</option>
@@ -260,12 +290,17 @@ export default class EditVoluntary extends Component {
                   <option value="Saúde">Saúde (por ex. rastreios, ações de sensibilização…)</option>
                   <option value="Social">Social (por ex. apoio a idosos, a crianças, Banco Alimentar…)</option>
                 </select>
+                <span className="red-text">{errors.interestAreas}</span>
               </div>
 
               <div className="input-field col s12">
                 <label htmlFor="name">Razões para querer ser voluntário</label><br></br>
-                <select multiple={true} value={this.state.reasons} onChange={this.handleChangeReasons}>
-                  <option disabled>Selecionar Opções</option>
+                <select required multiple={true} value={this.state.reasons} onChange={this.handleChangeReasons}
+                  error={errors.reasons}
+                  className={classnames("", {
+                    invalid: errors.reasons
+                  })}>
+                  <option value="" disabled>Selecionar Opções</option>
                   <option value="Convívio Social">Pelo convívio social</option>
                   <option value="Futuro Profissional">Porque pode ser vantajoso para o futuro profissional</option>
                   <option value="Integração Social">Pela possibilidade de integração social</option>
@@ -277,6 +312,7 @@ export default class EditVoluntary extends Component {
                   <option value="Ocupar Tempo Livre">Para ocupar tempo livre</option>
                   <option value="Outro">Outro</option>
                 </select>
+                <span className="red-text">{errors.reasons}</span>
               </div>
 
               <div className="input-field col s12">
@@ -286,7 +322,12 @@ export default class EditVoluntary extends Component {
                   value={this.state.observations}
                   id="observations"
                   type="text"
+                  error={errors.observations}
+                  className={classnames("", {
+                    invalid: errors.observations
+                  })}
                 />
+                <span className="red-text">{errors.observations}</span>
               </div>
 
             </form>

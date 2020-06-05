@@ -1,10 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
+const template = require('../../Notifications/emailNotificationsTemplates.js');
+const sender = require('../../Notifications/emailNotify.js');
+const crypto = require('crypto');
 
 // Load input validation
 const validateRegisterInputVoluntary = require("../../validation/registerVoluntary");
 const validateRegisterInputCompany = require("../../validation/register");
+const validateCreateProject = require("../../validation/createProject")
 
 // Load User model
 const User = require("../../models/user");
@@ -35,6 +39,7 @@ router.route('/editUser/:id').get(function (req, res) {
   let id = req.params.id;
   User.findById(id, function (err, user) {
     res.json(user);
+    console.log(user);
   });
 });
 
@@ -44,21 +49,23 @@ router.route('/editUser/:id').get(function (req, res) {
 router.post("/createVoluntaryUser", (req, res) => {
   // Form validation
   const { errors, isValid } = validateRegisterInputVoluntary(req.body);
-  console.log(errors);
   // Check validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
-      return res.status(400).json({ email: "Email already exists" });
+      return res.status(400).json({ email: "Email já existe" });
     } else {
       const newUser = new User({
         username: req.body.username,
+        name: req.body.name,
         role: req.body.role,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        isVerified: true
       });
+
       // Hash password before saving in database
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -66,28 +73,30 @@ router.post("/createVoluntaryUser", (req, res) => {
           newUser.password = hash;
           newUser
             .save()
-            .then(user => res.json(user))
+            .then(user => {
+              const email = user.email;
+              User.findOne({ email }).then(user => {
+                const newVoluntary = new Voluntary({
+                  name: req.body.name,
+                  email: req.body.email,
+                  phone: req.body.phone,
+                  address: req.body.address,
+                  birthDate: req.body.birthDate,
+                  memberIPS: req.body.memberIPS,
+                  schoolIPS: req.body.schoolIPS,
+                  courseIPS: req.body.courseIPS,
+                  interestAreas: req.body.interestAreas,
+                  reasons: req.body.reasons,
+                  observations: req.body.observations,
+                  authorization: true,
+                  userID: user._id
+                });
+                newVoluntary.save();
+              });
+            })
             .catch(err => console.log(err));
         });
       });
-      const newVoluntary = new Voluntary({
-        name: req.body.name,
-        email: req.body.email,
-        phone: req.body.phone,
-        address: req.body.address,
-        birthDate: req.body.birthDate,
-        memberIPS: req.body.memberIPS,
-        schoolIPS: req.body.schoolIPS,
-        courseIPS: req.body.courseIPS,
-        interestAreas: req.body.interestAreas,
-        reasons: req.body.reasons,
-        observations: req.body.observations,
-        authorization: true
-      });
-      newVoluntary
-        .save()
-        .then(voluntary => res.json(voluntary))
-        .catch(err => console.log(err));
     }
   });
 });
@@ -104,14 +113,17 @@ router.post("/createCompanyUser", (req, res) => {
   }
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
-      return res.status(400).json({ email: "Email already exists" });
+      return res.status(400).json({ email: "Email já existe" });
     } else {
       const newUser = new User({
         username: req.body.username,
+        name: req.body.name,
         role: req.body.role,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        isVerified: true
       });
+
       // Hash password before saving in database
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -119,25 +131,28 @@ router.post("/createCompanyUser", (req, res) => {
           newUser.password = hash;
           newUser
             .save()
-            .then(user => res.json(user))
+            .then(user => {
+              const email = user.email;
+              User.findOne({ email }).then(user => {
+                const newCompany = new Company({
+                  name: req.body.name,
+                  email: req.body.email,
+                  phone: req.body.phone,
+                  address: req.body.address,
+                  birthDate: req.body.birthDate,
+                  companyAddress: req.body.companyAddress,
+                  companyName: req.body.companyName,
+                  observations: req.body.observations,
+                  authorization: true,
+                  responsibleID: user._id,
+                  listProjects: req.body.listProjects
+                });
+                newCompany.save();
+              });
+            })
             .catch(err => console.log(err));
         });
       });
-      const newCompany = new Company({
-        name: req.body.name,
-        email: req.body.email,
-        phone: req.body.phone,
-        address: req.body.address,
-        birthDate: req.body.birthDate,
-        observations: req.body.observations,
-        companyName: req.body.companyName,
-        companyAddress: req.body.companyAddress,
-        authorization: true
-      });
-      newCompany
-        .save()
-        .then(company => res.json(company))
-        .catch(err => console.log(err));
     }
   });
 });
@@ -147,6 +162,19 @@ router.post("/createCompanyUser", (req, res) => {
 // @access Private
 router.route('/updateUser/:id').post(function (req, res) {
   User.findById(req.params.id, function (err, user) {
+    if (user.role === "Voluntário") {
+      const { errors, isValid } = validateRegisterInputVoluntary(req.body);
+      // Check validation
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
+    } else if (user.role === "Empresa") {
+      const { errors, isValid } = validateRegisterInputCompany(req.body);
+      // Check validation
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
+    }
     if (!user)
       res.status(404).send("data is not found");
     else {
@@ -156,14 +184,14 @@ router.route('/updateUser/:id').post(function (req, res) {
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(user.password, salt, (err, hash) => {
           if (err) throw err;
-            user.updateOne({
-              email: user.email,
-              username: user.username,
-              password: hash,
-            })
-              .catch(err => {
-                res.status(400).send("unable to update the database");
-              });
+          user.updateOne({
+            email: user.email,
+            username: user.username,
+            password: hash,
+          })
+            .catch(err => {
+              res.status(400).send("unable to update the database");
+            });
         });
       });
 

@@ -271,7 +271,6 @@ class CreateVoluntaryUser extends Component {
                                     <option value="ESCE">Escola Superior de Ciências Empresariais</option>
                                     <option value="ESS">Escola Superior de Saúde</option>
                                     <option value="EST-Barreiro">Escola Superior de Tecnologia do Barreiro</option>
-                                    <span className="red-text">{errors.schoolIPS}</span>
                                 </select>
                                 <span className="red-text">{errors.schoolIPS}</span>
                             </div>

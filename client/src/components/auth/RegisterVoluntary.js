@@ -23,8 +23,8 @@ class RegisterVoluntary extends Component {
             memberIPS: "",
             schoolIPS: "",
             courseIPS: "",
-            interestAreas: "",
-            reasons: "",
+            interestAreas: [],
+            reasons: [],
             observations: "",
             authorization: false,
             errors: {}

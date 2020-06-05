@@ -16,6 +16,10 @@ module.exports = function validateRegisterInputVoluntary(data) {
     data.birthDate = !isEmpty(data.birthDate) ? data.birthDate : "";
     data.memberIPS = !isEmpty(data.memberIPS) ? data.memberIPS : "";
     data.schoolIPS = !isEmpty(data.schoolIPS) ? data.schoolIPS : "";
+    let arrInterestAreas = new Array();
+    arrInterestAreas = data.interestAreas;
+    let arrReasons = new Array();
+    arrReasons = data.reasons;
 
     //Username checks
     if (Validator.isEmpty(data.username)){
@@ -48,12 +52,12 @@ module.exports = function validateRegisterInputVoluntary(data) {
     }
 
     // interestAreas checks
-    if (!data.interestAreas) {
+    if (arrInterestAreas.length === 0) {
         errors.interestAreas = "Deverá preencher o campo Áreas Interesse";
     }
 
     // reasons checks
-    if (!data.reasons) {
+    if (arrReasons.length === 0) {
         errors.reasons = "Deverá preencher o campo Razões Para Querer Ser Voluntário";
     }
 

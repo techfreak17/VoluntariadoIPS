@@ -50,7 +50,8 @@ const ProjectSchema = new Schema({
     },
     logo: {
         data: Buffer,
-        contentType: String
+        contentType: String,
+        required: false
     },
     observations: {
         type: String,

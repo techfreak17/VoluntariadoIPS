@@ -6,10 +6,20 @@ const Project = require("../../models/project");
 const User = require("../../models/user");
 const Company = require("../../models/company");
 
+// Load input validation
+const validateCreateProject = require("../../validation/createProject")
+
 // @route POST api/projects/createProject
 // @desc Create Project - Administrator
 // @access Private
 router.post("/createProject", (req, res) => {
+  // Form validation
+  const { errors, isValid } = validateCreateProject(req.body);
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   Project.findOne({ title: req.body.title }).then(project => {
     if (project) {
       return res.status(400).json({ title: "Project already exists" });
@@ -161,7 +171,7 @@ router.route('/getProjectUserDetails/:id').get(function (req, res) {
         return res.status(400).json({ email: "Such data doesn´t exist" });
       };
     })
-});
+  });
 });
 
 module.exports = router;

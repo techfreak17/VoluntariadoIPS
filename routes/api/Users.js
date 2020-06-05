@@ -140,7 +140,8 @@ router.post("/registerCompany", (req, res) => {
                   companyName: req.body.companyName,
                   observations: req.body.observations,
                   authorization: req.body.authorization,
-                  userID: user._id
+                  responsibleID: user._id,
+                  listProjects: req.body.listProjects
                 });       
                 newCompany.save();
               });})

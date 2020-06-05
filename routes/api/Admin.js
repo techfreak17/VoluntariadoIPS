@@ -1,13 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
-const template = require('../../Notifications/emailNotificationsTemplates.js');
-const sender = require('../../Notifications/emailNotify.js');
-const crypto = require('crypto');
 
 // Load input validation
 const validateRegisterInputVoluntary = require("../../validation/registerVoluntary");
 const validateRegisterInputCompany = require("../../validation/register");
+const validateEditInputVoluntary = require("../../validation/editVoluntary");
+const validateEditInputCompany = require("../../validation/editCompany");
 
 // Load User model
 const User = require("../../models/user");
@@ -160,76 +159,85 @@ router.post("/createCompanyUser", (req, res) => {
 // @access Private
 router.route('/updateUser/:id').post(function (req, res) {
   User.findById(req.params.id, function (err, user) {
-    if (user.role === "Voluntário") {
-      const { errors, isValid } = validateRegisterInputVoluntary(req.body);
-      // Check validation
-      if (!isValid) {
-        return res.status(400).json(errors);
-      }
-    } else if (user.role === "Empresa") {
-      const { errors, isValid } = validateRegisterInputCompany(req.body);
-      // Check validation
-      if (!isValid) {
-        return res.status(400).json(errors);
-      }
-    }
+
     if (!user)
       res.status(404).send("data is not found");
-    else {
-      user.email = req.body.email;
+
+    if (user.role === "Voluntário") {
+      const { errors, isValid } = validateEditInputVoluntary(req.body);
+      // Check validation
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
+
+      newEmail = req.body.email;
       user.username = req.body.username;
-      user.password = req.body.password;
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(user.password, salt, (err, hash) => {
-          if (err) throw err;
-          user.updateOne({
-            email: user.email,
-            username: user.username,
-            password: hash,
+      oldEmail = user.email;
+
+      user.updateOne({
+        email: newEmail,
+        username: user.username
+      })
+        .catch(err => {
+          res.status(400).send("unable to update the database");
+        });
+
+      Voluntary.findOne({ email: oldEmail }).then(voluntary => {
+        if (voluntary) {
+          voluntary.name = req.body.name;
+          voluntary.email = req.body.email;
+          voluntary.phone = req.body.phone;
+          voluntary.address = req.body.address;
+          voluntary.birthDate = req.body.birthDate;
+          voluntary.memberIPS = req.body.memberIPS;
+          voluntary.schoolIPS = req.body.schoolIPS;
+          voluntary.courseIPS = req.body.courseIPS;
+          voluntary.interestAreas = req.body.interestAreas;
+          voluntary.reasons = req.body.reasons;
+          voluntary.observations = req.body.observations;
+
+          voluntary.updateOne({
+            name: voluntary.name,
+            email: voluntary.email,
+            phone: voluntary.phone,
+            address: voluntary.address,
+            birthDate: voluntary.birthDate,
+            memberIPS: voluntary.memberIPS,
+            schoolIPS: voluntary.schoolIPS,
+            courseIPS: voluntary.courseIPS,
+            interestAreas: voluntary.interestAreas,
+            reasons: voluntary.reasons,
+            observations: voluntary.observations,
           })
             .catch(err => {
               res.status(400).send("unable to update the database");
             });
-        });
+        } else {
+          res.status(404).send("data is not found");
+        }
       });
 
-      if (user.role === "Voluntário") {
-        Voluntary.findOne({ email: user.email }).then(voluntary => {
-          if (voluntary) {
-            voluntary.name = req.body.name;
-            voluntary.email = req.body.email;
-            voluntary.phone = req.body.phone;
-            voluntary.address = req.body.address;
-            voluntary.birthDate = req.body.birthDate;
-            voluntary.memberIPS = req.body.memberIPS;
-            voluntary.schoolIPS = req.body.schoolIPS;
-            voluntary.courseIPS = req.body.courseIPS;
-            voluntary.interestAreas = req.body.interestAreas;
-            voluntary.reasons = req.body.reasons;
-            voluntary.observations = req.body.observations;
+    } else if (user.role === "Empresa") {
+      console.log("entrei");
+      const { errors, isValid } = validateEditInputCompany(req.body);
+      // Check validation
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
 
-            voluntary.updateOne({
-              name: voluntary.name,
-              email: voluntary.email,
-              phone: voluntary.phone,
-              address: voluntary.address,
-              birthDate: voluntary.birthDate,
-              memberIPS: voluntary.memberIPS,
-              schoolIPS: voluntary.schoolIPS,
-              courseIPS: voluntary.courseIPS,
-              interestAreas: voluntary.interestAreas,
-              reasons: voluntary.reasons,
-              observations: voluntary.observations,
-            })
-              .catch(err => {
-                res.status(400).send("unable to update the database");
-              });
-          } else {
-            res.status(404).send("data is not found");
-          }
+      newEmail = req.body.email;
+      user.username = req.body.username;
+      oldEmail = user.email;
+
+      user.updateOne({
+        email: newEmail,
+        username: user.username
+      })
+        .catch(err => {
+          res.status(400).send("unable to update the database");
         });
-      } else if (user.role === "Empresa") {
-        Company.findOne({ email: user.email }).then(company => {
+
+        Company.findOne({ email: oldEmail }).then(company => {
           if (company) {
             company.name = req.body.name;
             company.email = req.body.email;
@@ -257,7 +265,6 @@ router.route('/updateUser/:id').post(function (req, res) {
             res.status(404).send("data is not found");
           }
         });
-      }
     }
   });
 });

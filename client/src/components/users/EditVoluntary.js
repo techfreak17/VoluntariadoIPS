@@ -90,9 +90,9 @@ export default class EditVoluntary extends Component {
       email: this.state.email,
       phone: this.state.phone,
       address: this.state.address,
-      memberIPS: this.state.member,
-      schoolIPS: this.state.school,
-      courseIPS: this.state.course,
+      memberIPS: this.state.memberIPS,
+      schoolIPS: this.state.schoolIPS,
+      courseIPS: this.state.courseIPS,
       interestAreas: this.state.interestAreas,
       reasons: this.state.reasons,
       observations: this.state.observations,
@@ -103,6 +103,8 @@ export default class EditVoluntary extends Component {
     axios
       .post('/api/admin/updateUser/' + this.props.match.params.id, obj)
       .then(res => console.log(res.data));
+      this.props.history.push('/listUsers');
+      window.location.reload();
   }
 
   render() {
@@ -126,7 +128,7 @@ export default class EditVoluntary extends Component {
 
             <form noValidate>
               <div className="input-field col s12">
-                <label htmlFor="name">Username</label><br></br>
+                <label htmlFor="name">Username *</label><br></br>
                 <input
                   onChange={this.onChange}
                   value={this.state.username}
@@ -141,7 +143,7 @@ export default class EditVoluntary extends Component {
               </div>
 
               <div className="input-field col s12">
-                <label htmlFor="email">Email</label><br></br>
+                <label htmlFor="email">Email *</label><br></br>
                 <input
                   onChange={this.onChange}
                   value={this.state.email}
@@ -156,7 +158,7 @@ export default class EditVoluntary extends Component {
               </div>
 
               <div className="input-field col s12">
-                <label htmlFor="name">Nome Completo</label><br></br>
+                <label htmlFor="name">Nome Completo *</label><br></br>
                 <input
                   onChange={this.onChange}
                   value={this.state.name}
@@ -201,7 +203,7 @@ export default class EditVoluntary extends Component {
               </div>
 
               <div className="input-field col s12">
-                <label htmlFor="name">Data Nascimento</label><br></br>
+                <label htmlFor="name">Data Nascimento *</label><br></br>
                 <input
                   onChange={this.onChange}
                   value={this.state.birthDate}
@@ -216,7 +218,7 @@ export default class EditVoluntary extends Component {
               </div>
 
               <div className="input-field col s12">
-                <label htmlFor="name">Membro da Comunidade IPS</label><br></br>
+                <label htmlFor="name">Membro da Comunidade IPS *</label><br></br>
                 <select onChange={this.onChange}
                   value={this.state.memberIPS}
                   error={errors.memberIPS}
@@ -237,7 +239,7 @@ export default class EditVoluntary extends Component {
               </div>
 
               <div className="input-field col s12">
-                <label htmlFor="name">Escola/Serviço</label><br></br>
+                <label htmlFor="name">Escola/Serviço *</label><br></br>
                 <select onChange={this.onChange}
                   value={this.state.schoolIPS}
                   id="schoolIPS"
@@ -257,7 +259,7 @@ export default class EditVoluntary extends Component {
               </div>
 
               <div className="input-field col s12">
-                <label htmlFor="name">Curso/Formação em</label><br></br>
+                <label htmlFor="name">Curso/Formação em *</label><br></br>
                 <input
                   onChange={this.onChange}
                   value={this.state.courseIPS}
@@ -272,7 +274,7 @@ export default class EditVoluntary extends Component {
               </div>
 
               <div className="input-field col s12">
-                <label htmlFor="name">Áreas Interesse</label><br></br>
+                <label htmlFor="name">Áreas Interesse *</label><br></br>
                 <select required multiple={true} value={this.state.interestAreas} onChange={this.handleChangeInterestAreas}
                   error={errors.interestAreas}
                   className={classnames("", {
@@ -294,7 +296,7 @@ export default class EditVoluntary extends Component {
               </div>
 
               <div className="input-field col s12">
-                <label htmlFor="name">Razões para querer ser voluntário</label><br></br>
+                <label htmlFor="name">Razões para querer ser voluntário *</label><br></br>
                 <select required multiple={true} value={this.state.reasons} onChange={this.handleChangeReasons}
                   error={errors.reasons}
                   className={classnames("", {

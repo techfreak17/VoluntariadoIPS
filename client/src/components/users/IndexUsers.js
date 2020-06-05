@@ -74,7 +74,7 @@ export default class IndexUsers extends Component {
             }}> Criar Empresa</Link>
         </p>
         <form onSubmit={this.onSubmit}>
-          <input id="myInput" type="text" placeholder="Pesquisar..." name="search" onChange={this.onChangeSearch} style={{ borderBottom: "3px solid #23395D" }}></input>
+          <input id="myInput" type="text" placeholder="Pesquisar por username ..." name="search" onChange={this.onChangeSearch} style={{ borderBottom: "3px solid #23395D" }}></input>
           <button type="submit" className="btn waves-effect waves-light hoverable" style={{ backgroundColor: "#DDDDDD", color: "black", height: 35 }}>Pesquisar</button>
         </form>
         <table className="table table-striped" style={{ marginTop: 20 }}>

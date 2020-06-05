@@ -18,6 +18,7 @@ const User = require("../../models/user");
 const Voluntary = require("../../models/voluntary");
 const Company = require("../../models/company");
 const Token = require("../../models/token");
+const Administrator = require("../../models/administrator");
 
 // @route POST api/users/registerVoluntary
 // @desc Register user
@@ -299,7 +300,7 @@ router.route('/listUsers').get(function (req, res) {
 // @desc Search User
 // @access Private
 router.post("/searchUser", (req, res) => {   
-  User.find({ name: { $regex: req.body.search, $options: "i" } }).then(user => {
+  User.find({ username: { $regex: req.body.search, $options: "i" } }).then(user => {
       if (user) {
           res.json(user);
       } else {
@@ -319,7 +320,7 @@ router.route('/getUserDetails/:id').get(function (req, res) {
           if (voluntary) {
             res.json(voluntary);
           } else {
-            return res.status(400).json({ email: "Such data doesn´t exist" });
+            return res.status(400).json({ voluntary: "Such data doesn´t exist" });
           };
         })
       }else if (user.role === "Empresa"){
@@ -327,7 +328,15 @@ router.route('/getUserDetails/:id').get(function (req, res) {
           if (company) {
             res.json(company);
           } else {
-            return res.status(400).json({ email: "Such data doesn´t exist" });
+            return res.status(400).json({ company: "Such data doesn´t exist" });
+          };
+        })
+      }else if (user.role === "Administrador"){
+        Administrator.findOne({ userID: user._id }).then(admin => {
+          if (admin) {
+            res.json(admin);
+          } else {
+            return res.status(400).json({ admin: "Such data doesn´t exist" });
           };
         })
       }

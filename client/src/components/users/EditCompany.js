@@ -117,7 +117,7 @@ export default class EditVoluntary extends Component {
 
                         <form noValidate>
                             <div className="input-field col s12">
-                                <label htmlFor="name">Username</label><br></br>
+                                <label htmlFor="name">Username *</label><br></br>
                                 <input
                                     onChange={this.onChange}
                                     value={this.state.username}
@@ -132,7 +132,7 @@ export default class EditVoluntary extends Component {
                             </div>
 
                             <div className="input-field col s12">
-                                <label htmlFor="email">Email</label><br></br>
+                                <label htmlFor="email">Email *</label><br></br>
                                 <input
                                     onChange={this.onChange}
                                     value={this.state.email}
@@ -147,7 +147,7 @@ export default class EditVoluntary extends Component {
                             </div>
 
                             <div className="input-field col s12">
-                                <label htmlFor="name">Nome Completo</label><br></br>
+                                <label htmlFor="name">Nome Completo *</label><br></br>
                                 <input
                                     onChange={this.onChange}
                                     value={this.state.name}
@@ -162,7 +162,7 @@ export default class EditVoluntary extends Component {
                             </div>
 
                             <div className="input-field col s12">
-                                <label htmlFor="number">Nº Telemóvel</label><br></br>
+                                <label htmlFor="number">Nº Telemóvel *</label><br></br>
                                 <input
                                     onChange={this.onChange}
                                     value={this.state.phone}
@@ -192,7 +192,7 @@ export default class EditVoluntary extends Component {
                             </div>
 
                             <div className="input-field col s12">
-                                <label htmlFor="name">Data Nascimento</label><br></br>
+                                <label htmlFor="name">Data Nascimento *</label><br></br>
                                 <input
                                     onChange={this.onChange}
                                     value={this.state.birthDate}
@@ -207,7 +207,7 @@ export default class EditVoluntary extends Component {
                             </div>
 
                             <div className="input-field col s12">
-                                <label htmlFor="name">Nome Empresa</label><br></br>
+                                <label htmlFor="name">Nome Empresa *</label><br></br>
                                 <input
                                     onChange={this.onChange}
                                     value={this.state.companyName}
@@ -222,7 +222,7 @@ export default class EditVoluntary extends Component {
                             </div>
 
                             <div className="input-field col s12">
-                                <label htmlFor="name">Morada (Concelho) Empresa</label><br></br>
+                                <label htmlFor="name">Morada (Concelho) Empresa *</label><br></br>
                                 <input
                                     onChange={this.onChange}
                                     value={this.state.companyAddress}

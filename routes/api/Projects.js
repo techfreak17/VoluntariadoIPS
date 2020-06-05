@@ -5,6 +5,7 @@ const multer = require('multer');
 const Project = require("../../models/project");
 const User = require("../../models/user");
 const Company = require("../../models/company");
+const Administrator = require("../../models/administrator");
 
 // Load input validation
 const validateCreateProject = require("../../validation/createProject")
@@ -172,12 +173,25 @@ router.route('/getProjectUserDetails/:id').get(function (req, res) {
   let id = req.params.id;
   Project.findById(id, function (err, project) {
     let newId = project.responsibleID;
-    Company.findOne({ responsibleID: newId }).then(company => {
-      if (company) {
-        res.json(company);
-      } else {
-        return res.status(400).json({ email: "Such data doesn´t exist" });
-      };
+    User.findOne({ _id: newId }).then(user => {
+      if (user.role === "Empresa") {
+        Company.findOne({ responsibleID: newId }).then(company => {
+          if (company) {
+            res.json(company);
+          } else {
+            return res.status(400).json({ company: "Such data doesn´t exist" });
+          };
+        })
+      } else if (user.role === "Administrador") { 
+        Administrator.findOne().then(admin => {
+          if (admin) {
+            res.json(admin);
+          } else {
+            return res.status(400).json({ admin: "Such data doesn´t exist" });
+          };
+        })
+
+      }
     })
   });
 });

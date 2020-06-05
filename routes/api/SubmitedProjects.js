@@ -15,7 +15,6 @@ router.post("/submitCreateProject", (req, res) => {
     if (project) {
       return res.status(400).json({ title: "Project already exists" });
     } else {
-      console.log(req.body.related_entities);
       const newSubmitedProject = new SubmitedProject({
         title: req.body.title,
         synopsis: req.body.synopsis,

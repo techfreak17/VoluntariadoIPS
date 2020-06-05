@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
 
 
-export default class ProjectDetails extends Component {
+class ProjectDetails extends Component {
   constructor(props) {
     super(props);
 
@@ -102,3 +105,17 @@ export default class ProjectDetails extends Component {
     );
   }
 }
+
+ProjectDetails.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(ProjectDetails);

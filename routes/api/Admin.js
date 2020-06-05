@@ -88,7 +88,10 @@ router.post("/createVoluntaryUser", (req, res) => {
                   authorization: true,
                   userID: user._id
                 });
-                newVoluntary.save();
+                newVoluntary
+                .save()
+                .then(voluntary => res.json(voluntary))
+                .catch(err => console.log(err));
               });
             })
             .catch(err => console.log(err));
@@ -144,7 +147,10 @@ router.post("/createCompanyUser", (req, res) => {
                   responsibleID: user._id,
                   listProjects: req.body.listProjects
                 });
-                newCompany.save();
+                newCompany
+                .save()
+                .then(company => res.json(company))
+                .catch(err => console.log(err));
               });
             })
             .catch(err => console.log(err));
@@ -218,7 +224,6 @@ router.route('/updateUser/:id').post(function (req, res) {
       });
 
     } else if (user.role === "Empresa") {
-      console.log("entrei");
       const { errors, isValid } = validateEditInputCompany(req.body);
       // Check validation
       if (!isValid) {

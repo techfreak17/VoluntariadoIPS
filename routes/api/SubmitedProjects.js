@@ -7,10 +7,19 @@ const User = require("../../models/user");
 const Company = require("../../models/company");
 const Project = require("../../models/project");
 
+// Load input validation
+const validateCreateProject = require("../../validation/createProject")
+
 // @route POST api/submitedProjects/submitCreateProject
 // @desc Submit Create Project - Company and AAIPS
 // @access Private
 router.post("/submitCreateProject", (req, res) => {
+  const { errors, isValid } = validateCreateProject(req.body);
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   SubmitedProject.findOne({ title: req.body.title }).then(project => {
     if (project) {
       return res.status(400).json({ title: "Project already exists" });

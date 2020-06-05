@@ -240,7 +240,11 @@ class CreateVoluntaryUser extends Component {
                                     value={this.state.memberIPS}
                                     error={errors.memberIPS}
                                     id="memberIPS"
-                                    type="text">
+                                    type="text"
+                                    className={classnames("", {
+                                        invalid: errors.memberIPS
+                                    })}>
+                                    <option value="" disabled>Selecionar Opção</option>
                                     <option value="Estudante">Estudante</option>
                                     <option value="Diplomado">Diplomado</option>
                                     <option value="Docente">Docente</option>
@@ -257,12 +261,17 @@ class CreateVoluntaryUser extends Component {
                                     value={this.state.schoolIPS}
                                     error={errors.schoolIPS}
                                     id="schoolIPS"
-                                    type="text">
+                                    type="text"
+                                    className={classnames("", {
+                                        invalid: errors.schoolIPS
+                                    })}>
+                                    <option value="" disabled>Selecionar Opção</option>
                                     <option value="EST-Setúbal">Escola Superior de Tecnologia de Setúbal</option>
                                     <option value="ESE">Escola Superior de Educação</option>
                                     <option value="ESCE">Escola Superior de Ciências Empresariais</option>
                                     <option value="ESS">Escola Superior de Saúde</option>
                                     <option value="EST-Barreiro">Escola Superior de Tecnologia do Barreiro</option>
+                                    <span className="red-text">{errors.schoolIPS}</span>
                                 </select>
                                 <span className="red-text">{errors.schoolIPS}</span>
                             </div>
@@ -285,8 +294,11 @@ class CreateVoluntaryUser extends Component {
                             <div className="input-field col s12">
                                 <label>Áreas Interesse *</label><br></br>
                                 <select multiple={true} value={this.state.interestAreas} onChange={this.handleChangeInterestAreas}
-                                    error={errors.interestAreas}>
-                                    <option disabled>Selecionar Opções</option>
+                                    error={errors.interestAreas}
+                                    className={classnames("", {
+                                        invalid: errors.interestAreas
+                                    })}>
+                                    <option value="" disabled>Selecionar Opções</option>
                                     <option value="Atividades Académicas">Atividades Académicas (por ex. apoio às matrículas…)</option>
                                     <option value="Ambiental">Ambiental (por ex. ações de sensibilização, de limpeza…</option>
                                     <option value="Apoio a Eventos">Apoio a Eventos</option>
@@ -304,8 +316,11 @@ class CreateVoluntaryUser extends Component {
                             <div className="input-field col s12">
                                 <label>Razões para querer ser voluntário *</label><br></br>
                                 <select multiple={true} value={this.state.reasons} onChange={this.handleChangeReasons}
-                                    error={errors.reasons}>
-                                    <option disabled>Selecionar Opções</option>
+                                    error={errors.reasons}
+                                    className={classnames("", {
+                                        invalid: errors.reasons
+                                    })}>
+                                    <option value="" disabled>Selecionar Opções</option>
                                     <option value="Convívio Social">Pelo convívio social</option>
                                     <option value="Futuro Profissional">Porque pode ser vantajoso para o futuro profissional</option>
                                     <option value="Integração Social">Pela possibilidade de integração social</option>

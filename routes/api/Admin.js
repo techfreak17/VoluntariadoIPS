@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 
 // Load input validation
-const validateRegisterInputVoluntary = require("../../validation/register");
+const validateRegisterInputVoluntary = require("../../validation/registerVoluntary");
 const validateRegisterInputCompany = require("../../validation/register");
 
 // Load User model
@@ -44,6 +44,7 @@ router.route('/editUser/:id').get(function (req, res) {
 router.post("/createVoluntaryUser", (req, res) => {
   // Form validation
   const { errors, isValid } = validateRegisterInputVoluntary(req.body);
+  console.log(errors);
   // Check validation
   if (!isValid) {
     return res.status(400).json(errors);

@@ -62,6 +62,14 @@ router.route('/editProject/:id').get(function (req, res) {
 // @desc Update Project - Administrator
 // @access Private
 router.route('/updateProject/:id').post(function (req, res) {
+  // Form validation
+  const { errors, isValid } = validateCreateProject(req.body);
+  console.log(errors);
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   Project.findById(req.params.id, function (err, project) {
     if (!project)
       res.status(404).send("data is not found");

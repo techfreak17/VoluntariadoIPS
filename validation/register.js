@@ -7,7 +7,6 @@ module.exports = function validateRegisterInputCompany(data) {
     // Convert empty fields to an empty string so we can use validator functions
     data.username = !isEmpty(data.username) ? data.username : "";
     data.name = !isEmpty(data.name) ? data.name : "";
-    data.role = !isEmpty(data.role) ? data.role : "";
     data.email = !isEmpty(data.email) ? data.email : "";
     data.password = !isEmpty(data.password) ? data.password : "";
     data.password2 = !isEmpty(data.password2) ? data.password2 : "";

@@ -104,25 +104,6 @@ class Create extends Component {
         };
 
         this.props.submitProject(obj, this.props.history);
-
-        this.setState({
-            title: "",
-            synopsis: "",
-            intervationArea: "",
-            target_audience: "",
-            objectives: "",
-            description: "",
-            requiredFormation: "",
-            formation: "",
-            date: "",
-            interestAreas: [],
-            observations: "",
-            photo: "",
-            authorization: "",
-            relatedEntities: "",
-            responsibleID:"",
-            errors: {}
-        })
     }
 
     onChangeRelatedEntities = e => {

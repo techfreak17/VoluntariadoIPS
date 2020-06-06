@@ -84,6 +84,20 @@ export default class Edit extends Component {
               <p style={{ display: "flex", alignItems: "center" }}><i className="material-icons" style={{ paddingRight: 5 }}>person</i>{this.state.name}</p>
               <p style={{ display: "flex", alignItems: "center" }}><i className="material-icons" style={{ paddingRight: 6 }}>email</i>{this.state.email}</p>
               <p style={{ display: "flex", alignItems: "center" }}><i className="material-icons" style={{ paddingRight: 6 }}>phone</i>{this.state.phone}</p>
+              {(() => {
+                if (this.state.role === "Empresa") {
+                  return (
+                    <p style={{ display: "flex", alignItems: "center" }}><i className="material-icons" style={{ paddingRight: 6 }}>business</i>{this.state.companyName}</p>
+                  )
+                }
+              })()}
+              {(() => {
+                if (this.state.role === "Empresa") {
+                  return (
+                    <p style={{ display: "flex", alignItems: "center" }}><i className="material-icons" style={{ paddingRight: 6 }}>navigation</i>{this.state.companyAddress}</p>
+                  )
+                }
+              })()}
             </div>
 
             <div>

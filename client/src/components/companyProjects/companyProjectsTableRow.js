@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 
-class VoluntaryProjectsTableRow extends Component {
+class CompanyProjectsTableRow extends Component {
 
   constructor(props) {
     super(props);
@@ -42,7 +42,7 @@ class VoluntaryProjectsTableRow extends Component {
   }
 }
 
-VoluntaryProjectsTableRow.propTypes = {
+CompanyProjectsTableRow.propTypes = {
   auth: PropTypes.object.isRequired
 };
 
@@ -53,4 +53,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { logoutUser }
-)(VoluntaryProjectsTableRow);
+)(CompanyProjectsTableRow);

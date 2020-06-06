@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 
 
-class ProjectDetails extends Component {
+class CompanySubmitedProjectsDetails extends Component {
   constructor(props) {
     super(props);
 
@@ -115,7 +115,7 @@ class ProjectDetails extends Component {
   }
 }
 
-ProjectDetails.propTypes = {
+CompanySubmitedProjectsDetails.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
@@ -127,4 +127,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { logoutUser }
-)(ProjectDetails);
+)(CompanySubmitedProjectsDetails);

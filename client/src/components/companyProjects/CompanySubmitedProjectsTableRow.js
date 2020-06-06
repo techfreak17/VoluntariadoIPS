@@ -15,7 +15,7 @@ class VoluntaryProjectsTableRow extends Component {
   }
 
   removeProject() {
-    axios.get('/api/projects/deleteProject/' + this.props.obj._id)
+    axios.get('/api/submitedProjects/submitDeleteProject/' + this.props.obj._id)
       .then(console.log('Deleted'))
       .catch(err => console.log(err))
     window.location.reload();
@@ -34,7 +34,7 @@ class VoluntaryProjectsTableRow extends Component {
           {this.props.obj.synopsis}
         </td>
         <td>
-          <Link to={"/getCompanyProjects/" + this.props.obj._id} className="btn btn-primary" style={{ width: "auto", backgroundColor: "#D6E6F2", color: "black" }}><i className="material-icons">search</i></Link>
+          <Link to={"/getCompanySubmitedProjects/" + this.props.obj._id} className="btn btn-primary" style={{ width: "auto", backgroundColor: "#D6E6F2", color: "black" }}><i className="material-icons">search</i></Link>
           <button onClick={this.removeProject} className="btn btn-danger" style={{ width: "auto", backgroundColor: "red", marginLeft: 40, color: "white" }}><i className="material-icons">close</i></button>
         </td>
       </tr>

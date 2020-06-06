@@ -106,7 +106,7 @@ class ProjectDetails extends Component {
               <p><b>Observações:</b> {this.state.observations}</p>
               <ul id="friendsList"><b>Áreas:</b></ul>
             </div>
-            <Link to="/listProjects" style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold", }}
+            <Link to="/listProjectsCompany" style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold", }}
               className="btn btn-large waves-effect waves-light hoverable black center">Voltar</Link>
           </div>
         </div>

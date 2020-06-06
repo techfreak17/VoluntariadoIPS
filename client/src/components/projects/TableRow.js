@@ -29,7 +29,7 @@ class TableRow extends Component {
     axios.post('/api/voluntaries/joinProject/' + this.props.obj._id, newObj)
       .then(console.log('Joined'))
       .catch(err => console.log(err))
-    window.location.reload();
+      window.location.reload();
   }
 
   render() {

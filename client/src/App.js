@@ -11,6 +11,7 @@ import Login from "./components/auth/Login";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import EntityRoute from "./components/private-route/EntityRoute";
 import AdminRoute from "./components/private-route/AdminRoute";
+import VoluntaryRoute from "./components/private-route/VoluntaryRoute";
 import Dashboard from "./components/dashboard/Dashboard";
 import Create from './components/projects/Create';
 import Edit from './components/projects/Edit';
@@ -35,6 +36,10 @@ import CreateSubmitedProject from "./components/submitedProjects/CreateSubmitedP
 import SubmitedProjectDetails from "./components/submitedProjects/SubmitedProjectDetails";
 import IndexVoluntaryProjects from "./components/voluntaryProjects/IndexVoluntaryProjects";
 import VoluntaryProjectsDetails from "./components/voluntaryProjects/VoluntaryProjectsDetails";
+import IndexCompanyProjects from "./components/companyProjects/IndexCompanyProjects";
+import CompanyProjectsDetails from "./components/companyProjects/CompanyProjectsDetails";
+import IndexSubmitedCompanyProjects from "./components/companyProjects/IndexSubmitedCompanyProjects";
+import CompanySubmitedProjectsDetails from "./components/companyProjects/CompanySubmitedProjectsDetails";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -80,21 +85,25 @@ class App extends Component {
             <Route exact path="/resetpassword/:token" component={ResetPassword} />
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
-              <EntityRoute exact path='/createProject' component={ Create } />
-              <EntityRoute path='/editProject/:id' component={ Edit } />
               <PrivateRoute path='/listProjects' component={ IndexProjects } />
+              <PrivateRoute path='/getProject/:id' component={ ProjectDetails } />
               <AdminRoute exact path='/createCompanyUser' component={ CreateCompanyUser } />
               <AdminRoute exact path='/createVoluntaryUser' component={ CreateVoluntaryUser } />
-              <PrivateRoute path='/editVoluntary/:id' component={ EditVoluntary } />
-              <PrivateRoute path='/editCompany/:id' component={ EditCompany } />
-              <PrivateRoute path='/getProject/:id' component={ ProjectDetails } />
-              <EntityRoute path='/getUser/:id' component={ UserDetails } />
-              <EntityRoute path='/listUsers' component={ IndexUsers } />
+              <AdminRoute exact path='/createProject' component={ Create } />
+              <AdminRoute path='/editProject/:id' component={ Edit } />
+              <AdminRoute path='/editVoluntary/:id' component={ EditVoluntary } />
+              <AdminRoute path='/editCompany/:id' component={ EditCompany } />
               <AdminRoute path='/listSubmitedProjects' component={ IndexSubmitedProjects } />
-              <EntityRoute path='/submitProject' component={ CreateSubmitedProject } />
               <AdminRoute path='/getSubmitedProject/:id' component={ SubmitedProjectDetails } />
-              <PrivateRoute path='/listProjectsVoluntary' component={IndexVoluntaryProjects} />
-              <PrivateRoute path='/getVoluntaryProjects/:id' component={VoluntaryProjectsDetails} />
+              <AdminRoute path='/listUsers' component={ IndexUsers } />
+              <PrivateRoute path='/getUser/:id' component={ UserDetails } />
+              <EntityRoute path='/submitProject' component={ CreateSubmitedProject } />
+              <EntityRoute path='/listProjectsCompany' component={ IndexCompanyProjects } />
+              <EntityRoute path='/getCompanyProjects/:id' component={ CompanyProjectsDetails } />
+              <EntityRoute path='/listSubmitedProjectsCompany' component={ IndexSubmitedCompanyProjects } />
+              <EntityRoute path='/getCompanySubmitedProjects/:id' component={ CompanySubmitedProjectsDetails } />
+              <VoluntaryRoute path='/listProjectsVoluntary' component={IndexVoluntaryProjects} />
+              <VoluntaryRoute path='/getVoluntaryProjects/:id' component={VoluntaryProjectsDetails} />
             </Switch>
 
           </div>

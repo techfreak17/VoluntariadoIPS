@@ -30,9 +30,9 @@ class ProjectDetails extends Component {
 
   componentDidMount() {
     axios.all([
-      axios.get('/api/projects/getProject/' + this.props.match.params.id),
-      axios.get('/api/projects/getProjectUser/' + this.props.match.params.id),
-      axios.get('/api/projects/getProjectUserDetails/' + this.props.match.params.id),
+      axios.get('/api/submitedProjects/getSubmitedProject/' + this.props.match.params.id),
+      axios.get('/api/submitedProjects/getSubmitedProjectUser/' + this.props.match.params.id),
+      axios.get('/api/submitedProjects/getSubmitedProjectUserDetails/' + this.props.match.params.id),
     ])
       .then(responseArr => {
         this.myDate = new Date(responseArr[0].data.date);
@@ -106,7 +106,7 @@ class ProjectDetails extends Component {
               <p><b>Observações:</b> {this.state.observations}</p>
               <ul id="friendsList"><b>Áreas:</b></ul>
             </div>
-            <Link to="/listProjects" style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold", }}
+            <Link to="/listSubmitedProjectsCompany" style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold", }}
               className="btn btn-large waves-effect waves-light hoverable black center">Voltar</Link>
           </div>
         </div>

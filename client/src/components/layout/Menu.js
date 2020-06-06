@@ -35,6 +35,13 @@ class Menu extends Component {
                                         )
                                     }
                                 })()}
+                                {(() => {
+                                    if (this.props.auth.user.role === "Voluntário") {
+                                        return (
+                                            <li><a href="/listProjectsVoluntary">Meus Projetos</a></li>
+                                        )
+                                    }
+                                })()}
                                 <li><a href="..."> </a></li>
                             </ul>
                         </div>

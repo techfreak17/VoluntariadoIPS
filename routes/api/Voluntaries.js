@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+var mongoose = require('mongoose');
 
 // Load User model
 const Voluntary = require("../../models/voluntary");
@@ -41,7 +42,7 @@ router.route('/joinProject/:id').post(function (req, res) {
     });
 });
 
-// @route POST api/voluntaries/joinProject/:id
+// @route POST api/voluntaries/unjoinProject/:id
 // @desc Join Project
 // @access Private
 router.route('/unjoinProject/:id').post(function (req, res) {
@@ -60,5 +61,33 @@ router.route('/unjoinProject/:id').post(function (req, res) {
     });
 });
 
+// @route GET api/voluntaries/listVoluntaryProjects/:id
+// @desc Get List of Projects
+// @access Private
+router.route('/listVoluntaryProjects/:id').get(function (req, res) {
+    let userID = req.params.id;
+    Project.find({ enroled_IDs: mongoose.Types.ObjectId(userID) },function (err, projects) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.json(projects);
+        }
+    });
+});
 
+// @route GET api/voluntaries/searchVoluntaryProject/:id
+// @desc Search Project
+// @access Private
+router.post("/searchVoluntaryProject/:id", (req, res) => {
+    let userID = req.params.id;
+    Project.find({ enroled_IDs: mongoose.Types.ObjectId(userID), title: { $regex: req.body.search, $options: "i" } },function (err, projects) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.json(projects);
+        }
+    });
+  });
 module.exports = router;

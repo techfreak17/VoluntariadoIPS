@@ -72,9 +72,9 @@ class IndexSubmitedProjects extends Component {
           <table className="table table-striped" style={{ marginTop: 20 }}>
             <thead>
               <tr>
-                <th>Nome Proposta Projeto</th>
-                <th>Resumo</th>
+                <th>Título</th>
                 <th>Data</th>
+                <th>Descrição</th>
                 <th colSpan="2">Ações</th>
               </tr>
             </thead>

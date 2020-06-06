@@ -36,10 +36,10 @@ class SubmitedProjectsRow extends Component {
           {this.props.obj.title}
         </td>
         <td>
-          {this.props.obj.synopsis}
+          {this.myDate}
         </td>
         <td>
-          {this.myDate}
+          {this.props.obj.synopsis}
         </td>
         <td>
           <Link to={"/getSubmitedProject/" + this.props.obj._id} className="btn btn-primary" style={{ width: "auto", backgroundColor: "#D6E6F2", color: "black" }}><i className="material-icons">search</i></Link>

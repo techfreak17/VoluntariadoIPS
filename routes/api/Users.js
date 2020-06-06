@@ -70,7 +70,8 @@ router.post("/registerVoluntary", (req, res) => {
                   reasons: req.body.reasons,
                   observations: req.body.observations,
                   authorization: req.body.authorization,
-                  userID: user._id
+                  listProjects: req.body.listProjects,
+                  userID: user._id,
                 });       
                 newVoluntary.save();
               });})
@@ -129,8 +130,8 @@ router.post("/registerCompany", (req, res) => {
                   companyName: req.body.companyName,
                   observations: req.body.observations,
                   authorization: req.body.authorization,
+                  listProjects: req.body.listProjects,
                   responsibleID: user._id,
-                  listProjects: req.body.listProjects
                 });       
                 newCompany.save();
               });})

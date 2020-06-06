@@ -25,6 +25,9 @@ class CreateVoluntaryUser extends Component {
             interestAreas: [],
             reasons: [],
             observations: "",
+            isVerified: true,
+            authorization: true,
+            listProjects: [],
             errors: {}
         };
 
@@ -82,6 +85,9 @@ class CreateVoluntaryUser extends Component {
             interestAreas: this.state.interestAreas,
             reasons: this.state.reasons,
             observations: this.state.observations,
+            isVerified: this.state.isVerified,
+            authorization: this.state.authorization,
+            listProjects: this.state.listProjects
         };
 
         this.props.createVoluntary(newUser, this.props.history);

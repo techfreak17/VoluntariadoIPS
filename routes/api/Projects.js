@@ -196,4 +196,21 @@ router.route('/getProjectUserDetails/:id').get(function (req, res) {
   });
 });
 
+// @route POST api/project/joinProject/:id
+// @desc Join Project
+// @access Private
+router.route('/joinProject/:id').post(function (req, res) {
+  console.log(req);
+  /*let id = req.params.id;
+  User.findById(id, function (err, user) {
+      Voluntary.findOne({ userID: user._id }).then(voluntary => {
+          if (voluntary) {
+              res.json(voluntary);
+          } else {
+              return res.status(400).json({ user: "Such data doesn´t exist" });
+          };
+      })
+  });*/
+});
+
 module.exports = router;

@@ -60,7 +60,7 @@ router.post("/createVoluntaryUser", (req, res) => {
         role: req.body.role,
         email: req.body.email,
         password: req.body.password,
-        isVerified: true
+        isVerified: req.body.isVerified
       });
 
       // Hash password before saving in database
@@ -85,7 +85,8 @@ router.post("/createVoluntaryUser", (req, res) => {
                   interestAreas: req.body.interestAreas,
                   reasons: req.body.reasons,
                   observations: req.body.observations,
-                  authorization: true,
+                  authorization: req.body.authorization,
+                  listProjects: req.body.listProjects,
                   userID: user._id
                 });
                 newVoluntary
@@ -121,7 +122,7 @@ router.post("/createCompanyUser", (req, res) => {
         role: req.body.role,
         email: req.body.email,
         password: req.body.password,
-        isVerified: true
+        isVerified: req.body.isVerified
       });
 
       // Hash password before saving in database
@@ -143,7 +144,7 @@ router.post("/createCompanyUser", (req, res) => {
                   companyAddress: req.body.companyAddress,
                   companyName: req.body.companyName,
                   observations: req.body.observations,
-                  authorization: true,
+                  authorization: req.body.authorization,
                   responsibleID: user._id,
                   listProjects: req.body.listProjects
                 });

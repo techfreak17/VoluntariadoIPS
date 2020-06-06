@@ -27,6 +27,7 @@ class RegisterVoluntary extends Component {
             reasons: [],
             observations: "",
             authorization: false,
+            listProjects: [],
             errors: {}
         };
         this.handleChangeInterestAreas = this.handleChangeInterestAreas.bind(this);
@@ -94,6 +95,7 @@ class RegisterVoluntary extends Component {
             reasons: this.state.reasons,
             observations: this.state.observations,
             authorization: this.state.authorization,
+            listProjects: this.state.listProjects
         };
 
         this.props.registerVoluntary(newUser, this.props.history);

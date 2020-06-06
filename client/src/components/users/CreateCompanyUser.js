@@ -13,14 +13,17 @@ class CreateCompanyUser extends Component {
             password: "",
             password2: "",
             username: "",
-            name: "",
             role: "Empresa",
+            name: "",
             phone: "",
             address: "",
             birthDate: "",
             companyName: "",
             companyAddress: "",
             observations: "",
+            authorization: true,
+            listProjects: [],
+            isVerified: true,
             errors: {}
         };
     }
@@ -54,6 +57,8 @@ class CreateCompanyUser extends Component {
             companyName: this.state.companyName,
             observations: this.state.observations,
             authorization: this.state.authorization,
+            listProjects: this.state.listProjects,
+            isVerified: this.state.isVerified
         };
 
         this.props.createCompany(newUser, this.props.history);

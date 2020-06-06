@@ -42,9 +42,9 @@ class SubmitedProjectsRow extends Component {
           {this.myDate}
         </td>
         <td>
-          <Link to={"/getSubmitedProject/" + this.props.obj._id} className="btn btn-primary" style={{ width: "15%", backgroundColor: "#D6E6F2", color: "black" }}><i className="material-icons">search</i></Link>
-          <button onClick={this.accept} className="btn btn-danger" style={{ width: "15%", backgroundColor: "green", color: "white", marginLeft: 40 }}><i className="material-icons">done</i></button>
-          <button onClick={this.delete} className="btn btn-danger" style={{ width: "15%", backgroundColor: "red", marginLeft: 40, color: "white" }}><i className="material-icons">close</i></button>
+          <Link to={"/getSubmitedProject/" + this.props.obj._id} className="btn btn-primary" style={{ width: "auto", backgroundColor: "#D6E6F2", color: "black" }}><i className="material-icons">search</i></Link>
+          <button onClick={this.accept} className="btn btn-danger" style={{ width: "auto", backgroundColor: "green", color: "white", marginLeft: 40 }}><i className="material-icons">done</i></button>
+          <button onClick={this.delete} className="btn btn-danger" style={{ width: "auto", backgroundColor: "red", marginLeft: 40, color: "white" }}><i className="material-icons">close</i></button>
         </td>
       </tr>
     );

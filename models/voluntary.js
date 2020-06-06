@@ -54,6 +54,10 @@ const VoluntarySchema = new Schema({
         required: true,
         default: false
     },
+    listProjects: {
+        type: Array,
+        required: false
+    },
     userID: {
         type: Schema.ObjectId,
         ref: 'Users',

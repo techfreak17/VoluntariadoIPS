@@ -5,40 +5,39 @@ import axios from 'axios';
 
 
 
-class baseProfile extends Component {
+class baseCompanyProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          name: "",
-          email: "",
-          phone: "",
-          address: "",
-          member: "",
-          school: "",
-          course: "",
-          companyAddress: "",
-          companyName: "",
-          role: "",
-          errors: {}
+         name: '',
+         email: '',
+         phone: '',
+         address: '',
+         birthDate: '',
+         companyName: '',
+         companyAddress: '',
+         listProjects: '',
+         observations: '',
+         role:'',
+         errors: {}
         };
-        
     }
 
     componentDidMount() {
        
 
-            axios.get('/api/users/getUserDetails/' + this.props.match.params.id)
+            axios.get('/api/Company/getCompanyUserDetails/' + this.props.match.params.id)
             .then(responseArr => {
               this.setState({
                 name: responseArr.data.name,
                 email: responseArr.data.email,
                 phone: responseArr.data.phone,
                 address: responseArr.data.address,
-                member: responseArr.data.memberIPS,
-                school: responseArr.data.schoolIPS,
-                course: responseArr.data.courseIPS,
-                companyAddress: responseArr.data.companyAddress,
+                birthDate: responseArr.data.birthDate,
                 companyName: responseArr.data.companyName,
+                companyAddress: responseArr.data.companyAddress,
+                listProjects: responseArr.data.listProjects,
+                observations: responseArr.data.observations,
                 role: this.props.auth.user.role
               });
             });
@@ -81,15 +80,16 @@ class baseProfile extends Component {
                             <input value={this.state.phone}></input>
                             <h5 style={{fontWeight: 'bold'}}>Morada</h5>
                             <input value={this.state.address}></input>
-                            <h5 style={{fontWeight: 'bold'}}>Escola</h5>
-                            <input value={this.state.school}></input>
-                            <h5 style={{fontWeight: 'bold'}}>Curso</h5>
-                            <input value={this.state.course}></input>
-                            <h5 style={{fontWeight: 'bold'}}>Áreas de Interesse</h5>
+                            <h5 style={{fontWeight: 'bold'}}>Data de Nascimento</h5>
+                            <input value={this.state.birthDate}></input>
+                            <h5 style={{fontWeight: 'bold'}}>Nome da Companhia</h5>
                             <input value={this.state.companyName}></input>
+                            <h5 style={{fontWeight: 'bold'}}>Morada da Companhia</h5>
+                            <input value={this.state.companyAddress}></input>
+                            <h5 style={{fontWeight: 'bold'}}>Observações</h5>
+                            <input value={this.state.observations}></input>
                             <button style={{float: 'right'}}>Editar Perfil</button>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -97,7 +97,7 @@ class baseProfile extends Component {
     }
 }
 
-baseProfile.propTypes = {
+baseCompanyProfile.propTypes = {
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };
@@ -109,5 +109,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { baseProfile }
-)(baseProfile);
+    { baseCompanyProfile }
+)(baseCompanyProfile);

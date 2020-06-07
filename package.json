@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix client",
-    "start": "node Notifications/emailNotificationsExample.js",
+    "start": "node client/src/components/pushNotifications/PushNotifications.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
@@ -30,6 +30,8 @@
     "nouislider": "^14.5.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
+    "react-toastify": "^6.0.5",
+    "styled-components": "^5.1.1",
     "react-bootstrap": "^1.0.1",
     "react-chips": "^0.8.0",
     "react-datetime": "^2.16.3",

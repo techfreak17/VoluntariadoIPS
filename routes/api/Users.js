@@ -6,6 +6,7 @@ const keys = require("../../config/keys");
 const template = require('../../Notifications/emailNotificationsTemplates.js');
 const sender = require('../../Notifications/emailNotify.js');
 const crypto = require('crypto');
+const notification= require('./Notifications.js');
 
 // Load input validation
 const validateRegisterInputVoluntary = require("../../validation/registerVoluntary");
@@ -195,6 +196,7 @@ router.post("/login", (req, res) => {
             name: user.name,
             role: user.role
           };
+          //notification.getNotification(email);
           // Sign token
           jwt.sign(
             payload,

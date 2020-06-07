@@ -52,7 +52,6 @@ class Dashboard extends Component {
             for (let i = 0; i < this.state.titles.length; i++) {
                 titleL.push(<Slider obj={this.state.titles[i]} key={i} />);
             }
-            console.log(titleL);
             return titleL;
         };
 

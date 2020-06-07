@@ -31,6 +31,7 @@ import ResetPassword from "./components/auth/ResetPassword";
 import Menu from "./components/layout/Menu";
 import RegisterVoluntary from "./components/auth/RegisterVoluntary";
 import RegisterCompany from "./components/auth/RegisterCompany";
+import baseProfile from "./components/profile/baseProfile";
 import IndexSubmitedProjects from "./components/submitedProjects/IndexSubmitedProjects";
 import CreateSubmitedProject from "./components/submitedProjects/CreateSubmitedProject";
 import SubmitedProjectDetails from "./components/submitedProjects/SubmitedProjectDetails";
@@ -83,6 +84,7 @@ class App extends Component {
             <Route exact path="/ConfirmAccount" component={ConfirmAccount} />
             <Route exact path="/ConfirmAccountToken/:token" component={ConfirmAccountToken} />
             <Route exact path="/resetpassword/:token" component={ResetPassword} />
+            <Route exact path="/baseProfile/:id" component={baseProfile}/>
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute path='/listProjects' component={ IndexProjects } />

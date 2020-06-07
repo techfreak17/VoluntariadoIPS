@@ -41,6 +41,7 @@ router.post("/createProject", (req, res) => {
         requiredFormation: req.body.requiredFormation,
         formation: req.body.formation
       });
+      createNotification('novoProjecto',req.body.title,'admin@teste.pt');
       newProject
         .save()
         .then(project => res.json(project))
@@ -102,6 +103,7 @@ router.route('/updateProject/:id').post(function (req, res) {
         .catch(err => {
           res.status(400).send("unable to update the database");
         });
+        createNotification('projectoEditado',project.title,'admin@teste.pt');
     }
   });
 });
@@ -111,8 +113,13 @@ router.route('/updateProject/:id').post(function (req, res) {
 // @access Private
 router.route('/deleteProject/:id').get(function (req, res) {
   Project.findByIdAndRemove({ _id: req.params.id }, function (err, project) {
-    if (err) res.json(err);
-    else res.json('Successfully removed');
+    if (err){
+      res.json(err);
+    }
+    else {
+      createNotification('projectoRemovido',project.title,'admin@teste.pt');
+      res.json('Successfully removed');
+    }
   });
 });
 

@@ -49,7 +49,7 @@ class PushNotificationToast extends React.Component {
    
     render(){
         return(
-            <button onClick={this.notify}> Notificações </button>
+            <button onClick={this.notify}  style={{ backgroundColor: "transparent", color: "white", border:"none" }}><i className="material-icons">notifications</i></button>
         );
     }
 

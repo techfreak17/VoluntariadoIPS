@@ -64,12 +64,15 @@ function getNotification(userEmail){
 
 router.route('/listNotifications/:id').get(function (req, res) {
   const id = req.params.id;
+  console.log("in list notif");
   User.findById(id, function(err,user){
+    console.log(user);
     notifications.find({email: user.email}, function (err, notif) {
       if (err) {
         console.log(err);
       }
       else {
+        console.log(notif);
         res.json(notif);
       }
     });

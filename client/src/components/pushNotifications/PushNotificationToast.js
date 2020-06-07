@@ -29,7 +29,8 @@ class PushNotificationToast extends React.Component {
     componentDidMount(){
         Axios.get('/api/notifications/listNotifications/' + this.props.auth.user.id)
           .then(response => {
-            this.setState({ msgs: response.data});
+              console.log(response);
+              this.setState({ msgs: response.data});
           })
           .catch(function (error) {
             console.log(error);
@@ -48,7 +49,7 @@ class PushNotificationToast extends React.Component {
    
     render(){
         return(
-            <button onClick={this.notify}> Notify!</button>
+            <button onClick={this.notify}> Notificações </button>
         );
     }
 

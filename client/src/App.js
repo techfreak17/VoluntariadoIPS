@@ -31,7 +31,10 @@ import ResetPassword from "./components/auth/ResetPassword";
 import Menu from "./components/layout/Menu";
 import RegisterVoluntary from "./components/auth/RegisterVoluntary";
 import RegisterCompany from "./components/auth/RegisterCompany";
-import baseProfile from "./components/profile/baseProfile";
+import BaseProfile from "./components/profile/BaseProfile";
+import EditProfileAdmin from "./components/profile/EditProfileAdmin";
+import EditProfileCompany from "./components/profile/EditProfileCompany";
+import EditProfileVoluntary from "./components/profile/EditProfileVoluntary";
 import IndexSubmitedProjects from "./components/submitedProjects/IndexSubmitedProjects";
 import CreateSubmitedProject from "./components/submitedProjects/CreateSubmitedProject";
 import SubmitedProjectDetails from "./components/submitedProjects/SubmitedProjectDetails";
@@ -84,11 +87,15 @@ class App extends Component {
             <Route exact path="/ConfirmAccount" component={ConfirmAccount} />
             <Route exact path="/ConfirmAccountToken/:token" component={ConfirmAccountToken} />
             <Route exact path="/resetpassword/:token" component={ResetPassword} />
-            <Route exact path="/baseProfile/:id" component={baseProfile}/>
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute path='/listProjects' component={ IndexProjects } />
               <PrivateRoute path='/getProject/:id' component={ ProjectDetails } />
+              <PrivateRoute path="/baseProfile/:id" component={BaseProfile}/>
+              <PrivateRoute  path="/editProfileAdmin/:id" component={EditProfileAdmin}/>
+              <PrivateRoute  path="/editProfileCompany/:id" component={EditProfileCompany}/>
+              <PrivateRoute  path="/editProfileVoluntary/:id" component={EditProfileVoluntary}/>
+              <PrivateRoute path='/getUser/:id' component={ UserDetails } />
               <AdminRoute exact path='/createCompanyUser' component={ CreateCompanyUser } />
               <AdminRoute exact path='/createVoluntaryUser' component={ CreateVoluntaryUser } />
               <AdminRoute exact path='/createProject' component={ Create } />
@@ -98,7 +105,6 @@ class App extends Component {
               <AdminRoute path='/listSubmitedProjects' component={ IndexSubmitedProjects } />
               <AdminRoute path='/getSubmitedProject/:id' component={ SubmitedProjectDetails } />
               <AdminRoute path='/listUsers' component={ IndexUsers } />
-              <PrivateRoute path='/getUser/:id' component={ UserDetails } />
               <EntityRoute path='/submitProject' component={ CreateSubmitedProject } />
               <EntityRoute path='/listProjectsCompany' component={ IndexCompanyProjects } />
               <EntityRoute path='/getCompanyProjects/:id' component={ CompanyProjectsDetails } />

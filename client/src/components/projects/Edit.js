@@ -40,7 +40,7 @@ export default class Edit extends Component {
       .then(response => {
         var pdate = new Date(response.data.date);
         var year = pdate.getFullYear();
-        var month = pdate.getMonth();
+        var month = pdate.getMonth() + 1;
         var day = pdate.getDate();
         var mm = month < 10 ? '0' + month : month;
         var dd = day < 10 ? '0' + day: day;

@@ -4,13 +4,11 @@ import M from "materialize-css";
 import options from "materialize-css";
 import classnames from "classnames";
 
-export default class EditVoluntary extends Component {
+export default class EditProfileVoluntary extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      email: "",
-      username: "",
       name: "",
       phone: "",
       address: "",
@@ -18,9 +16,9 @@ export default class EditVoluntary extends Component {
       memberIPS: "",
       schoolIPS: "",
       courseIPS: "",
+      password: "",
+      password2: "",
       interestAreas: [],
-      reasons: [],
-      observations: "",
       authorization: false,
       errors: {}
     }
@@ -28,7 +26,6 @@ export default class EditVoluntary extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.handleChangeInterestAreas = this.handleChangeInterestAreas.bind(this);
-    this.handleChangeReasons = this.handleChangeReasons.bind(this);
   }
 
   componentDidMount() {
@@ -54,17 +51,13 @@ export default class EditVoluntary extends Component {
         date = '' + year + "-" + mm + "-" + dd;
         this.setState({
           name: responseArr[0].data.name,
-          email: responseArr[0].data.email,
           phone: responseArr[0].data.phone,
           address: responseArr[0].data.address,
           memberIPS: responseArr[0].data.memberIPS,
           schoolIPS: responseArr[0].data.schoolIPS,
           courseIPS: responseArr[0].data.courseIPS,
           interestAreas: responseArr[0].data.interestAreas,
-          reasons: responseArr[0].data.reasons,
-          observations: responseArr[0].data.observations,
           role: responseArr[1].data.role,
-          username: responseArr[1].data.username,
           birthDate: date
         });
       })
@@ -77,10 +70,6 @@ export default class EditVoluntary extends Component {
 
   handleChangeInterestAreas(event) {
     this.setState({ interestAreas: Array.from(event.target.selectedOptions, (item) => item.value) });
-  }
-
-  handleChangeReasons(event) {
-    this.setState({ reasons: Array.from(event.target.selectedOptions, (item) => item.value) });
   }
 
   onSubmit(e) {
@@ -98,13 +87,14 @@ export default class EditVoluntary extends Component {
       observations: this.state.observations,
       username: this.state.username,
       birthDate: this.state.birthDate,
-      role: this.state.role
+      role: this.state.role,
+      password: this.state.password,
+      password2: this.state.password2,
     };
     axios
-      .post('/api/admin/updateUser/' + this.props.match.params.id, obj)
+      .post('/api/users/updateUser/' + this.props.match.params.id, obj)
       .then(res => console.log(res.data));
-      this.props.history.push('/listUsers');
-      window.location.reload();
+    window.location.reload();
   }
 
   render() {
@@ -117,45 +107,15 @@ export default class EditVoluntary extends Component {
     });
 
     return (
-
       <div className="container" style={{ marginTop: "5%" }}>
         <div className="row">
           <div className="col s8 offset-s2">
-            <a href="/listUsers" className="btn-flat waves-effect">
+            <a type="button" href={"/baseProfile/" + this.props.match.params.id} url className="btn-flat waves-effect">
               <i className="material-icons left">keyboard_backspace</i>
                             Voltar
                         </a>
 
             <form noValidate>
-              <div className="input-field col s12">
-                <label htmlFor="name">Username *</label><br></br>
-                <input
-                  onChange={this.onChange}
-                  value={this.state.username}
-                  id="username"
-                  type="text"
-                  error={errors.username}
-                  className={classnames("", {
-                    invalid: errors.username
-                  })}
-                />
-                <span className="red-text">{errors.username}</span>
-              </div>
-
-              <div className="input-field col s12">
-                <label htmlFor="email">Email *</label><br></br>
-                <input
-                  onChange={this.onChange}
-                  value={this.state.email}
-                  id="email"
-                  type="email"
-                  error={errors.email}
-                  className={classnames("", {
-                    invalid: errors.email
-                  })}
-                />
-                <span className="red-text">{errors.email}</span>
-              </div>
 
               <div className="input-field col s12">
                 <label htmlFor="name">Nome Completo *</label><br></br>
@@ -170,6 +130,36 @@ export default class EditVoluntary extends Component {
                   })}
                 />
                 <span className="red-text">{errors.name}</span>
+              </div>
+
+              <div className="input-field col s12">
+                <input
+                  onChange={this.onChange}
+                  value={this.state.password}
+                  error={errors.password}
+                  id="password"
+                  type="password"
+                  className={classnames("", {
+                    invalid: errors.password
+                  })}
+                />
+                <label htmlFor="password">Password *</label>
+                <span className="red-text">{errors.password}</span>
+              </div>
+
+              <div className="input-field col s12">
+                <input
+                  onChange={this.onChange}
+                  value={this.state.password2}
+                  error={errors.password2}
+                  id="password2"
+                  type="password"
+                  className={classnames("", {
+                    invalid: errors.password2
+                  })}
+                />
+                <label htmlFor="password2">Confirmar Password *</label>
+                <span className="red-text">{errors.password2}</span>
               </div>
 
               <div className="input-field col s12">
@@ -293,43 +283,6 @@ export default class EditVoluntary extends Component {
                   <option value="Social">Social (por ex. apoio a idosos, a crianças, Banco Alimentar…)</option>
                 </select>
                 <span className="red-text">{errors.interestAreas}</span>
-              </div>
-
-              <div className="input-field col s12">
-                <label htmlFor="name">Razões para querer ser voluntário *</label><br></br>
-                <select required multiple={true} value={this.state.reasons} onChange={this.handleChangeReasons}
-                  error={errors.reasons}
-                  className={classnames("", {
-                    invalid: errors.reasons
-                  })}>
-                  <option value="" disabled>Selecionar Opções</option>
-                  <option value="Convívio Social">Pelo convívio social</option>
-                  <option value="Futuro Profissional">Porque pode ser vantajoso para o futuro profissional</option>
-                  <option value="Integração Social">Pela possibilidade de integração social</option>
-                  <option value="Novas Experiências">Para ter novas experiências</option>
-                  <option value="Ajudar os Outros">Porque gosto de ajudar os outros</option>
-                  <option value="Incentivado por outros">Porque fui incentivado(a) por outras pessoas</option>
-                  <option value="Conhece pessoas que também estão/estiveram no voluntariado">Porque conheço pessoas que já realizaram atividades de voluntariado no IPS</option>
-                  <option value="Sentir-se Útil">Para me sentir útil</option>
-                  <option value="Ocupar Tempo Livre">Para ocupar tempo livre</option>
-                  <option value="Outro">Outro</option>
-                </select>
-                <span className="red-text">{errors.reasons}</span>
-              </div>
-
-              <div className="input-field col s12">
-                <label htmlFor="name">Observações</label><br></br>
-                <input
-                  onChange={this.onChange}
-                  value={this.state.observations}
-                  id="observations"
-                  type="text"
-                  error={errors.observations}
-                  className={classnames("", {
-                    invalid: errors.observations
-                  })}
-                />
-                <span className="red-text">{errors.observations}</span>
               </div>
 
             </form>

@@ -6,11 +6,14 @@ const keys = require("../../config/keys");
 const template = require('../../Notifications/emailNotificationsTemplates.js');
 const sender = require('../../Notifications/emailNotify.js');
 const crypto = require('crypto');
-const notification= require('./Notifications.js');
+const notification = require('./Notifications.js');
 
 // Load input validation
 const validateRegisterInputVoluntary = require("../../validation/registerVoluntary");
 const validateRegisterInputCompany = require("../../validation/register");
+const validateEditInputCompanyProfileUser = require("../../validation/editCompanyProfileUser");
+const validateEditInputVoluntaryProfileUser = require("../../validation/editVoluntaryProfileUser");
+const validateEditInputAdminProfileUser = require("../../validation/editAdminProfileUser");
 const validateLoginInput = require("../../validation/login");
 const validatePasswordReset = require("../../validation/recover");
 
@@ -50,11 +53,12 @@ router.post("/registerVoluntary", (req, res) => {
           newUser.password = hash;
           newUser
             .save()
-            .then(user => {  const email = user.email;
-              User.findOne({ email }).then(user => {        
-                var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });          
-                msgToken = 'http://' + req.headers.host + '/ConfirmAccountToken/' + mytoken.token;           
-                mytoken.save();          
+            .then(user => {
+              const email = user.email;
+              User.findOne({ email }).then(user => {
+                var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });
+                msgToken = 'http://' + req.headers.host + '/ConfirmAccountToken/' + mytoken.token;
+                mytoken.save();
                 const msg = template.confirmarEmail(email, msgToken);
                 sender.sendEmail(msg);
                 res.json(user);
@@ -73,9 +77,10 @@ router.post("/registerVoluntary", (req, res) => {
                   authorization: req.body.authorization,
                   listProjects: req.body.listProjects,
                   userID: user._id,
-                });       
+                });
                 newVoluntary.save();
-              });})
+              });
+            })
             .catch(err => console.log(err));
         });
       });
@@ -113,11 +118,12 @@ router.post("/registerCompany", (req, res) => {
           newUser
             .save()
             //.then(user => res.json(user))
-            .then(user => {  const email = user.email;
-              User.findOne({ email }).then(user => {        
-                var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });          
-                msgToken = 'http://' + req.headers.host + '/ConfirmAccountToken/' + mytoken.token;           
-                mytoken.save();          
+            .then(user => {
+              const email = user.email;
+              User.findOne({ email }).then(user => {
+                var mytoken = new Token({ _userEmail: email, token: crypto.randomBytes(16).toString('hex') });
+                msgToken = 'http://' + req.headers.host + '/ConfirmAccountToken/' + mytoken.token;
+                mytoken.save();
                 const msg = template.confirmarEmail(email, msgToken);
                 sender.sendEmail(msg);
                 res.json(user);
@@ -133,9 +139,10 @@ router.post("/registerCompany", (req, res) => {
                   authorization: req.body.authorization,
                   listProjects: req.body.listProjects,
                   responsibleID: user._id,
-                });       
+                });
                 newCompany.save();
-              });})
+              });
+            })
             .catch(err => console.log(err));
         });
       });
@@ -150,7 +157,7 @@ router.post("/registerCompany", (req, res) => {
 router.post("/confirmtoken", (req, res) => {
   var reqToken = req.body.token.token;
   reqToken = reqToken.toString();
-  Token.findOne({token: reqToken }).then(token => {
+  Token.findOne({ token: reqToken }).then(token => {
     if (!token) {
       return res.status(404).json({ tokennotfound: "Token nâo encontrado" });
     }
@@ -302,13 +309,13 @@ router.route('/listUsers').get(function (req, res) {
 // @route POST api/users/searchUser
 // @desc Search User
 // @access Private
-router.post("/searchUser", (req, res) => {   
+router.post("/searchUser", (req, res) => {
   User.find({ username: { $regex: req.body.search, $options: "i" } }).then(user => {
-      if (user) {
-          res.json(user);
-      } else {
-        res.status(404).send({message: "Not found any user with that name"});
-      }
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).send({ message: "Not found any user with that name" });
+    }
   })
 });
 
@@ -317,32 +324,32 @@ router.post("/searchUser", (req, res) => {
 // @access Private
 router.route('/getUserDetails/:id').get(function (req, res) {
   let id = req.params.id;
-  User.findById(id, function (err, user){
-      if(user.role === "Voluntário"){
-        Voluntary.findOne({ userID: user._id }).then(voluntary => {
-          if (voluntary) {
-            res.json(voluntary);
-          } else {
-            return res.status(400).json({ voluntary: "Such data doesn´t exist" });
-          };
-        })
-      }else if (user.role === "Empresa"){
-        Company.findOne({ responsibleID: user._id }).then(company => {
-          if (company) {
-            res.json(company);
-          } else {
-            return res.status(400).json({ company: "Such data doesn´t exist" });
-          };
-        })
-      }else if (user.role === "Administrador"){
-        Administrator.findOne({ userID: user._id }).then(admin => {
-          if (admin) {
-            res.json(admin);
-          } else {
-            return res.status(400).json({ admin: "Such data doesn´t exist" });
-          };
-        })
-      }
+  User.findById(id, function (err, user) {
+    if (user.role === "Voluntário") {
+      Voluntary.findOne({ userID: user._id }).then(voluntary => {
+        if (voluntary) {
+          res.json(voluntary);
+        } else {
+          return res.status(400).json({ voluntary: "Such data doesn´t exist" });
+        };
+      })
+    } else if (user.role === "Empresa") {
+      Company.findOne({ responsibleID: user._id }).then(company => {
+        if (company) {
+          res.json(company);
+        } else {
+          return res.status(400).json({ company: "Such data doesn´t exist" });
+        };
+      })
+    } else if (user.role === "Administrador") {
+      Administrator.findOne({ userID: user._id }).then(admin => {
+        if (admin) {
+          res.json(admin);
+        } else {
+          return res.status(400).json({ admin: "Such data doesn´t exist" });
+        };
+      })
+    }
   });
 });
 
@@ -351,8 +358,166 @@ router.route('/getUserDetails/:id').get(function (req, res) {
 // @access Private
 router.route('/getUser/:id').get(function (req, res) {
   let id = req.params.id;
-  User.findById(id, function (err, user){
+  User.findById(id, function (err, user) {
     res.json(user);
+  });
+});
+
+// @route POST api/users/updateUser/:id
+// @desc Update User
+// @access Private
+router.route('/updateUser/:id').post(function (req, res) {
+  User.findById(req.params.id, function (err, user) {
+
+    if (!user)
+      res.status(404).send("data is not found");
+
+    if (user.role === "Voluntário") {
+      const { errors, isValid } = validateEditInputVoluntaryProfileUser(req.body);
+      // Check validation
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
+
+      newPassword = req.body.password;
+      var count = Object.keys(newPassword).length
+      if (newPassword !== user.password && count >= 6) {
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(newPassword, salt, (err, hash) => {
+            if (err) throw err;
+            newPassword = hash;
+            user.updateOne({
+              password: newPassword,
+            })
+              .catch(err => {
+                res.status(400).send("unable to update the database");
+              });
+          })
+        })
+      }
+
+      Voluntary.findOne({ email: user.email }).then(voluntary => {
+        if (voluntary) {
+          voluntary.name = req.body.name;
+          voluntary.phone = req.body.phone;
+          voluntary.address = req.body.address;
+          voluntary.birthDate = req.body.birthDate;
+          voluntary.memberIPS = req.body.memberIPS;
+          voluntary.schoolIPS = req.body.schoolIPS;
+          voluntary.courseIPS = req.body.courseIPS;
+          voluntary.interestAreas = req.body.interestAreas;
+
+          voluntary.updateOne({
+            name: voluntary.name,
+            phone: voluntary.phone,
+            address: voluntary.address,
+            birthDate: voluntary.birthDate,
+            memberIPS: voluntary.memberIPS,
+            schoolIPS: voluntary.schoolIPS,
+            courseIPS: voluntary.courseIPS,
+            interestAreas: voluntary.interestAreas,
+          })
+            .catch(err => {
+              res.status(400).send("unable to update the database");
+            });
+        } else {
+          res.status(404).send("data is not found");
+        }
+      });
+
+    } else if (user.role === "Empresa") {
+      const { errors, isValid } = validateEditInputCompanyProfileUser(req.body);
+      // Check validation
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
+
+      newPassword = req.body.password;
+      var count = Object.keys(newPassword).length
+      if (newPassword !== user.password && count >= 6) {
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(newPassword, salt, (err, hash) => {
+            if (err) throw err;
+            newPassword = hash;
+            user.updateOne({
+              password: newPassword,
+            })
+              .catch(err => {
+                res.status(400).send("unable to update the database");
+              });
+          })
+        })
+      }
+
+      Company.findOne({ email: user.email }).then(company => {
+        if (company) {
+          company.name = req.body.name;
+          company.phone = req.body.phone;
+          company.address = req.body.address;
+          company.birthDate = req.body.birthDate;
+          company.companyName = req.body.companyName;
+          company.companyAddress = req.body.companyAddress;
+
+          company.updateOne({
+            name: company.name,
+            phone: company.phone,
+            address: company.address,
+            birthDate: company.birthDate,
+            companyName: company.companyName,
+            companyAddress: company.companyAddress,
+          })
+            .catch(err => {
+              res.status(400).send("unable to update the database");
+            });
+        } else {
+          res.status(404).send("data is not found");
+        }
+      });
+    } else if (user.role === "Administrador") {
+      const { errors, isValid } = validateEditInputAdminProfileUser(req.body);
+      // Check validation
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
+
+      newPassword = req.body.password;
+      var count = Object.keys(newPassword).length
+      if (newPassword !== user.password && count >= 6) {
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(newPassword, salt, (err, hash) => {
+            if (err) throw err;
+            newPassword = hash;
+            user.updateOne({
+              password: newPassword,
+            })
+              .catch(err => {
+                res.status(400).send("unable to update the database");
+              });
+          })
+        })
+      }
+
+      Administrator.findOne({ email: user.email }).then(admin => {
+        if (admin) {
+          admin.name = req.body.name;
+          admin.phone = req.body.phone;
+          admin.address = req.body.address;
+          admin.birthDate = req.body.birthDate;
+
+          admin.updateOne({
+            name: admin.name,
+            phone: admin.phone,
+            address: admin.address,
+            birthDate: admin.birthDate,
+          })
+            .catch(err => {
+              res.status(400).send("unable to update the database");
+            });
+        } else {
+          res.status(404).send("data is not found");
+        }
+      });
+    }
   });
 });
 

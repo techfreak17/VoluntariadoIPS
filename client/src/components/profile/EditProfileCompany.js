@@ -4,28 +4,25 @@ import M from "materialize-css";
 import options from "materialize-css";
 import classnames from "classnames";
 
-export default class EditCompany extends Component {
+export default class EditProfileCompany extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             name: "",
-            email: "",
             phone: "",
             address: "",
             companyAddress: "",
             companyName: "",
             role: "",
-            observations: "",
-            username: "",
             birthDate: "",
+            password: "",
+            password2: "",
             errors: {}
         }
 
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        this.handleChangeInterestAreas = this.handleChangeInterestAreas.bind(this);
-        this.handleChangeReasons = this.handleChangeReasons.bind(this);
     }
 
     componentDidMount() {
@@ -51,15 +48,12 @@ export default class EditCompany extends Component {
                 date = '' + year + "-" + mm + "-" + dd;
                 this.setState({
                     name: responseArr[0].data.name,
-                    email: responseArr[0].data.email,
                     phone: responseArr[0].data.phone,
                     address: responseArr[0].data.address,
                     companyAddress: responseArr[0].data.companyAddress,
                     companyName: responseArr[0].data.companyName,
                     birthDate: date,
-                    observations: responseArr[0].data.observations,
                     role: responseArr[1].data.role,
-                    username: responseArr[1].data.username
                 });
             })
             .catch(error => console.log(error));
@@ -69,31 +63,21 @@ export default class EditCompany extends Component {
         this.setState({ [e.target.id]: e.target.value });
     };
 
-    handleChangeInterestAreas(event) {
-        this.setState({ interestAreas: Array.from(event.target.selectedOptions, (item) => item.value) });
-    }
-
-    handleChangeReasons(event) {
-        this.setState({ reasons: Array.from(event.target.selectedOptions, (item) => item.value) });
-    }
-
     onSubmit(e) {
         e.preventDefault();
         const obj = {
             name: this.state.name,
-            email: this.state.email,
             phone: this.state.phone,
             address: this.state.address,
             companyAddress: this.state.companyAddress,
             companyName: this.state.companyName,
             role: this.state.role,
-            observations: this.state.observations,
-            username: this.state.username,
-            birthDate: this.state.birthDate
+            birthDate: this.state.birthDate,
+            password: this.state.password,
+            password2: this.state.password2,
         };
-        axios.post('/api/admin/updateUser/' + this.props.match.params.id, obj)
+        axios.post('/api/users/updateUser/' + this.props.match.params.id, obj)
             .then(res => console.log(res.data));
-        this.props.history.push('/listUsers');
         window.location.reload();
     }
 
@@ -110,42 +94,12 @@ export default class EditCompany extends Component {
             <div className="container" style={{ marginTop: "5%" }}>
                 <div className="row">
                     <div className="col s8 offset-s2">
-                        <a href="/listUsers" className="btn-flat waves-effect">
+                        <a href={"/baseProfile/" + this.props.match.params.id} className="btn-flat waves-effect">
                             <i className="material-icons left">keyboard_backspace</i>
                     Voltar
                 </a>
 
                         <form noValidate>
-                            <div className="input-field col s12">
-                                <label htmlFor="name">Username *</label><br></br>
-                                <input
-                                    onChange={this.onChange}
-                                    value={this.state.username}
-                                    id="username"
-                                    type="text"
-                                    error={errors.username}
-                                    className={classnames("", {
-                                        invalid: errors.username
-                                    })}
-                                />
-                                <span className="red-text">{errors.username}</span>
-                            </div>
-
-                            <div className="input-field col s12">
-                                <label htmlFor="email">Email *</label><br></br>
-                                <input
-                                    onChange={this.onChange}
-                                    value={this.state.email}
-                                    id="email"
-                                    type="email"
-                                    error={errors.email}
-                                    className={classnames("", {
-                                        invalid: errors.email
-                                    })}
-                                />
-                                <span className="red-text">{errors.email}</span>
-                            </div>
-
                             <div className="input-field col s12">
                                 <label htmlFor="name">Nome Completo *</label><br></br>
                                 <input
@@ -235,22 +189,6 @@ export default class EditCompany extends Component {
                                 />
                                 <span className="red-text">{errors.companyAddress}</span>
                             </div>
-
-                            <div className="input-field col s12">
-                                <label htmlFor="name">Observações</label><br></br>
-                                <input
-                                    onChange={this.onChange}
-                                    value={this.state.observations}
-                                    id="observations"
-                                    type="text"
-                                    error={errors.observations}
-                                    className={classnames("", {
-                                        invalid: errors.observations
-                                    })}
-                                />
-                                 <span className="red-text">{errors.observations}</span>
-                            </div>
-
                         </form>
                         <div className="col s12" style={{ paddingLeft: "11.250px", paddingBottom: "60px" }}>
                             <br></br>

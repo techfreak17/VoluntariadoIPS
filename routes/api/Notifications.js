@@ -10,7 +10,6 @@ const router = express.Router();
 function createNotification ( type, texto, email){
   let notification;
   const templates=new pushTemplates();
-  console.log('entered the method')
   switch(type){
     case 'semVagas':
      notification=buildnotification(type, templates.semVagas,texto, email, date);
@@ -30,14 +29,12 @@ function createNotification ( type, texto, email){
     default:
       console.log("failed to find a possible type.")
   }
-  console.log(notification);
   notification.save();
 }
 
 
 function buildnotification(title,body,texto, email){
   const notif= new notifications;
-  console.log('entered build');
   notif.title=title;
   notif.body=body.replace('{{ title }}', '\"'+texto+'\"');
   notif.date=new Date();
@@ -47,15 +44,11 @@ function buildnotification(title,body,texto, email){
 }
 
 function getNotification(userEmail){
-  console.log('entered getnotification');
     notifications.find({ email: userEmail , isRead: false}, function(err, notif){
       if(err){
-        console.log('has error');
         return err;
       }
       else{
-        console.log('has something');
-        console.log(notif);
         return notif;
       }
 
@@ -64,15 +57,12 @@ function getNotification(userEmail){
 
 router.route('/listNotifications/:id').get(function (req, res) {
   const id = req.params.id;
-  console.log("in list notif");
   User.findById(id, function(err,user){
-    console.log(user);
     notifications.find({email: user.email}, function (err, notif) {
       if (err) {
         console.log(err);
       }
       else {
-        console.log(notif);
         res.json(notif);
       }
     });
@@ -88,16 +78,11 @@ router.route('/listNotifications/:id').get(function (req, res) {
 //});
 
 router.put('/updateNotification/:id').get(function (req, res) {
-  console.log('entered update Notification');
   notifications.findOne({_id: req.params.id},function(err, notif){
     if(err){
-      console.log('error');
-      console.log(err);
       res.json(err);
     }
     else {
-      console.log('has an object');
-      console.log(notif);
       notif.isRead=true;
       notif.save();
       res.json(notif);

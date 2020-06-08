@@ -110,6 +110,36 @@ export default class EditProfileAdmin extends Component {
                             </div>
 
                             <div className="input-field col s12">
+                                <input
+                                    onChange={this.onChange}
+                                    value={this.state.password}
+                                    error={errors.password}
+                                    id="password"
+                                    type="password"
+                                    className={classnames("", {
+                                        invalid: errors.password
+                                    })}
+                                />
+                                <label htmlFor="password">Password *</label>
+                                <span className="red-text">{errors.password}</span>
+                            </div>
+
+                            <div className="input-field col s12">
+                                <input
+                                    onChange={this.onChange}
+                                    value={this.state.password2}
+                                    error={errors.password2}
+                                    id="password2"
+                                    type="password"
+                                    className={classnames("", {
+                                        invalid: errors.password2
+                                    })}
+                                />
+                                <label htmlFor="password2">Confirmar Password *</label>
+                                <span className="red-text">{errors.password2}</span>
+                            </div>
+
+                            <div className="input-field col s12">
                                 <label htmlFor="number">Nº Telemóvel *</label><br></br>
                                 <input
                                     onChange={this.onChange}

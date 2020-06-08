@@ -21,10 +21,17 @@ class RegisterCompany extends Component {
             companyName: "",
             companyAddress: "",
             observations: "",
-            authorization: "",
+            authorization: false,
+            listProjects: [],
             errors: {}
         };
     }
+
+    toggleChangeAuthorization = () => {
+        this.setState({
+          authorization: !this.state.authorization,
+        });
+      }
 
     componentDidMount() {
         // If logged in and user navigates to Register page, should redirect them to dashboard
@@ -62,10 +69,9 @@ class RegisterCompany extends Component {
             companyAddress: this.state.companyAddress,
             companyName: this.state.companyName,
             observations: this.state.observations,
-            authorization: true,
+            authorization: this.state.authorization,
+            listProjects: this.state.listProjects
         };
-
-        console.log(newUser);
 
         this.props.registerCompany(newUser, this.props.history);
     };
@@ -74,10 +80,10 @@ class RegisterCompany extends Component {
         const { errors } = this.state;
 
         return (
-            <div className="container" style={{marginTop: "5%"}}>
+            <div className="container" style={{marginTop: "1%"}}>
                 <div className="row">
                     <div className="col s8 offset-s2">
-                        <a href="/" className="btn-flat waves-effect" onClick="window.location.reload()">
+                        <a href="/" className="btn-flat waves-effect">
                             <i className="material-icons left">keyboard_backspace</i>
                             Voltar
                         </a>
@@ -241,7 +247,7 @@ class RegisterCompany extends Component {
                                         invalid: errors.companyAddress
                                     })}
                                 />
-                                <label htmlFor="name">Morada (Concelho) Empresa</label>
+                                <label htmlFor="name">Morada (Concelho) Empresa *</label>
                                 <span className="red-text">{errors.companyAddress}</span>
                             </div>
         
@@ -264,10 +270,10 @@ class RegisterCompany extends Component {
                                 <b>Autorização RGPD *</b>
                                 <label>
                                     <br></br>
-                                    <input type="checkbox" />
+                                    <input type="checkbox" checked={this.state.authorization} onChange={this.toggleChangeAuthorization} />
                                     <span>Consinto, ao abrigo do Regulamento Geral de Proteção de Dados (RGPD), a utilização dos meus dados pessoais, fornecidos no formulário, ficando informado/a do direito a retirar o consentimento a qualquer momento e que o tratamento de dados é da responsabilidade do IPS, sendo-lhe aplicada a Política de Proteção de Dados do IPS.</span>
                                     <br></br>
-                                    <a href="http://www.si.ips.pt/ips_si/web_base.gera_pagina?P_pagina=40723" target="">(Disponível aqui)</a>
+                                    <a href="http://www.si.ips.pt/ips_si/web_base.gera_pagina?P_pagina=40723" rel="noopener noreferrer" target="_blank">(Disponível aqui)</a>
                                 </label>
                             </div>
                         </form>

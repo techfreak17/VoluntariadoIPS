@@ -14,7 +14,8 @@ const VoluntarySchema = new Schema({
     },
     phone: {
         type: Number,
-        required: true
+        required: true,
+        unique: true
     },
     address: {
         type: String,
@@ -53,11 +54,14 @@ const VoluntarySchema = new Schema({
         required: true,
         default: false
     },
+    listProjects: {
+        type: Array,
+        required: false
+    },
     userID: {
         type: Schema.ObjectId,
         ref: 'Users',
 		validate: {
-			isAsync: true,
 			validator: function(v) {
 				return FKHelper(mongoose.model('Users'), v);
 			},

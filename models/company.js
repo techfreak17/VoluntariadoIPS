@@ -43,13 +43,12 @@ const CompanySchema = new Schema({
     },
     listProjects:{
         type: Array,
-        required: true
+        required: false
     },
-    userID: {
+    responsibleID: {
         type: Schema.ObjectId,
         ref: 'Users',
 		validate: {
-			isAsync: true,
 			validator: function(v) {
 				return FKHelper(mongoose.model('Users'), v);
 			},

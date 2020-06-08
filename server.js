@@ -7,6 +7,12 @@ var path = require('path');
 
 const users = require("./routes/api/Users");
 const projects = require("./routes/api/Projects");
+const submitedProjects = require("./routes/api/SubmitedProjects");
+const voluntaries = require("./routes/api/Voluntaries");
+const aaips = require("./routes/api/AAIPS");
+const admin = require("./routes/api/Admin");
+const companies = require("./routes/api/Company");
+const notifications = require("./routes/api/Notifications");
 
 const app = express();
 // Bodyparser middleware
@@ -33,6 +39,7 @@ mongoose
     )
     .then(() => console.log("MongoDB successfully connected"))
     .catch(err => console.log(err));
+mongoose.set('useCreateIndex', true);
 
 // Passport middleware
 app.use(passport.initialize());
@@ -41,8 +48,14 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 
 // Routes
-app.use("/api/users", users);
 app.use("/api/projects", projects);
+app.use("/api/submitedProjects", submitedProjects);
+app.use("/api/users", users);
+app.use("/api/voluntaries", voluntaries);
+app.use("/api/companies", companies);
+app.use("/api/admin", admin);
+app.use("/api/aaips", aaips);
+app.use("/api/notifications",notifications)
 
 const root = path.join(__dirname, "client", "build");
 app.use(express.static(root));

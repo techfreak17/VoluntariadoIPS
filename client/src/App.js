@@ -9,21 +9,16 @@ import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
 import Login from "./components/auth/Login";
 import PrivateRoute from "./components/private-route/PrivateRoute";
-import EntityRoute from "./components/private-route/EntityRoute";
-import AdminRoute from "./components/private-route/AdminRoute";
-import VoluntaryRoute from "./components/private-route/VoluntaryRoute";
 import Dashboard from "./components/dashboard/Dashboard";
 import Create from './components/projects/Create';
 import Edit from './components/projects/Edit';
-import IndexProjects from './components/projects/Index';
+import Index from './components/projects/Index';
 import ProjectDetails from './components/projects/ProjectDetails';
 import Recover from "./components/auth/Recover";
 import RecoverConfirm from "./components/auth/RecoverConfirm";
 import IndexUsers from './components/users/IndexUsers';
-import CreateCompanyUser from './components/users/CreateCompanyUser';
-import CreateVoluntaryUser from './components/users/CreateVoluntaryUser';
-import EditVoluntary from './components/users/EditVoluntary';
-import EditCompany from './components/users/EditCompany';
+import CreateUser from './components/users/CreateUser';
+import EditUser from './components/users/EditUser';
 import UserDetails from './components/users/UserDetails';
 import ConfirmAccount from "./components/auth/ConfirmAccount";
 import ConfirmAccountToken from "./components/auth/ConfirmAccountToken";
@@ -31,19 +26,6 @@ import ResetPassword from "./components/auth/ResetPassword";
 import Menu from "./components/layout/Menu";
 import RegisterVoluntary from "./components/auth/RegisterVoluntary";
 import RegisterCompany from "./components/auth/RegisterCompany";
-import BaseProfile from "./components/profile/BaseProfile" ;
-import EditProfileAdmin from "./components/profile/EditProfileAdmin";
-import EditProfileCompany from "./components/profile/EditProfileCompany";
-import EditProfileVoluntary from "./components/profile/EditProfileVoluntary";
-import IndexSubmitedProjects from "./components/submitedProjects/IndexSubmitedProjects";
-import CreateSubmitedProject from "./components/submitedProjects/CreateSubmitedProject";
-import SubmitedProjectDetails from "./components/submitedProjects/SubmitedProjectDetails";
-import IndexVoluntaryProjects from "./components/voluntaryProjects/IndexVoluntaryProjects";
-import VoluntaryProjectsDetails from "./components/voluntaryProjects/VoluntaryProjectsDetails";
-import IndexCompanyProjects from "./components/companyProjects/IndexCompanyProjects";
-import CompanyProjectsDetails from "./components/companyProjects/CompanyProjectsDetails";
-import IndexSubmitedCompanyProjects from "./components/companyProjects/IndexSubmitedCompanyProjects";
-import CompanySubmitedProjectsDetails from "./components/companyProjects/CompanySubmitedProjectsDetails";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -89,29 +71,14 @@ class App extends Component {
             <Route exact path="/resetpassword/:token" component={ResetPassword} />
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
-              <PrivateRoute path='/listProjects' component={ IndexProjects } />
+              <PrivateRoute exact path='/createProject' component={ Create } />
+              <PrivateRoute path='/editProject/:id' component={ Edit } />
+              <PrivateRoute path='/listProjects' component={ Index } />
+              <PrivateRoute exact path='/createUser' component={ CreateUser } />
+              <PrivateRoute path='/editUser/:id' component={ EditUser } />
               <PrivateRoute path='/getProject/:id' component={ ProjectDetails } />
-              <PrivateRoute path="/baseProfile/:id" component={BaseProfile}/>
-              <PrivateRoute  path="/editProfileAdmin/:id" component={EditProfileAdmin}/>
-              <PrivateRoute  path="/editProfileCompany/:id" component={EditProfileCompany}/>
-              <PrivateRoute  path="/editProfileVoluntary/:id" component={EditProfileVoluntary}/>
               <PrivateRoute path='/getUser/:id' component={ UserDetails } />
-              <AdminRoute exact path='/createCompanyUser' component={ CreateCompanyUser } />
-              <AdminRoute exact path='/createVoluntaryUser' component={ CreateVoluntaryUser } />
-              <AdminRoute exact path='/createProject' component={ Create } />
-              <AdminRoute path='/editProject/:id' component={ Edit } />
-              <AdminRoute path='/editVoluntary/:id' component={ EditVoluntary } />
-              <AdminRoute path='/editCompany/:id' component={ EditCompany } />
-              <AdminRoute path='/listSubmitedProjects' component={ IndexSubmitedProjects } />
-              <AdminRoute path='/getSubmitedProject/:id' component={ SubmitedProjectDetails } />
-              <AdminRoute path='/listUsers' component={ IndexUsers } />
-              <EntityRoute path='/submitProject' component={ CreateSubmitedProject } />
-              <EntityRoute path='/listProjectsCompany' component={ IndexCompanyProjects } />
-              <EntityRoute path='/getCompanyProjects/:id' component={ CompanyProjectsDetails } />
-              <EntityRoute path='/listSubmitedProjectsCompany' component={ IndexSubmitedCompanyProjects } />
-              <EntityRoute path='/getCompanySubmitedProjects/:id' component={ CompanySubmitedProjectsDetails } />
-              <VoluntaryRoute path='/listProjectsVoluntary' component={IndexVoluntaryProjects} />
-              <VoluntaryRoute path='/getVoluntaryProjects/:id' component={VoluntaryProjectsDetails} />
+              <PrivateRoute path='/listUsers' component={ IndexUsers } />
             </Switch>
 
           </div>

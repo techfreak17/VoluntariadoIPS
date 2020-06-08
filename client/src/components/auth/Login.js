@@ -6,7 +6,6 @@ import { loginUser } from "../../actions/authActions";
 import classnames from "classnames";
 
 
-
 class Login extends Component {
     constructor() {
         super();
@@ -14,7 +13,6 @@ class Login extends Component {
             email: "",
             password: "",
             errors: {}
-            
         };
     }
 
@@ -40,10 +38,8 @@ class Login extends Component {
             email: this.state.email,
             password: this.state.password
         };
-
-        
         this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
-      
+        
     };
 
     render() {
@@ -52,7 +48,7 @@ class Login extends Component {
             <div className="container">
                 <div style={{marginTop: "10%"}} className="row">
                     <div className="col s8 offset-s2">
-                        <a href="/" className="btn-flat waves-effect" >
+                        <a href="/" className="btn-flat waves-effect" onClick="window.location.reload(true);">
                             <i className="material-icons left">keyboard_backspace</i>
                             Voltar
                         </a>

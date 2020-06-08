@@ -10,14 +10,14 @@ module.exports = function validateLoginInput(data) {
 
     // Email checks
     if (Validator.isEmpty(data.email)) {
-        errors.email = "Deverá preencher o campo Email";
+        errors.email = "Email field is required";
     } else if (!Validator.isEmail(data.email)) {
-        errors.email = "Email Inválido";
+        errors.email = "Email is invalid";
     }
 
     // Password checks
     if (Validator.isEmpty(data.password)) {
-        errors.password = "Deverá preencher o campo Password";
+        errors.password = "Password field is required";
     }
 
     return {

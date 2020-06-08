@@ -28,12 +28,13 @@ class RecoverConfirm extends Component {
     }
 
     render() {
+
         return (
             <div className="container">
                 <div className="row">
                     <div className="col s8 offset-s2">
 
-                        <a href="/" className="btn-flat waves-effect">
+                        <a href="/" className="btn-flat waves-effect" onClick="window.location.reload(true);">
                             <i className="material-icons left">keyboard_backspace</i>
                             Voltar
                         </a>

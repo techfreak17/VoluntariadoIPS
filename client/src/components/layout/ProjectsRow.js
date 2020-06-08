@@ -5,13 +5,14 @@ class ProjectsRow extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { project: [{ title: "", date: "", synopsis:"" }, { title: "", date: "",synopsis:"" }, { title: "", date: "",synopsis:"" }, { title: "", date: "",synopsis:"" }] };
+        this.state = { project: [{ title: "", date: "", synopsis:"" }, { title: "", date: "",synopsis:"" }, { title: "", date: "",synopsis:"" }] };
     }
 
     componentDidMount() {
         axios.get('/api/projects/listProjects')
             .then(response => {
                 this.myDate = new Date(this.props.obj.date);
+                console.log(this.myDate);
                 this.myDate = this.myDate.toLocaleString();
                 this.setState({ title: response.data.title, date: this.myDate, synopsis: response.data.synopsis });
             })
@@ -26,7 +27,7 @@ class ProjectsRow extends Component {
                 <img src={require("./images/Voluntariado.png")} alt="Unsplashed background img 1" />
                 <div className={this.props.className}>
                     <h2 style={{ fontFamily: "monospace", fontWeight: "bold" }}>{this.props.obj.title}</h2>
-                    <h5><i className="material-icons">access_time</i> {this.state.date}</h5>
+                    <h5><i className="material-icons">access_time</i> {this.props.obj.date}</h5>
                     <h5><i className="material-icons">done</i> {this.props.obj.synopsis}</h5>
                 </div>
             </li>

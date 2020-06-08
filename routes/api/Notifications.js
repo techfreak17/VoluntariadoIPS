@@ -9,7 +9,7 @@ const router = express.Router();
 router.route('/listNotifications/:id').get(function (req, res) {
   const id = req.params.id;
   User.findById(id, function(err,user){
-    notifications.find({email: user.email}, function (err, notif) {
+    notifications.find({email: user.email, isRead: false}, function (err, notif) {
       if (err) {
         console.log(err);
       }
@@ -21,12 +21,27 @@ router.route('/listNotifications/:id').get(function (req, res) {
   
 });
 
-//router.route('/deleteNotif/:id').get(function (req, res) {
-  //notifications.findByIdAndRemove({ _id: req.params.id }, function (err, user) {
-    //if (err) res.json(err);
-    //else res.json('Successfully removed');
-  //});
-//});
+router.route('/listReadNotifications/:id').get(function (req, res) {
+  const id = req.params.id;
+  User.findById(id, function(err,user){
+    notifications.find({email: user.email, isRead: true}, function (err, notif) {
+      if (err) {
+        console.log(err);
+      }
+      else {
+        res.json(notif);
+      }
+    });
+  })
+  
+});
+
+router.route('/deleteNotification/:id').get(function (req, res) {
+  notifications.findByIdAndRemove(req.params.id, function (err, notif) {
+    if (err) res.json(err);
+    else res.json('Successfully removed');
+  });
+});
 
 router.put('/updateNotification/:id').get(function (req, res) {
   notifications.findOne({_id: req.params.id},function(err, notif){

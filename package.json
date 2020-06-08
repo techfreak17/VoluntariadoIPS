@@ -4,9 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "node ./tests/test.js",
     "client-install": "npm install --prefix client",
-    "start": "node server.js",
+    "start": "node client/src/components/pushNotifications/PushNotifications.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
@@ -26,12 +25,16 @@
     "materialize-css": "^1.0.0-rc.2",
     "mongodb": "^3.5.7",
     "mongoose": "^5.9.13",
+    "multer": "^1.4.2",
     "nodemailer": "^2.7.2",
     "nouislider": "^14.5.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
-    "path": "^0.12.7",
+    "react-toastify": "^6.0.5",
+    "styled-components": "^5.1.1",
     "react-bootstrap": "^1.0.1",
+    "react-chips": "^0.8.0",
+    "react-datetime": "^2.16.3",
     "validator": "^13.0.0",
     "vue": "^2.6.11"
   },

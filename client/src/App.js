@@ -31,7 +31,7 @@ import ResetPassword from "./components/auth/ResetPassword";
 import Menu from "./components/layout/Menu";
 import RegisterVoluntary from "./components/auth/RegisterVoluntary";
 import RegisterCompany from "./components/auth/RegisterCompany";
-import BaseProfile from "./components/profile/BaseProfile";
+import BaseProfile from "./components/profile/BaseProfile" ;
 import EditProfileAdmin from "./components/profile/EditProfileAdmin";
 import EditProfileCompany from "./components/profile/EditProfileCompany";
 import EditProfileVoluntary from "./components/profile/EditProfileVoluntary";

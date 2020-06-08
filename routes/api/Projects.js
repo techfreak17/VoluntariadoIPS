@@ -6,6 +6,7 @@ const Project = require("../../models/project");
 const User = require("../../models/user");
 const Company = require("../../models/company");
 const Administrator = require("../../models/administrator");
+const createNotification = require("../../Notifications/pushNotifications");
 
 // Load input validation
 const validateCreateProject = require("../../validation/createProject")

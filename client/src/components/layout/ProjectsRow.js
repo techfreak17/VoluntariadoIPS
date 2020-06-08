@@ -12,7 +12,6 @@ class ProjectsRow extends Component {
         axios.get('/api/projects/listProjects')
             .then(response => {
                 this.myDate = new Date(this.props.obj.date);
-                console.log(this.myDate);
                 this.myDate = this.myDate.toLocaleString();
                 this.setState({ title: response.data.title, date: this.myDate, synopsis: response.data.synopsis });
             })

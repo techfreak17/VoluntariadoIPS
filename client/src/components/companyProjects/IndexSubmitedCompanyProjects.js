@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import CompanySubmitedProjectsTableRow from './CompanySubmitedProjectsTableRow';
+import CompanySubmitedProjectsRow from './CompanySubmitedProjectsRow';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
@@ -36,7 +36,7 @@ class IndexSubmitedCompanyProjects extends Component {
 
     tabRow() {
         return this.state.companySubmitedProjects.map(function (object, i) {
-            return <CompanySubmitedProjectsTableRow obj={object} key={i} />;
+            return <CompanySubmitedProjectsRow obj={object} key={i} />;
         });
     }
 

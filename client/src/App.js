@@ -31,7 +31,7 @@ import ResetPassword from "./components/auth/ResetPassword";
 import Menu from "./components/layout/Menu";
 import RegisterVoluntary from "./components/auth/RegisterVoluntary";
 import RegisterCompany from "./components/auth/RegisterCompany";
-import BaseProfile from "./components/profile/BaseProfile" ;
+import Profile from "./components/profile/Profile" ;
 import EditProfileAdmin from "./components/profile/EditProfileAdmin";
 import EditProfileCompany from "./components/profile/EditProfileCompany";
 import EditProfileVoluntary from "./components/profile/EditProfileVoluntary";
@@ -91,7 +91,7 @@ class App extends Component {
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute path='/listProjects' component={ IndexProjects } />
               <PrivateRoute path='/getProject/:id' component={ ProjectDetails } />
-              <PrivateRoute path="/baseProfile/:id" component={BaseProfile}/>
+              <PrivateRoute path="/baseProfile/:id" component={Profile}/>
               <PrivateRoute  path="/editProfileAdmin/:id" component={EditProfileAdmin}/>
               <PrivateRoute  path="/editProfileCompany/:id" component={EditProfileCompany}/>
               <PrivateRoute  path="/editProfileVoluntary/:id" component={EditProfileVoluntary}/>

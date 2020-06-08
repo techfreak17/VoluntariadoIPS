@@ -118,7 +118,7 @@ export default class Edit extends Component {
     });
 
     return (
-      <div className="container" style={{ marginTop: "5%" }}>
+      <div className="container" >
         <div className="row">
           <div className="col s8 offset-s2">
             <h3 align="left">Editar Detalhes</h3>
@@ -291,10 +291,10 @@ export default class Edit extends Component {
               </div>
             </form>
             <div className="col s12" style={{ marginTop: "1%", paddingBottom: 60 }}>
-              <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "16%" }}
-                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Submeter
+              <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "20%" }}
+                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable accent-3 blue">Editar
               </button>
-              <a style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "16%" }}
+              <a style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "20%" }}
                 href="/listProjects" className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
               </a>
             </div>

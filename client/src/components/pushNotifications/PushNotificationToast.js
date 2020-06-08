@@ -74,11 +74,11 @@ class PushNotificationToast extends React.Component {
 
     render() {
         return (
-            <div>
+            <li>
                 <li><button onClick={this.notify} style={{ backgroundColor: "transparent", color: "white", border: "none" }}><i className="material-icons">email</i></button></li>
                 <li><button onClick={this.notifyRead} style={{ backgroundColor: "transparent", color: "white", border: "none" }}><i className="material-icons">drafts</i></button></li>
                 <ToastContainer autoClose={false} />
-            </div>
+            </li>
         );
     }
 

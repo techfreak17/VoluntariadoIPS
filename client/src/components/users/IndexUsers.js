@@ -58,19 +58,21 @@ export default class IndexUsers extends Component {
           <a href="/dashboard" className="btn-flat waves-effect">
             <i className="material-icons left">keyboard_backspace</i>
                       Voltar
-                    </a> <br></br>
+          </a>
           <Link to="/createVoluntaryUser" className="right btn waves-effect waves-light hoverable"
             style={{
               borderRadius: 5,
               letterSpacing: "1px",
-              backgroundColor: "#23395D"
-            }}> Criar Voluntário</Link> 
-            
+              backgroundColor: "#23395D",
+              marginLeft: 10
+            }}> Criar Voluntário</Link>
+
           <Link to="/createCompanyUser" className="right btn waves-effect waves-light hoverable"
             style={{
               borderRadius: 5,
               letterSpacing: "1px",
-              backgroundColor: "#23395D"
+              backgroundColor: "#23395D",
+              marginRight: 10
             }}> Criar Empresa</Link>
         </p>
         <form onSubmit={this.onSubmit}>

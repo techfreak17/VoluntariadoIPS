@@ -91,14 +91,10 @@ export default class EditProfileCompany extends Component {
         });
 
         return (
-            <div className="container" style={{ marginTop: "5%" }}>
+            <div className="container">
                 <div className="row">
                     <div className="col s8 offset-s2">
-                        <a href={"/baseProfile/" + this.props.match.params.id} className="btn-flat waves-effect">
-                            <i className="material-icons left">keyboard_backspace</i>
-                    Voltar
-                </a>
-
+                        <h3>Editar Detalhes</h3>
                         <form noValidate>
                             <div className="input-field col s12">
                                 <label htmlFor="name">Nome Completo *</label><br></br>
@@ -190,19 +186,13 @@ export default class EditProfileCompany extends Component {
                                 <span className="red-text">{errors.companyAddress}</span>
                             </div>
                         </form>
-                        <div className="col s12" style={{ paddingLeft: "11.250px", paddingBottom: "60px" }}>
-                            <br></br>
-                            <button
-                                style={{
-                                    width: "150px",
-                                    borderRadius: 10,
-                                    letterSpacing: "1.5px",
-                                    marginTop: "1rem"
-                                }}
-                                type="submit"
-                                onClick={this.onSubmit}
-                                className="btn btn-large waves-effect waves-light hoverable blue accent-3">
-                                Editar</button>
+                        <div className="col s12" style={{ marginTop: "1%", paddingBottom: 60 }}>
+                            <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "20%" }}
+                                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Editar
+                            </button>
+                            <a style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "20%" }}
+                                href={"/baseProfile/" + this.props.match.params.id} className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
+                            </a>
                         </div>
                     </div>
                 </div>

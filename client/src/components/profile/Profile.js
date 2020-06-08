@@ -63,10 +63,10 @@ class BaseProfile extends Component {
 
     render() {
         return (
-            <div style={{ paddingBottom: '5%' }}>
+            <div style={{ paddingBottom: 50 }}>
                 <div className='container'>
                     <div className='row'>
-                        <div className='col s4'>
+                        <div className='col s5 center'>
                             <div>
                                 <a className="" href="/dashboard"><img src={require('../layout/images/avatar.jpg')}
                                     alt="Avatar"
@@ -96,14 +96,13 @@ class BaseProfile extends Component {
                                         )
                                     }
                                 })()}
-                               
+
                             </div>
                         </div>
-                        <div className='col s1' />
                         {(() => {
                             if (this.props.auth.user.role === "Voluntário") {
                                 return (
-                                    <div className='col s7'>
+                                    <div className='col s7' style={{ marginTop: 20 }}>
                                         <h5 style={{ fontWeight: 'bold' }}>Nome Completo</h5>
                                         <input readOnly value={this.state.name}></input>
                                         <h5 style={{ fontWeight: 'bold' }}>Email</h5>
@@ -127,7 +126,7 @@ class BaseProfile extends Component {
                         {(() => {
                             if (this.props.auth.user.role === "Empresa") {
                                 return (
-                                    <div className='col s7'>
+                                    <div className='col s7' style={{ marginTop: 20 }}>
                                         <h5 style={{ fontWeight: 'bold' }}>Nome Completo</h5>
                                         <input readOnly value={this.state.name}></input>
                                         <h5 style={{ fontWeight: 'bold' }}>Email</h5>
@@ -149,7 +148,7 @@ class BaseProfile extends Component {
                         {(() => {
                             if (this.props.auth.user.role === "Administrador") {
                                 return (
-                                    <div className='col s7'>
+                                    <div className='col s7' style={{ marginTop: 20 }}>
                                         <h5 style={{ fontWeight: 'bold' }}>Nome Completo</h5>
                                         <input readOnly value={this.state.name}></input>
                                         <h5 style={{ fontWeight: 'bold' }}>Email</h5>

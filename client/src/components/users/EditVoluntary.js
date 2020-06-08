@@ -103,8 +103,8 @@ export default class EditVoluntary extends Component {
     axios
       .post('/api/admin/updateUser/' + this.props.match.params.id, obj)
       .then(res => console.log(res.data));
-      this.props.history.push('/listUsers');
-      window.location.reload();
+    this.props.history.push('/listUsers');
+    window.location.reload();
   }
 
   render() {
@@ -118,14 +118,10 @@ export default class EditVoluntary extends Component {
 
     return (
 
-      <div className="container" style={{ marginTop: "5%" }}>
+      <div className="container">
         <div className="row">
           <div className="col s8 offset-s2">
-            <a href="/listUsers" className="btn-flat waves-effect">
-              <i className="material-icons left">keyboard_backspace</i>
-                            Voltar
-                        </a>
-
+            <h3>Editar Detalhes</h3>
             <form noValidate>
               <div className="input-field col s12">
                 <label htmlFor="name">Username *</label><br></br>
@@ -333,10 +329,13 @@ export default class EditVoluntary extends Component {
               </div>
 
             </form>
-            <div className="col s12" style={{ paddingLeft: "11.250px", paddingBottom: "60px" }}>
-              <br></br>
-              <button style={{ width: "150px", borderRadius: 10, letterSpacing: "1.5px", marginTop: "1rem" }}
-                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3"> Editar</button>
+            <div className="col s12" style={{ marginTop: "1%", paddingBottom: 60 }}>
+              <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "20%" }}
+                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Submeter
+              </button>
+              <a style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "20%" }}
+                href="/listUsers" className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
+              </a>
             </div>
           </div>
         </div>

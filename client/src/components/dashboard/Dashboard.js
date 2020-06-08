@@ -42,8 +42,7 @@ class Dashboard extends Component {
     render() {
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('.slider');
-            var instances = M.Slider.init(elems, options);
-            console.log(instances);
+            M.Slider.init(elems, options);
         });
 
         let titleL = [];
@@ -97,8 +96,7 @@ class Dashboard extends Component {
 }
 document.addEventListener('DOMContentLoaded', function () {
     var elems = document.querySelectorAll('.carousel');
-    var instances = M.Carousel.init(elems, options);
-    console.log(instances);
+    M.Carousel.init(elems, options);
 });
 
 Dashboard.propTypes = {

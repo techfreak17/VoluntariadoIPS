@@ -89,23 +89,19 @@ export default class Edit extends Component {
     };
 
     axios.post('/api/projects/updateProject/' + this.props.match.params.id, obj)
-      .then(res => console.log(res.data));
     this.props.history.push('/listProjects');
     window.location.reload();
   }
 
   handleChangeInterestAreas(event) {
     this.setState({ interestAreas: Array.from(event.target.selectedOptions, (item) => item.value) });
-    console.log(this.state.interestAreas);
   }
 
   onChangeRelatedEntities = e => {
     var input = e.target.value;
     var point = ",";
     var inputList = input.split(point);
-    console.log(inputList);
     this.setState({ [e.target.id]: inputList });
-    console.log(this.state.relatedEntities);
   };
 
   render() {
@@ -113,8 +109,7 @@ export default class Edit extends Component {
 
     document.addEventListener('DOMContentLoaded', function () {
       var elems = document.querySelectorAll('select');
-      var instances = M.FormSelect.init(elems, options);
-      console.log(instances);
+      M.FormSelect.init(elems, options);
     });
 
     return (

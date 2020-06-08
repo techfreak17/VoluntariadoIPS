@@ -36,7 +36,6 @@ class ProjectDetails extends Component {
     ])
       .then(responseArr => {
         this.myDate = new Date(responseArr[0].data.date);
-        console.log(this.myDate);
         this.myDate = this.myDate.toLocaleString();
         this.setState({
           name: responseArr[2].data.name,

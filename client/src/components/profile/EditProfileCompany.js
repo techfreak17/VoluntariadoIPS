@@ -77,7 +77,6 @@ export default class EditProfileCompany extends Component {
             password2: this.state.password2,
         };
         axios.post('/api/users/updateUser/' + this.props.match.params.id, obj)
-            .then(res => console.log(res.data));
         window.location.reload();
     }
 
@@ -86,8 +85,7 @@ export default class EditProfileCompany extends Component {
 
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('select');
-            var instances = M.FormSelect.init(elems, options);
-            console.log(instances);
+            M.FormSelect.init(elems, options);
         });
 
         return (

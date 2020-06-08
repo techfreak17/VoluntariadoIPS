@@ -93,7 +93,6 @@ export default class EditProfileVoluntary extends Component {
     };
     axios
       .post('/api/users/updateUser/' + this.props.match.params.id, obj)
-      .then(res => console.log(res.data));
     window.location.reload();
   }
 
@@ -102,8 +101,7 @@ export default class EditProfileVoluntary extends Component {
 
     document.addEventListener('DOMContentLoaded', function () {
       var elems = document.querySelectorAll('select');
-      var instances = M.FormSelect.init(elems, options);
-      console.log(instances);
+      M.FormSelect.init(elems, options);
     });
 
     return (

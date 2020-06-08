@@ -33,10 +33,7 @@ export default class Edit extends Component {
     ])
       .then(responseArr => {
         this.myDate = new Date(responseArr[0].data.date);
-        console.log(this.myDate);
         this.myDate = this.myDate.toLocaleString();
-        console.log(this.myDate);
-        console.log(responseArr[0].data);
         this.setState({
           name: responseArr[2].data.name,
           email: responseArr[2].data.email,
@@ -54,8 +51,6 @@ export default class Edit extends Component {
           role: responseArr[1].data.role,
         });
         var ul = document.getElementById("friendsList");
-
-        console.log(this.state.interestAreas);
 
         for (var i = 0; i < this.state.interestAreas.length; i++) {
           var name = this.state.interestAreas[i];

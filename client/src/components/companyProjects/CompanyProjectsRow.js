@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 
-class CompanyProjectsTableRow extends Component {
+class CompanyProjectsRow extends Component {
 
   constructor(props) {
     super(props);
@@ -16,7 +16,6 @@ class CompanyProjectsTableRow extends Component {
 
   removeProject() {
     axios.get('/api/projects/deleteProject/' + this.props.obj._id)
-      .then(console.log('Deleted'))
       .catch(err => console.log(err))
     window.location.reload();
   }
@@ -42,7 +41,7 @@ class CompanyProjectsTableRow extends Component {
   }
 }
 
-CompanyProjectsTableRow.propTypes = {
+CompanyProjectsRow.propTypes = {
   auth: PropTypes.object.isRequired
 };
 
@@ -53,4 +52,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { logoutUser }
-)(CompanyProjectsTableRow);
+)(CompanyProjectsRow);

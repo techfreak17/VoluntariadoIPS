@@ -30,7 +30,6 @@ export default class Edit extends Component {
       .then(responseArr => {
         this.myDate = new Date(responseArr[0].data.birthDate);
         this.myDate = this.myDate.toLocaleDateString();
-        console.log(responseArr[0].data);
         this.setState({
           name: responseArr[0].data.name,
           email: responseArr[0].data.email,

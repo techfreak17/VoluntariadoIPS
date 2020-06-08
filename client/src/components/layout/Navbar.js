@@ -18,7 +18,7 @@ class Navbar extends Component {
         e.preventDefault();
         this.props.logoutUser();
     };
- 
+
 
 
     componentDidMount() {
@@ -45,16 +45,16 @@ class Navbar extends Component {
                         backgroundColor: "#23395D",
                         zIndex: "10"
                     }}>
-                        <div className="nav-wrapper">
-                            <ul id="nav-mobile" className="right"> 
+                        <div className="nav-wrapper">                      
+                            <ul id="nav-mobile" className="right">
                                 <li><a className="navbar-brand" href="/dashboard"><img src={require('./images/logo.png')}
                                     alt="(Não esquecer de verificar no spam)"
                                     className="img-responsive"
                                     style={{ position: "absolute", left: 0, height: "auto", width: "auto", maxWidth: 200 }} /></a></li>
-                                <PushNotificationsToast></PushNotificationsToast>   
-                                <li><a href={"/baseProfile/"+this.state.id}><i className="material-icons left">person</i>{this.state.username}</a></li>
+                                <li><a href={"/baseProfile/" + this.state.id}><i className="material-icons left">person</i>{this.state.username}</a></li>
                                 <li><button onClick={this.onLogoutClick} className="red btn" style={{ borderRadius: 10, marginLeft: 12, marginBottom: 5 }}>Sair</button></li>
                             </ul>
+                            <PushNotificationsToast></PushNotificationsToast>
                         </div>
                     </nav>
                 ) : (

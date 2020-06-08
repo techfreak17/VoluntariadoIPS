@@ -22,6 +22,7 @@ class RegisterCompany extends Component {
             companyAddress: "",
             observations: "",
             authorization: false,
+            listProjects: [],
             errors: {}
         };
     }
@@ -69,6 +70,7 @@ class RegisterCompany extends Component {
             companyName: this.state.companyName,
             observations: this.state.observations,
             authorization: this.state.authorization,
+            listProjects: this.state.listProjects
         };
 
         this.props.registerCompany(newUser, this.props.history);
@@ -245,7 +247,7 @@ class RegisterCompany extends Component {
                                         invalid: errors.companyAddress
                                     })}
                                 />
-                                <label htmlFor="name">Morada (Concelho) Empresa</label>
+                                <label htmlFor="name">Morada (Concelho) Empresa *</label>
                                 <span className="red-text">{errors.companyAddress}</span>
                             </div>
         

@@ -13,14 +13,17 @@ class CreateCompanyUser extends Component {
             password: "",
             password2: "",
             username: "",
-            name: "",
             role: "Empresa",
+            name: "",
             phone: "",
             address: "",
             birthDate: "",
             companyName: "",
             companyAddress: "",
             observations: "",
+            authorization: true,
+            listProjects: [],
+            isVerified: true,
             errors: {}
         };
     }
@@ -54,6 +57,8 @@ class CreateCompanyUser extends Component {
             companyName: this.state.companyName,
             observations: this.state.observations,
             authorization: this.state.authorization,
+            listProjects: this.state.listProjects,
+            isVerified: this.state.isVerified
         };
 
         this.props.createCompany(newUser, this.props.history);
@@ -63,18 +68,11 @@ class CreateCompanyUser extends Component {
         const { errors } = this.state;
 
         return (
-            <div className="container" style={{marginTop: "5%"}}>
+            <div className="container">
                 <div className="row">
                     <div className="col s8 offset-s2">
-                        <a href="/listUsers" className="btn-flat waves-effect">
-                            <i className="material-icons left">keyboard_backspace</i>
-                            Voltar
-                        </a>
-
-                        <div className="col s12" style={{ paddingLeft: "11.250px"}}>
-                            <h4>
-                                <b>Criar Empresa</b>
-                            </h4>
+                        <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+                            <h3>Criar Empresa</h3>
                         </div>
 
                         <form noValidate>
@@ -227,7 +225,7 @@ class CreateCompanyUser extends Component {
                                 <label htmlFor="name">Morada (Concelho) Empresa</label>
                                 <span className="red-text">{errors.companyAddress}</span>
                             </div>
-        
+
                             <div className="input-field col s12">
                                 <input
                                     onChange={this.onChange}
@@ -244,21 +242,14 @@ class CreateCompanyUser extends Component {
                             </div>
 
                         </form>
-                            <div className="col s12" style={{ paddingLeft: "11.250px", paddingBottom: "60px" }}>
-                                <br></br>
-                                <button
-                                    style={{
-                                        width: "150px",
-                                        borderRadius: 10,
-                                        letterSpacing: "1.5px",
-                                        marginTop: "1rem"
-                                    }}
-                                    type="submit"
-                                    onClick={this.onSubmit}
-                                    className="btn btn-large waves-effect waves-light hoverable blue accent-3">
-                                    Criar
-                                </button>
-                            </div>
+                        <div className="col s12" style={{ marginTop: "1%", paddingBottom: 60 }}>
+                            <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "20%" }}
+                                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Criar
+                            </button>
+                            <a style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "20%" }}
+                                href="/listUsers" className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

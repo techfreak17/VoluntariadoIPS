@@ -25,6 +25,9 @@ class CreateVoluntaryUser extends Component {
             interestAreas: [],
             reasons: [],
             observations: "",
+            isVerified: true,
+            authorization: true,
+            listProjects: [],
             errors: {}
         };
 
@@ -82,6 +85,9 @@ class CreateVoluntaryUser extends Component {
             interestAreas: this.state.interestAreas,
             reasons: this.state.reasons,
             observations: this.state.observations,
+            isVerified: this.state.isVerified,
+            authorization: this.state.authorization,
+            listProjects: this.state.listProjects
         };
 
         this.props.createVoluntary(newUser, this.props.history);
@@ -99,18 +105,11 @@ class CreateVoluntaryUser extends Component {
         });
 
         return (
-            <div className="container" style={{ marginTop: "5%" }}>
+            <div className="container">
                 <div className="row">
                     <div className="col s8 offset-s2">
-                        <a href="/listUsers" className="btn-flat waves-effect">
-                            <i className="material-icons left">keyboard_backspace</i>
-                            Voltar
-                        </a>
-
                         <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                            <h4>
-                                <b>Criar Voluntário</b>
-                            </h4>
+                            <h3>Criar Voluntário</h3>
                         </div>
 
                         <form noValidate>
@@ -240,7 +239,11 @@ class CreateVoluntaryUser extends Component {
                                     value={this.state.memberIPS}
                                     error={errors.memberIPS}
                                     id="memberIPS"
-                                    type="text">
+                                    type="text"
+                                    className={classnames("", {
+                                        invalid: errors.memberIPS
+                                    })}>
+                                    <option value="" disabled>Selecionar Opção</option>
                                     <option value="Estudante">Estudante</option>
                                     <option value="Diplomado">Diplomado</option>
                                     <option value="Docente">Docente</option>
@@ -257,7 +260,11 @@ class CreateVoluntaryUser extends Component {
                                     value={this.state.schoolIPS}
                                     error={errors.schoolIPS}
                                     id="schoolIPS"
-                                    type="text">
+                                    type="text"
+                                    className={classnames("", {
+                                        invalid: errors.schoolIPS
+                                    })}>
+                                    <option value="" disabled>Selecionar Opção</option>
                                     <option value="EST-Setúbal">Escola Superior de Tecnologia de Setúbal</option>
                                     <option value="ESE">Escola Superior de Educação</option>
                                     <option value="ESCE">Escola Superior de Ciências Empresariais</option>
@@ -285,8 +292,11 @@ class CreateVoluntaryUser extends Component {
                             <div className="input-field col s12">
                                 <label>Áreas Interesse *</label><br></br>
                                 <select multiple={true} value={this.state.interestAreas} onChange={this.handleChangeInterestAreas}
-                                    error={errors.interestAreas}>
-                                    <option disabled>Selecionar Opções</option>
+                                    error={errors.interestAreas}
+                                    className={classnames("", {
+                                        invalid: errors.interestAreas
+                                    })}>
+                                    <option value="" disabled>Selecionar Opções</option>
                                     <option value="Atividades Académicas">Atividades Académicas (por ex. apoio às matrículas…)</option>
                                     <option value="Ambiental">Ambiental (por ex. ações de sensibilização, de limpeza…</option>
                                     <option value="Apoio a Eventos">Apoio a Eventos</option>
@@ -304,8 +314,11 @@ class CreateVoluntaryUser extends Component {
                             <div className="input-field col s12">
                                 <label>Razões para querer ser voluntário *</label><br></br>
                                 <select multiple={true} value={this.state.reasons} onChange={this.handleChangeReasons}
-                                    error={errors.reasons}>
-                                    <option disabled>Selecionar Opções</option>
+                                    error={errors.reasons}
+                                    className={classnames("", {
+                                        invalid: errors.reasons
+                                    })}>
+                                    <option value="" disabled>Selecionar Opções</option>
                                     <option value="Convívio Social">Pelo convívio social</option>
                                     <option value="Futuro Profissional">Porque pode ser vantajoso para o futuro profissional</option>
                                     <option value="Integração Social">Pela possibilidade de integração social</option>
@@ -336,20 +349,13 @@ class CreateVoluntaryUser extends Component {
                             </div>
 
                         </form>
-                        <div className="col s12" style={{ paddingLeft: "11.250px", paddingBottom: "60px" }}>
-                            <br></br>
-                            <button
-                                style={{
-                                    width: "150px",
-                                    borderRadius: 10,
-                                    letterSpacing: "1.5px",
-                                    marginTop: "1rem"
-                                }}
-                                type="submit"
-                                onClick={this.onSubmit}
-                                className="btn btn-large waves-effect waves-light hoverable blue accent-3">
-                                Criar
-                                </button>
+                        <div className="col s12" style={{ marginTop: "1%", paddingBottom: 60 }}>
+                            <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "20%" }}
+                                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Editar
+                            </button>
+                            <a style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "20%" }}
+                                href="/listUsers" className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
+                            </a>
                         </div>
                     </div>
                 </div>

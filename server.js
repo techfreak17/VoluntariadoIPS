@@ -11,6 +11,7 @@ const voluntaries = require("./routes/api/Voluntaries");
 const aaips = require("./routes/api/AAIPS");
 const admin = require("./routes/api/Admin");
 const companies = require("./routes/api/Company");
+const notifications = require("./routes/api/Notifications");
 
 const app = express();
 // Bodyparser middleware
@@ -36,6 +37,7 @@ mongoose
     )
     .then(() => console.log("MongoDB successfully connected"))
     .catch(err => console.log(err));
+mongoose.set('useCreateIndex', true);
 
 // Passport middleware
 app.use(passport.initialize());
@@ -46,14 +48,12 @@ require("./config/passport")(passport);
 // Routes
 app.use("/api/projects", projects);
 app.use("/api/submitedProjects", submitedProjects);
-
 app.use("/api/users", users);
-
 app.use("/api/voluntaries", voluntaries);
 app.use("/api/companies", companies);
 app.use("/api/admin", admin);
 app.use("/api/aaips", aaips);
-
+app.use("/api/notifications",notifications)
 
 const port = process.env.PORT || 5000; // process.env.port is Heroku's port if you choose to deploy the app there
 var server = app.listen(port, () => console.log(`Server up and running on port ${port} !`));

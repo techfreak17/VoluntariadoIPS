@@ -27,25 +27,25 @@ class TableRowUsers extends Component {
           {this.props.obj.role}
         </td>
         <td>
-          <Link to={"/getUser/" + this.props.obj._id} className="btn btn-primary" style={{ width: "15%", backgroundColor: "#D6E6F2", color: "black" }}><i className="material-icons">search</i></Link>
+          <Link to={"/getUser/" + this.props.obj._id} className="btn btn-primary" style={{ width: "auto", backgroundColor: "#D6E6F2", color: "black" }}><i className="material-icons">search</i></Link>
           {(() => {
             if (this.props.obj.role === "Voluntário") {
               return (
-                <Link to={"/editVoluntary/" + this.props.obj._id} className="btn btn-primary" style={{ width: "15%", backgroundColor: "lightGrey", color: "black", marginLeft: 40 }}><i className="material-icons">edit</i></Link>
+                <Link to={"/editVoluntary/" + this.props.obj._id} className="btn btn-primary" style={{ width: "auto", backgroundColor: "lightGrey", color: "black", marginLeft: 40 }}><i className="material-icons">edit</i></Link>
               )
             }
           })()}
           {(() => {
             if (this.props.obj.role === "Empresa") {
               return (
-                <Link to={"/editCompany/" + this.props.obj._id} className="btn btn-primary" style={{ width: "15%", backgroundColor: "lightGrey", color: "black", marginLeft: 40 }}><i className="material-icons">edit</i></Link>
+                <Link to={"/editCompany/" + this.props.obj._id} className="btn btn-primary" style={{ width: "auto", backgroundColor: "lightGrey", color: "black", marginLeft: 40 }}><i className="material-icons">edit</i></Link>
               )
             }
           })()}
           {(() => {
             if (this.props.obj.role !== "Administrador") {
               return (
-                <button onClick={this.delete} className="btn btn-danger" style={{ width: "15%", backgroundColor: "red", color: "black", marginLeft: 40 }}><i className="material-icons">delete</i></button>
+                <button onClick={this.delete} className="btn btn-danger" style={{ width: "auto", backgroundColor: "red", color: "black", marginLeft: 40 }}><i className="material-icons">delete</i></button>
               )
             }
           })()}

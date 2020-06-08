@@ -27,6 +27,7 @@ class RegisterVoluntary extends Component {
             reasons: [],
             observations: "",
             authorization: false,
+            listProjects: [],
             errors: {}
         };
         this.handleChangeInterestAreas = this.handleChangeInterestAreas.bind(this);
@@ -74,7 +75,6 @@ class RegisterVoluntary extends Component {
         this.setState({ reasons: Array.from(event.target.selectedOptions, (item) => item.value) });
     }
 
-
     onSubmit = e => {
         e.preventDefault();
 
@@ -95,6 +95,7 @@ class RegisterVoluntary extends Component {
             reasons: this.state.reasons,
             observations: this.state.observations,
             authorization: this.state.authorization,
+            listProjects: this.state.listProjects
         };
 
         this.props.registerVoluntary(newUser, this.props.history);
@@ -253,11 +254,15 @@ class RegisterVoluntary extends Component {
 
                             <div className="input-field col s12">
                                 <label htmlFor="name">Membro da Comunidade IPS *</label><br></br>
-                                <select onChange={this.onChange}
+                                <select required onChange={this.onChange}
                                     value={this.state.memberIPS}
                                     error={errors.memberIPS}
                                     id="memberIPS"
-                                    type="text">
+                                    type="text"
+                                    className={classnames("", {
+                                        invalid: errors.memberIPS
+                                    })}>
+                                    <option value="" disabled>Selecionar Opção</option>
                                     <option value="Estudante">Estudante</option>
                                     <option value="Diplomado">Diplomado</option>
                                     <option value="Docente">Docente</option>
@@ -270,11 +275,15 @@ class RegisterVoluntary extends Component {
 
                             <div className="input-field col s12">
                                 <label htmlFor="name">Escola/Serviço *</label><br></br>
-                                <select onChange={this.onChange}
+                                <select required onChange={this.onChange}
                                     value={this.state.schoolIPS}
                                     error={errors.schoolIPS}
                                     id="schoolIPS"
-                                    type="text">
+                                    type="text"
+                                    className={classnames("", {
+                                        invalid: errors.schoolIPS
+                                    })}>
+                                    <option value="" disabled>Selecionar Opção</option>
                                     <option value="EST-Setúbal">Escola Superior de Tecnologia de Setúbal</option>
                                     <option value="ESE">Escola Superior de Educação</option>
                                     <option value="ESCE">Escola Superior de Ciências Empresariais</option>
@@ -301,9 +310,12 @@ class RegisterVoluntary extends Component {
 
                             <div className="input-field col s12">
                                 <label>Áreas Interesse *</label><br></br>
-                                <select multiple={true} value={this.state.interestAreas} onChange={this.handleChangeInterestAreas}
-                                    error={errors.interestAreas}>
-                                    <option disabled>Selecionar Opções</option>
+                                <select required multiple={true} value={this.state.interestAreas} onChange={this.handleChangeInterestAreas}
+                                    error={errors.interestAreas}
+                                    className={classnames("", {
+                                        invalid: errors.interestAreas
+                                    })}>
+                                    <option value="" disabled>Selecionar Opções</option>
                                     <option value="Atividades Académicas">Atividades Académicas (por ex. apoio às matrículas…)</option>
                                     <option value="Ambiental">Ambiental (por ex. ações de sensibilização, de limpeza…</option>
                                     <option value="Apoio a Eventos">Apoio a Eventos</option>
@@ -319,10 +331,13 @@ class RegisterVoluntary extends Component {
                             </div>
 
                             <div className="input-field col s12">
-                                <label>Razões para querer ser voluntário *</label><br></br>
-                                <select multiple={true} value={this.state.reasons} onChange={this.handleChangeReasons}
-                                    error={errors.reasons}>
-                                    <option disabled>Selecionar Opções</option>
+                                <label>Razões Para Querer Ser Voluntário *</label><br></br>
+                                <select required multiple={true} value={this.state.reasons} onChange={this.handleChangeReasons}
+                                    error={errors.reasons}
+                                    className={classnames("", {
+                                        invalid: errors.reasons
+                                    })}>
+                                    <option value="" disabled>Selecionar Opções</option>
                                     <option value="Convívio Social">Pelo convívio social</option>
                                     <option value="Futuro Profissional">Porque pode ser vantajoso para o futuro profissional</option>
                                     <option value="Integração Social">Pela possibilidade de integração social</option>

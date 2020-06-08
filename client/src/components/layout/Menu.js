@@ -35,6 +35,27 @@ class Menu extends Component {
                                         )
                                     }
                                 })()}
+                                {(() => {
+                                    if (this.props.auth.user.role === "Voluntário") {
+                                        return (
+                                            <li><a href="/listProjectsVoluntary">Meus Projetos</a></li>
+                                        )
+                                    }
+                                })()}
+                                {(() => {
+                                    if (this.props.auth.user.role === "Empresa") {
+                                        return (
+                                            <li><a href="/listProjectsCompany">Meus Projetos Aprovados</a></li>
+                                        )
+                                    }
+                                })()}
+                                {(() => {
+                                    if (this.props.auth.user.role === "Empresa") {
+                                        return (
+                                            <li><a href="/listSubmitedProjectsCompany">Meus Projetos Submetidos</a></li>
+                                        )
+                                    }
+                                })()}
                                 <li><a href="..."> </a></li>
                             </ul>
                         </div>

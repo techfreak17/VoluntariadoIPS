@@ -43,7 +43,7 @@ const CompanySchema = new Schema({
     },
     listProjects:{
         type: Array,
-        required: true
+        required: false
     },
     responsibleID: {
         type: Schema.ObjectId,

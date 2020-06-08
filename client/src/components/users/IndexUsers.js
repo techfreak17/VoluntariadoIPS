@@ -58,23 +58,25 @@ export default class IndexUsers extends Component {
           <a href="/dashboard" className="btn-flat waves-effect">
             <i className="material-icons left">keyboard_backspace</i>
                       Voltar
-                    </a> <br></br>
+          </a>
           <Link to="/createVoluntaryUser" className="right btn waves-effect waves-light hoverable"
             style={{
               borderRadius: 5,
               letterSpacing: "1px",
-              backgroundColor: "#23395D"
-            }}> Criar Voluntário</Link> 
-            
+              backgroundColor: "#23395D",
+              marginLeft: 10
+            }}> Criar Voluntário</Link>
+
           <Link to="/createCompanyUser" className="right btn waves-effect waves-light hoverable"
             style={{
               borderRadius: 5,
               letterSpacing: "1px",
-              backgroundColor: "#23395D"
+              backgroundColor: "#23395D",
+              marginRight: 10
             }}> Criar Empresa</Link>
         </p>
         <form onSubmit={this.onSubmit}>
-          <input id="myInput" type="text" placeholder="Pesquisar..." name="search" onChange={this.onChangeSearch} style={{ borderBottom: "3px solid #23395D" }}></input>
+          <input id="myInput" type="text" placeholder="Pesquisar por username ..." name="search" onChange={this.onChangeSearch} style={{ borderBottom: "3px solid #23395D" }}></input>
           <button type="submit" className="btn waves-effect waves-light hoverable" style={{ backgroundColor: "#DDDDDD", color: "black", height: 35 }}>Pesquisar</button>
         </form>
         <table className="table table-striped" style={{ marginTop: 20 }}>

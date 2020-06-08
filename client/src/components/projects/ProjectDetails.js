@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
 
 
-export default class ProjectDetails extends Component {
+class ProjectDetails extends Component {
   constructor(props) {
     super(props);
 
@@ -67,21 +70,31 @@ export default class ProjectDetails extends Component {
     return (
       <div>
         <div className="card" style={{ backgroundColor: "#FEF4E8", width: 900, margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px black" }}>
-
           <div className="card-header center" style={{ overflow: "hidden", height: 400, width: "100%" }}>
             <h2><b>{this.state.title}</b></h2>
             <img src={require('../layout/images/image.jpg')} alt="(Não esquecer de verificar no spam)" className="img-responsive" style={{ width: "90%" }} />
           </div>
-
           <div className="card-content" style={{ paddingLeft: 50 }}>
-
             <div className="right" style={{ paddingRight: 25 }}>
               <h5><b>Contactos do Responsável:</b></h5>
               <p style={{ display: "flex", alignItems: "center" }}><i className="material-icons" style={{ paddingRight: 5 }}>person</i>{this.state.name}</p>
               <p style={{ display: "flex", alignItems: "center" }}><i className="material-icons" style={{ paddingRight: 6 }}>email</i>{this.state.email}</p>
               <p style={{ display: "flex", alignItems: "center" }}><i className="material-icons" style={{ paddingRight: 6 }}>phone</i>{this.state.phone}</p>
+              {(() => {
+                if (this.state.role === "Empresa") {
+                  return (
+                    <p style={{ display: "flex", alignItems: "center" }}><i className="material-icons" style={{ paddingRight: 6 }}>business</i>{this.state.companyName}</p>
+                  )
+                }
+              })()}
+              {(() => {
+                if (this.state.role === "Empresa") {
+                  return (
+                    <p style={{ display: "flex", alignItems: "center" }}><i className="material-icons" style={{ paddingRight: 6 }}>navigation</i>{this.state.companyAddress}</p>
+                  )
+                }
+              })()}
             </div>
-
             <div>
               <h5><b>Detalhes do Projeto:</b></h5>
               <p style={{ display: "flex", alignItems: "center" }}><i className="material-icons" style={{ paddingRight: 5 }}>access_time</i>{this.myDate}</p>
@@ -93,7 +106,6 @@ export default class ProjectDetails extends Component {
               <p><b>Observações:</b> {this.state.observations}</p>
               <ul id="friendsList"><b>Áreas:</b></ul>
             </div>
-
             <Link to="/listProjects" style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold", }}
               className="btn btn-large waves-effect waves-light hoverable black center">Voltar</Link>
           </div>
@@ -102,3 +114,17 @@ export default class ProjectDetails extends Component {
     );
   }
 }
+
+ProjectDetails.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(ProjectDetails);

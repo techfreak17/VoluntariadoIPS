@@ -1,15 +1,27 @@
 const express = require("express");
 const router = express.Router();
-const multer = require('multer');
+
 
 const Project = require("../../models/project");
 const User = require("../../models/user");
 const Company = require("../../models/company");
+const Administrator = require("../../models/administrator");
+const createNotification = require("../../Notifications/pushNotifications");
+
+// Load input validation
+const validateCreateProject = require("../../validation/createProject")
 
 // @route POST api/projects/createProject
 // @desc Create Project - Administrator
 // @access Private
 router.post("/createProject", (req, res) => {
+  // Form validation
+  const { errors, isValid } = validateCreateProject(req.body);
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   Project.findOne({ title: req.body.title }).then(project => {
     if (project) {
       return res.status(400).json({ title: "Project already exists" });
@@ -30,6 +42,7 @@ router.post("/createProject", (req, res) => {
         requiredFormation: req.body.requiredFormation,
         formation: req.body.formation
       });
+      createNotification('novoProjecto',req.body.title,'admin@teste.pt');
       newProject
         .save()
         .then(project => res.json(project))
@@ -52,6 +65,14 @@ router.route('/editProject/:id').get(function (req, res) {
 // @desc Update Project - Administrator
 // @access Private
 router.route('/updateProject/:id').post(function (req, res) {
+  // Form validation
+  const { errors, isValid } = validateCreateProject(req.body);
+  console.log(errors);
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   Project.findById(req.params.id, function (err, project) {
     if (!project)
       res.status(404).send("data is not found");
@@ -83,6 +104,7 @@ router.route('/updateProject/:id').post(function (req, res) {
         .catch(err => {
           res.status(400).send("unable to update the database");
         });
+        createNotification('projectoEditado',project.title,'admin@teste.pt');
     }
   });
 });
@@ -92,8 +114,13 @@ router.route('/updateProject/:id').post(function (req, res) {
 // @access Private
 router.route('/deleteProject/:id').get(function (req, res) {
   Project.findByIdAndRemove({ _id: req.params.id }, function (err, project) {
-    if (err) res.json(err);
-    else res.json('Successfully removed');
+    if (err){
+      res.json(err);
+    }
+    else {
+      createNotification('projectoRemovido',project.title,'admin@teste.pt');
+      res.json('Successfully removed');
+    }
   });
 });
 
@@ -154,14 +181,44 @@ router.route('/getProjectUserDetails/:id').get(function (req, res) {
   let id = req.params.id;
   Project.findById(id, function (err, project) {
     let newId = project.responsibleID;
-    Company.findOne({ responsibleID: newId }).then(company => {
-      if (company) {
-        res.json(company);
-      } else {
-        return res.status(400).json({ email: "Such data doesn´t exist" });
-      };
+    User.findOne({ _id: newId }).then(user => {
+      if (user.role === "Empresa") {
+        Company.findOne({ responsibleID: newId }).then(company => {
+          if (company) {
+            res.json(company);
+          } else {
+            return res.status(400).json({ company: "Such data doesn´t exist" });
+          };
+        })
+      } else if (user.role === "Administrador") { 
+        Administrator.findOne().then(admin => {
+          if (admin) {
+            res.json(admin);
+          } else {
+            return res.status(400).json({ admin: "Such data doesn´t exist" });
+          };
+        })
+
+      }
     })
+  });
 });
+
+// @route POST api/project/joinProject/:id
+// @desc Join Project
+// @access Private
+router.route('/joinProject/:id').post(function (req, res) {
+  console.log(req);
+  /*let id = req.params.id;
+  User.findById(id, function (err, user) {
+      Voluntary.findOne({ userID: user._id }).then(voluntary => {
+          if (voluntary) {
+              res.json(voluntary);
+          } else {
+              return res.status(400).json({ user: "Such data doesn´t exist" });
+          };
+      })
+  });*/
 });
 
 module.exports = router;

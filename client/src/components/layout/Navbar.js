@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import axios from 'axios';
+import PushNotificationsToast from "../pushNotifications/PushNotificationToast.js"
 
 class Navbar extends Component {
     constructor(props) {
@@ -17,6 +18,7 @@ class Navbar extends Component {
         e.preventDefault();
         this.props.logoutUser();
     };
+ 
 
 
     componentDidMount() {
@@ -44,13 +46,13 @@ class Navbar extends Component {
                         zIndex: "10"
                     }}>
                         <div className="nav-wrapper">
-                            <ul id="nav-mobile" className="right">
+                            <ul id="nav-mobile" className="right"> 
                                 <li><a className="navbar-brand" href="/dashboard"><img src={require('./images/logo.png')}
                                     alt="(Não esquecer de verificar no spam)"
                                     className="img-responsive"
                                     style={{ position: "absolute", left: 0, height: "auto", width: "auto", maxWidth: 200 }} /></a></li>
-                                <li><a href="/listNotifications"><i className="material-icons">notifications</i></a></li>
-                                <li><a href="/listUsers"><i className="material-icons left">person</i>{this.state.username}</a></li>
+                                <PushNotificationsToast></PushNotificationsToast>   
+                                <li><a href={"/baseProfile/"+this.state.id}><i className="material-icons left">person</i>{this.state.username}</a></li>
                                 <li><button onClick={this.onLogoutClick} className="red btn" style={{ borderRadius: 10, marginLeft: 12, marginBottom: 5 }}>Sair</button></li>
                             </ul>
                         </div>
@@ -91,3 +93,8 @@ export default connect(
     mapStateToProps,
     { logoutUser }
 )(Navbar);
+
+
+
+
+//<li><PushNotifications><i className="material-icons">notifications</i></PushNotifications></li>

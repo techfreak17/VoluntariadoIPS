@@ -14,7 +14,8 @@ const VoluntarySchema = new Schema({
     },
     phone: {
         type: Number,
-        required: true
+        required: true,
+        unique: true
     },
     address: {
         type: String,
@@ -52,6 +53,10 @@ const VoluntarySchema = new Schema({
         type: Boolean,
         required: true,
         default: false
+    },
+    listProjects: {
+        type: Array,
+        required: false
     },
     userID: {
         type: Schema.ObjectId,

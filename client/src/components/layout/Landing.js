@@ -10,7 +10,7 @@ import ProjectsRow from "./ProjectsRow"
 class Landing extends Component {
     constructor(props) {
         super(props);
-        this.state = { project: [{ title: "", date: "", synopsis: "" }, { title: "", date: "", synopsis: "" }, { title: "", date: "", synopsis: "" }, { title: "", date: "", synopsis: "" }] };
+        this.state = { project: [{ title: "", date: "", synopsis: "" }, { title: "", date: "", synopsis: "" }, { title: "", date: "", synopsis: "" }] };
     }
 
     componentDidMount() {

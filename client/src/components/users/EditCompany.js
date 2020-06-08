@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import M from "materialize-css";
 import options from "materialize-css";
+import classnames from "classnames";
 
-export default class EditVoluntary extends Component {
+export default class EditCompany extends Component {
     constructor(props) {
         super(props);
 
@@ -17,7 +18,8 @@ export default class EditVoluntary extends Component {
             role: "",
             observations: "",
             username: "",
-            birthDate: ""
+            birthDate: "",
+            errors: {}
         }
 
         this.onChange = this.onChange.bind(this);
@@ -42,10 +44,10 @@ export default class EditVoluntary extends Component {
             .then(responseArr => {
                 var date = new Date(responseArr[0].data.birthDate);
                 var year = date.getFullYear();
-                var month = date.getMonth();
+                var month = date.getMonth() + 1;
                 var d = date.getDate();
                 var mm = month < 10 ? '0' + month : month;
-                var dd = d < 10 ? '0' +  d: d;
+                var dd = d < 10 ? '0' + d : d;
                 date = '' + year + "-" + mm + "-" + dd;
                 this.setState({
                     name: responseArr[0].data.name,
@@ -96,6 +98,8 @@ export default class EditVoluntary extends Component {
     }
 
     render() {
+        const { errors } = this.state;
+
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('select');
             var instances = M.FormSelect.init(elems, options);
@@ -103,73 +107,69 @@ export default class EditVoluntary extends Component {
         });
 
         return (
-            <div className="container" style={{ marginTop: "5%" }}>
+            <div className="container">
                 <div className="row">
                     <div className="col s8 offset-s2">
-                        <a href="/listUsers" className="btn-flat waves-effect">
-                            <i className="material-icons left">keyboard_backspace</i>
-                    Voltar
-                </a>
-
+                        <h3 align="left">Editar Detalhes</h3>
                         <form noValidate>
                             <div className="input-field col s12">
-                                <label htmlFor="name">Username</label><br></br>
+                                <label htmlFor="name">Username *</label><br></br>
                                 <input
                                     onChange={this.onChange}
                                     value={this.state.username}
                                     id="username"
                                     type="text"
+                                    error={errors.username}
+                                    className={classnames("", {
+                                        invalid: errors.username
+                                    })}
                                 />
+                                <span className="red-text">{errors.username}</span>
                             </div>
 
                             <div className="input-field col s12">
-                                <label htmlFor="email">Email</label><br></br>
+                                <label htmlFor="email">Email *</label><br></br>
                                 <input
                                     onChange={this.onChange}
                                     value={this.state.email}
                                     id="email"
                                     type="email"
+                                    error={errors.email}
+                                    className={classnames("", {
+                                        invalid: errors.email
+                                    })}
                                 />
+                                <span className="red-text">{errors.email}</span>
                             </div>
 
                             <div className="input-field col s12">
-                                <label htmlFor="password">Password</label><br></br>
-                                <input
-                                    onChange={this.onChange}
-                                    value={this.state.password}
-                                    id="password"
-                                    type="password"
-                                />
-                            </div>
-
-                            <div className="input-field col s12">
-                                <label htmlFor="password2">Confirmar Password</label><br></br>
-                                <input
-                                    onChange={this.onChange}
-                                    value={this.state.password2}
-                                    id="password2"
-                                    type="password"
-                                />
-                            </div>
-
-                            <div className="input-field col s12">
-                                <label htmlFor="name">Nome Completo</label><br></br>
+                                <label htmlFor="name">Nome Completo *</label><br></br>
                                 <input
                                     onChange={this.onChange}
                                     value={this.state.name}
                                     id="name"
                                     type="text"
+                                    error={errors.name}
+                                    className={classnames("", {
+                                        invalid: errors.name
+                                    })}
                                 />
+                                <span className="red-text">{errors.name}</span>
                             </div>
 
                             <div className="input-field col s12">
-                                <label htmlFor="number">Nº Telemóvel</label><br></br>
+                                <label htmlFor="number">Nº Telemóvel *</label><br></br>
                                 <input
                                     onChange={this.onChange}
                                     value={this.state.phone}
                                     id="phone"
                                     type="number"
+                                    error={errors.phone}
+                                    className={classnames("", {
+                                        invalid: errors.phone
+                                    })}
                                 />
+                                <span className="red-text">{errors.phone}</span>
                             </div>
 
                             <div className="input-field col s12">
@@ -179,38 +179,57 @@ export default class EditVoluntary extends Component {
                                     value={this.state.address}
                                     id="address"
                                     type="text"
+                                    error={errors.address}
+                                    className={classnames("", {
+                                        invalid: errors.address
+                                    })}
                                 />
+                                <span className="red-text">{errors.address}</span>
                             </div>
 
                             <div className="input-field col s12">
-                                <label htmlFor="name">Data Nascimento</label><br></br>
+                                <label htmlFor="name">Data Nascimento *</label><br></br>
                                 <input
                                     onChange={this.onChange}
                                     value={this.state.birthDate}
                                     id="birthDate"
                                     type="date"
+                                    error={errors.birthDate}
+                                    className={classnames("", {
+                                        invalid: errors.birthDate
+                                    })}
                                 />
+                                <span className="red-text">{errors.birthDate}</span>
                             </div>
 
                             <div className="input-field col s12">
-                                <label htmlFor="name">Nome Empresa</label><br></br>
+                                <label htmlFor="name">Nome Empresa *</label><br></br>
                                 <input
                                     onChange={this.onChange}
                                     value={this.state.companyName}
                                     id="companyName"
                                     type="text"
+                                    error={errors.companyName}
+                                    className={classnames("", {
+                                        invalid: errors.companyName
+                                    })}
                                 />
-
+                                <span className="red-text">{errors.companyName}</span>
                             </div>
 
                             <div className="input-field col s12">
-                                <label htmlFor="name">Morada (Concelho) Empresa</label><br></br>
+                                <label htmlFor="name">Morada (Concelho) Empresa *</label><br></br>
                                 <input
                                     onChange={this.onChange}
                                     value={this.state.companyAddress}
                                     id="companyAddress"
                                     type="text"
+                                    error={errors.companyAddress}
+                                    className={classnames("", {
+                                        invalid: errors.companyAddress
+                                    })}
                                 />
+                                <span className="red-text">{errors.companyAddress}</span>
                             </div>
 
                             <div className="input-field col s12">
@@ -220,23 +239,22 @@ export default class EditVoluntary extends Component {
                                     value={this.state.observations}
                                     id="observations"
                                     type="text"
+                                    error={errors.observations}
+                                    className={classnames("", {
+                                        invalid: errors.observations
+                                    })}
                                 />
+                                <span className="red-text">{errors.observations}</span>
                             </div>
 
                         </form>
-                        <div className="col s12" style={{ paddingLeft: "11.250px", paddingBottom: "60px" }}>
-                            <br></br>
-                            <button
-                                style={{
-                                    width: "150px",
-                                    borderRadius: 10,
-                                    letterSpacing: "1.5px",
-                                    marginTop: "1rem"
-                                }}
-                                type="submit"
-                                onClick={this.onSubmit}
-                                className="btn btn-large waves-effect waves-light hoverable blue accent-3">
-                                Editar</button>
+                        <div className="col s12" style={{ marginTop: "1%", paddingBottom: 60 }}>
+                            <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "20%" }}
+                                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Editar
+                            </button>
+                            <a style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "20%" }}
+                                href="/listUsers" className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
+                            </a>
                         </div>
                     </div>
                 </div>

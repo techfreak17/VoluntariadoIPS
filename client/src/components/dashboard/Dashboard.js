@@ -52,13 +52,12 @@ class Dashboard extends Component {
             for (let i = 0; i < this.state.titles.length; i++) {
                 titleL.push(<Slider obj={this.state.titles[i]} key={i} />);
             }
-            console.log(titleL);
             return titleL;
         };
 
         return (
             <div className="container-fluid" style={{ width: "100%" }}>
-                <div className="container" style={{ width: "50%", backgroundColor: "#23395D", borderRadius: 50, marginTop: 40, marginBottom: 40, boxShadow: "0 0 15px 3px green" }}>
+                <div className="container" style={{ width: "50%", backgroundColor: "#23395D", borderRadius: 50, marginTop: 40, marginBottom: 40, boxShadow: "0 0 10px 3px green" }}>
                     <div className="section">
                         <h2 className="header center text-lighten-2" style={{ fontFamily: "monospace", fontWeight: "bold", color: "#50C878" }}>Plataforma VoluntariadoIPS</h2>
                         <div className="row center" style={{ width: "100%", textLighten: 2, fontWeight: "bold", color: "#FEF4E8" }}>
@@ -70,7 +69,7 @@ class Dashboard extends Component {
                 </div>
 
 
-                <div className="container center" style={{ marginTop: 50, marginBottom: 20, backgroundColor: "#FEF4E8", padding: 30, paddingTop: 3, borderRadius: 50, boxShadow: "0 0 15px 10px #23395D" }}>
+                <div className="container center" style={{ marginTop: 50, marginBottom: 20, backgroundColor: "#FEF4E8", padding: 30, paddingTop: 3, borderRadius: 50, boxShadow: "0 0 10px 10px #23395D" }}>
                     <h2 style={{ fontFamily: "monospace", fontWeight: "bold", color: "#23395D" }}>Os Meus Projetos</h2>
                     <div className="carousel carousel-slider center" style={{ borderRadius: 30 }}>
                         {titleList()}

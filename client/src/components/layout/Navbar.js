@@ -51,16 +51,16 @@ class Navbar extends Component {
                                     style={{ position: "absolute", left: 0, height: "auto", width: "auto", maxWidth: 200 }} /></a></li>
                                 <li><a href="/listNotifications"><i className="material-icons">notifications</i></a></li>
                                 <li>{(() => {
-                                    if (this.props.auth.user.role === "Administrador") {
+                                    if (this.props.auth.user.role === "Admin") {
                                         return (
-                                            <a href="/">Utilizadores</a>
+                                            <a href={"/baseAdminProfile/"+this.props.auth.id}>{this.props.auth.user.name}</a>
                                         )
                                     }
                                 })()}
                                 {(() => {
                                     if (this.props.auth.user.role === "Empresa") {
                                         return (
-                                            <a href="/">Utilizadores</a>
+                                            <a href={"/baseCompanyProfile/"+this.props.auth.id}>{this.props.auth.user.name}</a>
                                         )
                                     }
                                 })()}

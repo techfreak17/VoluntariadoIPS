@@ -93,7 +93,7 @@ class baseVoluntaryProfile extends Component {
                             <input value={this.state.schoolIPS}></input>
                             <h5 style={{fontWeight: 'bold'}}>Curso</h5>
                             <input value={this.state.courseIPS}></input>
-                            <button style={{float: 'right'}}>Editar Perfil</button>
+                            <button style={{float: 'right'}}> <a href={"/editVoluntaryProfile/"+this.props.auth.id}>Editar Perfil</a></button>
                         </div>
                     </div>
                 </div>

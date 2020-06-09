@@ -88,7 +88,7 @@ class baseCompanyProfile extends Component {
                             <input value={this.state.companyAddress}></input>
                             <h5 style={{fontWeight: 'bold'}}>Observações</h5>
                             <input value={this.state.observations}></input>
-                            <button style={{float: 'right'}}>Editar Perfil</button>
+                            <button style={{float: 'right'}}> <a href={"/editCompanyProfile/"+this.props.auth.id}>Editar Perfil</a></button>
                         </div>
                     </div>
                 </div>

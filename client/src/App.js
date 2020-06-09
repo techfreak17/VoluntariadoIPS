@@ -31,6 +31,11 @@ import Menu from "./components/layout/Menu";
 import RegisterVoluntary from "./components/auth/RegisterVoluntary";
 import RegisterCompany from "./components/auth/RegisterCompany";
 import baseVoluntaryProfile from "./components/profile/baseVoluntaryProfile";
+import editVoluntaryProfile from "./components/profile/editVoluntaryProfile";
+import baseCompanyProfile from "./components/profile/baseCompanyProfile";
+import editCompanyProfile from "./components/profile/editCompanyProfile";
+import baseAdminProfile from "./components/profile/baseAdminProfile";
+import editAdminProfile from "./components/profile/editAdminProfile";
 import IndexSubmitedProjects from "./components/submitedProjects/IndexSubmitedProjects";
 import CreateSubmitedProject from "./components/submitedProjects/CreateSubmitedProject";
 import SubmitedProjectDetails from "./components/submitedProjects/SubmitedProjectDetails";
@@ -78,6 +83,11 @@ class App extends Component {
             <Route exact path="/ConfirmAccountToken/:token" component={ConfirmAccountToken} />
             <Route exact path="/resetpassword/:token" component={ResetPassword} />
             <Route exact path="/baseVoluntaryProfile/:id" component={baseVoluntaryProfile}/>
+            <Route exact path="/baseCompanyProfile/:id" component={baseCompanyProfile}/>
+            <Route exact path="/baseAdminProfile/:id" component={baseAdminProfile}/>
+            <Route exact path="/editVoluntaryProfile/:id" component={editVoluntaryProfile}/>
+            <Route exact path="/editCompanyProfile/:id" component={editCompanyProfile}/>
+            <Route exact path="/editAdminProfile/:id" component={editAdminProfile}/>
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <EntityRoute exact path='/createProject' component={ Create } />

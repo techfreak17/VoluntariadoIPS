@@ -74,7 +74,7 @@ class baseAdminProfile extends Component {
                             <input value={this.state.address}></input>
                             <h5 style={{fontWeight: 'bold'}}>Data de Nascimento</h5>
                             <input value={this.state.birthDate}></input>
-                            <button style={{float: 'right'}}>Editar Perfil</button>
+                            <button style={{float: 'right'}}> <a href={"/editAdminProfile/"+this.props.auth.id}>Editar Perfil</a></button>
                         </div>
                     </div>
                 </div>

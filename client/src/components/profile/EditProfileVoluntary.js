@@ -256,7 +256,7 @@ export default class EditProfileVoluntary extends Component {
               <div className="input-field col s12">
                 <input
                   onChange={e => this.setState({
-                    password2: e.target.value,
+                    password: e.target.value,
                     validationErrorPassword: e.target.value === "" ? "Deverá preencher o campo Password Atual" : ""
                   })}
                   value={this.state.password}

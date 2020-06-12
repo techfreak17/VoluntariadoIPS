@@ -67,14 +67,18 @@ class Dashboard extends Component {
                     </div>
                 </div>
 
-
-                <div className="container center" style={{ marginTop: 50, marginBottom: 20, backgroundColor: "#FEF4E8", padding: 30, paddingTop: 3, borderRadius: 50, boxShadow: "0 0 10px 10px #23395D" }}>
-                    <h2 style={{ fontFamily: "monospace", fontWeight: "bold", color: "#23395D" }}>Os Meus Projetos</h2>
-                    <div className="carousel carousel-slider center" style={{ borderRadius: 30 }}>
-                        {titleList()}
-                    </div>
-                </div>
-
+                {(() => {
+                    if (this.props.auth.user.role !== "Administrador") {
+                        return (
+                            <div className="container center" style={{ marginTop: 50, marginBottom: 20, backgroundColor: "#FEF4E8", padding: 30, paddingTop: 3, borderRadius: 50, boxShadow: "0 0 10px 10px #23395D" }}>
+                                <h2 style={{ fontFamily: "monospace", fontWeight: "bold", color: "#23395D" }}>Os Meus Projetos</h2>
+                                <div className="carousel carousel-slider center" style={{ borderRadius: 30 }}>
+                                    {titleList()}
+                                </div>
+                            </div>
+                        )
+                    }
+                })()}
 
                 <div className="container" style={{ marginBottom: 70, display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <a className="img" href="https://moodle.ips.pt/1920/" rel="noopener noreferrer" target="_blank" style={{ paddingRight: 100 }}>

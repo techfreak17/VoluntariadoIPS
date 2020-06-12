@@ -9,7 +9,6 @@ const createNotification = require("../../Notifications/pushNotifications");
 
 // Load input validation
 const validateCreateProject = require("../../validation/createProject");
-const company = require("../../models/company");
 
 // @route POST api/projects/createProject
 // @desc Create Project - Administrator
@@ -26,7 +25,7 @@ router.post("/createProject", (req, res) => {
     if (project) {
       return res.status(400).json({ title: "Project already exists" });
     } else {
-      Company.findOne({ name: req.body.responsibleID}).then(company => {
+      Company.findOne({ name: req.body.responsibleID }).then(company => {
         const newProject = new Project({
           title: req.body.title,
           synopsis: req.body.synopsis,
@@ -79,8 +78,9 @@ router.route('/updateProject/:id').post(function (req, res) {
     if (!project)
       res.status(404).send("data is not found");
     else {
-      project.title = req.body.title;
-      project.synopsis = req.body.synopsis,
+      Company.findOne({ name: req.body.responsibleID }).then(company => {
+        project.title = req.body.title;
+        project.synopsis = req.body.synopsis,
         project.intervationArea = req.body.intervationArea,
         project.target_audience = req.body.target_audience,
         project.objectives = req.body.objectives,
@@ -88,7 +88,8 @@ router.route('/updateProject/:id').post(function (req, res) {
         project.date = (req.body.date) ? req.body.date : null,
         project.interestAreas = req.body.interestAreas,
         project.observations = req.body.observations,
-        project.relatedEntities = req.body.relatedEntities
+        project.relatedEntities = req.body.relatedEntities,
+        project.responsibleID = company.responsibleID
 
       project.updateOne({
         title: project.title,
@@ -101,11 +102,12 @@ router.route('/updateProject/:id').post(function (req, res) {
         interestAreas: project.interestAreas,
         observations: project.observations,
         relatedEntities: project.relatedEntities,
-      }
-      )
+        responsibleID: project.responsibleID
+      })
         .catch(err => {
           res.status(400).send("unable to update the database");
         });
+      })
       createNotification('projectoEditado', project.title, 'admin@teste.pt');
     }
   });

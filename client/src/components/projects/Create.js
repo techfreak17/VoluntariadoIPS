@@ -295,7 +295,6 @@ class Create extends Component {
                 <span className="red-text">{errors.interestAreas}</span>
               </div>
 
-
               <div className="input-field col s12">
                 <label>Responsável*</label><br></br><br></br>
                 <select value={this.state.selectedUser} onChange={this.onChange}

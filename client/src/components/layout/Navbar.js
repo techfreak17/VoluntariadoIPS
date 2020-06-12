@@ -93,8 +93,3 @@ export default connect(
     mapStateToProps,
     { logoutUser }
 )(Navbar);
-
-
-
-
-//<li><PushNotifications><i className="material-icons">notifications</i></PushNotifications></li>

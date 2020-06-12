@@ -26,7 +26,7 @@ class Create extends Component {
       observations: "",
       authorization: false,
       users: [],
-            selectedUser: "",
+      selectedUser: "",
       errors: {}
     }
 
@@ -34,6 +34,7 @@ class Create extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.uploadFile = this.uploadFile.bind(this);
     this.onChangeRelatedEntities = this.onChangeRelatedEntities.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
@@ -111,7 +112,7 @@ class Create extends Component {
       observations: this.state.observations,
       authorization: this.state.authorization,
       relatedEntities: this.state.relatedEntities,
-      responsibleID: this.state.responsibleID
+      responsibleID: this.state.selectedUser
     };
 
     this.props.createProject(obj, this.props.history);
@@ -134,7 +135,7 @@ class Create extends Component {
     });
 
     let optionTemplate = this.state.users.map(v => (
-      <option key={v.email} value={v._id}>{v.name}</option>
+      <option key={v.email} value={v.name}>{v.name}</option>
     ));
 
     return (
@@ -296,12 +297,13 @@ class Create extends Component {
 
 
               <div className="input-field col s12">
-                <label>Responsável*</label><br></br>
-                <select required multiple={false} value={this.state.selectedUser} onChange={this.onChange}
-                 error={errors.selectedUser}
-                 className={classnames("", {
-                   invalid: errors.selectedUser
-                 })}>
+                <label>Responsável*</label><br></br><br></br>
+                <select value={this.state.selectedUser} onChange={this.onChange}
+                  error={errors.selectedUser}
+                  className="browser-default"
+                  id="selectedUser"
+                  type="text">
+                  <option value="" disabled>Selecionar Opção</option>
                   {optionTemplate}
                 </select>
                 <span className="red-text">{errors.selectedUser}</span>

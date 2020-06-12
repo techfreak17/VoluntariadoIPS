@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-
 const Project = require("../../models/project");
 const User = require("../../models/user");
 const Company = require("../../models/company");
@@ -9,7 +8,8 @@ const Administrator = require("../../models/administrator");
 const createNotification = require("../../Notifications/pushNotifications");
 
 // Load input validation
-const validateCreateProject = require("../../validation/createProject")
+const validateCreateProject = require("../../validation/createProject");
+const company = require("../../models/company");
 
 // @route POST api/projects/createProject
 // @desc Create Project - Administrator
@@ -26,27 +26,29 @@ router.post("/createProject", (req, res) => {
     if (project) {
       return res.status(400).json({ title: "Project already exists" });
     } else {
-      const newProject = new Project({
-        title: req.body.title,
-        synopsis: req.body.synopsis,
-        intervationArea: req.body.intervationArea,
-        target_audience: req.body.target_audience,
-        objectives: req.body.objectives,
-        description: req.body.description,
-        date: req.body.date,
-        interestAreas: req.body.interestAreas,
-        photo: req.body.photo,
-        observations: req.body.observations,
-        relatedEntities: req.body.relatedEntities,
-        responsibleID: req.body.responsibleID,
-        requiredFormation: req.body.requiredFormation,
-        formation: req.body.formation
-      });
-      createNotification('novoProjecto',req.body.title,'admin@teste.pt');
-      newProject
-        .save()
-        .then(project => res.json(project))
-        .catch(err => console.log(err));
+      Company.findOne({ name: req.body.responsibleID}).then(company => {
+        const newProject = new Project({
+          title: req.body.title,
+          synopsis: req.body.synopsis,
+          intervationArea: req.body.intervationArea,
+          target_audience: req.body.target_audience,
+          objectives: req.body.objectives,
+          description: req.body.description,
+          date: req.body.date,
+          interestAreas: req.body.interestAreas,
+          photo: req.body.photo,
+          observations: req.body.observations,
+          relatedEntities: req.body.relatedEntities,
+          responsibleID: company.responsibleID,
+          requiredFormation: req.body.requiredFormation,
+          formation: req.body.formation
+        });
+        createNotification('novoProjecto', req.body.title, 'admin@teste.pt');
+        newProject
+          .save()
+          .then(project => res.json(project))
+          .catch(err => console.log(err));
+      })
     }
   });
 });
@@ -104,7 +106,7 @@ router.route('/updateProject/:id').post(function (req, res) {
         .catch(err => {
           res.status(400).send("unable to update the database");
         });
-        createNotification('projectoEditado',project.title,'admin@teste.pt');
+      createNotification('projectoEditado', project.title, 'admin@teste.pt');
     }
   });
 });
@@ -114,11 +116,11 @@ router.route('/updateProject/:id').post(function (req, res) {
 // @access Private
 router.route('/deleteProject/:id').get(function (req, res) {
   Project.findByIdAndRemove({ _id: req.params.id }, function (err, project) {
-    if (err){
+    if (err) {
       res.json(err);
     }
     else {
-      createNotification('projectoRemovido',project.title,'admin@teste.pt');
+      createNotification('projectoRemovido', project.title, 'admin@teste.pt');
       res.json('Successfully removed');
     }
   });
@@ -190,7 +192,7 @@ router.route('/getProjectUserDetails/:id').get(function (req, res) {
             return res.status(400).json({ company: "Such data doesn´t exist" });
           };
         })
-      } else if (user.role === "Administrador") { 
+      } else if (user.role === "Administrador") {
         Administrator.findOne().then(admin => {
           if (admin) {
             res.json(admin);

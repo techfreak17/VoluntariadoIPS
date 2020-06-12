@@ -66,7 +66,8 @@ export default class Edit extends Component {
           photo: responseArr[0].data.photo,
           observations: responseArr[0].data.observations,
           relatedEntities: responseArr[0].data.relatedEntities,
-          users: responseArr[1].data
+          users: responseArr[1].data,
+          selectedUser: responseArr[1].data[0].name
         });
       })
   }
@@ -311,7 +312,6 @@ export default class Edit extends Component {
                   className="browser-default"
                   id="selectedUser"
                   type="text">
-                  <option value="" disabled>Selecionar Opção</option>
                   {optionTemplate}
                 </select>
                 <div style={{ color: "red", marginTop: "5px" }}>

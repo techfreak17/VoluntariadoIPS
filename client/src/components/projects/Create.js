@@ -49,7 +49,8 @@ class Create extends Component {
     axios.get('/api/admin/getCompanyUsers')
       .then(response => {
         this.setState({
-          users: response.data
+          users: response.data,
+          selectedUser: response.data[0].name
         });
       })
       .catch(function (error) {
@@ -260,7 +261,6 @@ class Create extends Component {
 
               <div className="input-field col s12">
                 <label htmlFor="name">Data/Horário Previsto *</label><br></br><br></br>
-                <span className="red-text">{errors.date}</span>
                 <input
                   onChange={this.onChange}
                   value={this.state.date}
@@ -271,6 +271,7 @@ class Create extends Component {
                     invalid: errors.date
                   })}
                 />
+                <span className="red-text">{errors.date}</span>
               </div>
 
               <div className="input-field col s12">
@@ -302,7 +303,6 @@ class Create extends Component {
                   className="browser-default"
                   id="selectedUser"
                   type="text">
-                  <option value="" disabled>Selecionar Opção</option>
                   {optionTemplate}
                 </select>
                 <span className="red-text">{errors.selectedUser}</span>

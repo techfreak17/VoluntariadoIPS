@@ -5,6 +5,7 @@ import { createProject } from "../../actions/projectActions";
 import classnames from "classnames";
 import M from "materialize-css";
 import options from "materialize-css";
+import axios from 'axios';
 
 class Create extends Component {
   constructor(props) {
@@ -24,7 +25,8 @@ class Create extends Component {
       relatedEntities: [],
       observations: "",
       authorization: false,
-      responsibleID: this.props.auth.user.id,
+      users: [],
+            selectedUser: "",
       errors: {}
     }
 
@@ -43,6 +45,15 @@ class Create extends Component {
       else
         localStorage.removeItem('firstLoad');
     }
+    axios.get('/api/admin/getCompanyUsers')
+      .then(response => {
+        this.setState({
+          users: response.data
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
   }
 
   uploadFile(event) {
@@ -114,7 +125,6 @@ class Create extends Component {
     this.setState({ [e.target.id]: inputList });
   };
 
-
   render() {
     const { errors } = this.state;
 
@@ -122,6 +132,10 @@ class Create extends Component {
       var elems = document.querySelectorAll('select');
       M.FormSelect.init(elems, options);
     });
+
+    let optionTemplate = this.state.users.map(v => (
+      <option key={v.email} value={v._id}>{v.name}</option>
+    ));
 
     return (
       <div className="container">
@@ -278,6 +292,19 @@ class Create extends Component {
                   <option value="Social">Social (por ex. apoio a idosos, a crianças, Banco Alimentar…)</option>
                 </select>
                 <span className="red-text">{errors.interestAreas}</span>
+              </div>
+
+
+              <div className="input-field col s12">
+                <label>Responsável*</label><br></br>
+                <select required multiple={false} value={this.state.selectedUser} onChange={this.onChange}
+                 error={errors.selectedUser}
+                 className={classnames("", {
+                   invalid: errors.selectedUser
+                 })}>
+                  {optionTemplate}
+                </select>
+                <span className="red-text">{errors.selectedUser}</span>
               </div>
 
               <div className="input-field col s12">

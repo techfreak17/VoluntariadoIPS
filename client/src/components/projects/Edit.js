@@ -43,10 +43,10 @@ export default class Edit extends Component {
         var month = pdate.getMonth() + 1;
         var day = pdate.getDate();
         var mm = month < 10 ? '0' + month : month;
-        var dd = day < 10 ? '0' + day: day;
+        var dd = day < 10 ? '0' + day : day;
         var hour = pdate.getHours();
         var minutes = pdate.getMinutes();
-        var hh =  hour < 10 ? '0' + hour : hour;
+        var hh = hour < 10 ? '0' + hour : hour;
         var mmm = minutes < 10 ? '0' + minutes : minutes;
         pdate = '' + year + "-" + mm + "-" + dd + "T" + hh + ":" + mmm;
         this.setState({
@@ -94,7 +94,12 @@ export default class Edit extends Component {
   }
 
   handleChangeInterestAreas(event) {
-    this.setState({ interestAreas: Array.from(event.target.selectedOptions, (item) => item.value) });
+    this.setState({
+      interestAreas: Array.from(event.target.selectedOptions, (item) => item.value), validationErrorInterestAreas:
+        event.target.value === ""
+          ? "Deverá preencher o campo Áreas Interesse"
+          : ""
+    });
   }
 
   onChangeRelatedEntities = e => {
@@ -121,7 +126,9 @@ export default class Edit extends Component {
               <div className="input-field col s12">
                 <label>Designação do Projeto/Atividade *</label><br></br><br></br>
                 <input
-                  onChange={this.onChange}
+                  onChange={e => this.setState({title: e.target.value,
+                      validationErrorTitle: e.target.value === "" ? "Deverá preencher o campo Designação do Projeto/Atividade" : ""
+                  })}
                   value={this.state.title}
                   id="title"
                   type="text"
@@ -130,13 +137,18 @@ export default class Edit extends Component {
                     invalid: errors.title
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorTitle}
+                </div>
                 <span className="red-text">{errors.title}</span>
               </div>
 
               <div className="input-field col s12">
                 <label>Resumo do Projeto/Atividade *</label><br></br><br></br>
                 <input
-                  onChange={this.onChange}
+                  onChange={e => this.setState({ synopsis: e.target.value,
+                    validationErrorSynopsis: e.target.value === "" ? "Deverá preencher o campo Resumo do Projeto/Atividade" : ""
+                  })}
                   value={this.state.synopsis}
                   id="synopsis"
                   type="text"
@@ -145,13 +157,18 @@ export default class Edit extends Component {
                     invalid: errors.synopsis
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorSynopsis}
+                </div>
                 <span className="red-text">{errors.synopsis}</span>
               </div>
 
               <div className="input-field col s12">
                 <label>Área de Intervenção *</label><br></br><br></br>
                 <input
-                  onChange={this.onChange}
+                  onChange={e =>
+                    this.setState({intervationArea: e.target.value,
+                      validationErrorIntervationArea: e.target.value === "" ? "Deverá preencher o campo Área de Intervenção" : ""})}
                   value={this.state.intervationArea}
                   id="intervationArea"
                   type="text"
@@ -160,13 +177,19 @@ export default class Edit extends Component {
                     invalid: errors.intervationArea
                   })}
                 />
+                <div style={{color: "red", marginTop: "5px"}}>
+                  {this.state.validationErrorIntervationArea}
+                </div>
                 <span className="red-text">{errors.intervationArea}</span>
               </div>
 
               <div className="input-field col s12">
                 <label>Público Alvo (Beneficiários) *</label><br></br><br></br>
                 <input
-                  onChange={this.onChange}
+                  onChange={e =>
+                    this.setState({target_audience: e.target.value,
+                      validationErrorTargetAudience:e.target.value === "" ? "Deverá preencher o campo Público Alvo (Beneficiários)" : ""
+                    })}
                   value={this.state.target_audience}
                   id="target_audience"
                   type="text"
@@ -175,6 +198,9 @@ export default class Edit extends Component {
                     invalid: errors.target_audience
                   })}
                 />
+                <div style={{color: "red", marginTop: "5px"}}>
+                  {this.state.validationErrorTargetAudience}
+                </div>
                 <span className="red-text">{errors.target_audience}</span>
               </div>
 
@@ -196,7 +222,10 @@ export default class Edit extends Component {
               <div className="input-field col s12">
                 <label>Descrição das Atividades *</label><br></br><br></br>
                 <input
-                  onChange={this.onChange}
+                  onChange={e =>
+                    this.setState({description: e.target.value,
+                       validationErrorDescription: e.target.value === "" ? "Deverá preencher o campo Descrição das Atividades" : ""
+                    })}
                   value={this.state.description}
                   id="description"
                   type="text"
@@ -205,13 +234,18 @@ export default class Edit extends Component {
                     invalid: errors.description
                   })}
                 />
+                <div style={{color: "red", marginTop: "5px"}}>
+                  {this.state.validationErrorDescription}
+                </div>
                 <span className="red-text">{errors.description}</span>
               </div>
 
               <div className="input-field col s12">
                 <label htmlFor="name">Data/Horário Previsto *</label><br></br><br></br>
                 <input
-                  onChange={this.onChange}
+                  onChange={e => this.setState({date: e.target.value,
+                    validationErrorDate: e.target.value === "" ? "Deverá preencher o campo Data/Horário Previsto" : ""
+                  })}
                   value={this.state.date}
                   id="date"
                   type="datetime-local"
@@ -220,7 +254,10 @@ export default class Edit extends Component {
                     invalid: errors.date
                   })}
                 />
-                <span className="red-text">{errors.description}</span>
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorDate}
+                </div>
+                <span className="red-text">{errors.date}</span>
               </div>
 
               <div className="input-field col s12">
@@ -242,6 +279,9 @@ export default class Edit extends Component {
                   <option value="Saúde">Saúde (por ex. rastreios, ações de sensibilização…)</option>
                   <option value="Social">Social (por ex. apoio a idosos, a crianças, Banco Alimentar…)</option>
                 </select>
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorInterestAreas}
+                </div>
                 <span className="red-text">{errors.interestAreas}</span>
               </div>
 

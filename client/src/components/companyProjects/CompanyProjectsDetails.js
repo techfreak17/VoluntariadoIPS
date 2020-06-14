@@ -71,7 +71,7 @@ class CompanyProjectDetails extends Component {
         <div className="card" style={{ backgroundColor: "#FEF4E8", width: 900, margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px black" }}>
           <div className="card-header center" style={{ overflow: "hidden", height: 400, width: "100%" }}>
             <h2><b>{this.state.title}</b></h2>
-            <img src={require('../layout/images/image.jpg')} alt="(Não esquecer de verificar no spam)" className="img-responsive" style={{ width: "90%" }} />
+            <img src={require('../layout/images/volun.png')} alt="(Não esquecer de verificar no spam)" className="img-responsive" style={{ width: "90%" }} />
           </div>
           <div className="card-content" style={{ paddingLeft: 50 }}>
             <div className="right" style={{ paddingRight: 25 }}>

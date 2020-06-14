@@ -6,7 +6,6 @@ import axios from 'axios';
 import PushNotificationsToast from "../pushNotifications/PushNotificationToast.js"
 import M from "materialize-css";
 import options from "materialize-css";
-import { Link } from "react-router-dom";
 
 class Navbar extends Component {
     constructor(props) {
@@ -70,7 +69,7 @@ class Navbar extends Component {
                                 <li><a href={"/baseProfile/" + this.state.id}><i className="material-icons left">collections</i>Estatísticas</a></li>
                                 <li><button onClick={this.onLogoutClick} className="blue btn" style={{ borderRadius: 10, marginLeft: 12, marginBottom: 5 }}>Sair</button></li>
                             </ul>
-                            <Link data-target="slide-out" className="sidenav-trigger show-on-large right"><i className="material-icons">menu</i></Link>
+                            <p data-target="slide-out" className="sidenav-trigger show-on-large right"><i className="material-icons">menu</i></p>
                             <PushNotificationsToast></PushNotificationsToast>
                             <li><a className="navbar-brand" href="/dashboard"><img src={require('./images/logo.png')}
                                     alt="(Não esquecer de verificar no spam)"

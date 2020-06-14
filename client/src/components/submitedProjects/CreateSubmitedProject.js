@@ -110,9 +110,7 @@ class Create extends Component {
         var input = e.target.value;
         var point = ",";
         var inputList = input.split(point);
-        console.log(inputList);
         this.setState({ [e.target.id]: inputList });
-        console.log(this.state.relatedEntities);
     };
 
 
@@ -121,8 +119,7 @@ class Create extends Component {
 
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('select');
-            var instances = M.FormSelect.init(elems, options);
-            console.log(instances);
+            M.FormSelect.init(elems, options);
         });
 
         return (

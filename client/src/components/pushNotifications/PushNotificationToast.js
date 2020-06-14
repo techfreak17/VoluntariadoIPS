@@ -22,7 +22,6 @@ class PushNotificationToast extends React.Component {
     componentDidMount() {
         Axios.get('/api/notifications/listNotifications/' + this.props.auth.user.id)
             .then(response => {
-                console.log(response);
                 this.setState({ msgs: response.data });
             })
             .catch(function (error) {
@@ -31,16 +30,14 @@ class PushNotificationToast extends React.Component {
 
         Axios.get('/api/notifications/listReadNotifications/' + this.props.auth.user.id)
             .then(response => {
-                console.log(response);
                 this.setState({ readMsgs: response.data });
             })
             .catch(function (error) {
                 console.log(error);
             })
     }
-    
+
     markRead(notif) {
-        console.log(notif);
         Axios.get('/api/notifications/updateNotification/' + notif._id)
             .catch(function (error) {
                 console.log(error);
@@ -74,11 +71,11 @@ class PushNotificationToast extends React.Component {
 
     render() {
         return (
-            <li>
-                <li><button onClick={this.notify} style={{ backgroundColor: "transparent", color: "white", border: "none" }}><i className="material-icons">email</i></button></li>
-                <li><button onClick={this.notifyRead} style={{ backgroundColor: "transparent", color: "white", border: "none" }}><i className="material-icons">drafts</i></button></li>
-                <ToastContainer autoClose={false} />
-            </li>
+                <ul id="nav-mobile" className="right" >
+                    <li><button onClick={this.notify} style={{ backgroundColor: "transparent", color: "white", border: "none" }}><i className="material-icons">email</i></button></li>
+                    <li><button onClick={this.notifyRead} style={{ backgroundColor: "transparent", color: "white", border: "none" }}><i className="material-icons">drafts</i></button></li>
+                    <ToastContainer autoClose={false} />
+                </ul>
         );
     }
 

@@ -18,6 +18,17 @@ class Login extends Component {
         };
     }
 
+    componentDidMount() {
+        if (window.localStorage) {
+            if (!localStorage.getItem('firstLoad')) {
+                localStorage['firstLoad'] = true;
+                window.location.reload();
+            }
+            else
+                localStorage.removeItem('firstLoad');
+        }
+    }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.auth.isAuthenticated) {
             this.props.history.push("/dashboard"); // push user to dashboard when they login

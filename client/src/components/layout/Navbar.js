@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import axios from 'axios';
 import PushNotificationsToast from "../pushNotifications/PushNotificationToast.js"
+import M from "materialize-css";
+import options from "materialize-css";
 
 class Navbar extends Component {
     constructor(props) {
@@ -11,6 +13,7 @@ class Navbar extends Component {
 
         this.state = {
             username: "",
+            email:"",
             id: this.props.auth.user.id
         }
     }
@@ -18,7 +21,7 @@ class Navbar extends Component {
         e.preventDefault();
         this.props.logoutUser();
     };
- 
+
 
 
     componentDidMount() {
@@ -26,6 +29,7 @@ class Navbar extends Component {
             .then(response => {
                 this.setState({
                     username: response.data.username,
+                    email: response.data.email
                 });
             })
             .catch(function (error) {
@@ -35,6 +39,10 @@ class Navbar extends Component {
 
 
     render() {
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.sidenav');
+            M.Sidenav.init(elems, options);
+        });
         const { user } = this.props.auth;
         return (
             <div>
@@ -46,15 +54,27 @@ class Navbar extends Component {
                         zIndex: "10"
                     }}>
                         <div className="nav-wrapper">
-                            <ul id="nav-mobile" className="right"> 
-                                <li><a className="navbar-brand" href="/dashboard"><img src={require('./images/logo.png')}
+                            <ul id="slide-out" className="sidenav">
+                                <li><div className="user-view">
+                                    <div className="background">
+                                        <img src={require('./images/Voluntariado.png')}
+                                         alt="(Não esquecer de verificar no spam)"
+                                         className="img-responsive" />
+                                    </div>
+                                    <p><img className="circle" alt="(Não esquecer de verificar no spam)" src={require('./images/avatar.jpg')} /></p>
+                                    <p><span className="white-text name">{this.state.username}</span></p>
+                                    <p><span className="white-text email">{this.state.email}</span></p>
+                                </div></li>
+                                <li><a href={"/baseProfile/" + this.state.id}><i className="material-icons left">person</i>Perfil</a></li>
+                                <li><a href={"/baseProfile/" + this.state.id}><i className="material-icons left">collections</i>Estatísticas</a></li>
+                                <li><button onClick={this.onLogoutClick} className="blue btn" style={{ borderRadius: 10, marginLeft: 12, marginBottom: 5 }}>Sair</button></li>
+                            </ul>
+                            <p data-target="slide-out" className="sidenav-trigger show-on-large right"><i className="material-icons">menu</i></p>
+                            <PushNotificationsToast></PushNotificationsToast>
+                            <li><a className="navbar-brand" href="/dashboard"><img src={require('./images/logo.png')}
                                     alt="(Não esquecer de verificar no spam)"
                                     className="img-responsive"
                                     style={{ position: "absolute", left: 0, height: "auto", width: "auto", maxWidth: 200 }} /></a></li>
-                                <PushNotificationsToast></PushNotificationsToast>   
-                                <li><a href={"/baseProfile/"+this.state.id}><i className="material-icons left">person</i>{this.state.username}</a></li>
-                                <li><button onClick={this.onLogoutClick} className="red btn" style={{ borderRadius: 10, marginLeft: 12, marginBottom: 5 }}>Sair</button></li>
-                            </ul>
                         </div>
                     </nav>
                 ) : (
@@ -93,8 +113,3 @@ export default connect(
     mapStateToProps,
     { logoutUser }
 )(Navbar);
-
-
-
-
-//<li><PushNotifications><i className="material-icons">notifications</i></PushNotifications></li>

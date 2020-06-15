@@ -19,6 +19,8 @@ export default class Edit extends Component {
       photo: "",
       observations: "",
       relatedEntities: [],
+      users: [],
+      selectedUser: "",
       errors: {}
     }
 
@@ -36,35 +38,37 @@ export default class Edit extends Component {
       else
         localStorage.removeItem('firstLoad');
     }
-    axios.get('/api/projects/editProject/' + this.props.match.params.id)
-      .then(response => {
-        var pdate = new Date(response.data.date);
+    axios.all([
+      axios.get('/api/projects/editProject/' + this.props.match.params.id),
+      axios.get('/api/admin/getCompanyUsers'),
+    ])
+      .then(responseArr => {
+        var pdate = new Date(responseArr[0].data.date);
         var year = pdate.getFullYear();
         var month = pdate.getMonth() + 1;
         var day = pdate.getDate();
         var mm = month < 10 ? '0' + month : month;
-        var dd = day < 10 ? '0' + day: day;
+        var dd = day < 10 ? '0' + day : day;
         var hour = pdate.getHours();
         var minutes = pdate.getMinutes();
-        var hh =  hour < 10 ? '0' + hour : hour;
+        var hh = hour < 10 ? '0' + hour : hour;
         var mmm = minutes < 10 ? '0' + minutes : minutes;
         pdate = '' + year + "-" + mm + "-" + dd + "T" + hh + ":" + mmm;
         this.setState({
-          title: response.data.title,
-          synopsis: response.data.synopsis,
-          intervationArea: response.data.intervationArea,
-          target_audience: response.data.target_audience,
-          objectives: response.data.objectives,
-          description: response.data.description,
+          title: responseArr[0].data.title,
+          synopsis: responseArr[0].data.synopsis,
+          intervationArea: responseArr[0].data.intervationArea,
+          target_audience: responseArr[0].data.target_audience,
+          objectives: responseArr[0].data.objectives,
+          description: responseArr[0].data.description,
           date: pdate,
-          interestAreas: response.data.interestAreas,
-          photo: response.data.photo,
-          observations: response.data.observations,
-          relatedEntities: response.data.relatedEntities
+          interestAreas: responseArr[0].data.interestAreas,
+          photo: responseArr[0].data.photo,
+          observations: responseArr[0].data.observations,
+          relatedEntities: responseArr[0].data.relatedEntities,
+          users: responseArr[1].data,
+          selectedUser: responseArr[1].data[0].name
         });
-      })
-      .catch(function (error) {
-        console.log(error);
       })
   }
 
@@ -85,27 +89,29 @@ export default class Edit extends Component {
       interestAreas: this.state.interestAreas,
       photo: this.state.photo,
       observations: this.state.observations,
-      relatedEntities: this.state.relatedEntities
+      relatedEntities: this.state.relatedEntities,
+      responsibleID: this.state.selectedUser
     };
 
     axios.post('/api/projects/updateProject/' + this.props.match.params.id, obj)
-      .then(res => console.log(res.data));
     this.props.history.push('/listProjects');
     window.location.reload();
   }
 
   handleChangeInterestAreas(event) {
-    this.setState({ interestAreas: Array.from(event.target.selectedOptions, (item) => item.value) });
-    console.log(this.state.interestAreas);
+    this.setState({
+      interestAreas: Array.from(event.target.selectedOptions, (item) => item.value), validationErrorInterestAreas:
+        event.target.value === ""
+          ? "Deverá preencher o campo Áreas Interesse"
+          : ""
+    });
   }
 
   onChangeRelatedEntities = e => {
     var input = e.target.value;
     var point = ",";
     var inputList = input.split(point);
-    console.log(inputList);
     this.setState({ [e.target.id]: inputList });
-    console.log(this.state.relatedEntities);
   };
 
   render() {
@@ -113,9 +119,12 @@ export default class Edit extends Component {
 
     document.addEventListener('DOMContentLoaded', function () {
       var elems = document.querySelectorAll('select');
-      var instances = M.FormSelect.init(elems, options);
-      console.log(instances);
+      M.FormSelect.init(elems, options);
     });
+
+    let optionTemplate = this.state.users.map(v => (
+      <option key={v.email} value={v.name}>{v.name}</option>
+    ));
 
     return (
       <div className="container" >
@@ -126,7 +135,10 @@ export default class Edit extends Component {
               <div className="input-field col s12">
                 <label>Designação do Projeto/Atividade *</label><br></br><br></br>
                 <input
-                  onChange={this.onChange}
+                  onChange={e => this.setState({
+                    title: e.target.value,
+                    validationErrorTitle: e.target.value === "" ? "Deverá preencher o campo Designação do Projeto/Atividade" : ""
+                  })}
                   value={this.state.title}
                   id="title"
                   type="text"
@@ -135,13 +147,19 @@ export default class Edit extends Component {
                     invalid: errors.title
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorTitle}
+                </div>
                 <span className="red-text">{errors.title}</span>
               </div>
 
               <div className="input-field col s12">
                 <label>Resumo do Projeto/Atividade *</label><br></br><br></br>
                 <input
-                  onChange={this.onChange}
+                  onChange={e => this.setState({
+                    synopsis: e.target.value,
+                    validationErrorSynopsis: e.target.value === "" ? "Deverá preencher o campo Resumo do Projeto/Atividade" : ""
+                  })}
                   value={this.state.synopsis}
                   id="synopsis"
                   type="text"
@@ -150,13 +168,20 @@ export default class Edit extends Component {
                     invalid: errors.synopsis
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorSynopsis}
+                </div>
                 <span className="red-text">{errors.synopsis}</span>
               </div>
 
               <div className="input-field col s12">
                 <label>Área de Intervenção *</label><br></br><br></br>
                 <input
-                  onChange={this.onChange}
+                  onChange={e =>
+                    this.setState({
+                      intervationArea: e.target.value,
+                      validationErrorIntervationArea: e.target.value === "" ? "Deverá preencher o campo Área de Intervenção" : ""
+                    })}
                   value={this.state.intervationArea}
                   id="intervationArea"
                   type="text"
@@ -165,13 +190,20 @@ export default class Edit extends Component {
                     invalid: errors.intervationArea
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorIntervationArea}
+                </div>
                 <span className="red-text">{errors.intervationArea}</span>
               </div>
 
               <div className="input-field col s12">
                 <label>Público Alvo (Beneficiários) *</label><br></br><br></br>
                 <input
-                  onChange={this.onChange}
+                  onChange={e =>
+                    this.setState({
+                      target_audience: e.target.value,
+                      validationErrorTargetAudience: e.target.value === "" ? "Deverá preencher o campo Público Alvo (Beneficiários)" : ""
+                    })}
                   value={this.state.target_audience}
                   id="target_audience"
                   type="text"
@@ -180,6 +212,9 @@ export default class Edit extends Component {
                     invalid: errors.target_audience
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorTargetAudience}
+                </div>
                 <span className="red-text">{errors.target_audience}</span>
               </div>
 
@@ -201,7 +236,11 @@ export default class Edit extends Component {
               <div className="input-field col s12">
                 <label>Descrição das Atividades *</label><br></br><br></br>
                 <input
-                  onChange={this.onChange}
+                  onChange={e =>
+                    this.setState({
+                      description: e.target.value,
+                      validationErrorDescription: e.target.value === "" ? "Deverá preencher o campo Descrição das Atividades" : ""
+                    })}
                   value={this.state.description}
                   id="description"
                   type="text"
@@ -210,13 +249,19 @@ export default class Edit extends Component {
                     invalid: errors.description
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorDescription}
+                </div>
                 <span className="red-text">{errors.description}</span>
               </div>
 
               <div className="input-field col s12">
                 <label htmlFor="name">Data/Horário Previsto *</label><br></br><br></br>
                 <input
-                  onChange={this.onChange}
+                  onChange={e => this.setState({
+                    date: e.target.value,
+                    validationErrorDate: e.target.value === "" ? "Deverá preencher o campo Data/Horário Previsto" : ""
+                  })}
                   value={this.state.date}
                   id="date"
                   type="datetime-local"
@@ -225,7 +270,10 @@ export default class Edit extends Component {
                     invalid: errors.date
                   })}
                 />
-                <span className="red-text">{errors.description}</span>
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorDate}
+                </div>
+                <span className="red-text">{errors.date}</span>
               </div>
 
               <div className="input-field col s12">
@@ -247,7 +295,29 @@ export default class Edit extends Component {
                   <option value="Saúde">Saúde (por ex. rastreios, ações de sensibilização…)</option>
                   <option value="Social">Social (por ex. apoio a idosos, a crianças, Banco Alimentar…)</option>
                 </select>
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorInterestAreas}
+                </div>
                 <span className="red-text">{errors.interestAreas}</span>
+              </div>
+
+              <div className="input-field col s12">
+                <label>Responsável*</label><br></br><br></br>
+                <select value={this.state.selectedUser} onChange={e =>
+                    this.setState({
+                      selectedUser: e.target.value,
+                      validationErrorSelectedUser: e.target.value === "" ? "Deverá preencher o campo Responsável" : ""
+                    })}
+                  error={errors.selectedUser}
+                  className="browser-default"
+                  id="selectedUser"
+                  type="text">
+                  {optionTemplate}
+                </select>
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorSelectedUser}
+                </div>
+                <span className="red-text">{errors.selectedUser}</span>
               </div>
 
               <div className="input-field col s12">

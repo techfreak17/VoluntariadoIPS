@@ -222,7 +222,7 @@ class CreateCompanyUser extends Component {
                                         invalid: errors.companyAddress
                                     })}
                                 />
-                                <label htmlFor="name">Morada (Concelho) Empresa</label>
+                                <label htmlFor="name">Morada (Concelho) Empresa *</label>
                                 <span className="red-text">{errors.companyAddress}</span>
                             </div>
 
@@ -244,7 +244,7 @@ class CreateCompanyUser extends Component {
                         </form>
                         <div className="col s12" style={{ marginTop: "1%", paddingBottom: 60 }}>
                             <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "20%" }}
-                                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Criar
+                                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Submeter
                             </button>
                             <a style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "20%" }}
                                 href="/listUsers" className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar

@@ -10,7 +10,9 @@ import ProjectsRow from "./ProjectsRow"
 class Landing extends Component {
     constructor(props) {
         super(props);
-        this.state = { project: [{ title: "", date: "", synopsis: "" }, { title: "", date: "", synopsis: "" }, { title: "", date: "", synopsis: "" }] };
+        this.state = { 
+            project: [{ title: "", date: "", synopsis: "" }, { title: "", date: "", synopsis: "" }, { title: "", date: "", synopsis: "" }],
+        };
     }
 
     componentDidMount() {
@@ -34,8 +36,7 @@ class Landing extends Component {
     render() {
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('.slider');
-            var instances = M.Slider.init(elems, options);
-            console.log(instances);
+            M.Slider.init(elems, options);
         });
 
         let projectL = [];

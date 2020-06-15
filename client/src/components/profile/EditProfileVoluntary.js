@@ -13,19 +13,17 @@ export default class EditProfileVoluntary extends Component {
       phone: "",
       address: "",
       birthDate: "",
-      memberIPS: "",
-      schoolIPS: "",
-      courseIPS: "",
       password: "",
       password2: "",
       interestAreas: [],
-      authorization: false,
+      reasons: [],
       errors: {}
     }
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.handleChangeInterestAreas = this.handleChangeInterestAreas.bind(this);
+    this.handleChangeReasons = this.handleChangeReasons.bind(this);
   }
 
   componentDidMount() {
@@ -57,6 +55,7 @@ export default class EditProfileVoluntary extends Component {
           schoolIPS: responseArr[0].data.schoolIPS,
           courseIPS: responseArr[0].data.courseIPS,
           interestAreas: responseArr[0].data.interestAreas,
+          reasons: responseArr[0].data.reasons,
           role: responseArr[1].data.role,
           birthDate: date
         });
@@ -69,7 +68,21 @@ export default class EditProfileVoluntary extends Component {
   };
 
   handleChangeInterestAreas(event) {
-    this.setState({ interestAreas: Array.from(event.target.selectedOptions, (item) => item.value) });
+    this.setState({
+      interestAreas: Array.from(event.target.selectedOptions, (item) => item.value), validationErrorInterestAreas:
+        event.target.value === ""
+          ? "Deverá preencher o campo Áreas Interesse"
+          : ""
+    });
+  }
+
+  handleChangeReasons(event) {
+    this.setState({
+      reasons: Array.from(event.target.selectedOptions, (item) => item.value), validationErrorReasons:
+        event.target.value === ""
+          ? "Deverá preencher o campo Razões Para Querer Ser Voluntário"
+          : ""
+    });
   }
 
   onSubmit(e) {
@@ -79,13 +92,8 @@ export default class EditProfileVoluntary extends Component {
       email: this.state.email,
       phone: this.state.phone,
       address: this.state.address,
-      memberIPS: this.state.memberIPS,
-      schoolIPS: this.state.schoolIPS,
-      courseIPS: this.state.courseIPS,
       interestAreas: this.state.interestAreas,
       reasons: this.state.reasons,
-      observations: this.state.observations,
-      username: this.state.username,
       birthDate: this.state.birthDate,
       role: this.state.role,
       password: this.state.password,
@@ -93,7 +101,6 @@ export default class EditProfileVoluntary extends Component {
     };
     axios
       .post('/api/users/updateUser/' + this.props.match.params.id, obj)
-      .then(res => console.log(res.data));
     window.location.reload();
   }
 
@@ -102,8 +109,7 @@ export default class EditProfileVoluntary extends Component {
 
     document.addEventListener('DOMContentLoaded', function () {
       var elems = document.querySelectorAll('select');
-      var instances = M.FormSelect.init(elems, options);
-      console.log(instances);
+      M.FormSelect.init(elems, options);
     });
 
     return (
@@ -114,9 +120,12 @@ export default class EditProfileVoluntary extends Component {
             <form noValidate>
 
               <div className="input-field col s12">
-                <label htmlFor="name">Nome Completo *</label><br></br>
+                <label htmlFor="name">Nome Completo</label><br></br>
                 <input
-                  onChange={this.onChange}
+                  onChange={e => this.setState({
+                    name: e.target.value,
+                    validationErrorName: e.target.value === "" ? "Deverá preencher o campo Nome Completo" : ""
+                  })}
                   value={this.state.name}
                   id="name"
                   type="text"
@@ -125,43 +134,19 @@ export default class EditProfileVoluntary extends Component {
                     invalid: errors.name
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorName}
+                </div>
                 <span className="red-text">{errors.name}</span>
               </div>
 
               <div className="input-field col s12">
+                <label htmlFor="number">Nº Telemóvel</label><br></br>
                 <input
-                  onChange={this.onChange}
-                  value={this.state.password}
-                  error={errors.password}
-                  id="password"
-                  type="password"
-                  className={classnames("", {
-                    invalid: errors.password
+                  onChange={e => this.setState({
+                    phone: e.target.value,
+                    validationErrorPhone: e.target.value === "" ? "Deverá preencher o campo Nº Telemóvel" : ""
                   })}
-                />
-                <label htmlFor="password">Password *</label>
-                <span className="red-text">{errors.password}</span>
-              </div>
-
-              <div className="input-field col s12">
-                <input
-                  onChange={this.onChange}
-                  value={this.state.password2}
-                  error={errors.password2}
-                  id="password2"
-                  type="password"
-                  className={classnames("", {
-                    invalid: errors.password2
-                  })}
-                />
-                <label htmlFor="password2">Confirmar Password *</label>
-                <span className="red-text">{errors.password2}</span>
-              </div>
-
-              <div className="input-field col s12">
-                <label htmlFor="number">Nº Telemóvel *</label><br></br>
-                <input
-                  onChange={this.onChange}
                   value={this.state.phone}
                   id="phone"
                   type="number"
@@ -170,13 +155,19 @@ export default class EditProfileVoluntary extends Component {
                     invalid: errors.phone
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorPhone}
+                </div>
                 <span className="red-text">{errors.phone}</span>
               </div>
 
               <div className="input-field col s12">
                 <label htmlFor="name">Morada (Concelho)</label><br></br>
                 <input
-                  onChange={this.onChange}
+                  onChange={e => this.setState({
+                    address: e.target.value,
+                    validationErrorAddress: e.target.value === "" ? "Deverá preencher o campo Morada (Concelho)" : ""
+                  })}
                   value={this.state.address}
                   id="address"
                   type="text"
@@ -185,13 +176,19 @@ export default class EditProfileVoluntary extends Component {
                     invalid: errors.address
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorAddress}
+                </div>
                 <span className="red-text">{errors.address}</span>
               </div>
 
               <div className="input-field col s12">
-                <label htmlFor="name">Data Nascimento *</label><br></br>
+                <label htmlFor="name">Data Nascimento</label><br></br>
                 <input
-                  onChange={this.onChange}
+                  onChange={e => this.setState({
+                    birthDate: e.target.value,
+                    validationErrorBirthDate: e.target.value === "" ? "Deverá preencher o campo Data Nascimento" : ""
+                  })}
                   value={this.state.birthDate}
                   id="birthDate"
                   type="date"
@@ -200,63 +197,10 @@ export default class EditProfileVoluntary extends Component {
                     invalid: errors.birthDate
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorBirthDate}
+                </div>
                 <span className="red-text">{errors.birthDate}</span>
-              </div>
-
-              <div className="input-field col s12">
-                <label htmlFor="name">Membro da Comunidade IPS *</label><br></br>
-                <select onChange={this.onChange}
-                  value={this.state.memberIPS}
-                  error={errors.memberIPS}
-                  id="memberIPS"
-                  type="text"
-                  className={classnames("", {
-                    invalid: errors.memberIPS
-                  })}>
-                  <option value="" disabled>Selecionar Opção</option>
-                  <option value="Estudante">Estudante</option>
-                  <option value="Diplomado">Diplomado</option>
-                  <option value="Docente">Docente</option>
-                  <option value="Não Docente">Não Docente</option>
-                  <option value="Bolseiro">Bolseiro</option>
-                  <option value="Aposentado">Aposentado</option>
-                </select>
-                <span className="red-text">{errors.memberIPS}</span>
-              </div>
-
-              <div className="input-field col s12">
-                <label htmlFor="name">Escola/Serviço *</label><br></br>
-                <select onChange={this.onChange}
-                  value={this.state.schoolIPS}
-                  id="schoolIPS"
-                  type="text"
-                  error={errors.schoolIPS}
-                  className={classnames("", {
-                    invalid: errors.schoolIPS
-                  })}>
-                  <option value="" disabled>Selecionar Opção</option>
-                  <option value="EST-Setúbal">Escola Superior de Tecnologia de Setúbal</option>
-                  <option value="ESE">Escola Superior de Educação</option>
-                  <option value="ESCE">Escola Superior de Ciências Empresariais</option>
-                  <option value="ESS">Escola Superior de Saúde</option>
-                  <option value="EST-Barreiro">Escola Superior de Tecnologia do Barreiro</option>
-                </select>
-                <span className="red-text">{errors.schoolIPS}</span>
-              </div>
-
-              <div className="input-field col s12">
-                <label htmlFor="name">Curso/Formação em *</label><br></br>
-                <input
-                  onChange={this.onChange}
-                  value={this.state.courseIPS}
-                  error={errors.courseIPS}
-                  id="courseIPS"
-                  type="text"
-                  className={classnames("", {
-                    invalid: errors.courseIPS
-                  })}
-                />
-                <span className="red-text">{errors.courseIPS}</span>
               </div>
 
               <div className="input-field col s12">
@@ -278,7 +222,77 @@ export default class EditProfileVoluntary extends Component {
                   <option value="Saúde">Saúde (por ex. rastreios, ações de sensibilização…)</option>
                   <option value="Social">Social (por ex. apoio a idosos, a crianças, Banco Alimentar…)</option>
                 </select>
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorInterestAreas}
+                </div>
                 <span className="red-text">{errors.interestAreas}</span>
+              </div>
+
+              <div className="input-field col s12">
+                <label htmlFor="name">Razões para querer ser voluntário *</label><br></br>
+                <select required multiple={true} value={this.state.reasons} onChange={this.handleChangeReasons}
+                  error={errors.reasons}
+                  className={classnames("", {
+                    invalid: errors.reasons
+                  })}>
+                  <option value="" disabled>Selecionar Opções</option>
+                  <option value="Convívio Social">Pelo convívio social</option>
+                  <option value="Futuro Profissional">Porque pode ser vantajoso para o futuro profissional</option>
+                  <option value="Integração Social">Pela possibilidade de integração social</option>
+                  <option value="Novas Experiências">Para ter novas experiências</option>
+                  <option value="Ajudar os Outros">Porque gosto de ajudar os outros</option>
+                  <option value="Incentivado por outros">Porque fui incentivado(a) por outras pessoas</option>
+                  <option value="Conhece pessoas que também estão/estiveram no voluntariado">Porque conheço pessoas que já realizaram atividades de voluntariado no IPS</option>
+                  <option value="Sentir-se Útil">Para me sentir útil</option>
+                  <option value="Ocupar Tempo Livre">Para ocupar tempo livre</option>
+                  <option value="Outro">Outro</option>
+                </select>
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorReasons}
+                </div>
+                <span className="red-text">{errors.reasons}</span>
+              </div>
+
+              <div className="input-field col s12">
+                <input
+                  onChange={e => this.setState({
+                    password: e.target.value,
+                    validationErrorPassword: e.target.value === "" ? "Deverá preencher o campo Password Atual" : ""
+                  })}
+                  value={this.state.password}
+                  error={errors.password}
+                  id="password"
+                  type="password"
+                  className={classnames("", {
+                    invalid: errors.password
+                  })}
+                />
+                <label htmlFor="password">Password Atual</label>
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorPassword}
+                </div>
+                <span className="red-text">{errors.password}</span>
+              </div>
+
+              <div className="input-field col s12">
+                <input
+                  onChange={e => this.setState({
+                    password2: e.target.value,
+                    validationErrorPassword2: e.target.value === "" ? "Deverá preencher o campo Password Nova" : ""
+                  })}
+                  value={this.state.password2}
+                  error={errors.password2}
+                  id="password2"
+                  type="password"
+                  className={classnames("", {
+                    invalid: errors.password2
+                  })}
+                />
+                <label htmlFor="password2">Password Nova</label>
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorPassword2}
+                </div>
+                <span className="red-text">{errors.password2}</span>
               </div>
 
             </form>

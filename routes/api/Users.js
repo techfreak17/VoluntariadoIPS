@@ -379,9 +379,11 @@ router.route('/updateUser/:id').post(function (req, res) {
         return res.status(400).json(errors);
       }
 
-      newPassword = req.body.password;
-      var count = Object.keys(newPassword).length
-      if (newPassword !== user.password && count >= 6) {
+      atualPassword = req.body.password;
+      newPassword = req.body.password2;
+      var countAtualPassword = Object.keys(newPassword).length
+      var countNewPassword = Object.keys(newPassword).length
+      if (atualPassword === newPassword && countAtualPassword >= 6 && countNewPassword >= 6) {
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newPassword, salt, (err, hash) => {
             if (err) throw err;
@@ -432,9 +434,11 @@ router.route('/updateUser/:id').post(function (req, res) {
         return res.status(400).json(errors);
       }
 
-      newPassword = req.body.password;
-      var count = Object.keys(newPassword).length
-      if (newPassword !== user.password && count >= 6) {
+      atualPassword = req.body.password;
+      newPassword = req.body.password2;
+      var countAtualPassword = Object.keys(newPassword).length
+      var countNewPassword = Object.keys(newPassword).length
+      if (atualPassword === newPassword && countAtualPassword >= 6 && countNewPassword >= 6) {
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newPassword, salt, (err, hash) => {
             if (err) throw err;
@@ -480,9 +484,11 @@ router.route('/updateUser/:id').post(function (req, res) {
         return res.status(400).json(errors);
       }
 
-      newPassword = req.body.password;
-      var count = Object.keys(newPassword).length
-      if (newPassword !== user.password && count >= 6) {
+      atualPassword = req.body.password;
+      newPassword = req.body.password2;
+      var countAtualPassword = Object.keys(newPassword).length
+      var countNewPassword = Object.keys(newPassword).length
+      if (atualPassword === newPassword && countAtualPassword >= 6 && countNewPassword >= 6) {
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newPassword, salt, (err, hash) => {
             if (err) throw err;

@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-
 const Project = require("../../models/project");
 const User = require("../../models/user");
 const Company = require("../../models/company");
@@ -10,7 +9,7 @@ const createNotification = require("../../Notifications/pushNotifications");
 
 
 // Load input validation
-const validateCreateProject = require("../../validation/createProject")
+const validateCreateProject = require("../../validation/createProject");
 
 // @route POST api/projects/createProject
 // @desc Create Project - Administrator
@@ -27,27 +26,29 @@ router.post("/createProject", (req, res) => {
     if (project) {
       return res.status(400).json({ title: "Project already exists" });
     } else {
-      const newProject = new Project({
-        title: req.body.title,
-        synopsis: req.body.synopsis,
-        intervationArea: req.body.intervationArea,
-        target_audience: req.body.target_audience,
-        objectives: req.body.objectives,
-        description: req.body.description,
-        date: req.body.date,
-        interestAreas: req.body.interestAreas,
-        photo: req.body.photo,
-        observations: req.body.observations,
-        relatedEntities: req.body.relatedEntities,
-        responsibleID: req.body.responsibleID,
-        requiredFormation: req.body.requiredFormation,
-        formation: req.body.formation
-      });
-      createNotification('novoProjecto', req.body.title, 'admin@teste.pt');
-      newProject
-        .save()
-        .then(project => res.json(project))
-        .catch(err => console.log(err));
+      Company.findOne({ name: req.body.responsibleID }).then(company => {
+        const newProject = new Project({
+          title: req.body.title,
+          synopsis: req.body.synopsis,
+          intervationArea: req.body.intervationArea,
+          target_audience: req.body.target_audience,
+          objectives: req.body.objectives,
+          description: req.body.description,
+          date: req.body.date,
+          interestAreas: req.body.interestAreas,
+          photo: req.body.photo,
+          observations: req.body.observations,
+          relatedEntities: req.body.relatedEntities,
+          responsibleID: company.responsibleID,
+          requiredFormation: req.body.requiredFormation,
+          formation: req.body.formation
+        });
+        createNotification('novoProjecto', req.body.title, 'admin@teste.pt');
+        newProject
+          .save()
+          .then(project => res.json(project))
+          .catch(err => console.log(err));
+      })
     }
   });
 });
@@ -78,8 +79,9 @@ router.route('/updateProject/:id').post(function (req, res) {
     if (!project)
       res.status(404).send("data is not found");
     else {
-      project.title = req.body.title;
-      project.synopsis = req.body.synopsis,
+      Company.findOne({ name: req.body.responsibleID }).then(company => {
+        project.title = req.body.title;
+        project.synopsis = req.body.synopsis,
         project.intervationArea = req.body.intervationArea,
         project.target_audience = req.body.target_audience,
         project.objectives = req.body.objectives,
@@ -87,7 +89,8 @@ router.route('/updateProject/:id').post(function (req, res) {
         project.date = (req.body.date) ? req.body.date : null,
         project.interestAreas = req.body.interestAreas,
         project.observations = req.body.observations,
-        project.relatedEntities = req.body.relatedEntities
+        project.relatedEntities = req.body.relatedEntities,
+        project.responsibleID = company.responsibleID
 
       project.updateOne({
         title: project.title,
@@ -100,11 +103,12 @@ router.route('/updateProject/:id').post(function (req, res) {
         interestAreas: project.interestAreas,
         observations: project.observations,
         relatedEntities: project.relatedEntities,
-      }
-      )
+        responsibleID: project.responsibleID
+      })
         .catch(err => {
           res.status(400).send("unable to update the database");
         });
+      })
       createNotification('projectoEditado', project.title, 'admin@teste.pt');
     }
   });

@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import {withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import M from "materialize-css";
 import options from "materialize-css";
 import axios from 'axios';
 import ProjectsRow from "./ProjectsRow"
-
 
 
 class Landing extends Component {
@@ -16,6 +18,10 @@ class Landing extends Component {
     }
 
     componentDidMount() {
+        if (this.props.auth.isAuthenticated) {
+            this.props.history.push("/dashboard");
+            window.location.reload();
+        }else{
         if (window.localStorage) {
             if (!localStorage.getItem('firstLoad')) {
                 localStorage['firstLoad'] = true;
@@ -31,6 +37,7 @@ class Landing extends Component {
             .catch(function (error) {
                 console.log(error);
             })
+        }
     }
 
     render() {
@@ -115,4 +122,17 @@ class Landing extends Component {
         );
     }
 }
-export default Landing;
+
+Landing.propTypes = {
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+    auth: state.auth,
+    errors: state.errors
+});
+
+export default connect(
+    mapStateToProps
+)(withRouter(Landing));

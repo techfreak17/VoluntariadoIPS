@@ -8,6 +8,7 @@ const Company = require("../../models/company");
 const Administrator = require("../../models/administrator");
 const createNotification = require("../../Notifications/pushNotifications");
 
+
 // Load input validation
 const validateCreateProject = require("../../validation/createProject")
 
@@ -42,7 +43,7 @@ router.post("/createProject", (req, res) => {
         requiredFormation: req.body.requiredFormation,
         formation: req.body.formation
       });
-      createNotification('novoProjecto',req.body.title,'admin@teste.pt');
+      createNotification('novoProjecto', req.body.title, 'admin@teste.pt');
       newProject
         .save()
         .then(project => res.json(project))
@@ -104,7 +105,7 @@ router.route('/updateProject/:id').post(function (req, res) {
         .catch(err => {
           res.status(400).send("unable to update the database");
         });
-        createNotification('projectoEditado',project.title,'admin@teste.pt');
+      createNotification('projectoEditado', project.title, 'admin@teste.pt');
     }
   });
 });
@@ -114,11 +115,11 @@ router.route('/updateProject/:id').post(function (req, res) {
 // @access Private
 router.route('/deleteProject/:id').get(function (req, res) {
   Project.findByIdAndRemove({ _id: req.params.id }, function (err, project) {
-    if (err){
+    if (err) {
       res.json(err);
     }
     else {
-      createNotification('projectoRemovido',project.title,'admin@teste.pt');
+      createNotification('projectoRemovido', project.title, 'admin@teste.pt');
       res.json('Successfully removed');
     }
   });
@@ -190,7 +191,7 @@ router.route('/getProjectUserDetails/:id').get(function (req, res) {
             return res.status(400).json({ company: "Such data doesn´t exist" });
           };
         })
-      } else if (user.role === "Administrador") { 
+      } else if (user.role === "Administrador") {
         Administrator.findOne().then(admin => {
           if (admin) {
             res.json(admin);
@@ -219,6 +220,33 @@ router.route('/joinProject/:id').post(function (req, res) {
           };
       })
   });*/
+});
+
+
+router.route('/getProjectVoluntaries/:id').get(function (req, res) {
+  let id = req.params.id;
+  let listID = [];
+  let voluntaries = [];
+  Project.findById(id, function (err, project) {
+    if (project) {
+      listID = project.enroled_IDs;
+      listID.forEach(element => {
+        User.findById(element, function (err, voluntario) {
+          if(voluntario){
+            voluntaries.push(voluntario);
+          }
+          else{
+            return res.status(404).json({voluntario: 'Voluntário nao encontrado'});
+          }
+        });
+      });
+      res.json(voluntaries);
+    }
+    else{
+      return res.status(404).json({project:'Projecto não foi encontrado'});
+    }
+
+  });
 });
 
 module.exports = router;

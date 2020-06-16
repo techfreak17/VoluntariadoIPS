@@ -12,7 +12,7 @@ class Dashboard extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { titles: [{ title: "#Dinamizar", date: "" }, { title: "#Responsabilizar", date: "" }, { title: "#Qualificar", date: "" }, { title: "", date: "" }] };
+        this.state = { slogans: [{ slogan: "#Dinamizar" }, { slogan: "#Responsabilizar" }, { slogan: "#Qualificar" }] };
     }
 
 
@@ -48,8 +48,8 @@ class Dashboard extends Component {
         let titleL = [];
 
         const titleList = () => {
-            for (let i = 0; i < this.state.titles.length; i++) {
-                titleL.push(<Slider obj={this.state.titles[i]} key={i} />);
+            for (let i = 0; i < this.state.slogans.length; i++) {
+                titleL.push(<Slider obj={this.state.slogans[i]} key={i} className="caption left-align" />);
             }
             return titleL;
         };
@@ -66,19 +66,16 @@ class Dashboard extends Component {
                         </div>
                     </div>
                 </div>
-
-                {(() => {
-                    if (this.props.auth.user.role !== "Administrador") {
-                        return (
-                            <div className="container center" style={{ marginTop: 50, marginBottom: 20, backgroundColor: "#FEF4E8", padding: 30, paddingTop: 3, borderRadius: 50, boxShadow: "0 0 10px 10px #23395D" }}>
-                                <h2 style={{ fontFamily: "monospace", fontWeight: "bold", color: "#23395D" }}>Os Meus Projetos</h2>
-                                <div className="carousel carousel-slider center" style={{ borderRadius: 30 }}>
-                                    {titleList()}
-                                </div>
-                            </div>
-                        )
-                    }
-                })()}
+                
+                <div style={{ width: "70%", margin: "auto" }}>
+                    <div className="container-fluid" style={{ marginTop: 50, marginBottom: 20, backgroundColor: "#FEF4E8", padding: 30, borderRadius: 50, boxShadow: "0 0 10px 10px #23395D" }}>
+                        <div className="slider">
+                            <ul className="slides">
+                                {titleList()}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
                 <div className="container" style={{ marginBottom: 70, display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <a className="img" href="https://moodle.ips.pt/1920/" rel="noopener noreferrer" target="_blank" style={{ paddingRight: 100 }}>
@@ -98,10 +95,6 @@ class Dashboard extends Component {
         );
     }
 }
-document.addEventListener('DOMContentLoaded', function () {
-    var elems = document.querySelectorAll('.carousel');
-    M.Carousel.init(elems, options);
-});
 
 Dashboard.propTypes = {
     logoutUser: PropTypes.func.isRequired,

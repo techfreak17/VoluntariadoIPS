@@ -228,12 +228,15 @@ router.route('/joinProject/:id').post(function (req, res) {
 
 
 router.route('/getProjectVoluntaries/:id').get(function (req, res) {
+  console.log(req.params.id);
   let id = req.params.id;
   let listID = [];
   let voluntaries = [];
   Project.findById(id, function (err, project) {
     if (project) {
+      console.log("Entrou");
       listID = project.enroled_IDs;
+      console.log(listID);
       listID.forEach(element => {
         User.findById(element, function (err, voluntario) {
           if(voluntario){

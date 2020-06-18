@@ -2,12 +2,11 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { rowVoluntary } from './rowVoluntary';
+import  RowVoluntary  from './RowVoluntary.js';
 //get the project, which has all of the voluntaries ID's
 //GET the voluntary by id
 //Repeat
-class listVoluntaries extends Component {
+class ListVoluntaries extends Component {
 
   constructor(props) {
     super(props);
@@ -17,7 +16,8 @@ class listVoluntaries extends Component {
   }
 
   componentDidMount() {
-    axios.get('/api/projects/getProjectVoluntaries/'+this.props.match.params.id)//add the project id
+    console.log(this.props);
+    /*axios.get('/api/projects/getProjectVoluntaries/'+this.props.match.params.id)//add the project id
       .then(response => {
         this.setState({
           voluntaries: response.data
@@ -25,13 +25,13 @@ class listVoluntaries extends Component {
       })
       .catch(function (error) {
         console.log(error);
-      })
+      })*/
   }
 
   
-  rowVoluntary() {
+  rowVolun() {
     return this.state.voluntaries.map(function (object, i) {
-      return <rowVoluntary obj={object} key={i} />;
+      return <RowVoluntary obj={object} key={i} />;
     });
   }
 
@@ -41,7 +41,7 @@ class listVoluntaries extends Component {
       <div>
         <table>
           <tbody>
-            {this.rowVoluntary()}
+            {this.rowVolun()}
           </tbody>
         </table>
       </div>
@@ -49,7 +49,7 @@ class listVoluntaries extends Component {
   }
 }
 
-listVoluntaries.propTypes = {
+ListVoluntaries.propTypes = {
   auth: PropTypes.object.isRequired
 };
 
@@ -59,5 +59,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { listVoluntaries }
-)(listVoluntaries);
+  { ListVoluntaries }
+)(ListVoluntaries);

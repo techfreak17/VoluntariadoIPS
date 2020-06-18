@@ -13,7 +13,7 @@ class Navbar extends Component {
 
         this.state = {
             username: "",
-            email:"",
+            email: "",
             id: this.props.auth.user.id
         }
     }
@@ -58,8 +58,8 @@ class Navbar extends Component {
                                 <li><div className="user-view">
                                     <div className="background">
                                         <img src={require('./images/Voluntariado.png')}
-                                         alt="(Não esquecer de verificar no spam)"
-                                         className="img-responsive" />
+                                            alt="(Não esquecer de verificar no spam)"
+                                            className="img-responsive" />
                                     </div>
                                     <p><img className="circle" alt="(Não esquecer de verificar no spam)" src={require('./images/avatar.jpg')} /></p>
                                     <p><span className="white-text name">{this.state.username}</span></p>
@@ -72,9 +72,9 @@ class Navbar extends Component {
                             <p data-target="slide-out" className="sidenav-trigger show-on-large right"><i className="material-icons">menu</i></p>
                             <PushNotificationsToast></PushNotificationsToast>
                             <li><a className="navbar-brand" href="/dashboard"><img src={require('./images/logo.png')}
-                                    alt="(Não esquecer de verificar no spam)"
-                                    className="img-responsive"
-                                    style={{ position: "absolute", left: 0, height: "auto", width: "auto", maxWidth: 200 }} /></a></li>
+                                alt="(Não esquecer de verificar no spam)"
+                                className="img-responsive"
+                                style={{ position: "absolute", left: 0, height: "auto", width: "auto", maxWidth: 200 }} /></a></li>
                         </div>
                     </nav>
                 ) : (

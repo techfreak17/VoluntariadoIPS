@@ -216,17 +216,15 @@ router.route('/getProjectVoluntaries/:id').get(function (req, res) {
   let voluntaries = [];
   Project.findById(id, function (err, project) {
     if (project) {
-      console.log("Entrou");
       listID = project.enroled_IDs;
       listID.forEach(element => {
-        console.log(element);
-        User.find({_id: mongoose.Types.ObjectId(element)}, function (err, voluntario) {
-          console.log(voluntario);
-          if(voluntario){
-            voluntaries.push(voluntario);
+        User.find({_id: mongoose.Types.ObjectId(element)}, function (err, user) {
+          console.log(user);
+          if(user){
+            voluntaries.push(user);
           }
           else{
-            return res.status(404).json({voluntario: 'Voluntário nao encontrado'});
+            return res.status(404).json({user: 'User não encontrado'});
           }
         });
       });

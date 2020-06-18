@@ -68,18 +68,6 @@ class ProjectDetails extends Component {
       .catch(error => console.log(error));
   }
 
-  returnList = () => {
-    console.log(this.state.role);
-    console.log(this.props);
-    if(this.state.role==="Empresa"||this.state.role==="Admin")
-      this.setState({on: !this.state.on})
-
-    else
-     console.log("Não tens autorização");
-
-     console.log(this.state.on);
-  }
-
   render() {
     return (
       <div>
@@ -119,11 +107,9 @@ class ProjectDetails extends Component {
               <p style={{ color: "#000000" }}><b>Área Intervenção:</b> {this.state.intervationArea}</p>
               <p style={{ color: "#000000" }}><b>Observações:</b> {this.state.observations}</p>
               <ul id="friendsList" style={{ color: "#000000" }}><b>Áreas:</b></ul>
-              <button onClick={this.returnList}>Ver Voluntários</button>
-              <div>
-                {this.state.on && <ListVoluntaries/>}
-              </div>
-            </div>
+              <Link to={"/listVoluntary/" + this.props.match.params.id}
+              className="btn btn-large waves-effect waves-light hoverable black center">Ver Voluntários</Link>
+            </div><br></br>
             <Link to="/listProjects" style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold", }}
               className="btn btn-large waves-effect waves-light hoverable black center">Voltar</Link>
           </div>

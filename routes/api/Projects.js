@@ -6,6 +6,7 @@ const User = require("../../models/user");
 const Company = require("../../models/company");
 const Administrator = require("../../models/administrator");
 const createNotification = require("../../Notifications/pushNotifications");
+var mongoose = require('mongoose');
 
 
 // Load input validation
@@ -209,26 +210,7 @@ router.route('/getProjectUserDetails/:id').get(function (req, res) {
   });
 });
 
-// @route POST api/project/joinProject/:id
-// @desc Join Project
-// @access Private
-router.route('/joinProject/:id').post(function (req, res) {
-  console.log(req);
-  /*let id = req.params.id;
-  User.findById(id, function (err, user) {
-      Voluntary.findOne({ userID: user._id }).then(voluntary => {
-          if (voluntary) {
-              res.json(voluntary);
-          } else {
-              return res.status(400).json({ user: "Such data doesn´t exist" });
-          };
-      })
-  });*/
-});
-
-
 router.route('/getProjectVoluntaries/:id').get(function (req, res) {
-  console.log(req.params.id);
   let id = req.params.id;
   let listID = [];
   let voluntaries = [];
@@ -236,9 +218,10 @@ router.route('/getProjectVoluntaries/:id').get(function (req, res) {
     if (project) {
       console.log("Entrou");
       listID = project.enroled_IDs;
-      console.log(listID);
       listID.forEach(element => {
-        User.findById(element, function (err, voluntario) {
+        console.log(element);
+        User.find({_id: mongoose.Types.ObjectId(element)}, function (err, voluntario) {
+          console.log(voluntario);
           if(voluntario){
             voluntaries.push(voluntario);
           }
@@ -250,7 +233,7 @@ router.route('/getProjectVoluntaries/:id').get(function (req, res) {
       res.json(voluntaries);
     }
     else{
-      return res.status(404).json({project:'Projecto não foi encontrado'});
+      return res.status(404).json({project:'Projeto não foi encontrado'});
     }
 
   });

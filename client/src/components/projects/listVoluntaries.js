@@ -17,7 +17,7 @@ class ListVoluntaries extends Component {
 
   componentDidMount() {
     console.log(this.props);
-    /*axios.get('/api/projects/getProjectVoluntaries/'+this.props.match.params.id)//add the project id
+    axios.get('/api/projects/getProjectVoluntaries/'+ this.props.match.params.id)//add the project id
       .then(response => {
         this.setState({
           voluntaries: response.data
@@ -25,7 +25,7 @@ class ListVoluntaries extends Component {
       })
       .catch(function (error) {
         console.log(error);
-      })*/
+      })
   }
 
   

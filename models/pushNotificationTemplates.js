@@ -53,6 +53,10 @@ const PushNotificationTemplatesSchema = new Schema({
     sairProjeto:{
         type: String,
         default: 'Saiu do projeto {{ title }}.'
+    },
+    editarPerfil:{
+        type: String,
+        default: 'Editou o seu perfil.'
     }
 });
 module.exports = PushNotificationTemplates = mongoose.model("PushNotificationTemplates", PushNotificationTemplatesSchema);

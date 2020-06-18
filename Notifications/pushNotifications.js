@@ -47,6 +47,9 @@ module.exports = function createNotification(type, texto, email) {
     case 'sairProjeto':
       notification = buildnotification(type, templates.sairProjeto, texto, email);
       break;
+    case 'editarPerfil':
+      notification = buildnotification(type, templates.editarPerfil, texto, email);
+      break;
     default:
       console.log("failed to find a possible type.")
   }

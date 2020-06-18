@@ -16,6 +16,7 @@ const validateEditInputVoluntaryProfileUser = require("../../validation/editVolu
 const validateEditInputAdminProfileUser = require("../../validation/editAdminProfileUser");
 const validateLoginInput = require("../../validation/login");
 const validatePasswordReset = require("../../validation/recover");
+const createNotification = require("../../Notifications/pushNotifications");
 
 // Load User model
 const User = require("../../models/user");
@@ -394,6 +395,7 @@ router.route('/updateUser/:id').post(function (req, res) {
               .catch(err => {
                 res.status(400).send("unable to update the database");
               });
+
           })
         })
       }

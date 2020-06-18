@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 var mongoose = require('mongoose');
 
+const createNotification = require("../../Notifications/pushNotifications");
+
 // Load User model
 const Voluntary = require("../../models/voluntary");
 const Project = require("../../models/project");
@@ -36,6 +38,7 @@ router.route('/joinProject/:id').post(function (req, res) {
                     voluntary.save();
                     project.enroled_IDs.push(user._id);
                     project.save();
+                    createNotification('entrarProjeto', project.title, user.email);
                 })
             })
         }
@@ -55,6 +58,7 @@ router.route('/unjoinProject/:id').post(function (req, res) {
                     voluntary.save();
                     project.enroled_IDs.pull(user._id);
                     project.save();
+                    createNotification('sairProjeto', project.title, user.email);
                 })
             })
         }

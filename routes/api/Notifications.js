@@ -68,8 +68,4 @@ router.post("/createNotification", (req, res) => {
 });
 
 
-//createNotification('semVagas','\"Ajudar o Ambiente\"','180221102@estudantes.ips.pt');
-//createNotification('confirmarEmail','', '180221102@estudantes.ips.pt');
-//getNotification('180221102@estudantes.ips.pt');
-
 module.exports = router;

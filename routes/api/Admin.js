@@ -7,6 +7,7 @@ const validateRegisterInputVoluntary = require("../../validation/registerVolunta
 const validateRegisterInputCompany = require("../../validation/register");
 const validateEditInputVoluntary = require("../../validation/editVoluntary");
 const validateEditInputCompany = require("../../validation/editCompany");
+const createNotification = require("../../Notifications/pushNotifications");
 
 // Load User model
 const User = require("../../models/user");
@@ -90,10 +91,11 @@ router.post("/createVoluntaryUser", (req, res) => {
                   userID: user._id
                 });
                 newVoluntary
-                .save()
-                .then(voluntary => res.json(voluntary))
-                .catch(err => console.log(err));
+                  .save()
+                  .then(voluntary => res.json(voluntary))
+                  .catch(err => console.log(err));
               });
+              createNotification('novoVoluntario', req.body.name, 'admin@teste.pt');
             })
             .catch(err => console.log(err));
         });
@@ -149,10 +151,11 @@ router.post("/createCompanyUser", (req, res) => {
                   listProjects: req.body.listProjects
                 });
                 newCompany
-                .save()
-                .then(company => res.json(company))
-                .catch(err => console.log(err));
+                  .save()
+                  .then(company => res.json(company))
+                  .catch(err => console.log(err));
               });
+              createNotification('novaEntidade', req.body.companyName, 'admin@teste.pt');
             })
             .catch(err => console.log(err));
         });
@@ -219,6 +222,7 @@ router.route('/updateUser/:id').post(function (req, res) {
             .catch(err => {
               res.status(400).send("unable to update the database");
             });
+          createNotification('editarVoluntario', req.body.name, 'admin@teste.pt');
         } else {
           res.status(404).send("data is not found");
         }
@@ -243,34 +247,35 @@ router.route('/updateUser/:id').post(function (req, res) {
           res.status(400).send("unable to update the database");
         });
 
-        Company.findOne({ email: oldEmail }).then(company => {
-          if (company) {
-            company.name = req.body.name;
-            company.email = req.body.email;
-            company.phone = req.body.phone;
-            company.address = req.body.address;
-            company.birthDate = req.body.birthDate;
-            company.companyName = req.body.companyName;
-            company.companyAddress = req.body.companyAddress;
-            company.observations = req.body.observations;
+      Company.findOne({ email: oldEmail }).then(company => {
+        if (company) {
+          company.name = req.body.name;
+          company.email = req.body.email;
+          company.phone = req.body.phone;
+          company.address = req.body.address;
+          company.birthDate = req.body.birthDate;
+          company.companyName = req.body.companyName;
+          company.companyAddress = req.body.companyAddress;
+          company.observations = req.body.observations;
 
-            company.updateOne({
-              name: company.name,
-              email: company.email,
-              phone: company.phone,
-              address: company.address,
-              birthDate: company.birthDate,
-              companyName: company.companyName,
-              companyAddress: company.companyAddress,
-              observations: company.observations,
-            })
-              .catch(err => {
-                res.status(400).send("unable to update the database");
-              });
-          } else {
-            res.status(404).send("data is not found");
-          }
-        });
+          company.updateOne({
+            name: company.name,
+            email: company.email,
+            phone: company.phone,
+            address: company.address,
+            birthDate: company.birthDate,
+            companyName: company.companyName,
+            companyAddress: company.companyAddress,
+            observations: company.observations,
+          })
+            .catch(err => {
+              res.status(400).send("unable to update the database");
+            });
+          createNotification('editarEntidade', req.body.companyName, 'admin@teste.pt');
+        } else {
+          res.status(404).send("data is not found");
+        }
+      });
     }
   });
 });
@@ -288,11 +293,13 @@ router.route('/deleteUser/:id').get(function (req, res) {
         Voluntary.findOneAndRemove({ email: user.email }, function (err, voluntary) {
           if (err) res.json(err);
           else res.json('Successfully removed');
+          createNotification('apagarVoluntario', voluntary.name, 'admin@teste.pt');
         });
       } else if (user.role === "Empresa") {
         Company.findOneAndRemove({ email: user.email }, function (err, company) {
           if (err) res.json(err);
           else res.json('Successfully removed');
+          createNotification('apagarEntidade', company.name, 'admin@teste.pt');
         });
       }
     }

@@ -47,7 +47,7 @@ class PushNotificationToast extends React.Component {
     notify = () => {
         const notif = this.state.msgs[this.state.position];
         if (notif) {
-            toast(notif.body, { position: "bottom-right", onClose: () => this.markRead(notif) });
+            toast(notif.body, { position: "bottom-right",  onClose: () => this.markRead(notif) });
             this.setState({
                 position: this.state.position + 1,
             });
@@ -60,7 +60,7 @@ class PushNotificationToast extends React.Component {
     notifyRead = () => {
         const notif = this.state.readMsgs[this.state.readPos];
         if (notif) {
-            toast(notif.body, { position: "bottom-right" });
+            toast(notif.body, { position: "bottom-right"});
             this.setState({ readPos: this.state.readPos + 1 });
         } else {
             toast('Não existem mais notificações', { position: "bottom-right" });
@@ -74,7 +74,7 @@ class PushNotificationToast extends React.Component {
                 <ul id="nav-mobile" className="right" >
                     <li><button onClick={this.notify} style={{ backgroundColor: "transparent", color: "white", border: "none" }}><i className="material-icons">email</i></button></li>
                     <li><button onClick={this.notifyRead} style={{ backgroundColor: "transparent", color: "white", border: "none" }}><i className="material-icons">drafts</i></button></li>
-                    <ToastContainer autoClose={false} />
+                    <ToastContainer autoClose={10000} style={{width:"auto"}} />
                 </ul>
         );
     }

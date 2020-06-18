@@ -20,9 +20,9 @@ module.exports = function validateRegisterInputCompany(data) {
     var firstNumber = String(number).charAt(0);
     firstNumber = Number(firstNumber); 
     birthDate1 = data.birthDate.split("-");
-    day = birthDate1[0];
+    year = birthDate1[0];
     month = birthDate1[1];
-    year = birthDate1[2];
+    day = birthDate1[2];
 
     if(day < 1 || day > 31){
         errors.birthDate = "Dia Inválido";

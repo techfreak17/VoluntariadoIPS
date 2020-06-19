@@ -369,17 +369,11 @@ router.route('/getUser/:id').get(function (req, res) {
 // @access Private
 router.route('/updateUser/:id').post(function (req, res) {
   User.findById(req.params.id, function (err, user) {
-
-    if (!user)
+    if (!user){
       res.status(404).send("data is not found");
+    }
 
     if (user.role === "Voluntário") {
-      const { errors, isValid } = validateEditInputVoluntaryProfileUser(req.body);
-      // Check validation
-      if (!isValid) {
-        return res.status(400).json(errors);
-      }
-
       atualPassword = req.body.password;
       newPassword = req.body.password2;
       var countAtualPassword = Object.keys(newPassword).length
@@ -395,7 +389,6 @@ router.route('/updateUser/:id').post(function (req, res) {
               .catch(err => {
                 res.status(400).send("unable to update the database");
               });
-
           })
         })
       }
@@ -424,17 +417,13 @@ router.route('/updateUser/:id').post(function (req, res) {
             .catch(err => {
               res.status(400).send("unable to update the database");
             });
+            createNotification('editarPerfil', voluntary.name, user.email);
         } else {
           res.status(404).send("data is not found");
         }
       });
 
     } else if (user.role === "Empresa") {
-      const { errors, isValid } = validateEditInputCompanyProfileUser(req.body);
-      // Check validation
-      if (!isValid) {
-        return res.status(400).json(errors);
-      }
 
       atualPassword = req.body.password;
       newPassword = req.body.password2;
@@ -475,6 +464,7 @@ router.route('/updateUser/:id').post(function (req, res) {
             .catch(err => {
               res.status(400).send("unable to update the database");
             });
+          createNotification('editarPerfil', company.name, user.email);
         } else {
           res.status(404).send("data is not found");
         }
@@ -521,6 +511,7 @@ router.route('/updateUser/:id').post(function (req, res) {
             .catch(err => {
               res.status(400).send("unable to update the database");
             });
+            createNotification('editarPerfil', admin.name, user.email);
         } else {
           res.status(404).send("data is not found");
         }

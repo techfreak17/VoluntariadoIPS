@@ -122,8 +122,12 @@ router.route('/deleteProject/:id').get(function (req, res) {
       res.json(err);
     }
     else {
-      createNotification('projetoRemovido', project.title, 'admin@teste.pt');
-      res.json('Successfully removed');
+      User.findById( req.body.userID, function (err, user) {
+        if (user) {
+          createNotification('projetoRemovido', project.title, user.email);
+          res.json('Successfully removed');
+        }
+      });
     }
   });
 });

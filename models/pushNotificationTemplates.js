@@ -57,6 +57,30 @@ const PushNotificationTemplatesSchema = new Schema({
     editarPerfil:{
         type: String,
         default: 'Editou o seu perfil.'
+    },
+    proporProjetoAdmin:{
+        type: String,
+        default: 'Nova Proposta de Projeto: {{ title }}'
+    },
+    proporProjetoEntidade:{
+        type: String,
+        default: 'Proposta de Projeto: {{ title }} enviada com sucesso.'
+    },
+    aceitarProjetoAdmin:{
+        type: String,
+        default: 'Proposta de Projeto: {{ title }} aceite com sucesso.'
+    },
+    recusarProjetoAdmin:{
+        type: String,
+        default: 'Proposta de Projeto: {{ title }} recusada com sucesso.'
+    },
+    aceitarProjetoEntidade:{
+        type: String,
+        default: 'A sua proposta {{ title }} foi aceite.'
+    },
+    recusarProjetoEntidade:{
+        type: String,
+        default: 'A sua proposta {{ title }} foi removida/recusada.'
     }
 });
 module.exports = PushNotificationTemplates = mongoose.model("PushNotificationTemplates", PushNotificationTemplatesSchema);

@@ -15,7 +15,10 @@ class CompanyProjectsRow extends Component {
   }
 
   removeProject() {
-    axios.get('/api/projects/deleteProject/' + this.props.obj._id)
+    const newObj = {
+      userID: this.props.auth.user.id,
+    };
+    axios.get('/api/projects/deleteProject/' + this.props.obj._id, newObj)
       .catch(err => console.log(err))
     window.location.reload();
   }

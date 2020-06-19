@@ -50,6 +50,24 @@ module.exports = function createNotification(type, texto, email) {
     case 'editarPerfil':
       notification = buildnotification(type, templates.editarPerfil, texto, email);
       break;
+    case 'proporProjetoAdmin':
+      notification = buildnotification(type, templates.proporProjetoAdmin, texto, email);
+      break;
+    case 'proporProjetoEntidade':
+      notification = buildnotification(type, templates.proporProjetoEntidade, texto, email);
+      break;
+    case 'aceitarProjetoAdmin':
+      notification = buildnotification(type, templates.aceitarProjetoAdmin, texto, email);
+      break;
+    case 'recusarProjetoAdmin':
+      notification = buildnotification(type, templates.recusarProjetoAdmin, texto, email);
+      break;
+    case 'aceitarProjetoEntidade':
+      notification = buildnotification(type, templates.aceitarProjetoEntidade, texto, email);
+      break;
+    case 'recusarProjetoEntidade':
+      notification = buildnotification(type, templates.recusarProjetoEntidade, texto, email);
+      break;
     default:
       console.log("failed to find a possible type.")
   }

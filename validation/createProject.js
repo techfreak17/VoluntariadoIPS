@@ -24,25 +24,19 @@ module.exports = function validateCreateProject(data) {
     month = date[1];
     minutes = data2[1];
 
+    let numberYear = new Int32Array; 
+    numberYear = year
+
 
     let currentDate = new Date();
     year1 = currentDate.getFullYear();
-    month1 = currentDate.getMonth();
-    day1 = currentDate.getDay();
-    hour1 = currentDate.getHours();
-    minutes1 = currentDate.getMinutes();
-
     
     if(year<year1){
         errors.date = "Ano Inválido";
     }
 
-    if(month<month1){
-        errors.date = "Mês Inválido";
-    }
-
-    if(day<day1){
-        errors.date = "Dia Inválido";
+    if(numberYear>4){
+        errors.date = "Ano Inválido";
     }
 
     //title checks

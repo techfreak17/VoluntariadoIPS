@@ -27,7 +27,6 @@ module.exports = function validateCreateProject(data) {
     let numberYear = new Int32Array; 
     numberYear = year
 
-
     let currentDate = new Date();
     year1 = currentDate.getFullYear();
     
@@ -35,7 +34,7 @@ module.exports = function validateCreateProject(data) {
         errors.date = "Ano Inválido";
     }
 
-    if(numberYear>4){
+    if(numberYear.length > 4){
         errors.date = "Ano Inválido";
     }
 

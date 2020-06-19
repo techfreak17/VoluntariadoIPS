@@ -117,17 +117,13 @@ router.route('/updateProject/:id').post(function (req, res) {
 // @desc Delete Project - Administrator
 // @access Private
 router.route('/deleteProject/:id').get(function (req, res) {
-  Project.findByIdAndRemove({ _id: req.params.id }, function (err, project) {
+  Project.findById({ _id: req.params.id }, function (err, project) {
     if (err) {
       res.json(err);
     }
     else {
-      User.findById( req.body.userID, function (err, user) {
-        if (user) {
-          createNotification('projetoRemovido', project.title, user.email);
-          res.json('Successfully removed');
-        }
-      });
+      project.deleteOne();
+      createNotification('projetoRemovido', project.title, 'admin@teste.pt');
     }
   });
 });

@@ -5,6 +5,7 @@ const Project = require("../../models/project");
 const User = require("../../models/user");
 const Company = require("../../models/company");
 const Administrator = require("../../models/administrator");
+const Voluntary = require("../../models/voluntary");
 const createNotification = require("../../Notifications/pushNotifications");
 var mongoose = require('mongoose');
 
@@ -212,23 +213,17 @@ router.route('/getProjectUserDetails/:id').get(function (req, res) {
 
 router.route('/getProjectVoluntaries/:id').get(function (req, res) {
   let id = req.params.id;
-  let listID = [];
-  let voluntaries = [];
   Project.findById(id, function (err, project) {
     if (project) {
-      listID = project.enroled_IDs;
-      listID.forEach(element => {
-        User.find({_id: mongoose.Types.ObjectId(element)}, function (err, user) {
-          console.log(user);
+        Voluntary.find({'userID': { $in: project.enroled_IDs}}, function (err, user) {
           if(user){
-            voluntaries.push(user);
+            res.json(user);
           }
           else{
             return res.status(404).json({user: 'User não encontrado'});
           }
         });
-      });
-      res.json(voluntaries);
+      
     }
     else{
       return res.status(404).json({project:'Projeto não foi encontrado'});

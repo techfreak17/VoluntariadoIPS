@@ -1,20 +1,18 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-
+import { Link } from "react-router-dom";
 
 class RowVoluntary extends Component {
 
   render() {
     return (
-      <tr>
-        <td>
+        <tr>
           {this.props.obj.name}
-        </td>
-        <td>
-          <button onClick={this.props.history.push('/getUser/'+this.props.obj.userID)} className="btn btn-danger" style={{ width: "auto", backgroundColor: "green", marginLeft: 40, color: "white" }}><i className="material-icons">Ver Utilizador</i></button>
-        </td>
-      </tr>
+          <Link to={"/getUser/" + this.props.obj.userID}
+              className="btn btn-large waves-effect waves-light hoverable black center">Ver Voluntários</Link>
+        </tr>
+        
     );
   }
 }

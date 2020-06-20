@@ -12,7 +12,7 @@ const PushNotificationTemplatesSchema = new Schema({
     },
     projetoEditado: {
         type: String,
-        default: 'O projeto {{ title }} do qual faz parte sofreu alterações.'
+        default: 'O projeto {{ title }} sofreu alterações.'
     },
     novoProjeto: {
         type: String,
@@ -68,11 +68,11 @@ const PushNotificationTemplatesSchema = new Schema({
     },
     aceitarProjetoAdmin:{
         type: String,
-        default: 'Proposta de Projeto: {{ title }} aceite com sucesso.'
+        default: 'Proposta de Projeto: {{ title }} aceite.'
     },
     recusarProjetoAdmin:{
         type: String,
-        default: 'Proposta de Projeto: {{ title }} recusada com sucesso.'
+        default: 'Proposta de Projeto: {{ title }} recusada.'
     },
     aceitarProjetoEntidade:{
         type: String,

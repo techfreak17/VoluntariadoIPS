@@ -6,6 +6,7 @@ import axios from 'axios';
 import PushNotificationsToast from "../pushNotifications/PushNotificationToast.js"
 import M from "materialize-css";
 import options from "materialize-css";
+import SideMenu from "./SideMenu.js";
 
 class Navbar extends Component {
     constructor(props) {
@@ -53,22 +54,8 @@ class Navbar extends Component {
                         backgroundColor: "#23395D",
                         zIndex: "10"
                     }}>
-                        <div className="nav-wrapper">
-                            <ul id="slide-out" className="sidenav">
-                                <li><div className="user-view">
-                                    <div className="background">
-                                        <img src={require('./images/Voluntariado.png')}
-                                         alt="(Não esquecer de verificar no spam)"
-                                         className="img-responsive" />
-                                    </div>
-                                    <p><img className="circle" alt="(Não esquecer de verificar no spam)" src={require('./images/avatar.jpg')} /></p>
-                                    <p><span className="white-text name">{this.state.username}</span></p>
-                                    <p><span className="white-text email">{this.state.email}</span></p>
-                                </div></li>
-                                <li><a href={"/baseProfile/" + this.state.id}><i className="material-icons left">person</i>Perfil</a></li>
-                                <li><a href={"/baseProfile/" + this.state.id}><i className="material-icons left">collections</i>Estatísticas</a></li>
-                                <li><button onClick={this.onLogoutClick} className="blue btn" style={{ borderRadius: 10, marginLeft: 12, marginBottom: 5 }}>Sair</button></li>
-                            </ul>
+                       <div className="nav-wrapper">
+                            <SideMenu username={this.state.username} email={this.state.email} logout={this.onLogoutClick}></SideMenu>
                             <p data-target="slide-out" className="sidenav-trigger show-on-large right"><i className="material-icons">menu</i></p>
                             <PushNotificationsToast></PushNotificationsToast>
                             <li><a className="navbar-brand" href="/dashboard"><img src={require('./images/logo.png')}

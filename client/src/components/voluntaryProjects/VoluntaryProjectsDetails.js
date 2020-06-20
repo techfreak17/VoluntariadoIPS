@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
@@ -65,6 +64,10 @@ class VoluntaryProjectsDetails extends Component {
       .catch(error => console.log(error));
   }
 
+  goBack() {
+    window.history.back();
+  }
+
   render() {
     return (
       <div>
@@ -105,8 +108,8 @@ class VoluntaryProjectsDetails extends Component {
               <p style={{color:"#000000"}}><b>Observações:</b> {this.state.observations}</p>
               <ul id="friendsList" style={{color:"#000000"}}><b>Áreas:</b></ul>
             </div>
-            <Link to="/listProjectsVoluntary" style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold", }}
-              className="btn btn-large waves-effect waves-light hoverable black center">Voltar</Link>
+            <button onClick={this.goBack} style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold", }}
+              className="btn btn-large waves-effect waves-light hoverable black center">Voltar</button>
           </div>
         </div>
       </div>

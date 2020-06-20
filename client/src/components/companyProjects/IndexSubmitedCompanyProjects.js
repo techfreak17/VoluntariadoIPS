@@ -58,7 +58,7 @@ class IndexSubmitedCompanyProjects extends Component {
         return (
             <div className="container" style={{ paddingBottom: 70 }}>
                 <div>
-                    <h1 className="center">Projetos sob Análise</h1>
+                    <h1 className="center"><b>Projetos sob Análise</b></h1>
                     <p className="grey-text text-darken-1">
                         <a href="/dashboard" className="btn-flat waves-effect">
                             <i className="material-icons left">keyboard_backspace</i>
@@ -67,7 +67,7 @@ class IndexSubmitedCompanyProjects extends Component {
                     </p>
                     <form onSubmit={this.onSubmit}>
                         <input id="myInput" type="text" placeholder="Pesquisar..." name="search" onChange={this.onChangeSearch} style={{ borderBottom: "3px solid #23395D" }}></input>
-                        <button type="submit" className="btn waves-effect waves-light hoverable" style={{ backgroundColor: "#DDDDDD", color: "black", height: 35 }}>Pesquisar</button>
+                        <button type="submit" className="btn waves-effect waves-light hoverable" style={{ backgroundColor: "#DDDDDD", color: "black", height: 35, fontWeight:"bolder" }}>Pesquisar</button>
                     </form>
                     <table className="table table-striped" style={{ marginTop: 20 }}>
                         <thead>

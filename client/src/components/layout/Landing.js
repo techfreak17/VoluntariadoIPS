@@ -4,13 +4,16 @@ import M from "materialize-css";
 import options from "materialize-css";
 import axios from 'axios';
 import ProjectsRow from "./ProjectsRow"
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
 
 
 
 class Landing extends Component {
     constructor(props) {
         super(props);
-        this.state = { 
+        this.state = {
             project: [{ title: "", date: "", synopsis: "" }, { title: "", date: "", synopsis: "" }, { title: "", date: "", synopsis: "" }],
         };
     }
@@ -31,6 +34,11 @@ class Landing extends Component {
             .catch(function (error) {
                 console.log(error);
             })
+
+        const { user } = this.props.auth;
+        if(user.id !== undefined){
+            window.location.replace("http://localhost:3000/dashboard");
+        }
     }
 
     render() {
@@ -115,4 +123,17 @@ class Landing extends Component {
         );
     }
 }
-export default Landing;
+
+Landing.propTypes = {
+    logoutUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+    auth: state.auth
+});
+
+export default connect(
+    mapStateToProps,
+    { logoutUser }
+)(Landing);

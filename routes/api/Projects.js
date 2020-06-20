@@ -78,37 +78,66 @@ router.route('/updateProject/:id').post(function (req, res) {
     if (!project)
       res.status(404).send("data is not found");
     else {
-      Company.findOne({ name: req.body.responsibleID }).then(company => {
-        project.title = req.body.title;
-        project.synopsis = req.body.synopsis,
-        project.intervationArea = req.body.intervationArea,
-        project.target_audience = req.body.target_audience,
-        project.objectives = req.body.objectives,
-        project.description = req.body.description,
-        project.date = (req.body.date) ? req.body.date : null,
-        project.interestAreas = req.body.interestAreas,
-        project.observations = req.body.observations,
-        project.relatedEntities = req.body.relatedEntities,
-        project.responsibleID = company.responsibleID
+      if (req.body.responsibleID !== undefined) {
+        Company.findOne({ name: req.body.responsibleID }).then(company => {
+          project.title = req.body.title;
+          project.synopsis = req.body.synopsis,
+            project.intervationArea = req.body.intervationArea,
+            project.target_audience = req.body.target_audience,
+            project.objectives = req.body.objectives,
+            project.description = req.body.description,
+            project.date = (req.body.date) ? req.body.date : null,
+            project.interestAreas = req.body.interestAreas,
+            project.observations = req.body.observations,
+            project.relatedEntities = req.body.relatedEntities,
+            project.responsibleID = company.responsibleID
 
-      project.updateOne({
-        title: project.title,
-        synopsis: project.synopsis,
-        intervationArea: project.intervationArea,
-        target_audience: project.target_audience,
-        objectives: project.objectives,
-        description: project.description,
-        date: project.date,
-        interestAreas: project.interestAreas,
-        observations: project.observations,
-        relatedEntities: project.relatedEntities,
-        responsibleID: project.responsibleID
-      })
-        .catch(err => {
-          res.status(400).send("unable to update the database");
-        });
-      })
-      createNotification('projetoEditado', project.title, 'admin@teste.pt');
+          project.updateOne({
+            title: project.title,
+            synopsis: project.synopsis,
+            intervationArea: project.intervationArea,
+            target_audience: project.target_audience,
+            objectives: project.objectives,
+            description: project.description,
+            date: project.date,
+            interestAreas: project.interestAreas,
+            observations: project.observations,
+            relatedEntities: project.relatedEntities,
+            responsibleID: project.responsibleID
+          })
+            .catch(err => {
+              res.status(400).send("unable to update the database");
+            });
+        })
+        createNotification('projetoEditado', project.title, 'admin@teste.pt');
+      } else {
+        project.title = (req.body.title) ? req.body.title : null;
+        project.synopsis = (req.body.synopsis) ? req.body.title : null,
+          project.intervationArea = (req.body.intervationArea) ? req.body.intervationArea : null,
+          project.target_audience = (req.body.target_audience) ? req.body.target_audience : null,
+          project.objectives = (req.body.objectives) ? req.body.objectives : null,
+          project.description = (req.body.description) ? req.body.description : null,
+          project.date = (req.body.date) ? req.body.date : null,
+          project.interestAreas = (req.body.interestAreas) ? req.body.interestAreas : null,
+          project.observations = (req.body.observations) ? req.body.observations : null,
+          project.relatedEntities = (req.body.relatedEntities) ? req.body.relatedEntities : null
+
+        project.updateOne({
+          title: project.title,
+          synopsis: project.synopsis,
+          intervationArea: project.intervationArea,
+          target_audience: project.target_audience,
+          objectives: project.objectives,
+          description: project.description,
+          date: project.date,
+          interestAreas: project.interestAreas,
+          observations: project.observations,
+          relatedEntities: project.relatedEntities,
+        })
+          .catch(err => {
+            res.status(400).send("unable to update the database");
+          });
+      }
     }
   });
 });

@@ -3,8 +3,10 @@ import axios from 'axios';
 import M from "materialize-css";
 import options from "materialize-css";
 import classnames from "classnames";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-export default class Edit extends Component {
+class Edit extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -301,24 +303,32 @@ export default class Edit extends Component {
                 <span className="red-text">{errors.interestAreas}</span>
               </div>
 
-              <div className="input-field col s12">
-                <label>Responsável*</label><br></br><br></br>
-                <select value={this.state.selectedUser} onChange={e =>
-                    this.setState({
-                      selectedUser: e.target.value,
-                      validationErrorSelectedUser: e.target.value === "" ? "Deverá preencher o campo Responsável" : ""
-                    })}
-                  error={errors.selectedUser}
-                  className="browser-default"
-                  id="selectedUser"
-                  type="text">
-                  {optionTemplate}
-                </select>
-                <div style={{ color: "red", marginTop: "5px" }}>
-                  {this.state.validationErrorSelectedUser}
-                </div>
-                <span className="red-text">{errors.selectedUser}</span>
-              </div>
+              {(() => {
+                if (this.props.auth.user.role === "Administrador") {
+                  return (
+                    <div>
+                      <div className="input-field col s12">
+                        <label>Responsável*</label><br></br><br></br>
+                        <select value={this.state.selectedUser} onChange={e =>
+                          this.setState({
+                            selectedUser: e.target.value,
+                            validationErrorSelectedUser: e.target.value === "" ? "Deverá preencher o campo Responsável" : ""
+                          })}
+                          error={errors.selectedUser}
+                          className="browser-default"
+                          id="selectedUser"
+                          type="text">
+                          {optionTemplate}
+                        </select>
+                        <div style={{ color: "red", marginTop: "5px" }}>
+                          {this.state.validationErrorSelectedUser}
+                        </div>
+                        <span className="red-text">{errors.selectedUser}</span>
+                      </div>
+                    </div>
+                  )
+                }
+              })()}
 
               <div className="input-field col s12">
                 <label>Observações</label><br></br><br></br>
@@ -375,4 +385,19 @@ export default class Edit extends Component {
     )
   }
 }
+
+Edit.propTypes = {
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { Edit }
+)(Edit);
 

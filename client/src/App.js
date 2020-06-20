@@ -99,7 +99,7 @@ class App extends Component {
               <AdminRoute exact path='/createCompanyUser' component={ CreateCompanyUser } />
               <AdminRoute exact path='/createVoluntaryUser' component={ CreateVoluntaryUser } />
               <AdminRoute exact path='/createProject' component={ Create } />
-              <AdminRoute path='/editProject/:id' component={ Edit } />
+              <PrivateRoute path='/editProject/:id' component={ Edit } />
               <AdminRoute path='/editVoluntary/:id' component={ EditVoluntary } />
               <AdminRoute path='/editCompany/:id' component={ EditCompany } />
               <AdminRoute path='/listSubmitedProjects' component={ IndexSubmitedProjects } />

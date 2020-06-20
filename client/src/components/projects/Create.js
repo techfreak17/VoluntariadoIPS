@@ -96,6 +96,10 @@ class Create extends Component {
     }
   }
 
+  goBack() {
+    window.history.back();
+  }
+
   onSubmit(e) {
     e.preventDefault();
     const obj = {
@@ -354,9 +358,9 @@ class Create extends Component {
               <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "16%" }}
                 type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Submeter
               </button>
-              <a style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "16%" }}
-                href="/listProjects" className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
-              </a>
+              <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "16%" }}
+                onClick={this.goBack} className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
+              </button>
             </div>
           </div>
         </div>

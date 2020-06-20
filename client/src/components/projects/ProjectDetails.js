@@ -108,7 +108,7 @@ class ProjectDetails extends Component {
               <p style={{ color: "#000000" }}><b>Observações:</b> {this.state.observations}</p>
               <ul id="friendsList" style={{ color: "#000000" }}><b>Áreas:</b></ul>
               <Link to={"/listVoluntary/" + this.props.match.params.id}
-              className="btn btn-large waves-effect waves-light hoverable black center">Ver Voluntários</Link>
+              className="btn btn-medium waves-effect waves-light hoverable blue center">Ver Voluntários</Link>
             </div><br></br>
             <Link to="/listProjects" style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold", }}
               className="btn btn-large waves-effect waves-light hoverable black center">Voltar</Link>

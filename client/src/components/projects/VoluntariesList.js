@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import axios from 'axios';
-import  RowVoluntary  from './RowVoluntary.js';
+import VoluntaryRow  from './VoluntaryRow.js';
 
 //get the project, which has all of the voluntaries ID's
 //GET the voluntary by id
 //Repeat
-class ListVoluntaries extends Component {
+class VoluntariesList extends Component {
 
   constructor(props) {
     super(props);
@@ -21,22 +21,20 @@ class ListVoluntaries extends Component {
       .then(res=>{this.setState(prevState=>({
         voluntaries: [...prevState.voluntaries,...res.data]
       }))
-    console.log(this.state.voluntaries)});
-      
+    });   
   }
 
   
   rowVolun() {
     return this.state.voluntaries.map(function (object, i) {
-      return <RowVoluntary obj={object} key={i} />;
+      return <VoluntaryRow obj={object} key={i} />;
     });
   }
-
 
   render() {
     return (
       <div>
-        <table  className="striped">
+        <table className="striped">
         <thead>
           <tr>
               <th>Nome</th>
@@ -51,7 +49,7 @@ class ListVoluntaries extends Component {
   }
 }
 
-ListVoluntaries.propTypes = {
+VoluntariesList.propTypes = {
   auth: PropTypes.object.isRequired
 };
 
@@ -61,5 +59,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { ListVoluntaries }
-)(ListVoluntaries);
+  { VoluntariesList }
+)(VoluntariesList);

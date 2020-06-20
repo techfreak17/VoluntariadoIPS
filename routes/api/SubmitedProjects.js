@@ -9,53 +9,7 @@ const Company = require("../../models/company");
 const Project = require("../../models/project");
 
 // Load input validation
-const validateCreateProject = require("../../validation/createProject")
 const createNotification = require("../../Notifications/pushNotifications");
-
-// @route POST api/submitedProjects/submitCreateProject
-// @desc Submit Create Project - Company and AAIPS
-// @access Private
-router.post("/submitCreateProject", (req, res) => {
-  const { errors, isValid } = validateCreateProject(req.body);
-  // Check validation
-  if (!isValid) {
-    return res.status(400).json(errors);
-  }
-
-  SubmitedProject.findOne({ title: req.body.title }).then(project => {
-    if (project) {
-      return res.status(400).json({ title: "Project already exists" });
-    } else {
-      const newSubmitedProject = new SubmitedProject({
-        title: req.body.title,
-        synopsis: req.body.synopsis,
-        intervationArea: req.body.intervationArea,
-        target_audience: req.body.target_audience,
-        objectives: req.body.objectives,
-        description: req.body.description,
-        date: req.body.date,
-        interestAreas: req.body.interestAreas,
-        photo: req.body.photo,
-        observations: req.body.observations,
-        relatedEntities: req.body.relatedEntities,
-        responsibleID: req.body.responsibleID,
-        requiredFormation: req.body.requiredFormation,
-        formation: req.body.formation
-      });
-      newSubmitedProject
-        .save()
-        .then(newSubmitedProject => res.json(newSubmitedProject))
-        .catch(err => console.log(err));
-
-      User.findOne({ _id: mongoose.Types.ObjectId(newSubmitedProject.responsibleID) }).then(user => {
-        if (user) {
-          createNotification('proporProjetoEntidade', newSubmitedProject.title, user.email);
-          createNotification('proporProjetoAdmin', newSubmitedProject.title, 'admin@teste.pt');
-        }
-      });
-    }
-  });
-});
 
 // @route GET api/submitedProjects/submitEditProject/:id
 // @desc Submit Edit Project - Company and AAIPS

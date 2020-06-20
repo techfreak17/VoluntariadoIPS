@@ -114,8 +114,16 @@ class Profile extends Component {
                                         <input readOnly value={this.state.address}></input>
                                         <h5 style={{ fontWeight: 'bold' }}>Escola</h5>
                                         <input readOnly value={this.state.school}></input>
-                                        <h5 style={{ fontWeight: 'bold' }}>Curso</h5>
-                                        <input readOnly value={this.state.course}></input>
+                                        {(() => {
+                                            if (this.state.course !== "") {
+                                                return (
+                                                    <div>
+                                                        <h5 style={{ fontWeight: 'bold' }}>Curso</h5>
+                                                        <input readOnly value={this.state.course}></input>
+                                                    </div>
+                                                )
+                                            }
+                                        })()}
                                         <h5 style={{ fontWeight: 'bold' }}>Áreas de Interesse</h5>
                                         <input readOnly value={this.state.interestAreas}></input>
                                     </div>

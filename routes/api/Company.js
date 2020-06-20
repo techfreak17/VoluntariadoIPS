@@ -3,26 +3,8 @@ const router = express.Router();
 const mongoose = require("mongoose");
 
 // Load User model
-const User = require("../../models/user");
-const Company = require("../../models/company");
 const Project = require("../../models/project");
 const SubmitedProject = require("../../models/submitedProject");
-
-// @route GET api/companies/getCompanyUserDetails/:id
-// @desc Get Company User Details
-// @access Private
-router.route('/getCompanyUserDetails/:id').get(function (req, res) {
-    let id = req.params.id;
-    User.findById(id, function (err, user) {
-        Company.findOne({ userID: user._id }).then(company => {
-            if (company) {
-                res.json(company);
-            } else {
-                return res.status(400).json({ user: "Such data doesn´t exist" });
-            };
-        })
-    });
-});
 
 // @route GET api/companies/listCompanyProjects/:id
 // @desc Get List of Projects
@@ -59,7 +41,7 @@ router.route('/listCompanySubmitedProjects/:id').get(function (req, res) {
 // @access Private
 router.post("/searchCompanyProject/:id", (req, res) => {
     let userID = req.params.id;
-    Project.find({ enroled_IDs: mongoose.Types.ObjectId(userID), title: { $regex: req.body.search, $options: "i" } },function (err, projects) {
+    Project.find({ responsibleID: mongoose.Types.ObjectId(userID), title: { $regex: req.body.search, $options: "i" } },function (err, projects) {
         if (err) {
             console.log(err);
         }

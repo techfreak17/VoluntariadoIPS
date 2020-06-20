@@ -45,9 +45,9 @@ class IndexCompanyProjects extends Component {
         const obj = {
             search: document.getElementById("myInput").value,
         };
-        axios.post("/api/voluntaries/searchVoluntaryProject/" + this.props.auth.user.id ,obj)
+        axios.post("/api/companies/searchCompanyProject/" + this.props.auth.user.id ,obj)
             .then(response => {
-                this.setState({ voluntaryProjects: response.data });
+                this.setState({ companyProjects: response.data });
             })
             .catch(function (error) {
                 console.log(error);
@@ -66,7 +66,7 @@ class IndexCompanyProjects extends Component {
             </a>
                     </p>
                     <form onSubmit={this.onSubmit}>
-                        <input id="myInput" type="text" placeholder="Pesquisar..." name="search" onChange={this.onChangeSearch} style={{ borderBottom: "3px solid #23395D" }}></input>
+                        <input id="myInput" type="text" placeholder="Pesquisar por título ..." name="search" onChange={this.onChangeSearch} style={{ borderBottom: "3px solid #23395D" }}></input>
                         <button type="submit" className="btn waves-effect waves-light hoverable" style={{ backgroundColor: "#DDDDDD", color: "black", height: 35, fontWeight:"bolder" }}>Pesquisar</button>
                     </form>
                     <table className="table table-striped" style={{ marginTop: 20 }}>

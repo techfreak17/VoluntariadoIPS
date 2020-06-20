@@ -11,35 +11,8 @@ const createNotification = require("../../Notifications/pushNotifications");
 
 // Load User model
 const User = require("../../models/user");
-const Admin = require("../../models/administrator");
 const Voluntary = require("../../models/voluntary");
 const Company = require("../../models/company");
-
-// @route GET api/admin/getAdminUserDetails/:id
-// @desc Get Admin User Details
-// @access Private
-router.route('/getAdminUserDetails/:id').get(function (req, res) {
-  let id = req.params.id;
-  User.findById(id, function (err, user) {
-    Admin.findOne({ userID: user._id }).then(admin => {
-      if (admin) {
-        res.json(admin);
-      } else {
-        return res.status(400).json({ user: "Such data doesn´t exist" });
-      };
-    })
-  });
-});
-
-// @route GET api/admin/editUser/:id
-// @desc Edit User
-// @access Private
-router.route('/editUser/:id').get(function (req, res) {
-  let id = req.params.id;
-  User.findById(id, function (err, user) {
-    res.json(user);
-  });
-});
 
 // @route POST api/admin/createVoluntaryUser
 // @desc Create Voluntary User

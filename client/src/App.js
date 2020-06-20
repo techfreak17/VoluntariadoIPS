@@ -44,6 +44,8 @@ import IndexCompanyProjects from "./components/companyProjects/IndexCompanyProje
 import CompanyProjectsDetails from "./components/companyProjects/CompanyProjectsDetails";
 import IndexSubmitedCompanyProjects from "./components/companyProjects/IndexSubmitedCompanyProjects";
 import CompanySubmitedProjectsDetails from "./components/companyProjects/CompanySubmitedProjectsDetails";
+import ListVoluntaries from "./components/projects/ListVoluntaries.js";
+
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -112,6 +114,7 @@ class App extends Component {
               <EntityRoute path='/getCompanySubmitedProjects/:id' component={ CompanySubmitedProjectsDetails } />
               <VoluntaryRoute path='/listProjectsVoluntary' component={IndexVoluntaryProjects} />
               <VoluntaryRoute path='/getVoluntaryProjects/:id' component={VoluntaryProjectsDetails} />
+              <EntityRoute path='/listVoluntary/:id' component={ListVoluntaries}/>
             </Switch>
 
           </div>

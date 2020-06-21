@@ -2,9 +2,16 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
+import M from "materialize-css";
+import options from "materialize-css";
 
 class SideMenu extends Component {
     render() {
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.sidenav');
+            M.Sidenav.init(elems, {edge:'right'});
+          });
+
         return (
             <ul id="slide-out" className="sidenav">
                 <li><div className="user-view">

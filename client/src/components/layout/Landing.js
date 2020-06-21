@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import M from "materialize-css";
-import options from "materialize-css";
 import axios from 'axios';
 import ProjectsRow from "./ProjectsRow"
 import PropTypes from "prop-types";
@@ -42,11 +40,6 @@ class Landing extends Component {
     }
 
     render() {
-        document.addEventListener('DOMContentLoaded', function () {
-            var elems = document.querySelectorAll('.slider');
-            M.Slider.init(elems, options);
-        });
-
         let projectL = [];
 
         const projectList = () => {

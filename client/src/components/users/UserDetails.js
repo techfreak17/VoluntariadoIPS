@@ -64,11 +64,27 @@ export default class Edit extends Component {
                   <h5 style={{ color: "#1167B1" }}><b>Detalhes do Utilizador:</b></h5>
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 5 }}>email</i> {this.state.email}</p>
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>phone</i> {this.state.phone}</p>
-                  <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>home</i> {this.state.address}</p>
+                  {(() => {
+                    if (this.state.address !== "") {
+                      return (
+                        <div>
+                          <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>home</i> {this.state.address}</p>
+                        </div>
+                      )
+                    }
+                  })()}
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>cake</i> {this.myDate}</p>
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>person</i> {this.state.member}</p>
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>school</i> {this.state.school}</p>
-                  <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>domain</i> {this.state.course}</p>
+                  {(() => {
+                    if (this.state.course !== "") {
+                      return (
+                        <div>
+                          <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>domain</i> {this.state.course}</p>
+                        </div>
+                      )
+                    }
+                  })()}
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 7 }}>public</i> {this.state.role}</p><br></br>
                   <button onClick={this.goBack} style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold" }}
                     className="btn btn-large waves-effect waves-light hoverable black">Voltar</button>
@@ -91,7 +107,15 @@ export default class Edit extends Component {
                   <h5 style={{ color: "#1167B1" }}><b>Detalhes do Utilizador:</b></h5>
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 5 }}>email</i> {this.state.email}</p>
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>phone</i> {this.state.phone}</p>
-                  <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>home</i> {this.state.address}</p>
+                  {(() => {
+                    if (this.state.address !== "") {
+                      return (
+                        <div>
+                          <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>home</i> {this.state.address}</p>
+                        </div>
+                      )
+                    }
+                  })()}
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>cake</i> {this.myDate}</p>
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>person</i> {this.state.role}</p>
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>domain</i> {this.state.companyName}</p>
@@ -117,7 +141,15 @@ export default class Edit extends Component {
                   <h5 style={{ color: "#1167B1" }}><b>Detalhes do Utilizador:</b></h5>
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 5 }}>email</i> {this.state.email}</p>
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>phone</i> {this.state.phone}</p>
-                  <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>home</i> {this.state.address}</p>
+                  {(() => {
+                    if (this.state.address !== "") {
+                      return (
+                        <div>
+                          <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>home</i> {this.state.address}</p>
+                        </div>
+                      )
+                    }
+                  })()}
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>cake</i> {this.myDate}</p>
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>person</i> {this.state.role}</p><br></br>
                   <button onClick={this.goBack} style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold" }}

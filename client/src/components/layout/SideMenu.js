@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import M from "materialize-css";
-import options from "materialize-css";
 
 class SideMenu extends Component {
     render() {

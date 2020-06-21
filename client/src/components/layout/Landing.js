@@ -5,7 +5,8 @@ import ProjectsRow from "./ProjectsRow"
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
-
+import M from "materialize-css";
+import options from "materialize-css";
 
 
 class Landing extends Component {
@@ -40,6 +41,10 @@ class Landing extends Component {
     }
 
     render() {
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.slider');
+            M.Slider.init(elems, options);
+        });
         let projectL = [];
 
         const projectList = () => {

@@ -5,7 +5,10 @@ const Project = require("../../models/project");
 const User = require("../../models/user");
 const Company = require("../../models/company");
 const Administrator = require("../../models/administrator");
+const Voluntary = require("../../models/voluntary");
 const createNotification = require("../../Notifications/pushNotifications");
+var mongoose = require('mongoose');
+
 
 // Load input validation
 const validateCreateProject = require("../../validation/createProject");
@@ -234,6 +237,27 @@ router.route('/getProjectUserDetails/:id').get(function (req, res) {
 
       }
     })
+  });
+});
+
+router.route('/getProjectVoluntaries/:id').get(function (req, res) {
+  let id = req.params.id;
+  Project.findById(id, function (err, project) {
+    if (project) {
+        Voluntary.find({'userID': { $in: project.enroled_IDs}}, function (err, user) {
+          if(user){
+            res.json(user);
+          }
+          else{
+            return res.status(404).json({user: 'User não encontrado'});
+          }
+        });
+      
+    }
+    else{
+      return res.status(404).json({project:'Projeto não foi encontrado'});
+    }
+
   });
 });
 

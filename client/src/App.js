@@ -44,6 +44,8 @@ import IndexCompanyProjects from "./components/companyProjects/IndexCompanyProje
 import CompanyProjectsDetails from "./components/companyProjects/CompanyProjectsDetails";
 import IndexSubmitedCompanyProjects from "./components/companyProjects/IndexSubmitedCompanyProjects";
 import CompanySubmitedProjectsDetails from "./components/companyProjects/CompanySubmitedProjectsDetails";
+import VoluntariesList from "./components/projects/VoluntariesList.js";
+
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -96,10 +98,11 @@ class App extends Component {
               <PrivateRoute  path="/editProfileCompany/:id" component={EditProfileCompany}/>
               <PrivateRoute  path="/editProfileVoluntary/:id" component={EditProfileVoluntary}/>
               <PrivateRoute path='/getUser/:id' component={ UserDetails } />
+              <PrivateRoute path='/listVoluntary/:id' component={VoluntariesList}/>
+              <PrivateRoute path='/editProject/:id' component={ Edit } />
               <AdminRoute exact path='/createCompanyUser' component={ CreateCompanyUser } />
               <AdminRoute exact path='/createVoluntaryUser' component={ CreateVoluntaryUser } />
               <AdminRoute exact path='/createProject' component={ Create } />
-              <PrivateRoute path='/editProject/:id' component={ Edit } />
               <AdminRoute path='/editVoluntary/:id' component={ EditVoluntary } />
               <AdminRoute path='/editCompany/:id' component={ EditCompany } />
               <AdminRoute path='/listSubmitedProjects' component={ IndexSubmitedProjects } />

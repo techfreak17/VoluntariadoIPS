@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-//import M from 'materialize-css';
-import { Link } from "react-router-dom";
-
 
 export default class Edit extends Component {
   constructor(props) {
@@ -46,6 +43,10 @@ export default class Edit extends Component {
       .catch(error => console.log(error));
   }
 
+  goBack() {
+    window.history.back();
+  }
+
   render() {
     return (
       <div>
@@ -69,8 +70,8 @@ export default class Edit extends Component {
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>school</i> {this.state.school}</p>
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>domain</i> {this.state.course}</p>
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 7 }}>public</i> {this.state.role}</p><br></br>
-                  <Link to="/listUsers" style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold" }}
-                    className="btn btn-large waves-effect waves-light hoverable black">Voltar</Link>
+                  <button onClick={this.goBack} style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold" }}
+                    className="btn btn-large waves-effect waves-light hoverable black">Voltar</button>
                 </div>
               </div>
             )
@@ -95,8 +96,8 @@ export default class Edit extends Component {
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>person</i> {this.state.role}</p>
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>domain</i> {this.state.companyName}</p>
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 7 }}>public</i> {this.state.companyAddress}</p><br></br>
-                  <Link to="/listUsers" style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold" }}
-                    className="btn btn-large waves-effect waves-light hoverable black">Voltar</Link>
+                  <button onClick={this.goBack} style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold" }}
+                    className="btn btn-large waves-effect waves-light hoverable black">Voltar</button>
                 </div>
               </div>
             )
@@ -119,8 +120,8 @@ export default class Edit extends Component {
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>home</i> {this.state.address}</p>
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>cake</i> {this.myDate}</p>
                   <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons small" style={{ paddingRight: 6 }}>person</i> {this.state.role}</p><br></br>
-                  <Link to="/listUsers" style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold" }}
-                    className="btn btn-large waves-effect waves-light hoverable black">Voltar</Link>
+                  <button onClick={this.goBack} style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold" }}
+                    className="btn btn-large waves-effect waves-light hoverable black">Voltar</button>
                 </div>
               </div>
             )

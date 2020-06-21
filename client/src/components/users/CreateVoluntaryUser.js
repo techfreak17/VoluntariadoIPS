@@ -55,6 +55,10 @@ class CreateVoluntaryUser extends Component {
         }
     }
 
+    goBack() {
+        window.history.back();
+    }
+
     componentDidMount() {
         if (window.localStorage) {
             if (!localStorage.getItem('firstLoad')) {
@@ -352,9 +356,9 @@ class CreateVoluntaryUser extends Component {
                             <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "20%" }}
                                 type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Submeter
                             </button>
-                            <a style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "20%" }}
-                                href="/listUsers" className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
-                            </a>
+                            <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "20%" }}
+                                onClick={this.goBack} className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
+                            </button>
                         </div>
                     </div>
                 </div>

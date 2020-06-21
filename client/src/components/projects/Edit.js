@@ -23,6 +23,7 @@ class Edit extends Component {
       relatedEntities: [],
       users: [],
       selectedUser: "",
+      vacancies: "",
       errors: {}
     }
 
@@ -69,7 +70,8 @@ class Edit extends Component {
           observations: responseArr[0].data.observations,
           relatedEntities: responseArr[0].data.relatedEntities,
           users: responseArr[1].data,
-          selectedUser: responseArr[1].data[0].name
+          selectedUser: responseArr[1].data[0].name,
+          vacancies: responseArr[0].data.vacancies
         });
       })
   }
@@ -92,7 +94,8 @@ class Edit extends Component {
       photo: this.state.photo,
       observations: this.state.observations,
       relatedEntities: this.state.relatedEntities,
-      responsibleID: this.state.selectedUser
+      responsibleID: this.state.selectedUser,
+      vacancies: this.state.vacancies
     };
 
     axios.post('/api/projects/updateProject/' + this.props.match.params.id, obj)
@@ -362,6 +365,27 @@ class Edit extends Component {
                   })}
                 />
                 <span className="red-text">{errors.relatedEntities}</span>
+              </div>
+
+              <div className="input-field col s12">
+                <label>Nº Máximo de Vagas *</label><br></br><br></br>
+                <input
+                  onChange={e => this.setState({
+                    vacancies: e.target.value,
+                    validationErrorVacancies: e.target.value === "" ? "Deverá preencher o campo Nº Máximo de Vagas" : ""
+                  })}
+                  value={this.state.vacancies}
+                  id="vacancies"
+                  type="text"
+                  error={errors.vacancies}
+                  className={classnames("", {
+                    invalid: errors.vacancies
+                  })}
+                />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorVacancies}
+                </div>
+                <span className="red-text">{errors.vacancies}</span>
               </div>
 
               <div className="input-field col s12">

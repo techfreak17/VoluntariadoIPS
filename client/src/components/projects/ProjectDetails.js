@@ -27,6 +27,8 @@ class ProjectDetails extends Component {
       companyAddress: "",
       companyName: "",
       role: "",
+      vacancies: "",
+      vacanciesToFill: "",
       on: false
     }
   }
@@ -55,6 +57,8 @@ class ProjectDetails extends Component {
           observations: responseArr[0].data.observations,
           interestAreas: responseArr[0].data.interestAreas,
           role: responseArr[1].data.role,
+          vacancies : responseArr[0].data.vacancies,
+          vacanciesToFill: responseArr[0].data.vacancies - responseArr[0].data.enroled_IDs.length
         });
         var ul = document.getElementById("friendsList");
 
@@ -96,6 +100,8 @@ class ProjectDetails extends Component {
                   )
                 }
               })()}
+              <br></br><p style={{ color: "#000000" }}><b>Número de Vagas Totais do Projeto:</b> {this.state.vacancies}</p>
+              <p style={{ color: "#000000" }}><b>Número de Vagas Disponíveis:</b> {this.state.vacanciesToFill}</p>
             </div>
             <div>
               <h5 style={{ color: "#1167B1" }}><b>Detalhes do Projeto:</b></h5>
@@ -108,7 +114,7 @@ class ProjectDetails extends Component {
               <p style={{ color: "#000000" }}><b>Observações:</b> {this.state.observations}</p>
               <ul id="friendsList" style={{ color: "#000000" }}><b>Áreas:</b></ul>
               <Link to={"/listVoluntary/" + this.props.match.params.id}
-              className="btn btn-medium waves-effect waves-light hoverable blue center">Ver Voluntários</Link>
+                className="btn btn-medium waves-effect waves-light hoverable blue center">Ver Voluntários</Link>
             </div><br></br>
             <Link to="/listProjects" style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold", }}
               className="btn btn-large waves-effect waves-light hoverable black center">Voltar</Link>

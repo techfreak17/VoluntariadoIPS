@@ -11,23 +11,33 @@ module.exports = function validateCreateProject(data) {
     data.target_audience = !isEmpty(data.target_audience) ? data.target_audience : "";
     data.description = !isEmpty(data.description) ? data.description : "";
     data.date = !isEmpty(data.date) ? data.date : "";
+    data.vacancies = !isEmpty(data.vacancies) ? data.vacancies : "";
     let arrInterestAreas = new Array();
     arrInterestAreas = data.interestAreas;
     date = data.date.split("-");
     year = date[0];
 
-    let numberYear = new Int32Array; 
+    let numberYear = new Int32Array;
     numberYear = year
 
     let currentDate = new Date();
     year1 = currentDate.getFullYear();
-    
-    if(year<year1){
+
+    if (year < year1) {
         errors.date = "Ano Inválido";
     }
 
-    if(numberYear.length > 4){
+    if (data.vacancies <= 0) {
+        errors.vacancies = "Número de Vagas Inválido";
+    }
+
+    if (numberYear.length > 4) {
         errors.date = "Ano Inválido";
+    }
+
+    //title checks
+    if (Validator.isEmpty(data.vacancies)) {
+        errors.vacancies = "Deverá preencher o campo Nº Máximo de Vagas";
     }
 
     //title checks

@@ -25,6 +25,7 @@ class Create extends Component {
             observations: "",
             authorization: false,
             responsibleID: this.props.auth.user.id,
+            vacancies: "",
             errors: {}
         }
 
@@ -100,7 +101,8 @@ class Create extends Component {
             observations: this.state.observations,
             authorization: this.state.authorization,
             relatedEntities: this.state.relatedEntities,
-            responsibleID: this.state.responsibleID
+            responsibleID: this.state.responsibleID,
+            vacancies: this.state.vacancies
         };
 
         this.props.submitProject(obj, this.props.history);
@@ -309,6 +311,21 @@ class Create extends Component {
                                 />
                                 <label htmlFor="name">Entidades Envolvidas (ex: Siemens, Google, Vodafone)</label>
                                 <span className="red-text">{errors.objectives}</span>
+                            </div>
+
+                            <div className="input-field col s12">
+                                <input
+                                    onChange={this.onChange}
+                                    value={this.state.vacancies}
+                                    error={errors.vacancies}
+                                    id="vacancies"
+                                    type="number"
+                                    className={classnames("", {
+                                        invalid: errors.vacancies
+                                    })}
+                                />
+                                <label htmlFor="name">Nº Máximo de Vagas *</label>
+                                <span className="red-text">{errors.vacancies}</span>
                             </div>
 
                             <div className="input-field col s12">

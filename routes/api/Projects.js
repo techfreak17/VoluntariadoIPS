@@ -43,7 +43,8 @@ router.post("/createProject", (req, res) => {
           relatedEntities: req.body.relatedEntities,
           responsibleID: company.responsibleID,
           requiredFormation: req.body.requiredFormation,
-          formation: req.body.formation
+          formation: req.body.formation,
+          vacancies: req.body.vacancies
         });
         createNotification('novoProjeto', req.body.title, 'admin@teste.pt');
         newProject
@@ -71,7 +72,6 @@ router.route('/editProject/:id').get(function (req, res) {
 router.route('/updateProject/:id').post(function (req, res) {
   // Form validation
   const { errors, isValid } = validateCreateProject(req.body);
-  console.log(errors);
   // Check validation
   if (!isValid) {
     return res.status(400).json(errors);
@@ -93,6 +93,7 @@ router.route('/updateProject/:id').post(function (req, res) {
             project.interestAreas = req.body.interestAreas,
             project.observations = req.body.observations,
             project.relatedEntities = req.body.relatedEntities,
+            project.vacancies = req.body.vacancies,
             project.responsibleID = company.responsibleID
 
           project.updateOne({
@@ -106,7 +107,8 @@ router.route('/updateProject/:id').post(function (req, res) {
             interestAreas: project.interestAreas,
             observations: project.observations,
             relatedEntities: project.relatedEntities,
-            responsibleID: project.responsibleID
+            responsibleID: project.responsibleID,
+            vacancies: project.vacancies
           })
             .catch(err => {
               res.status(400).send("unable to update the database");
@@ -123,6 +125,7 @@ router.route('/updateProject/:id').post(function (req, res) {
           project.date = (req.body.date) ? req.body.date : null,
           project.interestAreas = (req.body.interestAreas) ? req.body.interestAreas : null,
           project.observations = (req.body.observations) ? req.body.observations : null,
+          project.vacancies = (req.body.vacancies) ? req.body.vacancies : null,
           project.relatedEntities = (req.body.relatedEntities) ? req.body.relatedEntities : null
 
         project.updateOne({
@@ -136,6 +139,7 @@ router.route('/updateProject/:id').post(function (req, res) {
           interestAreas: project.interestAreas,
           observations: project.observations,
           relatedEntities: project.relatedEntities,
+          vacancies: project.vacancies
         })
           .catch(err => {
             res.status(400).send("unable to update the database");

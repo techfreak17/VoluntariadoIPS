@@ -40,7 +40,8 @@ router.post("/submitCreateProject", (req, res) => {
         relatedEntities: req.body.relatedEntities,
         responsibleID: req.body.responsibleID,
         requiredFormation: req.body.requiredFormation,
-        formation: req.body.formation
+        formation: req.body.formation,
+        vacancies: req.body.vacancies
       });
       newSubmitedProject
         .save()

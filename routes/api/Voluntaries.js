@@ -19,11 +19,15 @@ router.route('/joinProject/:id').post(function (req, res) {
         if (user.role === "Voluntário") {
             Voluntary.findOne({ userID: user._id }).then(voluntary => {
                 Project.findById(id).then(project => {
-                    voluntary.listProjects.push(project._id);
-                    voluntary.save();
-                    project.enroled_IDs.push(user._id);
-                    project.save();
-                    createNotification('entrarProjeto', project.title, user.email);
+                    if(project.vacancies>project.enroled_IDs.lenght){
+                        voluntary.listProjects.push(project._id);
+                        voluntary.save();
+                        project.enroled_IDs.push(user._id);
+                        project.save();
+                        createNotification('entrarProjeto', project.title, user.email);
+                    }else{
+                        createNotification('semVagas', project.title, user.email);
+                    }                    
                 })
             })
         }

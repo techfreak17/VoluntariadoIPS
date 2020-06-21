@@ -23,7 +23,8 @@ class CompanySubmitedProjectsDetails extends Component {
       phone: "",
       companyAddress: "",
       companyName: "",
-      role: ""
+      role: "",
+      vacancies: ""
     }
   }
 
@@ -51,6 +52,7 @@ class CompanySubmitedProjectsDetails extends Component {
           observations: responseArr[0].data.observations,
           interestAreas: responseArr[0].data.interestAreas,
           role: responseArr[1].data.role,
+          vacancies: responseArr[0].data.vacancies
         });
         var ul = document.getElementById("friendsList");
 
@@ -96,6 +98,7 @@ class CompanySubmitedProjectsDetails extends Component {
                   )
                 }
               })()}
+              <br></br><p style={{ color: "#000000" }}><b>Número de Vagas Totais do Projeto:</b> {this.state.vacancies}</p>
             </div>
             <div>
               <h5 style={{ color: "#1167B1" }}><b>Detalhes do Projeto:</b></h5>

@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const PushNotificationTemplatesSchema = new Schema({
     semVagas: {
         type: String,
-        default: 'O seu projeto {{ title }} encontra-se com o número de vagas designado.'
+        default: 'Desculpe mas o projeto {{ title }} atingiu o número máximo de vagas designado.'
     },
     confirmarEmail: {
         type: String,

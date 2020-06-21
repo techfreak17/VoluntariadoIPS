@@ -9,7 +9,7 @@ module.exports = function createNotification(type, texto, email) {
   const templates = new pushTemplates();
   switch (type) {
     case 'semVagas':
-      notification = buildnotification(type, templates.semVagas, texto, email, date);
+      notification = buildnotification(type, templates.semVagas, texto, email);
       break;
     case 'confirmarEmail':
       notification = buildnotification(type, templates.confirmarEmail, texto, email);

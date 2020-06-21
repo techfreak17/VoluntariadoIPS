@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 
-class BaseProfile extends Component {
+class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -28,7 +28,6 @@ class BaseProfile extends Component {
     componentDidMount() {
         axios.get('/api/users/getUserDetails/' + this.props.match.params.id)
             .then(responseArr => {
-                console.log(responseArr.data);
                 var date = new Date(responseArr.data.birthDate);
                 var year = date.getFullYear();
                 var month = date.getMonth() + 1;
@@ -115,8 +114,16 @@ class BaseProfile extends Component {
                                         <input readOnly value={this.state.address}></input>
                                         <h5 style={{ fontWeight: 'bold' }}>Escola</h5>
                                         <input readOnly value={this.state.school}></input>
-                                        <h5 style={{ fontWeight: 'bold' }}>Curso</h5>
-                                        <input readOnly value={this.state.course}></input>
+                                        {(() => {
+                                            if (this.state.course !== "") {
+                                                return (
+                                                    <div>
+                                                        <h5 style={{ fontWeight: 'bold' }}>Curso</h5>
+                                                        <input readOnly value={this.state.course}></input>
+                                                    </div>
+                                                )
+                                            }
+                                        })()}
                                         <h5 style={{ fontWeight: 'bold' }}>Áreas de Interesse</h5>
                                         <input readOnly value={this.state.interestAreas}></input>
                                     </div>
@@ -170,7 +177,7 @@ class BaseProfile extends Component {
     }
 }
 
-BaseProfile.propTypes = {
+Profile.propTypes = {
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };
@@ -182,5 +189,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { BaseProfile }
-)(BaseProfile);
+    { Profile }
+)(Profile);

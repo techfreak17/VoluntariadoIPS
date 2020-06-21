@@ -6,16 +6,14 @@ const keys = require("../../config/keys");
 const template = require('../../Notifications/emailNotificationsTemplates.js');
 const sender = require('../../Notifications/emailNotify.js');
 const crypto = require('crypto');
-const notification = require('./Notifications.js');
 
 // Load input validation
 const validateRegisterInputVoluntary = require("../../validation/registerVoluntary");
 const validateRegisterInputCompany = require("../../validation/register");
-const validateEditInputCompanyProfileUser = require("../../validation/editCompanyProfileUser");
-const validateEditInputVoluntaryProfileUser = require("../../validation/editVoluntaryProfileUser");
 const validateEditInputAdminProfileUser = require("../../validation/editAdminProfileUser");
 const validateLoginInput = require("../../validation/login");
 const validatePasswordReset = require("../../validation/recover");
+const createNotification = require("../../Notifications/pushNotifications");
 
 // Load User model
 const User = require("../../models/user");
@@ -368,20 +366,16 @@ router.route('/getUser/:id').get(function (req, res) {
 // @access Private
 router.route('/updateUser/:id').post(function (req, res) {
   User.findById(req.params.id, function (err, user) {
-
-    if (!user)
+    if (!user) {
       res.status(404).send("data is not found");
+    }
 
     if (user.role === "Voluntário") {
-      const { errors, isValid } = validateEditInputVoluntaryProfileUser(req.body);
-      // Check validation
-      if (!isValid) {
-        return res.status(400).json(errors);
-      }
-
-      newPassword = req.body.password;
-      var count = Object.keys(newPassword).length
-      if (newPassword !== user.password && count >= 6) {
+      atualPassword = req.body.password;
+      newPassword = req.body.password2;
+      var countAtualPassword = Object.keys(newPassword).length
+      var countNewPassword = Object.keys(newPassword).length
+      if (atualPassword === newPassword && countAtualPassword >= 6 && countNewPassword >= 6) {
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newPassword, salt, (err, hash) => {
             if (err) throw err;
@@ -407,34 +401,46 @@ router.route('/updateUser/:id').post(function (req, res) {
           voluntary.courseIPS = req.body.courseIPS;
           voluntary.interestAreas = req.body.interestAreas;
 
-          voluntary.updateOne({
-            name: voluntary.name,
-            phone: voluntary.phone,
-            address: voluntary.address,
-            birthDate: voluntary.birthDate,
-            memberIPS: voluntary.memberIPS,
-            schoolIPS: voluntary.schoolIPS,
-            courseIPS: voluntary.courseIPS,
-            interestAreas: voluntary.interestAreas,
-          })
-            .catch(err => {
-              res.status(400).send("unable to update the database");
-            });
+          if (voluntary.courseIPS !== undefined && voluntary.schoolIPS !== undefined && voluntary.memberIPS !== undefined) {
+            voluntary.updateOne({
+              name: voluntary.name,
+              phone: voluntary.phone,
+              address: voluntary.address,
+              birthDate: voluntary.birthDate,
+              memberIPS: voluntary.memberIPS,
+              schoolIPS: voluntary.schoolIPS,
+              courseIPS: voluntary.courseIPS,
+              interestAreas: voluntary.interestAreas,
+            })
+              .catch(err => {
+                res.status(400).send("unable to update the database");
+              });
+            createNotification('editarVoluntario', voluntary.name, user.email);
+          } else {
+            voluntary.updateOne({
+              name: voluntary.name,
+              phone: voluntary.phone,
+              address: voluntary.address,
+              birthDate: voluntary.birthDate,
+              interestAreas: voluntary.interestAreas,
+            })
+              .catch(err => {
+                res.status(400).send("unable to update the database");
+              });
+            createNotification('editarPerfil', voluntary.name, user.email);
+          }
         } else {
           res.status(404).send("data is not found");
         }
       });
 
     } else if (user.role === "Empresa") {
-      const { errors, isValid } = validateEditInputCompanyProfileUser(req.body);
-      // Check validation
-      if (!isValid) {
-        return res.status(400).json(errors);
-      }
 
-      newPassword = req.body.password;
-      var count = Object.keys(newPassword).length
-      if (newPassword !== user.password && count >= 6) {
+      atualPassword = req.body.password;
+      newPassword = req.body.password2;
+      var countAtualPassword = Object.keys(newPassword).length
+      var countNewPassword = Object.keys(newPassword).length
+      if (atualPassword === newPassword && countAtualPassword >= 6 && countNewPassword >= 6) {
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newPassword, salt, (err, hash) => {
             if (err) throw err;
@@ -458,17 +464,31 @@ router.route('/updateUser/:id').post(function (req, res) {
           company.companyName = req.body.companyName;
           company.companyAddress = req.body.companyAddress;
 
-          company.updateOne({
-            name: company.name,
-            phone: company.phone,
-            address: company.address,
-            birthDate: company.birthDate,
-            companyName: company.companyName,
-            companyAddress: company.companyAddress,
-          })
-            .catch(err => {
-              res.status(400).send("unable to update the database");
-            });
+          if (company.companyName !== undefined && company.companyAddress !== undefined) {
+            company.updateOne({
+              name: company.name,
+              phone: company.phone,
+              address: company.address,
+              birthDate: company.birthDate,
+              companyName: company.companyName,
+              companyAddress: company.companyAddress
+            })
+              .catch(err => {
+                res.status(400).send("unable to update the database");
+              });
+            createNotification('editarEntidade', company.companyName, user.email);
+          } else {
+            company.updateOne({
+              name: company.name,
+              phone: company.phone,
+              address: company.address,
+              birthDate: company.birthDate,
+            })
+              .catch(err => {
+                res.status(400).send("unable to update the database");
+              });
+            createNotification('editarPerfil', company.companyName, user.email);
+          }
         } else {
           res.status(404).send("data is not found");
         }
@@ -480,9 +500,11 @@ router.route('/updateUser/:id').post(function (req, res) {
         return res.status(400).json(errors);
       }
 
-      newPassword = req.body.password;
-      var count = Object.keys(newPassword).length
-      if (newPassword !== user.password && count >= 6) {
+      atualPassword = req.body.password;
+      newPassword = req.body.password2;
+      var countAtualPassword = Object.keys(newPassword).length
+      var countNewPassword = Object.keys(newPassword).length
+      if (atualPassword === newPassword && countAtualPassword >= 6 && countNewPassword >= 6) {
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newPassword, salt, (err, hash) => {
             if (err) throw err;
@@ -513,6 +535,7 @@ router.route('/updateUser/:id').post(function (req, res) {
             .catch(err => {
               res.status(400).send("unable to update the database");
             });
+          createNotification('editarPerfil', admin.name, user.email);
         } else {
           res.status(404).send("data is not found");
         }

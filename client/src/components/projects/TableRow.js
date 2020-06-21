@@ -17,7 +17,6 @@ class TableRow extends Component {
 
   delete() {
     axios.get('/api/projects/deleteProject/' + this.props.obj._id)
-      .then(console.log('Deleted'))
       .catch(err => console.log(err))
     window.location.reload();
   }
@@ -27,7 +26,6 @@ class TableRow extends Component {
       userID: this.props.auth.user.id,
     };
     axios.post('/api/voluntaries/joinProject/' + this.props.obj._id, newObj)
-      .then(console.log('Joined'))
       .catch(err => console.log(err))
       window.location.reload();
   }

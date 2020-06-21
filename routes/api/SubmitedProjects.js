@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+var mongoose = require('mongoose');
 
 // Load User model
 const SubmitedProject = require("../../models/submitedProject");
@@ -9,6 +10,7 @@ const Project = require("../../models/project");
 
 // Load input validation
 const validateCreateProject = require("../../validation/createProject")
+const createNotification = require("../../Notifications/pushNotifications");
 
 // @route POST api/submitedProjects/submitCreateProject
 // @desc Submit Create Project - Company and AAIPS
@@ -44,6 +46,13 @@ router.post("/submitCreateProject", (req, res) => {
         .save()
         .then(newSubmitedProject => res.json(newSubmitedProject))
         .catch(err => console.log(err));
+
+      User.findOne({ _id: mongoose.Types.ObjectId(newSubmitedProject.responsibleID) }).then(user => {
+        if (user) {
+          createNotification('proporProjetoEntidade', newSubmitedProject.title, user.email);
+          createNotification('proporProjetoAdmin', newSubmitedProject.title, 'admin@teste.pt');
+        }
+      });
     }
   });
 });
@@ -104,6 +113,13 @@ router.route('/submitDeleteProject/:id').get(function (req, res) {
   SubmitedProject.findByIdAndRemove({ _id: req.params.id }, function (err, project) {
     if (err) res.json(err);
     else res.json('Successfully removed');
+
+    User.findOne({ _id: mongoose.Types.ObjectId(project.responsibleID) }).then(user => {
+      if (user) {
+        createNotification('recusarProjetoEntidade', project.title, user.email);
+        createNotification('recusarProjetoAdmin', project.title, 'admin@teste.pt');
+      }
+    });
   });
 });
 
@@ -178,7 +194,7 @@ router.route('/getSubmitedProjectUserDetails/:id').get(function (req, res) {
 // @desc Accept Submited Project
 // @access Private
 router.route('/acceptSubmitedProject/:id').post(function (req, res) {
-  SubmitedProject.findByIdAndRemove({ _id: req.params.id }, function (err, project) {
+  SubmitedProject.findById({ _id: req.params.id }, function (err, project) {
     if (err) {
       res.json(err);
     }
@@ -203,11 +219,16 @@ router.route('/acceptSubmitedProject/:id').post(function (req, res) {
         .save()
         .then(newProject => res.json(newProject))
         .catch(err => console.log(err));
+
+      User.findOne({ _id: mongoose.Types.ObjectId(project.responsibleID) }).then(user => {
+        if (user) {
+          createNotification('aceitarProjetoEntidade', project.title, user.email);
+          createNotification('aceitarProjetoAdmin', project.title, 'admin@teste.pt');
+        }
+      });
+
+      project.deleteOne();
     }
-  });
-  SubmitedProject.findByIdAndRemove({ _id: req.params.id }, function (err, project) {
-    if (err) res.json(err);
-    else res.json('Successfully removed');
   });
 });
 

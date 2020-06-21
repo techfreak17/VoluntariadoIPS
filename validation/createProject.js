@@ -13,7 +13,30 @@ module.exports = function validateCreateProject(data) {
     data.date = !isEmpty(data.date) ? data.date : "";
     let arrInterestAreas = new Array();
     arrInterestAreas = data.interestAreas;
+    date = data.date.split("-");
+    date1 = data.date.split("T");
+    data2 = data.date.split(":");
+    date3 = date1[1].split(":");
+    date4 = date1[0].split("-");
+    hour = date3[0];
+    day = date4[2];
+    year = date[0];
+    month = date[1];
+    minutes = data2[1];
 
+    let numberYear = new Int32Array; 
+    numberYear = year
+
+    let currentDate = new Date();
+    year1 = currentDate.getFullYear();
+    
+    if(year<year1){
+        errors.date = "Ano Inválido";
+    }
+
+    if(numberYear.length > 4){
+        errors.date = "Ano Inválido";
+    }
 
     //title checks
     if (Validator.isEmpty(data.title)) {

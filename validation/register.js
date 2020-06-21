@@ -17,6 +17,24 @@ module.exports = function validateRegisterInputCompany(data) {
     data.companyName = !isEmpty(data.companyName) ? data.companyName : "";
     let number = new Int32Array; 
     number = data.phone
+    var firstNumber = String(number).charAt(0);
+    firstNumber = Number(firstNumber); 
+    birthDate1 = data.birthDate.split("-");
+    year = birthDate1[0];
+    month = birthDate1[1];
+    day = birthDate1[2];
+
+    if(day < 1 || day > 31){
+        errors.birthDate = "Dia Inválido";
+    }
+
+    if(month < 1 || month > 12){
+        errors.birthDate = "Mês Inválido";
+    }
+
+    if(year < 1930 || year > 2002){
+        errors.birthDate = "Ano Inválido";
+    }
 
     //Username checks
     if (Validator.isEmpty(data.username)) {
@@ -74,6 +92,10 @@ module.exports = function validateRegisterInputCompany(data) {
 
     if (number.length < 9 || number.length > 9) {
         errors.phone = "Telemóvel deverá ter 9 dígitos";
+    }
+
+    if (firstNumber !== 9) {
+        errors.phone = "O Nº de Telemóvel deverá começar por 9";
     }
 
     if (!Validator.equals(data.password, data.password2)) {

@@ -19,7 +19,6 @@ class VoluntaryProjectsTableRow extends Component {
       userID: this.props.auth.user.id,
     };
     axios.post('/api/voluntaries/unjoinProject/' + this.props.obj._id, newObj)
-      .then(console.log('Unjoined'))
       .catch(err => console.log(err))
     window.location.reload();
   }

@@ -7,10 +7,17 @@ const SubmitedProject = require("../../models/submitedProject");
 const User = require("../../models/user");
 const Company = require("../../models/company");
 const Project = require("../../models/project");
+const Administrator = require("../../models/administrator");
 
 // Load input validation
 const validateCreateProject = require("../../validation/createProject")
 const createNotification = require("../../Notifications/pushNotifications");
+
+const buildJSON = (...files) => {
+  var obj = {}
+  Object.assign(obj, files);
+  return obj;
+};
 
 // @route POST api/submitedProjects/submitCreateProject
 // @desc Submit Create Project - Company and AAIPS
@@ -151,29 +158,6 @@ router.post("/searchSubmitedProject", (req, res) => {
   })
 });
 
-// @route GET api/submitedProjects/getProject/:id
-// @desc Get Project
-// @access Private
-router.route('/getSubmitedProject/:id').get(function (req, res) {
-  let id = req.params.id;
-  SubmitedProject.findById(id, function (err, submitedProject) {
-    res.json(submitedProject);
-  });
-});
-
-// @route GET api/submitedProjects/getProjectUser/:id
-// @desc Get Project User
-// @access Private
-router.route('/getSubmitedProjectUser/:id').get(function (req, res) {
-  let id = req.params.id;
-  SubmitedProject.findById(id, function (err, submitedProject) {
-    let newId = submitedProject.responsibleID;
-    User.findOne({ _id: newId }).then(user => {
-      res.json(user);
-    })
-  });
-});
-
 // @route GET api/submitedProjects/getSubmitedProjectUserDetails/:id
 // @desc Get Project User Details
 // @access Private
@@ -181,12 +165,27 @@ router.route('/getSubmitedProjectUserDetails/:id').get(function (req, res) {
   let id = req.params.id;
   SubmitedProject.findById(id, function (err, submitedProject) {
     let newId = submitedProject.responsibleID;
-    Company.findOne({ responsibleID: newId }).then(company => {
-      if (company) {
-        res.json(company);
-      } else {
-        return res.status(400).json({ email: "Such data doesn´t exist" });
-      };
+    User.findOne({ _id: newId }).then(user => {
+      if (user.role === "Empresa") {
+        Company.findOne({ responsibleID: newId }).then(company => {
+          if (company) {
+            
+            res.json(buildJSON(submitedProject, user, company ));
+          
+          } else {
+            return res.status(400).json({ company: "Such data doesn´t exist" });
+          };
+        })
+      } else if (user.role === "Administrador") {
+        Administrator.findOne().then(admin => {
+          if (admin) {
+            res.json(buildJSON(submitedProject, user, admin));
+          } else {
+            return res.status(400).json({ admin: "Such data doesn´t exist" });
+          };
+        })
+
+      }
     })
   });
 });

@@ -22,6 +22,12 @@ const Company = require("../../models/company");
 const Token = require("../../models/token");
 const Administrator = require("../../models/administrator");
 
+const buildJSON = (...files) => {
+  var obj = {}
+  Object.assign(obj, files);
+  return obj;
+};
+
 // @route POST api/users/registerVoluntary
 // @desc Register user
 // @access Public
@@ -147,7 +153,6 @@ router.post("/registerCompany", (req, res) => {
     }
   });
 });
-
 
 // @route POST api/users/confirmtoken
 // @desc Recover User password
@@ -326,7 +331,7 @@ router.route('/getUserDetails/:id').get(function (req, res) {
     if (user.role === "Voluntário") {
       Voluntary.findOne({ userID: user._id }).then(voluntary => {
         if (voluntary) {
-          res.json(voluntary);
+          res.json(buildJSON(user, voluntary));
         } else {
           return res.status(400).json({ voluntary: "Such data doesn´t exist" });
         };
@@ -334,7 +339,7 @@ router.route('/getUserDetails/:id').get(function (req, res) {
     } else if (user.role === "Empresa") {
       Company.findOne({ responsibleID: user._id }).then(company => {
         if (company) {
-          res.json(company);
+          res.json(buildJSON(user,company));
         } else {
           return res.status(400).json({ company: "Such data doesn´t exist" });
         };
@@ -342,22 +347,12 @@ router.route('/getUserDetails/:id').get(function (req, res) {
     } else if (user.role === "Administrador") {
       Administrator.findOne({ userID: user._id }).then(admin => {
         if (admin) {
-          res.json(admin);
+          res.json(buildJSON(user,admin));
         } else {
           return res.status(400).json({ admin: "Such data doesn´t exist" });
         };
       })
     }
-  });
-});
-
-// @route GET api/users/getUser/:id
-// @desc Get User
-// @access Private
-router.route('/getUser/:id').get(function (req, res) {
-  let id = req.params.id;
-  User.findById(id, function (err, user) {
-    res.json(user);
   });
 });
 

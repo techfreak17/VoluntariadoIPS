@@ -32,9 +32,12 @@ export default class EditProfileAdmin extends Component {
             else
                 localStorage.removeItem('firstLoad');
         }
-        axios.get('/api/users/getUserDetails/' + this.props.match.params.id)
-            .then(response => {
-                var date = new Date(response.data[0].birthDate);
+        axios.all([
+            axios.get('/api/users/getUserDetails/' + this.props.match.params.id),
+            axios.get('/api/users/getUser/' + this.props.match.params.id)
+        ])
+            .then(responseArr => {
+                var date = new Date(responseArr[0].data.birthDate);
                 var year = date.getFullYear();
                 var month = date.getMonth() + 1;
                 var d = date.getDate();
@@ -42,11 +45,11 @@ export default class EditProfileAdmin extends Component {
                 var dd = d < 10 ? '0' + d : d;
                 date = '' + year + "-" + mm + "-" + dd;
                 this.setState({
-                    name: response.data[0].name,
-                    phone: response.data[0].phone,
-                    address: response.data[0].address,
+                    name: responseArr[0].data.name,
+                    phone: responseArr[0].data.phone,
+                    address: responseArr[0].data.address,
                     birthDate: date,
-                    role: response.data[1].role,
+                    role: responseArr[1].data.role,
                 });
             })
             .catch(error => console.log(error));

@@ -26,7 +26,7 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-        axios.get('/api/users/getUserDetails/' + this.props.auth.user.id)
+        axios.get('/api/users/getUserDetails/' + this.props.match.params.id)
             .then(responseArr => {
                 var date = new Date(responseArr.data.birthDate);
                 var year = date.getFullYear();

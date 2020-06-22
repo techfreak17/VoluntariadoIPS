@@ -8,6 +8,7 @@ import { logoutUser } from "../../actions/authActions";
 import M from "materialize-css";
 import options from "materialize-css";
 
+
 class Landing extends Component {
     constructor(props) {
         super(props);
@@ -17,10 +18,6 @@ class Landing extends Component {
     }
 
     componentDidMount() {
-        if (this.props.auth.isAuthenticated) {
-            this.props.history.push("/dashboard");
-            window.location.reload();
-        }else{
         if (window.localStorage) {
             if (!localStorage.getItem('firstLoad')) {
                 localStorage['firstLoad'] = true;
@@ -41,7 +38,7 @@ class Landing extends Component {
         if(user.id !== undefined){
             window.location.replace("http://localhost:3000/dashboard");
         }
-    }}
+    }
 
     render() {
         document.addEventListener('DOMContentLoaded', function () {

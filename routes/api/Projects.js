@@ -265,36 +265,4 @@ router.route('/getProjectVoluntaries/:id').get(function (req, res) {
   });
 });
 
-// @route GET api/projects/getProjectUserDetails/:id
-// @desc Get Project User Details
-// @access Private
-router.route('/getCompanyProjectDetails/:id').get(function (req, res) {
-  let id = req.params.id;
-  Project.findById(id, function (err, project) {
-    let newId = project.responsibleID;
-    User.findOne({ _id: newId }).then(user => {
-      if (user.role === "Empresa") {
-        Company.findOne({ responsibleID: newId }).then(company => {
-          if (company) {
-            
-            res.json(buildJSON(project, user, company ));
-          
-          } else {
-            return res.status(400).json({ company: "Such data doesn´t exist" });
-          };
-        })
-      } else if (user.role === "Administrador") {
-        Administrator.findOne().then(admin => {
-          if (admin) {
-            res.json(buildJSON(project, user, admin));
-          } else {
-            return res.status(400).json({ admin: "Such data doesn´t exist" });
-          };
-        })
-
-      }
-    })
-  });
-});
-
 module.exports = router;

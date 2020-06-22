@@ -93,7 +93,7 @@ class App extends Component {
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute path='/listProjects' component={ IndexProjects } />
               <PrivateRoute path='/getProject/:id' component={ ProjectDetails } />
-              <PrivateRoute path="/baseProfile" component={Profile}/>
+              <PrivateRoute path="/baseProfile/:id" component={Profile}/>
               <PrivateRoute  path="/editProfileAdmin/:id" component={EditProfileAdmin}/>
               <PrivateRoute  path="/editProfileCompany/:id" component={EditProfileCompany}/>
               <PrivateRoute  path="/editProfileVoluntary/:id" component={EditProfileVoluntary}/>

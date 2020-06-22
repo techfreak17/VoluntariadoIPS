@@ -22,12 +22,6 @@ const Company = require("../../models/company");
 const Token = require("../../models/token");
 const Administrator = require("../../models/administrator");
 
-const buildJSON = (...files) => {
-  var obj = {}
-  Object.assign(obj, files);
-  return obj;
-};
-
 // @route POST api/users/registerVoluntary
 // @desc Register user
 // @access Public
@@ -332,7 +326,7 @@ router.route('/getUserDetails/:id').get(function (req, res) {
     if (user.role === "Voluntário") {
       Voluntary.findOne({ userID: user._id }).then(voluntary => {
         if (voluntary) {
-          res.json(buildJSON(user, voluntary));
+          res.json(voluntary);
         } else {
           return res.status(400).json({ voluntary: "Such data doesn´t exist" });
         };
@@ -340,7 +334,7 @@ router.route('/getUserDetails/:id').get(function (req, res) {
     } else if (user.role === "Empresa") {
       Company.findOne({ responsibleID: user._id }).then(company => {
         if (company) {
-          res.json(buildJSON(user,company));
+          res.json(company);
         } else {
           return res.status(400).json({ company: "Such data doesn´t exist" });
         };
@@ -348,7 +342,7 @@ router.route('/getUserDetails/:id').get(function (req, res) {
     } else if (user.role === "Administrador") {
       Administrator.findOne({ userID: user._id }).then(admin => {
         if (admin) {
-          res.json(buildJSON(user,admin));
+          res.json(admin);
         } else {
           return res.status(400).json({ admin: "Such data doesn´t exist" });
         };

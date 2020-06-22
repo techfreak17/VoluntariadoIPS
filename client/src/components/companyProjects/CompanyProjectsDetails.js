@@ -30,13 +30,9 @@ class CompanyProjectDetails extends Component {
   }
 
   componentDidMount() {
-    axios.all([
-      axios.get('/api/projects/getProject/' + this.props.match.params.id),
-      axios.get('/api/projects/getProjectUser/' + this.props.match.params.id),
-      axios.get('/api/projects/getProjectUserDetails/' + this.props.match.params.id),
-    ])
-      .then(responseArr => {
-        this.myDate = new Date(responseArr[0].data.date);
+    axios.get('/api/projects/getCompanyProjectDetails/' + this.props.match.params.id)
+    .then(responseArr => {
+        this.myDate = new Date(response.data[0].date);
         this.myDate = this.myDate.toLocaleString();
         this.setState({
           name: responseArr[2].data.name,

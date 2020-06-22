@@ -328,30 +328,32 @@ router.post("/searchUser", (req, res) => {
 router.route('/getUserDetails/:id').get(function (req, res) {
   let id = req.params.id;
   User.findById(id, function (err, user) {
-    if (user.role === "Voluntário") {
-      Voluntary.findOne({ userID: user._id }).then(voluntary => {
-        if (voluntary) {
-          res.json(buildJSON(user, voluntary));
-        } else {
-          return res.status(400).json({ voluntary: "Such data doesn´t exist" });
-        };
-      })
-    } else if (user.role === "Empresa") {
-      Company.findOne({ responsibleID: user._id }).then(company => {
-        if (company) {
-          res.json(buildJSON(user,company));
-        } else {
-          return res.status(400).json({ company: "Such data doesn´t exist" });
-        };
-      })
-    } else if (user.role === "Administrador") {
-      Administrator.findOne({ userID: user._id }).then(admin => {
-        if (admin) {
-          res.json(buildJSON(user,admin));
-        } else {
-          return res.status(400).json({ admin: "Such data doesn´t exist" });
-        };
-      })
+    if (user) {
+      if (user.role === "Voluntário") {
+        Voluntary.findOne({ userID: user._id }).then(voluntary => {
+          if (voluntary) {
+            res.json(buildJSON(user, voluntary));
+          } else {
+            return res.status(400).json({ voluntary: "Such data doesn´t exist" });
+          };
+        })
+      } else if (user.role === "Empresa") {
+        Company.findOne({ responsibleID: user._id }).then(company => {
+          if (company) {
+            res.json(buildJSON(user, company));
+          } else {
+            return res.status(400).json({ company: "Such data doesn´t exist" });
+          };
+        })
+      } else if (user.role === "Administrador") {
+        Administrator.findOne({ userID: user._id }).then(admin => {
+          if (admin) {
+            res.json(buildJSON(user, admin));
+          } else {
+            return res.status(400).json({ admin: "Such data doesn´t exist" });
+          };
+        })
+      }
     }
   });
 });

@@ -35,22 +35,22 @@ class CompanyProjectDetails extends Component {
         this.myDate = new Date(responseArr.data[0].date);
         this.myDate = this.myDate.toLocaleString();
         this.setState({
-          name: responseArr[2].data.name,
-          email: responseArr[2].data.email,
-          phone: responseArr[2].data.phone,
-          companyAddress: responseArr[2].data.companyAddress,
-          companyName: responseArr[2].data.companyName,
-          title: responseArr[0].data.title,
-          synopsis: responseArr[0].data.synopsis,
-          intervationArea: responseArr[0].data.intervationArea,
-          target_audience: responseArr[0].data.target_audience,
-          objectives: responseArr[0].data.objectives,
-          description: responseArr[0].data.description,
-          observations: responseArr[0].data.observations,
-          interestAreas: responseArr[0].data.interestAreas,
-          role: responseArr[1].data.role,
-          vacancies : responseArr[0].data.vacancies,
-          vacanciesToFill: responseArr[0].data.vacancies - responseArr[0].data.enroled_IDs.length
+          name: responseArr.data[2].name,
+          email: responseArr.data[2].email,
+          phone: responseArr.data[2].phone,
+          companyAddress: responseArr.data[2].companyAddress,
+          companyName: responseArr.data[2].companyName,
+          title: responseArr.data[0].title,
+          synopsis: responseArr.data[0].synopsis,
+          intervationArea: responseArr.data[0].intervationArea,
+          target_audience: responseArr.data[0].target_audience,
+          objectives: responseArr.data[0].objectives,
+          description: responseArr.data[0].description,
+          observations: responseArr.data[0].observations,
+          interestAreas: responseArr.data[0].interestAreas,
+          role: responseArr.data[1].role,
+          vacancies : responseArr.data[0].vacancies,
+          vacanciesToFill: responseArr.data[0].vacancies - responseArr.data[0].enroled_IDs.length
         });
         var ul = document.getElementById("friendsList");
 

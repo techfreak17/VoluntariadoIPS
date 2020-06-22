@@ -35,11 +35,11 @@ class ListVoluntaries extends Component {
 
   render() {
     return (
-      <div>
-        <table  className="striped">
+      <div className="card" style={{backgroundColor: "#00000", width: 900, margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px black" }}>
+        <table  className="striped" >
         <thead>
           <tr>
-              <th>Nome</th>
+              <th style={{fontSize: "24px"}}>Nome</th>
           </tr>
         </thead>
         <tbody>

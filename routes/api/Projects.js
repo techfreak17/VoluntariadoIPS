@@ -195,29 +195,6 @@ router.post("/searchProject", (req, res) => {
   })
 });
 
-// @route GET api/projects/getProject/:id
-// @desc Get Project
-// @access Private
-router.route('/getProject/:id').get(function (req, res) {
-  let id = req.params.id;
-  Project.findById(id, function (err, project) {
-    res.json(project);
-  });
-});
-
-// @route GET api/projects/getProjectUser/:id
-// @desc Get Project User
-// @access Private
-router.route('/getProjectUser/:id').get(function (req, res) {
-  let id = req.params.id;
-  Project.findById(id, function (err, project) {
-    let newId = project.responsibleID;
-    User.findOne({ _id: newId }).then(user => {
-      res.json(user);
-    })
-  });
-});
-
 // @route GET api/projects/getProjectUserDetails/:id
 // @desc Get Project User Details
 // @access Private
@@ -248,6 +225,9 @@ router.route('/getProjectUserDetails/:id').get(function (req, res) {
   });
 });
 
+// @route GET api/projects/getProjectVoluntaries/:id
+// @desc Get Project Voluntaries
+// @access Private
 router.route('/getProjectVoluntaries/:id').get(function (req, res) {
   let id = req.params.id;
   Project.findById(id, function (err, project) {
@@ -270,7 +250,7 @@ router.route('/getProjectVoluntaries/:id').get(function (req, res) {
 });
 
 // @route GET api/projects/getProjectUserDetails/:id
-// @desc Get Project User Details
+// @desc Get Company Projects Details
 // @access Private
 router.route('/getCompanyProjectDetails/:id').get(function (req, res) {
   let id = req.params.id;

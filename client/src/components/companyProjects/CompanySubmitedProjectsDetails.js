@@ -31,6 +31,7 @@ class CompanySubmitedProjectsDetails extends Component {
   componentDidMount() {
     axios.get('/api/projects/getCompanyProjectDetails/' + this.props.match.params.id)
     .then(responseArr => {
+        console.log(responseArr);
         this.myDate = new Date(responseArr.data[0].date);
         this.myDate = this.myDate.toLocaleString();
         this.setState({

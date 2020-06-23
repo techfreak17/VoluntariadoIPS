@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import axios from 'axios';
-import  RowVoluntary  from './RowVoluntary.js';
+import  RowVoluntary  from './rowVoluntary.js';
 
 //get the project, which has all of the voluntaries ID's
 //GET the voluntary by id

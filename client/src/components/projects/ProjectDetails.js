@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
-
+import VoluntariesList from './VoluntariesList';
+import Popup from "reactjs-popup";
+import '../../componentsCSS/Modal.css'
 
 
 
@@ -68,6 +70,13 @@ class ProjectDetails extends Component {
       .catch(error => console.log(error));
   }
 
+  openModal =() =>{
+    this.setState({ open: true });
+  }
+  closeModal=() =>{
+    this.setState({ open: false });
+  }
+
   render() {
     return (
       <div>
@@ -109,8 +118,17 @@ class ProjectDetails extends Component {
               <p style={{ color: "#000000" }}><b>Área Intervenção:</b> {this.state.intervationArea}</p>
               <p style={{ color: "#000000" }}><b>Observações:</b> {this.state.observations}</p>
               <ul id="friendsList" style={{ color: "#000000" }}><b>Áreas:</b></ul>
-              <Link to={"/listVoluntary/" + this.props.match.params.id}
-                className="btn btn-medium waves-effect waves-light hoverable blue center">Ver Voluntários</Link>
+              
+              <button className="btn btn-medium waves-effect waves-light hoverable blue center" onClick={this.openModal}>
+              lista de Inscritos
+              </button>
+              <Popup open={this.state.open}
+                    closeOnDocumentClick
+                    onClose={this.closeModal}>
+                <div className="Modal">
+                <VoluntariesList projectID={this.props.match.params.id}></VoluntariesList>
+                </div>
+              </Popup>
             </div><br></br>
             <Link to="/listProjects" style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold", }}
               className="btn btn-large waves-effect waves-light hoverable black center">Voltar</Link>

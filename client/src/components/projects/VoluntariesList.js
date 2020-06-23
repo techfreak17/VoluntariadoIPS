@@ -17,7 +17,8 @@ class VoluntariesList extends Component {
   }
 
   componentDidMount() {
-    axios.get('/api/projects/getProjectVoluntaries/' + this.props.match.params.id)//add the project id
+    console.log(this.props.projectID);
+    axios.get('/api/projects/getProjectVoluntaries/' + this.props.projectID)//add the project id
       .then(res => {
         this.setState(prevState => ({
           voluntaries: [...prevState.voluntaries, ...res.data]
@@ -26,24 +27,15 @@ class VoluntariesList extends Component {
   }
 
 
-  rowVolun() {
+  rowVolun = () => {
     return this.state.voluntaries.map(function (object, i) {
       return <VoluntaryRow obj={object} key={i} />;
     });
   }
 
-
-  goBack() {
-    window.history.back();
-  }
-
   render() {
     return (
-      <div  className="card" style={{backgroundColor: "#00000", width: 900, margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px black" }}>
-        <button onClick={this.goBack} className="btn-flat waves-effect">
-          <i className="material-icons left">keyboard_backspace</i>
-              Voltar
-            </button>
+      <div  className="card" style={{minWidth:400, width: "auto", boxShadow: "1px 1px 10px 5px black" }}>
         <table className="striped">
           <thead>
             <tr>

@@ -27,8 +27,8 @@ class Profile extends Component {
 
     componentDidMount() {
         axios.get('/api/users/getUserDetails/' + this.props.match.params.id)
-            .then(responseArr => {
-                var date = new Date(responseArr.data.birthDate);
+            .then(response => {
+                var date = new Date(response.data[1].birthDate);
                 var year = date.getFullYear();
                 var month = date.getMonth() + 1;
                 var d = date.getDate();
@@ -36,16 +36,16 @@ class Profile extends Component {
                 var dd = d < 10 ? '0' + d : d;
                 date = '' + year + "-" + mm + "-" + dd;
                 this.setState({
-                    name: responseArr.data.name,
-                    email: responseArr.data.email,
-                    phone: responseArr.data.phone,
-                    address: responseArr.data.address,
-                    member: responseArr.data.memberIPS,
-                    school: responseArr.data.schoolIPS,
-                    course: responseArr.data.courseIPS,
-                    companyAddress: responseArr.data.companyAddress,
-                    companyName: responseArr.data.companyName,
-                    interestAreas: responseArr.data.interestAreas,
+                    name: response.data[1].name,
+                    email: response.data[1].email,
+                    phone: response.data[1].phone,
+                    address: response.data[1].address,
+                    member: response.data[1].memberIPS,
+                    school: response.data[1].schoolIPS,
+                    course: response.data[1].courseIPS,
+                    companyAddress: response.data[1].companyAddress,
+                    companyName: response.data[1].companyName,
+                    interestAreas: response.data[1].interestAreas,
                     birthDate: date,
                     role: this.props.auth.user.role
                 });

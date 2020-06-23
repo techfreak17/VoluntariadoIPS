@@ -35,12 +35,10 @@ export default class EditProfileVoluntary extends Component {
       else
         localStorage.removeItem('firstLoad');
     }
-    axios.all([
-      axios.get('/api/users/getUserDetails/' + this.props.match.params.id),
-      axios.get('/api/users/getUser/' + this.props.match.params.id)
-    ])
-      .then(responseArr => {
-        var date = new Date(responseArr[0].data.birthDate);
+
+    axios.get('/api/users/getUserDetails/' + this.props.match.params.id)
+    .then(response => {
+        var date = new Date(response.data[1].birthDate);
         var year = date.getFullYear();
         var month = date.getMonth() + 1;
         var d = date.getDate();
@@ -48,15 +46,15 @@ export default class EditProfileVoluntary extends Component {
         var dd = d < 10 ? '0' + d : d;
         date = '' + year + "-" + mm + "-" + dd;
         this.setState({
-          name: responseArr[0].data.name,
-          phone: responseArr[0].data.phone,
-          address: responseArr[0].data.address,
-          memberIPS: responseArr[0].data.memberIPS,
-          schoolIPS: responseArr[0].data.schoolIPS,
-          courseIPS: responseArr[0].data.courseIPS,
-          interestAreas: responseArr[0].data.interestAreas,
-          reasons: responseArr[0].data.reasons,
-          role: responseArr[1].data.role,
+          name: response.data[1].name,
+          phone: response.data[1].phone,
+          address: response.data[1].address,
+          memberIPS: response.data[1].memberIPS,
+          schoolIPS: response.data[1].schoolIPS,
+          courseIPS: response.data[1].courseIPS,
+          interestAreas: response.data[1].interestAreas,
+          reasons: response.data[1].reasons,
+          role: response.data[0].role,
           birthDate: date
         });
       })

@@ -19,7 +19,7 @@ router.route('/joinProject/:id').post(function (req, res) {
         if (user.role === "Voluntário") {
             Voluntary.findOne({ userID: user._id }).then(voluntary => {
                 Project.findById(id).then(project => {
-                    if(project.vacancies>project.enroled_IDs.lenght){
+                    if(project.vacancies>Object.keys(project.enroled_IDs).length){
                         voluntary.listProjects.push(project._id);
                         voluntary.save();
                         project.enroled_IDs.push(user._id);

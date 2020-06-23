@@ -20,27 +20,24 @@ export default class Edit extends Component {
   }
 
   componentDidMount() {
-    axios.all([
-      axios.get('/api/users/getUserDetails/' + this.props.match.params.id),
-      axios.get('/api/users/getUser/' + this.props.match.params.id)
-    ])
-      .then(responseArr => {
-        this.myDate = new Date(responseArr[0].data.birthDate);
-        this.myDate = this.myDate.toLocaleDateString();
-        this.setState({
-          name: responseArr[0].data.name,
-          email: responseArr[0].data.email,
-          phone: responseArr[0].data.phone,
-          address: responseArr[0].data.address,
-          member: responseArr[0].data.memberIPS,
-          school: responseArr[0].data.schoolIPS,
-          course: responseArr[0].data.courseIPS,
-          companyAddress: responseArr[0].data.companyAddress,
-          companyName: responseArr[0].data.companyName,
-          role: responseArr[1].data.role
-        });
-      })
-      .catch(error => console.log(error));
+    axios.get('/api/users/getUserDetails/' + this.props.match.params.id)
+      .then(response => {
+      this.myDate = new Date(response.data[1].birthDate);
+      this.myDate = this.myDate.toLocaleDateString();
+      this.setState({
+        name: response.data[1].name,
+        email: response.data[1].email,
+        phone: response.data[1].phone,
+        address: response.data[1].address,
+        member: response.data[1].memberIPS,
+        school: response.data[1].schoolIPS,
+        course: response.data[1].courseIPS,
+        companyAddress: response.data[1].companyAddress,
+        companyName: response.data[1].companyName,
+        role: response.data[0].role
+      });
+    })
+        .catch(error => console.log(error));
   }
 
   goBack() {

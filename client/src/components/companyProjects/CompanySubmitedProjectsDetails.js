@@ -29,27 +29,26 @@ class CompanySubmitedProjectsDetails extends Component {
   }
 
   componentDidMount() {
-    axios.get('/api/projects/getCompanyProjectDetails/' + this.props.match.params.id)
-    .then(responseArr => {
-        this.myDate = new Date(responseArr.data[0].date);
+    axios.get('/api/submitedProjects/getSubmitedProjectUserDetails/' + this.props.match.params.id)
+    .then(response => {
+        this.myDate = new Date(response.data[0].date);
         this.myDate = this.myDate.toLocaleString();
         this.setState({
-          name: responseArr.data[2].name,
-          email: responseArr.data[2].email,
-          phone: responseArr.data[2].phone,
-          companyAddress: responseArr.data[2].companyAddress,
-          companyName: responseArr.data[2].companyName,
-          title: responseArr.data[0].title,
-          synopsis: responseArr.data[0].synopsis,
-          intervationArea: responseArr.data[0].intervationArea,
-          target_audience: responseArr.data[0].target_audience,
-          objectives: responseArr.data[0].objectives,
-          description: responseArr.data[0].description,
-          observations: responseArr.data[0].observations,
-          interestAreas: responseArr.data[0].interestAreas,
-          role: responseArr.data[1].role,
-          vacancies : responseArr.data[0].vacancies,
-          vacanciesToFill: responseArr.data[0].vacancies - responseArr.data[0].enroled_IDs.length
+          name: response.data[2].name,
+          email: response.data[2].email,
+          phone: response.data[2].phone,
+          companyAddress: response.data[2].companyAddress,
+          companyName: response.data[2].companyName,
+          title: response.data[0].title,
+          synopsis: response.data[0].synopsis,
+          intervationArea: response.data[0].intervationArea,
+          target_audience: response.data[0].target_audience,
+          objectives: response.data[0].objectives,
+          description: response.data[0].description,
+          observations: response.data[0].observations,
+          interestAreas: response.data[0].interestAreas,
+          role: response.data[1].role,
+          vacancies: response.data[0].vacancies
         });
         var ul = document.getElementById("friendsList");
 
@@ -62,6 +61,7 @@ class CompanySubmitedProjectsDetails extends Component {
       })
       .catch(error => console.log(error));
   }
+
 
   goBack() {
     window.history.back();

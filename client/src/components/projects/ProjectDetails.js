@@ -34,31 +34,27 @@ class ProjectDetails extends Component {
   }
 
   componentDidMount() {
-    axios.all([
-      axios.get('/api/projects/getProject/' + this.props.match.params.id),
-      axios.get('/api/projects/getProjectUser/' + this.props.match.params.id),
-      axios.get('/api/projects/getProjectUserDetails/' + this.props.match.params.id),
-    ])
-      .then(responseArr => {
-        this.myDate = new Date(responseArr[0].data.date);
+    axios.get('/api/projects/getCompanyProjectDetails/' + this.props.match.params.id)
+    .then(response => {
+        this.myDate = new Date(response.data[0].date);
         this.myDate = this.myDate.toLocaleString();
         this.setState({
-          name: responseArr[2].data.name,
-          email: responseArr[2].data.email,
-          phone: responseArr[2].data.phone,
-          companyAddress: responseArr[2].data.companyAddress,
-          companyName: responseArr[2].data.companyName,
-          title: responseArr[0].data.title,
-          synopsis: responseArr[0].data.synopsis,
-          intervationArea: responseArr[0].data.intervationArea,
-          target_audience: responseArr[0].data.target_audience,
-          objectives: responseArr[0].data.objectives,
-          description: responseArr[0].data.description,
-          observations: responseArr[0].data.observations,
-          interestAreas: responseArr[0].data.interestAreas,
-          role: responseArr[1].data.role,
-          vacancies : responseArr[0].data.vacancies,
-          vacanciesToFill: responseArr[0].data.vacancies - responseArr[0].data.enroled_IDs.length
+          name: response.data[2].name,
+          email: response.data[2].email,
+          phone: response.data[2].phone,
+          companyAddress: response.data[2].companyAddress,
+          companyName: response.data[2].companyName,
+          title: response.data[0].title,
+          synopsis: response.data[0].synopsis,
+          intervationArea: response.data[0].intervationArea,
+          target_audience: response.data[0].target_audience,
+          objectives: response.data[0].objectives,
+          description: response.data[0].description,
+          observations: response.data[0].observations,
+          interestAreas: response.data[0].interestAreas,
+          role: response.data[1].role,
+          vacancies : response.data[0].vacancies,
+          vacanciesToFill: response.data[0].vacancies - response.data[0].enroled_IDs.length
         });
         var ul = document.getElementById("friendsList");
 

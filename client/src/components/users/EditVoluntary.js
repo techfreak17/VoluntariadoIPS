@@ -40,12 +40,9 @@ export default class EditVoluntary extends Component {
       else
         localStorage.removeItem('firstLoad');
     }
-    axios.all([
-      axios.get('/api/users/getUserDetails/' + this.props.match.params.id),
-      axios.get('/api/users/getUser/' + this.props.match.params.id)
-    ])
-      .then(responseArr => {
-        var date = new Date(responseArr[0].data.birthDate);
+    axios.get('/api/users/getUserDetails/' + this.props.match.params.id)
+      .then(response => {
+        var date = new Date(response.data[1].birthDate);
         var year = date.getFullYear();
         var month = date.getMonth() + 1;
         var d = date.getDate();
@@ -53,18 +50,18 @@ export default class EditVoluntary extends Component {
         var dd = d < 10 ? '0' + d : d;
         date = '' + year + "-" + mm + "-" + dd;
         this.setState({
-          name: responseArr[0].data.name,
-          email: responseArr[0].data.email,
-          phone: responseArr[0].data.phone,
-          address: responseArr[0].data.address,
-          memberIPS: responseArr[0].data.memberIPS,
-          schoolIPS: responseArr[0].data.schoolIPS,
-          courseIPS: responseArr[0].data.courseIPS,
-          interestAreas: responseArr[0].data.interestAreas,
-          reasons: responseArr[0].data.reasons,
-          observations: responseArr[0].data.observations,
-          role: responseArr[1].data.role,
-          username: responseArr[1].data.username,
+          name: response.data[1].name,
+          email: response.data[1].email,
+          phone: response.data[1].phone,
+          address: response.data[1].address,
+          memberIPS: response.data[1].memberIPS,
+          schoolIPS: response.data[1].schoolIPS,
+          courseIPS: response.data[1].courseIPS,
+          interestAreas: response.data[1].interestAreas,
+          reasons: response.data[1].reasons,
+          observations: response.data[1].observations,
+          role: response.data[0].role,
+          username: response.data[0].username,
           birthDate: date
         });
       })

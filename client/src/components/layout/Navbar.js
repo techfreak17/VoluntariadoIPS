@@ -14,8 +14,7 @@ class Navbar extends Component {
 
         this.state = {
             username: "",
-            email: "",
-            id: this.props.auth.user.id
+            email: ""
         }
     }
     onLogoutClick = e => {
@@ -26,11 +25,11 @@ class Navbar extends Component {
 
 
     componentDidMount() {
-        axios.get('/api/users/getUser/' + this.state.id)
-            .then(response => {
+        axios.get('/api/users/getUserDetails/' + this.props.auth.user.id)
+        .then(response => {
                 this.setState({
-                    username: response.data.username,
-                    email: response.data.email
+                    username: response.data[0].username,
+                    email: response.data[0].email
                 });
             })
             .catch(function (error) {

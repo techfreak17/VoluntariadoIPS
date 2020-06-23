@@ -4,8 +4,6 @@ const express = require("express");
 const router = express.Router();
 
 
-
-
 router.route('/listNotifications/:id').get(function (req, res) {
   const id = req.params.id;
   User.findById(id, function(err,user){
@@ -43,7 +41,7 @@ router.route('/deleteNotification/:id').get(function (req, res) {
   });
 });
 
-router.put('/updateNotification/:id').get(function (req, res) {
+router.route('/updateNotification/:id').get(function (req, res) {
   notifications.findOne({_id: req.params.id},function(err, notif){
     if(err){
       res.json(err);
@@ -67,9 +65,5 @@ router.post("/createNotification", (req, res) => {
   
 });
 
-
-//createNotification('semVagas','\"Ajudar o Ambiente\"','180221102@estudantes.ips.pt');
-//createNotification('confirmarEmail','', '180221102@estudantes.ips.pt');
-//getNotification('180221102@estudantes.ips.pt');
 
 module.exports = router;

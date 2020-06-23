@@ -70,6 +70,10 @@ const SubmitedProjectSchema = new Schema({
             },
             message: `Users doesn't exist`
         }
+    },
+    vacancies:{
+        type: Number,
+        required: true
     }
 });
 

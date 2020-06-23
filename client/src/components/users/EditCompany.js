@@ -24,8 +24,6 @@ export default class EditCompany extends Component {
 
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        this.handleChangeInterestAreas = this.handleChangeInterestAreas.bind(this);
-        this.handleChangeReasons = this.handleChangeReasons.bind(this);
     }
 
     componentDidMount() {
@@ -37,12 +35,10 @@ export default class EditCompany extends Component {
             else
                 localStorage.removeItem('firstLoad');
         }
-        axios.all([
-            axios.get('/api/users/getUserDetails/' + this.props.match.params.id),
-            axios.get('/api/users/getUser/' + this.props.match.params.id)
-        ])
-            .then(responseArr => {
-                var date = new Date(responseArr[0].data.birthDate);
+
+        axios.get('/api/users/getUserDetails/' + this.props.match.params.id)
+            .then(response => {
+                var date = new Date(response.data[1].birthDate);
                 var year = date.getFullYear();
                 var month = date.getMonth() + 1;
                 var d = date.getDate();
@@ -50,16 +46,16 @@ export default class EditCompany extends Component {
                 var dd = d < 10 ? '0' + d : d;
                 date = '' + year + "-" + mm + "-" + dd;
                 this.setState({
-                    name: responseArr[0].data.name,
-                    email: responseArr[0].data.email,
-                    phone: responseArr[0].data.phone,
-                    address: responseArr[0].data.address,
-                    companyAddress: responseArr[0].data.companyAddress,
-                    companyName: responseArr[0].data.companyName,
+                    name: response.data[1].name,
+                    email: response.data[1].email,
+                    phone: response.data[1].phone,
+                    address: response.data[1].address,
+                    companyAddress: response.data[1].companyAddress,
+                    companyName: response.data[1].companyName,
                     birthDate: date,
-                    observations: responseArr[0].data.observations,
-                    role: responseArr[1].data.role,
-                    username: responseArr[1].data.username
+                    observations: response.data[1].observations,
+                    role: response.data[0].role,
+                    username: response.data[0].username
                 });
             })
             .catch(error => console.log(error));
@@ -68,14 +64,6 @@ export default class EditCompany extends Component {
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
     };
-
-    handleChangeInterestAreas(event) {
-        this.setState({ interestAreas: Array.from(event.target.selectedOptions, (item) => item.value) });
-    }
-
-    handleChangeReasons(event) {
-        this.setState({ reasons: Array.from(event.target.selectedOptions, (item) => item.value) });
-    }
 
     onSubmit(e) {
         e.preventDefault();
@@ -92,9 +80,12 @@ export default class EditCompany extends Component {
             birthDate: this.state.birthDate
         };
         axios.post('/api/admin/updateUser/' + this.props.match.params.id, obj)
-            .then(res => console.log(res.data));
         this.props.history.push('/listUsers');
         window.location.reload();
+    }
+
+    goBack() {
+        window.history.back();
     }
 
     render() {
@@ -102,8 +93,7 @@ export default class EditCompany extends Component {
 
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('select');
-            var instances = M.FormSelect.init(elems, options);
-            console.log(instances);
+            M.FormSelect.init(elems, options);
         });
 
         return (
@@ -115,7 +105,10 @@ export default class EditCompany extends Component {
                             <div className="input-field col s12">
                                 <label htmlFor="name">Username *</label><br></br>
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        username: e.target.value,
+                                        validationErrorUsername: e.target.value === "" ? "Deverá preencher o campo Username" : ""
+                                    })}
                                     value={this.state.username}
                                     id="username"
                                     type="text"
@@ -124,13 +117,19 @@ export default class EditCompany extends Component {
                                         invalid: errors.username
                                     })}
                                 />
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationErrorUsername}
+                                </div>
                                 <span className="red-text">{errors.username}</span>
                             </div>
 
                             <div className="input-field col s12">
                                 <label htmlFor="email">Email *</label><br></br>
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        email: e.target.value,
+                                        validationErrorEmail: e.target.value === "" ? "Deverá preencher o campo Email" : ""
+                                    })}
                                     value={this.state.email}
                                     id="email"
                                     type="email"
@@ -139,13 +138,19 @@ export default class EditCompany extends Component {
                                         invalid: errors.email
                                     })}
                                 />
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationErrorEmail}
+                                </div>
                                 <span className="red-text">{errors.email}</span>
                             </div>
 
                             <div className="input-field col s12">
                                 <label htmlFor="name">Nome Completo *</label><br></br>
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        name: e.target.value,
+                                        validationErrorName: e.target.value === "" ? "Deverá preencher o campo Nome Completo" : ""
+                                    })}
                                     value={this.state.name}
                                     id="name"
                                     type="text"
@@ -154,13 +159,19 @@ export default class EditCompany extends Component {
                                         invalid: errors.name
                                     })}
                                 />
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationErrorName}
+                                </div>
                                 <span className="red-text">{errors.name}</span>
                             </div>
 
                             <div className="input-field col s12">
                                 <label htmlFor="number">Nº Telemóvel *</label><br></br>
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        phone: e.target.value,
+                                        validationErrorPhone: e.target.value === "" ? "Deverá preencher o campo Nº Telemóvel" : ""
+                                    })}
                                     value={this.state.phone}
                                     id="phone"
                                     type="number"
@@ -169,6 +180,9 @@ export default class EditCompany extends Component {
                                         invalid: errors.phone
                                     })}
                                 />
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationErrorPhone}
+                                </div>
                                 <span className="red-text">{errors.phone}</span>
                             </div>
 
@@ -190,7 +204,10 @@ export default class EditCompany extends Component {
                             <div className="input-field col s12">
                                 <label htmlFor="name">Data Nascimento *</label><br></br>
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        birthDate: e.target.value,
+                                        validationErrorBirthDate: e.target.value === "" ? "Deverá preencher o campo Data Nascimento" : ""
+                                    })}
                                     value={this.state.birthDate}
                                     id="birthDate"
                                     type="date"
@@ -199,13 +216,19 @@ export default class EditCompany extends Component {
                                         invalid: errors.birthDate
                                     })}
                                 />
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationErrorBirthDate}
+                                </div>
                                 <span className="red-text">{errors.birthDate}</span>
                             </div>
 
                             <div className="input-field col s12">
                                 <label htmlFor="name">Nome Empresa *</label><br></br>
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        companyName: e.target.value,
+                                        validationErrorCompanyName: e.target.value === "" ? "Deverá preencher o campo Nome Empresa" : ""
+                                    })}
                                     value={this.state.companyName}
                                     id="companyName"
                                     type="text"
@@ -214,13 +237,19 @@ export default class EditCompany extends Component {
                                         invalid: errors.companyName
                                     })}
                                 />
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationErrorCompanyName}
+                                </div>
                                 <span className="red-text">{errors.companyName}</span>
                             </div>
 
                             <div className="input-field col s12">
                                 <label htmlFor="name">Morada (Concelho) Empresa *</label><br></br>
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        companyAddress: e.target.value,
+                                        validationErrorCompanyAddress: e.target.value === "" ? "Deverá preencher o campo Morada (Concelho) Empresa" : ""
+                                    })}
                                     value={this.state.companyAddress}
                                     id="companyAddress"
                                     type="text"
@@ -229,6 +258,9 @@ export default class EditCompany extends Component {
                                         invalid: errors.companyAddress
                                     })}
                                 />
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationErrorCompanyAddress}
+                                </div>
                                 <span className="red-text">{errors.companyAddress}</span>
                             </div>
 
@@ -250,11 +282,10 @@ export default class EditCompany extends Component {
                         </form>
                         <div className="col s12" style={{ marginTop: "1%", paddingBottom: 60 }}>
                             <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "20%" }}
-                                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Editar
+                                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Submeter
                             </button>
-                            <a style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "20%" }}
-                                href="/listUsers" className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
-                            </a>
+                            <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "20%" }}
+                                onClick={this.goBack} className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar </button>
                         </div>
                     </div>
                 </div>

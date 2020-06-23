@@ -55,6 +55,10 @@ class CreateVoluntaryUser extends Component {
         }
     }
 
+    goBack() {
+        window.history.back();
+    }
+
     componentDidMount() {
         if (window.localStorage) {
             if (!localStorage.getItem('firstLoad')) {
@@ -100,8 +104,7 @@ class CreateVoluntaryUser extends Component {
 
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('select');
-            var instances = M.FormSelect.init(elems, options);
-            console.log(instances);
+            M.FormSelect.init(elems, options);
         });
 
         return (
@@ -298,7 +301,7 @@ class CreateVoluntaryUser extends Component {
                                     })}>
                                     <option value="" disabled>Selecionar Opções</option>
                                     <option value="Atividades Académicas">Atividades Académicas (por ex. apoio às matrículas…)</option>
-                                    <option value="Ambiental">Ambiental (por ex. ações de sensibilização, de limpeza…</option>
+                                    <option value="Ambiental">Ambiental (por ex. ações de sensibilização, de limpeza…)</option>
                                     <option value="Apoio a Eventos">Apoio a Eventos</option>
                                     <option value="Informática">Informática (por ex. criação de sites, de bases de dados, formação…)</option>
                                     <option value="Comunicação">Comunicação (por ex. divulgação nas Escolas Secundárias/Profissionais, Futurália…)</option>
@@ -351,11 +354,11 @@ class CreateVoluntaryUser extends Component {
                         </form>
                         <div className="col s12" style={{ marginTop: "1%", paddingBottom: 60 }}>
                             <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "20%" }}
-                                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Editar
+                                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Submeter
                             </button>
-                            <a style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "20%" }}
-                                href="/listUsers" className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
-                            </a>
+                            <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "20%" }}
+                                onClick={this.goBack} className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
+                            </button>
                         </div>
                     </div>
                 </div>

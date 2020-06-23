@@ -106,8 +106,7 @@ class RegisterVoluntary extends Component {
 
         document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('select');
-            var instances = M.FormSelect.init(elems, options);
-            console.log(instances);
+            M.FormSelect.init(elems, options);
         });
 
         return (
@@ -317,7 +316,7 @@ class RegisterVoluntary extends Component {
                                     })}>
                                     <option value="" disabled>Selecionar Opções</option>
                                     <option value="Atividades Académicas">Atividades Académicas (por ex. apoio às matrículas…)</option>
-                                    <option value="Ambiental">Ambiental (por ex. ações de sensibilização, de limpeza…</option>
+                                    <option value="Ambiental">Ambiental (por ex. ações de sensibilização, de limpeza…)</option>
                                     <option value="Apoio a Eventos">Apoio a Eventos</option>
                                     <option value="Informática">Informática (por ex. criação de sites, de bases de dados, formação…)</option>
                                     <option value="Comunicação">Comunicação (por ex. divulgação nas Escolas Secundárias/Profissionais, Futurália…)</option>

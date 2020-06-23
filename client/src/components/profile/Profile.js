@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 
-class BaseProfile extends Component {
+class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -27,9 +27,8 @@ class BaseProfile extends Component {
 
     componentDidMount() {
         axios.get('/api/users/getUserDetails/' + this.props.match.params.id)
-            .then(responseArr => {
-                console.log(responseArr.data);
-                var date = new Date(responseArr.data.birthDate);
+            .then(response => {
+                var date = new Date(response.data[1].birthDate);
                 var year = date.getFullYear();
                 var month = date.getMonth() + 1;
                 var d = date.getDate();
@@ -37,16 +36,16 @@ class BaseProfile extends Component {
                 var dd = d < 10 ? '0' + d : d;
                 date = '' + year + "-" + mm + "-" + dd;
                 this.setState({
-                    name: responseArr.data.name,
-                    email: responseArr.data.email,
-                    phone: responseArr.data.phone,
-                    address: responseArr.data.address,
-                    member: responseArr.data.memberIPS,
-                    school: responseArr.data.schoolIPS,
-                    course: responseArr.data.courseIPS,
-                    companyAddress: responseArr.data.companyAddress,
-                    companyName: responseArr.data.companyName,
-                    interestAreas: responseArr.data.interestAreas,
+                    name: response.data[1].name,
+                    email: response.data[1].email,
+                    phone: response.data[1].phone,
+                    address: response.data[1].address,
+                    member: response.data[1].memberIPS,
+                    school: response.data[1].schoolIPS,
+                    course: response.data[1].courseIPS,
+                    companyAddress: response.data[1].companyAddress,
+                    companyName: response.data[1].companyName,
+                    interestAreas: response.data[1].interestAreas,
                     birthDate: date,
                     role: this.props.auth.user.role
                 });
@@ -115,8 +114,16 @@ class BaseProfile extends Component {
                                         <input readOnly value={this.state.address}></input>
                                         <h5 style={{ fontWeight: 'bold' }}>Escola</h5>
                                         <input readOnly value={this.state.school}></input>
-                                        <h5 style={{ fontWeight: 'bold' }}>Curso</h5>
-                                        <input readOnly value={this.state.course}></input>
+                                        {(() => {
+                                            if (this.state.course !== "") {
+                                                return (
+                                                    <div>
+                                                        <h5 style={{ fontWeight: 'bold' }}>Curso</h5>
+                                                        <input readOnly value={this.state.course}></input>
+                                                    </div>
+                                                )
+                                            }
+                                        })()}
                                         <h5 style={{ fontWeight: 'bold' }}>Áreas de Interesse</h5>
                                         <input readOnly value={this.state.interestAreas}></input>
                                     </div>
@@ -170,7 +177,7 @@ class BaseProfile extends Component {
     }
 }
 
-BaseProfile.propTypes = {
+Profile.propTypes = {
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };
@@ -182,5 +189,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { BaseProfile }
-)(BaseProfile);
+    { Profile }
+)(Profile);

@@ -1,14 +1,23 @@
 const express = require("express");
 const router = express.Router();
+var mongoose = require('mongoose');
 
 // Load User model
 const SubmitedProject = require("../../models/submitedProject");
 const User = require("../../models/user");
 const Company = require("../../models/company");
 const Project = require("../../models/project");
+const Administrator = require("../../models/administrator");
 
 // Load input validation
 const validateCreateProject = require("../../validation/createProject")
+const createNotification = require("../../Notifications/pushNotifications");
+
+const buildJSON = (...files) => {
+  var obj = {}
+  Object.assign(obj, files);
+  return obj;
+};
 
 // @route POST api/submitedProjects/submitCreateProject
 // @desc Submit Create Project - Company and AAIPS
@@ -38,12 +47,20 @@ router.post("/submitCreateProject", (req, res) => {
         relatedEntities: req.body.relatedEntities,
         responsibleID: req.body.responsibleID,
         requiredFormation: req.body.requiredFormation,
-        formation: req.body.formation
+        formation: req.body.formation,
+        vacancies: req.body.vacancies
       });
       newSubmitedProject
         .save()
         .then(newSubmitedProject => res.json(newSubmitedProject))
         .catch(err => console.log(err));
+
+      User.findOne({ _id: mongoose.Types.ObjectId(newSubmitedProject.responsibleID) }).then(user => {
+        if (user) {
+          createNotification('proporProjetoEntidade', newSubmitedProject.title, user.email);
+          createNotification('proporProjetoAdmin', newSubmitedProject.title, 'admin@teste.pt');
+        }
+      });
     }
   });
 });
@@ -104,6 +121,13 @@ router.route('/submitDeleteProject/:id').get(function (req, res) {
   SubmitedProject.findByIdAndRemove({ _id: req.params.id }, function (err, project) {
     if (err) res.json(err);
     else res.json('Successfully removed');
+
+    User.findOne({ _id: mongoose.Types.ObjectId(project.responsibleID) }).then(user => {
+      if (user) {
+        createNotification('recusarProjetoEntidade', project.title, user.email);
+        createNotification('recusarProjetoAdmin', project.title, 'admin@teste.pt');
+      }
+    });
   });
 });
 
@@ -134,29 +158,6 @@ router.post("/searchSubmitedProject", (req, res) => {
   })
 });
 
-// @route GET api/submitedProjects/getProject/:id
-// @desc Get Project
-// @access Private
-router.route('/getSubmitedProject/:id').get(function (req, res) {
-  let id = req.params.id;
-  SubmitedProject.findById(id, function (err, submitedProject) {
-    res.json(submitedProject);
-  });
-});
-
-// @route GET api/submitedProjects/getProjectUser/:id
-// @desc Get Project User
-// @access Private
-router.route('/getSubmitedProjectUser/:id').get(function (req, res) {
-  let id = req.params.id;
-  SubmitedProject.findById(id, function (err, submitedProject) {
-    let newId = submitedProject.responsibleID;
-    User.findOne({ _id: newId }).then(user => {
-      res.json(user);
-    })
-  });
-});
-
 // @route GET api/submitedProjects/getSubmitedProjectUserDetails/:id
 // @desc Get Project User Details
 // @access Private
@@ -164,12 +165,27 @@ router.route('/getSubmitedProjectUserDetails/:id').get(function (req, res) {
   let id = req.params.id;
   SubmitedProject.findById(id, function (err, submitedProject) {
     let newId = submitedProject.responsibleID;
-    Company.findOne({ responsibleID: newId }).then(company => {
-      if (company) {
-        res.json(company);
-      } else {
-        return res.status(400).json({ email: "Such data doesn´t exist" });
-      };
+    User.findOne({ _id: newId }).then(user => {
+      if (user.role === "Empresa") {
+        Company.findOne({ responsibleID: newId }).then(company => {
+          if (company) {
+            
+            res.json(buildJSON(submitedProject, user, company ));
+          
+          } else {
+            return res.status(400).json({ company: "Such data doesn´t exist" });
+          };
+        })
+      } else if (user.role === "Administrador") {
+        Administrator.findOne().then(admin => {
+          if (admin) {
+            res.json(buildJSON(submitedProject, user, admin));
+          } else {
+            return res.status(400).json({ admin: "Such data doesn´t exist" });
+          };
+        })
+
+      }
     })
   });
 });
@@ -178,7 +194,7 @@ router.route('/getSubmitedProjectUserDetails/:id').get(function (req, res) {
 // @desc Accept Submited Project
 // @access Private
 router.route('/acceptSubmitedProject/:id').post(function (req, res) {
-  SubmitedProject.findByIdAndRemove({ _id: req.params.id }, function (err, project) {
+  SubmitedProject.findById({ _id: req.params.id }, function (err, project) {
     if (err) {
       res.json(err);
     }
@@ -203,11 +219,16 @@ router.route('/acceptSubmitedProject/:id').post(function (req, res) {
         .save()
         .then(newProject => res.json(newProject))
         .catch(err => console.log(err));
+
+      User.findOne({ _id: mongoose.Types.ObjectId(project.responsibleID) }).then(user => {
+        if (user) {
+          createNotification('aceitarProjetoEntidade', project.title, user.email);
+          createNotification('aceitarProjetoAdmin', project.title, 'admin@teste.pt');
+        }
+      });
+
+      project.deleteOne();
     }
-  });
-  SubmitedProject.findByIdAndRemove({ _id: req.params.id }, function (err, project) {
-    if (err) res.json(err);
-    else res.json('Successfully removed');
   });
 });
 

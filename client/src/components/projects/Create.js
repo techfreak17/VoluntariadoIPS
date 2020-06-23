@@ -5,6 +5,7 @@ import { createProject } from "../../actions/projectActions";
 import classnames from "classnames";
 import M from "materialize-css";
 import options from "materialize-css";
+import axios from 'axios';
 
 class Create extends Component {
   constructor(props) {
@@ -24,7 +25,9 @@ class Create extends Component {
       relatedEntities: [],
       observations: "",
       authorization: false,
-      responsibleID: this.props.auth.user.id,
+      users: [],
+      selectedUser: "",
+      vacancies: "",
       errors: {}
     }
 
@@ -32,6 +35,7 @@ class Create extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.uploadFile = this.uploadFile.bind(this);
     this.onChangeRelatedEntities = this.onChangeRelatedEntities.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
@@ -43,6 +47,16 @@ class Create extends Component {
       else
         localStorage.removeItem('firstLoad');
     }
+    axios.get('/api/admin/getCompanyUsers')
+      .then(response => {
+        this.setState({
+          users: response.data,
+          selectedUser: response.data[0].name
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
   }
 
   uploadFile(event) {
@@ -83,6 +97,10 @@ class Create extends Component {
     }
   }
 
+  goBack() {
+    window.history.back();
+  }
+
   onSubmit(e) {
     e.preventDefault();
     const obj = {
@@ -100,7 +118,8 @@ class Create extends Component {
       observations: this.state.observations,
       authorization: this.state.authorization,
       relatedEntities: this.state.relatedEntities,
-      responsibleID: this.state.responsibleID
+      responsibleID: this.state.selectedUser,
+      vacancies: this.state.vacancies
     };
 
     this.props.createProject(obj, this.props.history);
@@ -114,15 +133,17 @@ class Create extends Component {
     this.setState({ [e.target.id]: inputList });
   };
 
-
   render() {
     const { errors } = this.state;
 
     document.addEventListener('DOMContentLoaded', function () {
       var elems = document.querySelectorAll('select');
-      var instances = M.FormSelect.init(elems, options);
-      console.log(instances);
+      M.FormSelect.init(elems, options);
     });
+
+    let optionTemplate = this.state.users.map(v => (
+      <option key={v.email} value={v.name}>{v.name}</option>
+    ));
 
     return (
       <div className="container">
@@ -246,7 +267,6 @@ class Create extends Component {
 
               <div className="input-field col s12">
                 <label htmlFor="name">Data/Horário Previsto *</label><br></br><br></br>
-                <span className="red-text">{errors.date}</span>
                 <input
                   onChange={this.onChange}
                   value={this.state.date}
@@ -257,6 +277,7 @@ class Create extends Component {
                     invalid: errors.date
                   })}
                 />
+                <span className="red-text">{errors.date}</span>
               </div>
 
               <div className="input-field col s12">
@@ -282,6 +303,18 @@ class Create extends Component {
               </div>
 
               <div className="input-field col s12">
+                <label>Responsável*</label><br></br><br></br>
+                <select value={this.state.selectedUser} onChange={this.onChange}
+                  error={errors.selectedUser}
+                  className="browser-default"
+                  id="selectedUser"
+                  type="text">
+                  {optionTemplate}
+                </select>
+                <span className="red-text">{errors.selectedUser}</span>
+              </div>
+
+              <div className="input-field col s12">
                 <input
                   onChange={this.onChange}
                   value={this.state.observations}
@@ -299,6 +332,21 @@ class Create extends Component {
                   type="text"
                 />
                 <label htmlFor="name">Entidades Envolvidas (ex: Siemens, Google, Vodafone)</label>
+              </div>
+              
+              <div className="input-field col s12">
+                <input
+                  onChange={this.onChange}
+                  value={this.state.vacancies}
+                  error={errors.vacancies}
+                  id="vacancies"
+                  type="number"
+                  className={classnames("", {
+                    invalid: errors.vacancies
+                  })}
+                />
+                <label htmlFor="name">Nº Máximo de Vagas *</label>
+                <span className="red-text">{errors.vacancies}</span>
               </div>
 
               <div className="input-field col s12">
@@ -327,9 +375,9 @@ class Create extends Component {
               <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "16%" }}
                 type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Submeter
               </button>
-              <a style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "16%" }}
-                href="/listProjects" className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
-              </a>
+              <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "16%" }}
+                onClick={this.goBack} className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
+              </button>
             </div>
           </div>
         </div>

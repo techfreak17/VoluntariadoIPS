@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 
-class CompanyProjectsTableRow extends Component {
+class CompanyProjectsRow extends Component {
 
   constructor(props) {
     super(props);
@@ -16,7 +16,6 @@ class CompanyProjectsTableRow extends Component {
 
   removeProject() {
     axios.get('/api/projects/deleteProject/' + this.props.obj._id)
-      .then(console.log('Deleted'))
       .catch(err => console.log(err))
     window.location.reload();
   }
@@ -35,6 +34,7 @@ class CompanyProjectsTableRow extends Component {
         </td>
         <td>
           <Link to={"/getCompanyProjects/" + this.props.obj._id} className="btn btn-primary" style={{ width: "auto", backgroundColor: "#D6E6F2", color: "black" }}><i className="material-icons">search</i></Link>
+          <Link to={"/editProject/" + this.props.obj._id} className="btn btn-primary" style={{ width: "auto", backgroundColor: "lightGrey", color: "black", marginLeft: 40 }}><i className="material-icons">edit</i></Link>
           <button onClick={this.removeProject} className="btn btn-danger" style={{ width: "auto", backgroundColor: "red", marginLeft: 40, color: "white" }}><i className="material-icons">close</i></button>
         </td>
       </tr>
@@ -42,7 +42,7 @@ class CompanyProjectsTableRow extends Component {
   }
 }
 
-CompanyProjectsTableRow.propTypes = {
+CompanyProjectsRow.propTypes = {
   auth: PropTypes.object.isRequired
 };
 
@@ -53,4 +53,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { logoutUser }
-)(CompanyProjectsTableRow);
+)(CompanyProjectsRow);

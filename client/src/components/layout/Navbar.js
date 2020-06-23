@@ -4,6 +4,9 @@ import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import axios from 'axios';
 import PushNotificationsToast from "../pushNotifications/PushNotificationToast.js"
+import M from "materialize-css";
+import options from "materialize-css";
+import SideMenu from "./SideMenu.js";
 
 class Navbar extends Component {
     constructor(props) {
@@ -11,21 +14,22 @@ class Navbar extends Component {
 
         this.state = {
             username: "",
-            id: this.props.auth.user.id
+            email: ""
         }
     }
     onLogoutClick = e => {
         e.preventDefault();
         this.props.logoutUser();
     };
- 
+
 
 
     componentDidMount() {
-        axios.get('/api/users/getUser/' + this.state.id)
-            .then(response => {
+        axios.get('/api/users/getUserDetails/' + this.props.auth.user.id)
+        .then(response => {
                 this.setState({
-                    username: response.data.username,
+                    username: response.data[0].username,
+                    email: response.data[0].email
                 });
             })
             .catch(function (error) {
@@ -35,6 +39,10 @@ class Navbar extends Component {
 
 
     render() {
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.sidenav');
+            M.Sidenav.init(elems, options);
+        });
         const { user } = this.props.auth;
         return (
             <div>
@@ -45,16 +53,14 @@ class Navbar extends Component {
                         backgroundColor: "#23395D",
                         zIndex: "10"
                     }}>
-                        <div className="nav-wrapper">
-                            <ul id="nav-mobile" className="right"> 
-                                <li><a className="navbar-brand" href="/dashboard"><img src={require('./images/logo.png')}
-                                    alt="(Não esquecer de verificar no spam)"
-                                    className="img-responsive"
-                                    style={{ position: "absolute", left: 0, height: "auto", width: "auto", maxWidth: 200 }} /></a></li>
-                                <PushNotificationsToast></PushNotificationsToast>   
-                                <li><a href={"/baseProfile/"+this.state.id}><i className="material-icons left">person</i>{this.state.username}</a></li>
-                                <li><button onClick={this.onLogoutClick} className="red btn" style={{ borderRadius: 10, marginLeft: 12, marginBottom: 5 }}>Sair</button></li>
-                            </ul>
+                       <div className="nav-wrapper">
+                            <SideMenu username={this.state.username} email={this.state.email} logout={this.onLogoutClick}></SideMenu>
+                            <p data-target="slide-out" className="sidenav-trigger show-on-large right"><i className="material-icons">menu</i></p>
+                            <PushNotificationsToast></PushNotificationsToast>
+                            <li><a className="navbar-brand" href="/dashboard"><img src={require('./images/logo.png')}
+                                alt="(Não esquecer de verificar no spam)"
+                                className="img-responsive"
+                                style={{ position: "absolute", left: 0, height: "auto", width: "auto", maxWidth: 200 }} /></a></li>
                         </div>
                     </nav>
                 ) : (
@@ -93,8 +99,3 @@ export default connect(
     mapStateToProps,
     { logoutUser }
 )(Navbar);
-
-
-
-
-//<li><PushNotifications><i className="material-icons">notifications</i></PushNotifications></li>

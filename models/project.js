@@ -75,6 +75,10 @@ const ProjectSchema = new Schema({
     enroled_IDs: {
         type: Array,
         required: false
+    },
+    vacancies:{
+        type: Number,
+        required: true
     }
 });
 module.exports = mongoose.model("Projects", ProjectSchema);

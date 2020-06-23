@@ -7,38 +7,12 @@ const validateRegisterInputVoluntary = require("../../validation/registerVolunta
 const validateRegisterInputCompany = require("../../validation/register");
 const validateEditInputVoluntary = require("../../validation/editVoluntary");
 const validateEditInputCompany = require("../../validation/editCompany");
+const createNotification = require("../../Notifications/pushNotifications");
 
 // Load User model
 const User = require("../../models/user");
-const Admin = require("../../models/administrator");
 const Voluntary = require("../../models/voluntary");
 const Company = require("../../models/company");
-
-// @route GET api/admin/getAdminUserDetails/:id
-// @desc Get Admin User Details
-// @access Private
-router.route('/getAdminUserDetails/:id').get(function (req, res) {
-  let id = req.params.id;
-  User.findById(id, function (err, user) {
-    Admin.findOne({ userID: user._id }).then(admin => {
-      if (admin) {
-        res.json(admin);
-      } else {
-        return res.status(400).json({ user: "Such data doesn´t exist" });
-      };
-    })
-  });
-});
-
-// @route GET api/admin/editUser/:id
-// @desc Edit User
-// @access Private
-router.route('/editUser/:id').get(function (req, res) {
-  let id = req.params.id;
-  User.findById(id, function (err, user) {
-    res.json(user);
-  });
-});
 
 // @route POST api/admin/createVoluntaryUser
 // @desc Create Voluntary User
@@ -90,10 +64,11 @@ router.post("/createVoluntaryUser", (req, res) => {
                   userID: user._id
                 });
                 newVoluntary
-                .save()
-                .then(voluntary => res.json(voluntary))
-                .catch(err => console.log(err));
+                  .save()
+                  .then(voluntary => res.json(voluntary))
+                  .catch(err => console.log(err));
               });
+              createNotification('novoVoluntario', req.body.name, 'admin@teste.pt');
             })
             .catch(err => console.log(err));
         });
@@ -149,10 +124,11 @@ router.post("/createCompanyUser", (req, res) => {
                   listProjects: req.body.listProjects
                 });
                 newCompany
-                .save()
-                .then(company => res.json(company))
-                .catch(err => console.log(err));
+                  .save()
+                  .then(company => res.json(company))
+                  .catch(err => console.log(err));
               });
+              createNotification('novaEntidade', req.body.companyName, 'admin@teste.pt');
             })
             .catch(err => console.log(err));
         });
@@ -219,6 +195,7 @@ router.route('/updateUser/:id').post(function (req, res) {
             .catch(err => {
               res.status(400).send("unable to update the database");
             });
+          createNotification('editarVoluntario', req.body.name, 'admin@teste.pt');
         } else {
           res.status(404).send("data is not found");
         }
@@ -243,34 +220,35 @@ router.route('/updateUser/:id').post(function (req, res) {
           res.status(400).send("unable to update the database");
         });
 
-        Company.findOne({ email: oldEmail }).then(company => {
-          if (company) {
-            company.name = req.body.name;
-            company.email = req.body.email;
-            company.phone = req.body.phone;
-            company.address = req.body.address;
-            company.birthDate = req.body.birthDate;
-            company.companyName = req.body.companyName;
-            company.companyAddress = req.body.companyAddress;
-            company.observations = req.body.observations;
+      Company.findOne({ email: oldEmail }).then(company => {
+        if (company) {
+          company.name = req.body.name;
+          company.email = req.body.email;
+          company.phone = req.body.phone;
+          company.address = req.body.address;
+          company.birthDate = req.body.birthDate;
+          company.companyName = req.body.companyName;
+          company.companyAddress = req.body.companyAddress;
+          company.observations = req.body.observations;
 
-            company.updateOne({
-              name: company.name,
-              email: company.email,
-              phone: company.phone,
-              address: company.address,
-              birthDate: company.birthDate,
-              companyName: company.companyName,
-              companyAddress: company.companyAddress,
-              observations: company.observations,
-            })
-              .catch(err => {
-                res.status(400).send("unable to update the database");
-              });
-          } else {
-            res.status(404).send("data is not found");
-          }
-        });
+          company.updateOne({
+            name: company.name,
+            email: company.email,
+            phone: company.phone,
+            address: company.address,
+            birthDate: company.birthDate,
+            companyName: company.companyName,
+            companyAddress: company.companyAddress,
+            observations: company.observations,
+          })
+            .catch(err => {
+              res.status(400).send("unable to update the database");
+            });
+          createNotification('editarEntidade', req.body.companyName, 'admin@teste.pt');
+        } else {
+          res.status(404).send("data is not found");
+        }
+      });
     }
   });
 });
@@ -288,13 +266,29 @@ router.route('/deleteUser/:id').get(function (req, res) {
         Voluntary.findOneAndRemove({ email: user.email }, function (err, voluntary) {
           if (err) res.json(err);
           else res.json('Successfully removed');
+          createNotification('apagarVoluntario', voluntary.name, 'admin@teste.pt');
         });
       } else if (user.role === "Empresa") {
         Company.findOneAndRemove({ email: user.email }, function (err, company) {
           if (err) res.json(err);
           else res.json('Successfully removed');
+          createNotification('apagarEntidade', company.name, 'admin@teste.pt');
         });
       }
+    }
+  });
+});
+
+// @route GET api/admin/deleteUser/:id
+// @desc Delete Voluntary User
+// @access Private
+router.route('/getCompanyUsers').get(function (req, res) {
+  Company.find(function (err, users) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      res.json(users);
     }
   });
 });

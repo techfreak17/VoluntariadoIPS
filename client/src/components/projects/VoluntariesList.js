@@ -39,7 +39,7 @@ class VoluntariesList extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <button onClick={this.goBack} className="btn-flat waves-effect">
           <i className="material-icons left">keyboard_backspace</i>
               Voltar

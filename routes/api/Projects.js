@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
 
 const Project = require("../../models/project");
 const User = require("../../models/user");
@@ -232,18 +233,18 @@ router.route('/getProjectVoluntaries/:id').get(function (req, res) {
   let id = req.params.id;
   Project.findById(id, function (err, project) {
     if (project) {
-        Voluntary.find({'userID': { $in: project.enroled_IDs}}, function (err, user) {
-          if(user){
-            res.json(user);
-          }
-          else{
-            return res.status(404).json({user: 'User não encontrado'});
-          }
-        });
-      
+      Voluntary.find({ 'userID': { $in: project.enroled_IDs } }, function (err, user) {
+        if (user) {
+          res.json(user);
+        }
+        else {
+          return res.status(404).json({ user: 'User não encontrado' });
+        }
+      });
+
     }
-    else{
-      return res.status(404).json({project:'Projeto não foi encontrado'});
+    else {
+      return res.status(404).json({ project: 'Projeto não foi encontrado' });
     }
 
   });
@@ -260,9 +261,9 @@ router.route('/getCompanyProjectDetails/:id').get(function (req, res) {
       if (user.role === "Empresa") {
         Company.findOne({ responsibleID: newId }).then(company => {
           if (company) {
-            
-            res.json(buildJSON(project, user, company ));
-          
+
+            res.json(buildJSON(project, user, company));
+
           } else {
             return res.status(400).json({ company: "Such data doesn´t exist" });
           };
@@ -281,5 +282,21 @@ router.route('/getCompanyProjectDetails/:id').get(function (req, res) {
   });
 });
 
+router.route('/removeVoluntary/:id').post(function (req, res) {
+  let id = req.params.id;
+  Voluntary.findById(mongoose.Types.ObjectId(id), function (err, voluntary) {
+    User.findById(voluntary.userID).then(user => {
+      if (user.role === "Voluntário") {
+        Project.findById(req.body.projectID).then(project => {
+            voluntary.listProjects.pull(project._id);
+            voluntary.save();
+            project.enroled_IDs.pull(user._id);
+            project.save();
+            createNotification('sairProjeto', project.title, user.email);
+        })
+    }
+    })
+  });
+});
 
 module.exports = router;

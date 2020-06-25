@@ -17,25 +17,24 @@ class VoluntariesList extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.projectID);
     axios.get('/api/projects/getProjectVoluntaries/' + this.props.projectID)//add the project id
       .then(res => {
         this.setState(prevState => ({
-          voluntaries: [...prevState.voluntaries, ...res.data]
+          voluntaries: [...prevState.voluntaries, ...res.data],
         }))
       });
   }
 
-
   rowVolun = () => {
+    let project = this.props.projectID;
     return this.state.voluntaries.map(function (object, i) {
-      return <VoluntaryRow obj={object} key={i} />;
+      return <VoluntaryRow obj={object} key={i} project = {project}/>;
     });
   }
 
   render() {
     return (
-      <div  className="card" style={{minWidth:400, width: "auto", boxShadow: "1px 1px 10px 5px black" }}>
+      <div className="card" style={{ minWidth: 400, width: "auto" }}>
         <table className="striped">
           <thead>
             <tr>

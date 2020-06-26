@@ -45,6 +45,7 @@ import CompanyProjectsDetails from "./components/companyProjects/CompanyProjects
 import IndexSubmitedCompanyProjects from "./components/companyProjects/IndexSubmitedCompanyProjects";
 import CompanySubmitedProjectsDetails from "./components/companyProjects/CompanySubmitedProjectsDetails";
 import VoluntariesList from "./components/projects/VoluntariesList.js";
+import StatisticsUser from "./components/stats/StatisticsUser.js";
 
 
 // Check for token to keep user logged in
@@ -100,6 +101,7 @@ class App extends Component {
               <PrivateRoute path='/getUser/:id' component={ UserDetails } />
               <PrivateRoute path='/listVoluntary/:id' component={VoluntariesList}/>
               <PrivateRoute path='/editProject/:id' component={ Edit } />
+              <PrivateRoute path='/statsUsers' component={ StatisticsUser } />
               <AdminRoute exact path='/createCompanyUser' component={ CreateCompanyUser } />
               <AdminRoute exact path='/createVoluntaryUser' component={ CreateVoluntaryUser } />
               <AdminRoute exact path='/createProject' component={ Create } />

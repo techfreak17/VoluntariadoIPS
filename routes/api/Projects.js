@@ -1,11 +1,13 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
 
 const Project = require("../../models/project");
 const User = require("../../models/user");
 const Company = require("../../models/company");
 const Administrator = require("../../models/administrator");
 const Voluntary = require("../../models/voluntary");
+const ProjectClassification = require("../../models/projectClassification");
 const createNotification = require("../../Notifications/pushNotifications");
 
 const buildJSON = (...files) => {
@@ -16,6 +18,7 @@ const buildJSON = (...files) => {
 
 // Load input validation
 const validateCreateProject = require("../../validation/createProject");
+const projectClassification = require("../../models/projectClassification");
 
 // @route POST api/projects/createProject
 // @desc Create Project - Administrator
@@ -232,18 +235,18 @@ router.route('/getProjectVoluntaries/:id').get(function (req, res) {
   let id = req.params.id;
   Project.findById(id, function (err, project) {
     if (project) {
-        Voluntary.find({'userID': { $in: project.enroled_IDs}}, function (err, user) {
-          if(user){
-            res.json(user);
-          }
-          else{
-            return res.status(404).json({user: 'User não encontrado'});
-          }
-        });
-      
+      Voluntary.find({ 'userID': { $in: project.enroled_IDs } }, function (err, user) {
+        if (user) {
+          res.json(user);
+        }
+        else {
+          return res.status(404).json({ user: 'User não encontrado' });
+        }
+      });
+
     }
-    else{
-      return res.status(404).json({project:'Projeto não foi encontrado'});
+    else {
+      return res.status(404).json({ project: 'Projeto não foi encontrado' });
     }
 
   });
@@ -260,9 +263,7 @@ router.route('/getCompanyProjectDetails/:id').get(function (req, res) {
       if (user.role === "Empresa") {
         Company.findOne({ responsibleID: newId }).then(company => {
           if (company) {
-            
-            res.json(buildJSON(project, user, company ));
-          
+            res.json(buildJSON(project, user, company));
           } else {
             return res.status(400).json({ company: "Such data doesn´t exist" });
           };
@@ -275,10 +276,44 @@ router.route('/getCompanyProjectDetails/:id').get(function (req, res) {
             return res.status(400).json({ admin: "Such data doesn´t exist" });
           };
         })
-
       }
     })
   });
+});
+
+// @route POST api/projects/ratingProject/:id
+// @desc Add Rating of Project from User
+// @access Private
+router.route('/ratingProject/:id').post(function (req, res) {
+  let id = req.params.id;
+  Project.findById(id, function (err, project) {
+    let newId = req.body.userID;
+    User.findOne({ _id: newId }).then(user => {
+      const newProjectClassification = new ProjectClassification({
+        projectID: project._id,
+        userID: user._id,
+        rating: req.body.rating
+      });
+
+      newProjectClassification
+        .save()
+        .then(projectClassification => res.json(projectClassification))
+        .catch(err => console.log(err));
+    })
+  })
+});
+
+// @route GET api/projects/getProjectUserStats/:id
+// @desc Get Rating Stats
+// @access Private
+router.route('/getProjectUserStats').post(function (req, res) {
+  ProjectClassification.findOne({ projectID: req.body.projectID, userID: req.body.userID}).then(projectClassification => {
+    const obj = {
+      alreadyClassified: true,
+    };
+    if (projectClassification)
+    res.json(obj);
+  })
 });
 
 

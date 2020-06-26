@@ -7,8 +7,7 @@ import { logoutUser } from "../../actions/authActions";
 import VoluntariesList from './VoluntariesList';
 import Popup from "reactjs-popup";
 import '../../componentsCSS/Modal.css'
-
-
+import ProjectClassification from "./ProjectClassification.js";
 
 class ProjectDetails extends Component {
   constructor(props) {
@@ -31,13 +30,13 @@ class ProjectDetails extends Component {
       role: "",
       vacancies: "",
       vacanciesToFill: "",
-      on: false
+      on: false,
     }
   }
 
   componentDidMount() {
     axios.get('/api/projects/getCompanyProjectDetails/' + this.props.match.params.id)
-    .then(response => {
+      .then(response => {
         this.myDate = new Date(response.data[0].date);
         this.myDate = this.myDate.toLocaleString();
         this.setState({
@@ -55,7 +54,7 @@ class ProjectDetails extends Component {
           observations: response.data[0].observations,
           interestAreas: response.data[0].interestAreas,
           role: response.data[1].role,
-          vacancies : response.data[0].vacancies,
+          vacancies: response.data[0].vacancies,
           vacanciesToFill: response.data[0].vacancies - response.data[0].enroled_IDs.length
         });
         var ul = document.getElementById("friendsList");
@@ -69,11 +68,11 @@ class ProjectDetails extends Component {
       })
       .catch(error => console.log(error));
   }
-
-  openModal =() =>{
+  
+  openModal = () => {
     this.setState({ open: true });
   }
-  closeModal=() =>{
+  closeModal = () => {
     this.setState({ open: false });
   }
 
@@ -85,8 +84,16 @@ class ProjectDetails extends Component {
             <h2 style={{ color: "#1167B1" }}><b>{this.state.title}</b></h2>
             <img src={require('../layout/images/volun.png')} alt="(Não esquecer de verificar no spam)" className="img-responsive" style={{ width: "40%", height: "70%" }} />
           </div>
+
           <div className="card-content" style={{ paddingLeft: 50 }}>
             <div className="right" style={{ paddingRight: 25 }}>
+              {(() => {
+                if (this.props.auth.user.role === "Voluntário") {
+                  return (
+                    <ProjectClassification project={this.props.match.params.id}></ProjectClassification>
+                  )
+                }
+              })()}
               <h5 style={{ color: "#1167B1" }}><b>Contactos do Responsável:</b></h5>
               <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons" style={{ paddingRight: 5 }}>person</i>{this.state.name}</p>
               <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons" style={{ paddingRight: 6 }}>email</i>{this.state.email}</p>
@@ -106,7 +113,7 @@ class ProjectDetails extends Component {
                 }
               })()}
               <br></br><p style={{ color: "#000000" }}><b>Número de Vagas Totais do Projeto:</b> {this.state.vacancies}</p>
-              <p style={{ color: "#000000" }}><b>Número de Vagas Disponíveis:</b> {this.state.vacanciesToFill}</p>
+              <p style={{ color: "#000000" }}><b>Número de Vagas Disponíveis:</b> {this.state.vacanciesToFill}</p><br></br>
             </div>
             <div>
               <h5 style={{ color: "#1167B1" }}><b>Detalhes do Projeto:</b></h5>
@@ -118,15 +125,15 @@ class ProjectDetails extends Component {
               <p style={{ color: "#000000" }}><b>Área Intervenção:</b> {this.state.intervationArea}</p>
               <p style={{ color: "#000000" }}><b>Observações:</b> {this.state.observations}</p>
               <ul id="friendsList" style={{ color: "#000000" }}><b>Áreas:</b></ul>
-              
+
               <button className="btn btn-medium waves-effect waves-light hoverable blue center" onClick={this.openModal}>
-              lista de Inscritos
+                lista de Inscritos
               </button>
               <Popup open={this.state.open}
-                    closeOnDocumentClick
-                    onClose={this.closeModal}>
+                closeOnDocumentClick
+                onClose={this.closeModal}>
                 <div className="Modal">
-                <VoluntariesList projectID={this.props.match.params.id}></VoluntariesList>
+                  <VoluntariesList projectID={this.props.match.params.id}></VoluntariesList>
                 </div>
               </Popup>
             </div><br></br>

@@ -22,8 +22,6 @@ class Navbar extends Component {
         this.props.logoutUser();
     };
 
-
-
     componentDidMount() {
         axios.get('/api/users/getUserDetails/' + this.props.auth.user.id)
         .then(response => {

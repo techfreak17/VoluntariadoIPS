@@ -18,6 +18,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.5.0",
+    "chai-http": "^4.3.0",
     "concurrently": "^5.2.0",
     "crypto": "^1.0.1",
     "express": "^4.17.1",
@@ -32,16 +33,17 @@
     "nouislider": "^14.5.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
-    "react-toastify": "^6.0.5",
-    "styled-components": "^5.1.1",
     "react-bootstrap": "^1.0.1",
     "react-chips": "^0.8.0",
     "react-datetime": "^2.16.3",
+    "react-toastify": "^6.0.5",
+    "styled-components": "^5.1.1",
     "supertest": "^4.0.2",
     "validator": "^13.0.0",
     "vue": "^2.6.11"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "nodemon": "^2.0.3"
   }
 }

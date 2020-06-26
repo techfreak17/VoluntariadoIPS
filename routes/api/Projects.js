@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 
 const Project = require("../../models/project");
+const ConcludedProject = require("../../models/concludedProject");
 const User = require("../../models/user");
 const Company = require("../../models/company");
 const Administrator = require("../../models/administrator");
@@ -19,6 +20,7 @@ const buildJSON = (...files) => {
 // Load input validation
 const validateCreateProject = require("../../validation/createProject");
 const projectClassification = require("../../models/projectClassification");
+const concludedProject = require("../../models/concludedProject");
 
 // @route POST api/projects/createProject
 // @desc Create Project - Administrator
@@ -316,5 +318,38 @@ router.route('/getProjectUserStats').post(function (req, res) {
   })
 });
 
+// @route GET  api/projects/concludeProject/:id
+// @desc Deletes a project from Projects, and had it to ConcludedProjects
+// @public
+router.route('/concludeProject/:id').get( function(req, res){
+  let id = req.params.id;
+  Project.findById(id, function(err, project){
+      if(project){
+        const newProject = new ConcludedProject({
+          title: project.title,
+          synopsis: project.synopsis,
+          intervationArea: project.intervationArea,
+          target_audience: project.target_audience,
+          objectives: project.objectives,
+          description: project.description,
+          date: project.date,
+          interestAreas: project.interestAreas,
+          photo: project.photo,
+          observations: project.observations,
+          relatedEntities: project.relatedEntities,
+          responsibleID: project.responsibleID,
+          requiredFormation: project.requiredFormation,
+          formation: project.formation,
+          vacancies: project.vacancies
+        });
+        newProject.save()
+        .then(project.deleteOne()
+        .then(project => res.json(project)));
+      }
+      else{
+        return res.status(404).json("Porjecto não encontrado.");
+      }
+  });
+});
 
 module.exports = router;

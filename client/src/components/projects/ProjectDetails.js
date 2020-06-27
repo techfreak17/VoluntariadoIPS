@@ -32,7 +32,8 @@ class ProjectDetails extends Component {
       vacancies: "",
       vacanciesToFill: "",
       on: false,
-      delete: false
+      delete: false,
+      responsibleID : "",
     }
   }
 
@@ -57,7 +58,8 @@ class ProjectDetails extends Component {
           interestAreas: response.data[0].interestAreas,
           role: response.data[1].role,
           vacancies: response.data[0].vacancies,
-          vacanciesToFill: response.data[0].vacancies - response.data[0].enroled_IDs.length
+          vacanciesToFill: response.data[0].vacancies - response.data[0].enroled_IDs.length,
+          responsibleID : response.data[0].responsibleID
         });
         var ul = document.getElementById("friendsList");
 
@@ -90,11 +92,9 @@ class ProjectDetails extends Component {
     axios.get('/api/projects/concludeProject/' + this.props.match.params.id)
       .then(response => {
         this.closeWarning();
-        alert("Este projecto foi encerrado");
-        console.log(response);
+        alert("O projeto " + this.state.title + " foi encerrado.");
         window.history.back();
       });
-      console.log("saiu");
   }
 
   render() {
@@ -122,21 +122,17 @@ class ProjectDetails extends Component {
               {(() => {
                 if (this.state.role === "Empresa") {
                   return (
-                    <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons" style={{ paddingRight: 6 }}>business</i>{this.state.companyName}</p>
-                  )
-                }
-              })()}
-              {(() => {
-                if (this.state.role === "Empresa") {
-                  return (
-                    <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons" style={{ paddingRight: 6 }}>navigation</i>{this.state.companyAddress}</p>
+                    <div>
+                      <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons" style={{ paddingRight: 6 }}>business</i>{this.state.companyName}</p>
+                      <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons" style={{ paddingRight: 6 }}>navigation</i>{this.state.companyAddress}</p>
+                    </div>
                   )
                 }
               })()}
               <br></br><p style={{ color: "#000000" }}><b>Número de Vagas Totais do Projeto:</b> {this.state.vacancies}</p>
               <p style={{ color: "#000000" }}><b>Número de Vagas Disponíveis:</b> {this.state.vacanciesToFill}</p><br></br>
               {(() => {
-                if (this.state.role === "Empresa") {
+                if (this.props.auth.user.role === "Administrador" || this.props.auth.user.id === this.state.responsibleID) {
                   return (
                     <div>
                       <button className="btn btn-medium waves-effect waves-light hoverable blue center" onClick={this.openWarning}>Fechar Projecto</button>
@@ -144,7 +140,7 @@ class ProjectDetails extends Component {
                         closeOnDocumentClick
                         onClose={this.closeWarning}>
                         <div className={"Modal container"} style={{ maxWidth: 400, width: "auto", paddingTop: "1%", paddingBottom: "1%" }}>
-                          <h5 style={{ color: "", fontFamily: "Arial" }}>Têm a certeza que deseja terminar este Projecto?</h5>
+                          <h5 style={{ color: "", fontFamily: "Arial" }}>Tem a certeza que pretende dar por concluido este Projecto?</h5>
                           <div>
                             <button className="btn btn-medium waves-effect waves-light hoverable red left" onClick={this.concludeProject}>CONFIRMAR</button>
                             <button className="btn btn-medium waves-effect waves-light hoverable gray right" onClick={this.closeWarning}>CANCELAR</button>

@@ -35,17 +35,19 @@ class StatisticsNumberProjects extends Component {
 
     render() {
         return (
-            <table className="table table-striped" style={{ marginTop: 20 }}>
-                <thead>
-                    <tr>
-                        <th>Título</th>
-                        <th>Nº Voluntários</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {this.tabRow()}
-                </tbody>
-            </table>
+            <div className="container"><h3 className="center"><b>Projetos</b></h3>
+                <table className="table table-striped" style={{ marginTop: 20 }}>
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Nº Voluntários</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.tabRow()}
+                    </tbody>
+                </table>
+            </div>
         );
     }
 }

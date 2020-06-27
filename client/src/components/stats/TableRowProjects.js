@@ -11,7 +11,6 @@ class TableRow extends Component {
     }
 
     render() {
-        console.log(this.array);
         return (
             <tr>
                 <td>

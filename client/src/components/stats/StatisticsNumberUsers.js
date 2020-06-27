@@ -23,7 +23,6 @@ class StatisticsNumberUsers extends Component {
 
     componentDidMount() {
         axios.get('/api/stats/countUsers').then(response => {
-            console.log(response.data);
             this.setState(prevState => ({
                 options: { series: [...prevState.options.series, ...response.data] },
                 countVoluntary: response.data[0],

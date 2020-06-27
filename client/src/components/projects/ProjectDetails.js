@@ -88,7 +88,6 @@ class ProjectDetails extends Component {
   }
 
   concludeProject = () => {
-    console.log("entrou");
     axios.get('/api/projects/concludeProject/' + this.props.match.params.id)
       .then(response => {
         this.closeWarning();

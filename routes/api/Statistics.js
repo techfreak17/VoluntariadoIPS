@@ -3,6 +3,8 @@ const router = express.Router();
 const User = require("../../models/user");
 const Project = require("../../models/project");
 const ProjectClassification = require("../../models/projectClassification");
+const ConcludedProject = require("../../models/concludedProject");
+const { use } = require("passport");
 
 const buildJSON = (...files) => {
   var obj = {}
@@ -10,8 +12,8 @@ const buildJSON = (...files) => {
   return obj;
 };
 
-// @route GET api/users/listUsers
-// @desc Get List Users
+// @route GET api/stats/countUsers
+// @desc Count Users
 // @access Private
 router.route('/countUsers').get(function (req, res) {
   User.countDocuments({ role: "Voluntário" }, function (err, userVoluntary) {
@@ -24,8 +26,8 @@ router.route('/countUsers').get(function (req, res) {
   });
 });
 
-// @route GET api/projects/listProjects
-// @desc Get List of Projects
+// @route GET api/stats/listProjectsClassifications
+// @desc Get Classifications of Projects
 // @access Private
 router.route('/listProjectsClassifications').get(function (req, res) {
   ProjectClassification.aggregate(
@@ -49,6 +51,25 @@ router.route('/listProjectsClassifications').get(function (req, res) {
     });
 });
 
+// @route GET api/projects/getProjectUserDetails/:id
+// @desc Get Company Projects Details
+// @access Private
+router.route('/getVoluntaryStatsData/:id').get(function (req, res) {
+  let id = req.params.id;
+  User.findOne({ _id: id }).then(user => {
+    if(user){
+      if (user.role === "Voluntário") {
+        Project.find({enroled_IDs: user._id}).then(project => {
+          ConcludedProject.find({enroled_IDs: user._id}).then(concludedProject => {
+            if(project || concludedProject){
+              res.json(buildJSON(project, concludedProject));
+            }    
+          })
+        })
+      }
+    }
+  });
+});
 
 
 module.exports = router;

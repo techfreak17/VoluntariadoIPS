@@ -48,6 +48,7 @@ import VoluntariesList from "./components/projects/VoluntariesList.js";
 import StatisticsNumberUsers from "./components/stats/StatisticsNumberUsers.js";
 import StatisticsNumberProjects from "./components/stats/StatisticsNumberProjects.js";
 import StatisticsRatingProjects from "./components/stats/StatisticsRatingProjects.js";
+import StatisticsVoluntary from "./components/stats/StatisticsVoluntary.js";
 
 
 // Check for token to keep user logged in
@@ -106,6 +107,7 @@ class App extends Component {
               <PrivateRoute path='/statsNumberUsers' component={ StatisticsNumberUsers } />
               <PrivateRoute path='/statsNumberProjects' component={ StatisticsNumberProjects } />
               <PrivateRoute path='/statsRatingProjects' component={ StatisticsRatingProjects } />
+              <PrivateRoute path='/statsVoluntary' component={ StatisticsVoluntary } />
               <AdminRoute exact path='/createCompanyUser' component={ CreateCompanyUser } />
               <AdminRoute exact path='/createVoluntaryUser' component={ CreateVoluntaryUser } />
               <AdminRoute exact path='/createProject' component={ Create } />

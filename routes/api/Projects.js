@@ -19,8 +19,6 @@ const buildJSON = (...files) => {
 
 // Load input validation
 const validateCreateProject = require("../../validation/createProject");
-const projectClassification = require("../../models/projectClassification");
-const concludedProject = require("../../models/concludedProject");
 
 // @route POST api/projects/createProject
 // @desc Create Project - Administrator
@@ -357,7 +355,8 @@ router.route('/concludeProject/:id').get( function(req, res){
           responsibleID: project.responsibleID,
           requiredFormation: project.requiredFormation,
           formation: project.formation,
-          vacancies: project.vacancies
+          vacancies: project.vacancies,
+          enroled_IDs: project.enroled_IDs
         });
         newProject.save()
         .then(project.deleteOne()

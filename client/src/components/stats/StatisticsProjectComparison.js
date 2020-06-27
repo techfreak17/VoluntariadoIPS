@@ -36,7 +36,7 @@ class StatisticsProjectComparison extends Component {
     render() {
         return (
             <div className="container">
-                <h3 className="center"><b>Projectos</b></h3>
+                <h3 className="center"><b>Lista dos Projetos</b></h3>
                 <table className="table table-striped">
                     <thead>
                         <tr>

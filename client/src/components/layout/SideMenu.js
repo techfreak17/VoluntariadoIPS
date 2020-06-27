@@ -40,8 +40,8 @@ class SideMenu extends Component {
                 <li><a href={"/statsNumberUsers"}><i className="material-icons left">search</i>Número de Utilizadores</a></li>
                 <li><button className="subheader" style={{ backgroundColor: "transparent", border: "none" }}>Estatísticas Projetos</button></li>
                 <li><a href={"/statsNumberProjects"}><i className="material-icons left">search</i>Voluntários nos Projetos</a></li>
-                <li><a href={"/statsRatingProjects"}><i className="material-icons left">search</i>Classificação Projetos</a></li>
-                <li><a href={"/statsCompareProjects"}><i className="material-icons left">search</i>Estatísticas de Comparação</a></li>
+                <li><a href={"/statsRatingProjects"}><i className="material-icons left">search</i>Classificação dos Projetos</a></li>
+                <li><a href={"/statsCompareProjects"}><i className="material-icons left">search</i>Lista dos Projetos</a></li>
                 <li><button onClick={this.props.logout} className="blue btn" style={{ borderRadius: 10, marginLeft: 12, marginBottom: 5 }}>Sair</button></li>
             </ul>
         );

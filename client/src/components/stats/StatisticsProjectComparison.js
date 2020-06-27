@@ -15,7 +15,7 @@ class StatisticsProjectComparison extends Component {
             countConcluded: 0,
             countSubmited: 0,
             options: {
-                labels: ['Projectos', 'Concluidos', 'Submetidos'],
+                labels: ['A Decorrer', 'Concluidos', 'Submetidos'],
                 series: []
             },
         }

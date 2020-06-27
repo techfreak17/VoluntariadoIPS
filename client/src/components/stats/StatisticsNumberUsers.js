@@ -35,15 +35,10 @@ class StatisticsNumberUsers extends Component {
 
     render() {
         return (
-            <div className="container" >
+            <div className="container">
                 <h3 className="center"><b>Número de Utilizadores</b></h3>
-                <div className="container">
-                    <div className="container">
-                        <div className="container">
-                            <Chart options={this.state.options} series={this.state.options.series} type="donut" width="380" />
-                        </div>
-
-                    </div>
+                <div style={{ display: "flex", justifyContent: "center"}}>
+                    <Chart options={this.state.options} series={this.state.options.series} type="donut" width="500" />
                 </div>
             </div>
         );

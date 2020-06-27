@@ -4,134 +4,198 @@ var chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 
 var server = require('../server');
-
+var projectID;
+var userID;
 
 describe('Testar Projetos', function () {
-  it('TEST Create Project', function () {
+  it('TEST Create Project', function (done) {
     chai.request(server)
-      .post('http://localhost:3000/api/Projects/createProject')
+      .post('/api/Projects/createProject')
       .type('form')
       .send({
-        title: "Titulo",
+        title: "Teste",
         synopsis: "Lorem Ipsum",
         intervationArea: "Lorem Ipsum",
         target_audience: "Lorem Ipsum",
         objectives: "Lorem Ipsum",
         description: "Lorem Ipsum",
-        date: "21/08/2020",
+        date: "2020-08-30T17:15:00.000+00:00",
         interestAreas: "Lorem Ipsum",
         photo: "",
         observations: "Lorem Ipsum",
         relatedEntities: "Lorem Ipsum",
-        responsibleID: "Lorem Ipsum",
-        requiredFormation: "Lorem Ipsum",
+        responsibleID: "Abílio Lários",
+        requiredFormation: false,
         formation: "Lorem Ipsum"
       })
-      .end(function (req, res) {
-        assert.equal(req.body.title, 'Titulo');
+      .then(res => {
+        projectID = res.body._id;
+        try {
+          assert.equal(res.body.title, 'Teste');
+        }
+        catch (e) {
+          return done(e);
+        }
+        done();
       });
   });
 
-  it('TEST Read Project', function () {
+  it('TEST Read Project', function (done) {
     chai.request(server)
-      .post('http://localhost:3000/api/Projects/editProject/:id')
-      .send({
-        title: "Titulo"
-      })
-      .end(function (req, res) {
-        assert.equal(req.body.title, 'Titulo');
+      .get('/api/Projects/editProject/' + projectID)
+      .then(res => {
+        try {
+          assert.equal(res.body.title, 'Teste');
+        }
+        catch (e) {
+          return done(e);
+        }
+        done();
       });
   });
 
-  it('TEST Update Project', function () {
+  it('TEST Update Project', function (done) {
     chai.request(server)
-      .post('http://localhost:3000/api/Projects/updateProject/:id')
+      .post('/api/Projects/updateProject/' + projectID)
       .type('form')
       .send({
-        title: "Title",
-        synopsis: "Ipsum Lorem"
+        title: "Teste 2",
+        synopsis: "Lorem Ipsum",
+        intervationArea: "Lorem Ipsum",
+        target_audience: "Lorem Ipsum",
+        objectives: "Lorem Ipsum",
+        description: "Lorem Ipsum",
+        date: "2020-08-30T17:15:00.000+00:00",
+        interestAreas: "Lorem Ipsum",
+        photo: "",
+        observations: "Lorem Ipsum",
+        relatedEntities: "Lorem Ipsum",
+        responsibleID: "Abílio Lários",
+        requiredFormation: false,
+        formation: "Lorem Ipsum"
       })
-      .end(function (req, res) {
-        assert.equal(req.body.title, 'Title');
-        assert.equal(req.body.synopsis, 'Ipsum Lorem');
+      .then(res => {
+        try {
+          assert.equal(res.body.title, 'Teste 2');
+        }
+        catch (e) {
+          return done(e);
+        }
+        done();
       });
   });
 
-  it('TEST Delete Project', function () {
-    it('TEST Read Project', function () {
-      chai.request(server)
-        .post('http://localhost:3000/api/Projects/deleteProject/:id')
-        .send({
-          id: ""
-        })
-        .end(function (req, res) {
-          assert.equal(req.body.title, '');
-        });
-    });
+  it('TEST Delete Project', function (done) {
+    chai.request(server)
+      .get('/api/Projects/deleteProject/' + projectID)
+      .then(res => {
+        try {
+          expect(res).to.have.status(202);
+        }
+        catch (e) {
+          return done(e);
+        }
+        done();
+      });
   })
 });
 
 
 describe('Testar Utilizadores', function () {
-  it('TEST Create Users', function () {
+  it('TEST Create Users', function (done) {
     chai.request(server)
-      .post('http://localhost:3000/api/Admin/createVoluntaryUser')
+      .post('/api/Admin/createVoluntaryUser')
       .type('form')
       .send({
-        name: 'Name',
-        email: 'Lorem Ipsum',
-        phone: 'Lorem Ipsum',
-        address: 'Lorem Ipsum',
-        birthDate: 'Lorem Ipsum',
-        memberIPS: 'Lorem Ipsum',
-        schoolIPS: 'Lorem Ipsum',
-        courseIPS: 'Lorem Ipsum',
-        interestAreas: 'Lorem Ipsum',
-        reasons: 'Lorem Ipsum',
-        observations: 'Lorem Ipsum',
-        authorization: 'Lorem Ipsum',
-        listProjects: 'Lorem Ipsum',
-        userID: 'Lorem Ipsum'
+        username: "Username",
+        name: "Name",
+        role: "Voluntário",
+        email: "emailteste@gmail.com",
+        password: "Lorem Ipsum",
+        password2: "Lorem Ipsum",
+        phone: 911111111,
+        address: "Lorem Ipsum",
+        birthDate: "1998-11-05T00:00:00.000+00:00",
+        memberIPS: "Lorem Ipsum",
+        schoolIPS: "Lorem Ipsum",
+        courseIPS: "Lorem Ipsum",
+        interestAreas: "Lorem Ipsum",
+        reasons: "Lorem Ipsum",
+        observations: "Lorem Ipsum",
+        authorization: true,
+        listProjects: "Lorem Ipsum"
       })
-      .end(function (req, res) {
-        assert.equal(req.body.name, 'Name');
+      .then(res => {
+        userID = res.body.userID;
+        try {
+          assert.equal(res.body.name, 'Name');
+        }
+        catch (e) {
+          return done(e);
+        }
+        done();
       });
   });
 
-  it('TEST Read Users', function () {
+  it('TEST Read Users', function (done) {
     chai.request(server)
-      .post('http://localhost:3000/api/Admin/getCompanyUsers')
-      .send({
-        name: "Nome"
-      })
-      .end(function (req, res) {
-        assert.equal(req.body.title, 'Nome');
+      .get('/api/Users/getUser/' + userID)
+      .then(res => {
+        try {
+          assert.equal(res.body.email, 'emailteste@gmail.com');
+        }
+        catch (e) {
+          return done(e);
+        }
+        done();
       });
   });
 
-  it('TEST Update Users', function () {
+  it('TEST Update Users', function (done) {
     chai.request(server)
-      .post('http://localhost:3000/api/Admin/updateUser/:id')
+      .post('/api/Users/updateUser/' + userID)
       .type('form')
       .send({
-        name: "Nome",
-        email: "Ipsum Lorem"
+        username: "Username",
+        name: "Name 2",
+        role: "Voluntário",
+        email: "emailteste@gmail.com",
+        password: "Lorem Ipsum2",
+        password2: "Lorem Ipsum2",
+        phone: 911111111,
+        address: "Lorem Ipsum",
+        birthDate: "1998-11-05T00:00:00.000+00:00",
+        memberIPS: "Lorem Ipsum",
+        schoolIPS: "Lorem Ipsum",
+        courseIPS: "Lorem Ipsum",
+        interestAreas: "Lorem Ipsum",
+        reasons: "Lorem Ipsum",
+        observations: "Lorem Ipsum",
+        authorization: true,
+        listProjects: "Lorem Ipsum"
       })
-      .end(function (req, res) {
-        assert.equal(req.body.title, 'Nome');
-        assert.equal(req.body.synopsis, 'Ipsum Lorem');
+      .then(res => {
+        try {
+          assert.equal(res.body.name, 'Name 2');
+        }
+        catch (e) {
+          return done(e);
+        }
+        done();
       });
   });
 
-  it('TEST Delete Users', function () {
+  it('TEST Delete Users', function (done) {
     chai.request(server)
-      .post('http://localhost:3000/api/Admin/deleteUser/:id')
-      .send({
-        id: ""
-      })
-      .end(function (req, res) {
-        assert.equal(req.body.title, '');
+      .get('/api/Admin/deleteUser/' + userID)
+      .then(res => {
+        try {
+          expect(res).to.have.status(202);
+        }
+        catch (e) {
+          return done(e);
+        }
+        done();
       });
   });
-
 });

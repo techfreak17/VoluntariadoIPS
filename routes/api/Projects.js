@@ -107,7 +107,7 @@ router.route('/updateProject/:id').post(function (req, res) {
             observations: project.observations,
             relatedEntities: project.relatedEntities,
             responsibleID: project.responsibleID
-          })
+          }).then(res.json(project))
             .catch(err => {
               res.status(400).send("unable to update the database");
             });
@@ -136,7 +136,7 @@ router.route('/updateProject/:id').post(function (req, res) {
           interestAreas: project.interestAreas,
           observations: project.observations,
           relatedEntities: project.relatedEntities,
-        })
+        }).then(res.json(project))
           .catch(err => {
             res.status(400).send("unable to update the database");
           });
@@ -156,6 +156,7 @@ router.route('/deleteProject/:id').get(function (req, res) {
     else {
       project.deleteOne();
       createNotification('projetoRemovido', project.title, 'admin@teste.pt');
+      res.status(202).send("Deleted sucesfull")
     }
   });
 });
@@ -244,18 +245,18 @@ router.route('/getProjectVoluntaries/:id').get(function (req, res) {
   let id = req.params.id;
   Project.findById(id, function (err, project) {
     if (project) {
-        Voluntary.find({'userID': { $in: project.enroled_IDs}}, function (err, user) {
-          if(user){
-            res.json(user);
-          }
-          else{
-            return res.status(404).json({user: 'User não encontrado'});
-          }
-        });
-      
+      Voluntary.find({ 'userID': { $in: project.enroled_IDs } }, function (err, user) {
+        if (user) {
+          res.json(user);
+        }
+        else {
+          return res.status(404).json({ user: 'User não encontrado' });
+        }
+      });
+
     }
-    else{
-      return res.status(404).json({project:'Projeto não foi encontrado'});
+    else {
+      return res.status(404).json({ project: 'Projeto não foi encontrado' });
     }
 
   });

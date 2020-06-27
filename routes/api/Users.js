@@ -74,7 +74,7 @@ router.post("/registerVoluntary", (req, res) => {
                   observations: req.body.observations,
                   authorization: req.body.authorization,
                   listProjects: req.body.listProjects,
-                  userID: user._id,
+                  userID: user._id
                 });
                 newVoluntary.save();
               });
@@ -136,7 +136,7 @@ router.post("/registerCompany", (req, res) => {
                   observations: req.body.observations,
                   authorization: req.body.authorization,
                   listProjects: req.body.listProjects,
-                  responsibleID: user._id,
+                  responsibleID: user._id
                 });
                 newCompany.save();
               });
@@ -389,8 +389,8 @@ router.route('/updateUser/:id').post(function (req, res) {
           })
         })
       }
-
       Voluntary.findOne({ email: user.email }).then(voluntary => {
+
         if (voluntary) {
           voluntary.name = req.body.name;
           voluntary.phone = req.body.phone;
@@ -411,7 +411,7 @@ router.route('/updateUser/:id').post(function (req, res) {
               schoolIPS: voluntary.schoolIPS,
               courseIPS: voluntary.courseIPS,
               interestAreas: voluntary.interestAreas,
-            })
+            }).then(res.json(voluntary))
               .catch(err => {
                 res.status(400).send("unable to update the database");
               });
@@ -423,7 +423,7 @@ router.route('/updateUser/:id').post(function (req, res) {
               address: voluntary.address,
               birthDate: voluntary.birthDate,
               interestAreas: voluntary.interestAreas,
-            })
+            }).then(res.json(voluntary))
               .catch(err => {
                 res.status(400).send("unable to update the database");
               });
@@ -472,7 +472,7 @@ router.route('/updateUser/:id').post(function (req, res) {
               birthDate: company.birthDate,
               companyName: company.companyName,
               companyAddress: company.companyAddress
-            })
+            }).then(res.json(company))
               .catch(err => {
                 res.status(400).send("unable to update the database");
               });
@@ -483,7 +483,7 @@ router.route('/updateUser/:id').post(function (req, res) {
               phone: company.phone,
               address: company.address,
               birthDate: company.birthDate,
-            })
+            }).then(res.json(company))
               .catch(err => {
                 res.status(400).send("unable to update the database");
               });
@@ -531,7 +531,7 @@ router.route('/updateUser/:id').post(function (req, res) {
             phone: admin.phone,
             address: admin.address,
             birthDate: admin.birthDate,
-          })
+          }).then(res.json(admin))
             .catch(err => {
               res.status(400).send("unable to update the database");
             });

@@ -265,14 +265,16 @@ router.route('/deleteUser/:id').get(function (req, res) {
       if (user.role === "Voluntário") {
         Voluntary.findOneAndRemove({ email: user.email }, function (err, voluntary) {
           if (err) res.json(err);
-          else res.json('Successfully removed');
-          createNotification('apagarVoluntario', voluntary.name, 'admin@teste.pt');
+          else
+            createNotification('apagarVoluntario', voluntary.name, 'admin@teste.pt');
+          res.status(202).send("Deleted sucesfull")
         });
       } else if (user.role === "Empresa") {
         Company.findOneAndRemove({ email: user.email }, function (err, company) {
           if (err) res.json(err);
-          else res.json('Successfully removed');
-          createNotification('apagarEntidade', company.name, 'admin@teste.pt');
+          else
+            createNotification('apagarEntidade', company.name, 'admin@teste.pt');
+          res.status(202).send("Deleted sucesfull")
         });
       }
     }

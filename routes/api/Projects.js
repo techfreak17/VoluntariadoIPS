@@ -310,7 +310,8 @@ router.route('/ratingProject/:id').post(function (req, res) {
       const newProjectClassification = new ProjectClassification({
         projectID: project._id,
         userID: user._id,
-        rating: req.body.rating
+        rating: req.body.rating,
+        title: project.title
       });
 
       newProjectClassification

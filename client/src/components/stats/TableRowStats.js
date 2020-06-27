@@ -3,28 +3,30 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 
-class TableRowProjects extends Component {
+class TableRowStats extends Component {
 
     constructor(props) {
         super(props);
-        this.number = this.props.number;
     }
 
     render() {
         return (
             <tr>
                 <td>
-                    {this.props.title}
+                    {this.props.obj._id}
                 </td>
                 <td>
-                    {this.number}
+                    {this.props.obj.avgRating}
+                </td>
+                <td>
+                    {this.props.obj.numberVotes}
                 </td>
             </tr>
         );
     }
 }
 
-TableRowProjects.propTypes = {
+TableRowStats.propTypes = {
     auth: PropTypes.object.isRequired
 };
 
@@ -35,4 +37,4 @@ const mapStateToProps = state => ({
 export default connect(
     mapStateToProps,
     { logoutUser }
-)(TableRowProjects);
+)(TableRowStats);

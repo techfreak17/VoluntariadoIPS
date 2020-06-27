@@ -22,6 +22,4 @@ router.route('/countUsers').get(function (req, res) {
     });
 });
 
-
-
 module.exports = router;

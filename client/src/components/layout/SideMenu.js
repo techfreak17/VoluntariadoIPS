@@ -23,8 +23,9 @@ class SideMenu extends Component {
                     <p><span className="white-text name">{this.props.username}</span></p>
                     <p><span className="white-text email">{this.props.email}</span></p>
                 </div></li>
-                <li><a href={"/baseProfile/" + this.props.auth.user.id}><i className="material-icons left">person</i>Perfil</a></li>
-                <li><a href={"/statsUsers"}><i className="material-icons left">collections</i>Estatísticas Utilizadores</a></li>
+                <li><a href={"/baseProfile/" + this.props.auth.user.id}><i className="material-icons left">account_box</i>Perfil</a></li>
+                <li><a href={"/statsNumberUsers"}><i className="material-icons left">search</i>Estatísticas Utilizadores</a></li>
+                <li><a href={"/statsNumberProjects"}><i className="material-icons left">search</i>Estatísticas Projetos</a></li>
                 <li><button onClick={this.props.logout} className="blue btn" style={{ borderRadius: 10, marginLeft: 12, marginBottom: 5 }}>Sair</button></li>
             </ul>
         );

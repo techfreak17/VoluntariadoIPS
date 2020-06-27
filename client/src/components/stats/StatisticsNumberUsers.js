@@ -38,7 +38,7 @@ class StatisticsNumberUsers extends Component {
             <div className="container">
                 <h3 className="center"><b>Número de Utilizadores</b></h3>
                 <div style={{ display: "flex", justifyContent: "center"}}>
-                    <Chart options={this.state.options} series={this.state.options.series} type="donut" width="500" />
+                    <Chart options={this.state.options} series={this.state.options.series} type="donut" width="165%" />
                 </div>
             </div>
         );

@@ -35,11 +35,12 @@ class StatisticsNumberProjects extends Component {
 
     render() {
         return (
-            <div className="container"><h3 className="center"><b>Projetos</b></h3>
+            <div className="container">
+                <h3 className="center"><b>Voluntários nos Projetos</b></h3>
                 <table className="table table-striped" style={{ marginTop: 20 }}>
                     <thead>
                         <tr>
-                            <th>Título</th>
+                            <th>Projeto</th>
                             <th>Nº Voluntários</th>
                         </tr>
                     </thead>

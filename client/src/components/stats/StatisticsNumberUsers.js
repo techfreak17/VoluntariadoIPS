@@ -17,7 +17,7 @@ class StatisticsNumberUsers extends Component {
             options: {
                 labels: ['Voluntário', 'Empresa', 'Administrador'],
                 series: []
-            },
+            }
         }
     }
 
@@ -36,7 +36,7 @@ class StatisticsNumberUsers extends Component {
     render() {
         return (
             <div className="container">
-                <h3 className="center"><b>Utilizadores</b></h3>
+                <h3 className="center"><b>Número de Utilizadores</b></h3>
                 <table className="table table-striped">
                     <thead>
                         <tr>

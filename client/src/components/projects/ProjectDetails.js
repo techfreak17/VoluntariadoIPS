@@ -9,6 +9,7 @@ import Popup from "reactjs-popup";
 import '../../componentsCSS/Modal.css'
 import ProjectClassification from "./ProjectClassification.js";
 
+
 class ProjectDetails extends Component {
   constructor(props) {
     super(props);
@@ -31,6 +32,7 @@ class ProjectDetails extends Component {
       vacancies: "",
       vacanciesToFill: "",
       on: false,
+      delete: false
     }
   }
 
@@ -68,12 +70,31 @@ class ProjectDetails extends Component {
       })
       .catch(error => console.log(error));
   }
-  
+
   openModal = () => {
     this.setState({ open: true });
   }
   closeModal = () => {
     this.setState({ open: false });
+  }
+
+  openWarning = () => {
+    this.setState({ delete: true });
+  }
+  closeWarning = () => {
+    this.setState({ delete: false });
+  }
+
+  concludeProject = () => {
+    console.log("entrou");
+    axios.get('/api/projects/concludeProject/' + this.props.match.params.id)
+      .then(response => {
+        this.closeWarning();
+        alert("Este projecto foi encerrado");
+        console.log(response);
+        window.history.back();
+      });
+      console.log("saiu");
   }
 
   render() {
@@ -114,6 +135,26 @@ class ProjectDetails extends Component {
               })()}
               <br></br><p style={{ color: "#000000" }}><b>Número de Vagas Totais do Projeto:</b> {this.state.vacancies}</p>
               <p style={{ color: "#000000" }}><b>Número de Vagas Disponíveis:</b> {this.state.vacanciesToFill}</p><br></br>
+              {(() => {
+                if (this.state.role === "Empresa") {
+                  return (
+                    <div>
+                      <button className="btn btn-medium waves-effect waves-light hoverable blue center" onClick={this.openWarning}>Fechar Projecto</button>
+                      <Popup open={this.state.delete}
+                        closeOnDocumentClick
+                        onClose={this.closeWarning}>
+                        <div className={"Modal container"} style={{ maxWidth: 400, width: "auto", paddingTop: "1%", paddingBottom: "1%" }}>
+                          <h5 style={{ color: "", fontFamily: "Arial" }}>Têm a certeza que deseja terminar este Projecto?</h5>
+                          <div>
+                            <button className="btn btn-medium waves-effect waves-light hoverable red left" onClick={this.concludeProject}>CONFIRMAR</button>
+                            <button className="btn btn-medium waves-effect waves-light hoverable gray right" onClick={this.closeWarning}>CANCELAR</button>
+                          </div>
+                        </div>
+                      </Popup>
+                    </div>
+                  )
+                }
+              })()}
             </div>
             <div>
               <h5 style={{ color: "#1167B1" }}><b>Detalhes do Projeto:</b></h5>

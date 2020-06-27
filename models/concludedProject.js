@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const FKHelper = require('./helpers/foreign-key-helper');
 
 // Create Schema
-const ProjectSchema = new Schema({
+const ConcludedProjectSchema = new Schema({
     title: {
         type: String,
         required: true
@@ -85,4 +85,4 @@ const ProjectSchema = new Schema({
         default: false
     }
 });
-module.exports = mongoose.model("Projects", ProjectSchema);
+module.exports = mongoose.model("ConcludedProjects", ConcludedProjectSchema);

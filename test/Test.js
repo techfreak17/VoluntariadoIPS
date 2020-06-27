@@ -2,8 +2,8 @@ const { expect, assert } = require('chai');
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 chai.use(chaiHttp);
-
 var server = require('../server');
+
 var projectID;
 var userID;
 
@@ -11,10 +11,9 @@ describe('Testar Projetos', function () {
   it('TEST Create Project', function (done) {
     chai.request(server)
       .post('/api/Projects/createProject')
-      .type('form')
       .send({
         title: "Teste",
-        synopsis: "Lorem Ipsum",
+        synopsis: "Test",
         intervationArea: "Lorem Ipsum",
         target_audience: "Lorem Ipsum",
         objectives: "Lorem Ipsum",
@@ -32,6 +31,7 @@ describe('Testar Projetos', function () {
         projectID = res.body._id;
         try {
           assert.equal(res.body.title, 'Teste');
+          assert.equal(res.body.synopsis, 'Test')
         }
         catch (e) {
           return done(e);
@@ -39,13 +39,13 @@ describe('Testar Projetos', function () {
         done();
       });
   });
-
   it('TEST Read Project', function (done) {
     chai.request(server)
       .get('/api/Projects/editProject/' + projectID)
       .then(res => {
         try {
           assert.equal(res.body.title, 'Teste');
+          assert.equal(res.body.synopsis, 'Test')
         }
         catch (e) {
           return done(e);
@@ -53,14 +53,12 @@ describe('Testar Projetos', function () {
         done();
       });
   });
-
   it('TEST Update Project', function (done) {
     chai.request(server)
       .post('/api/Projects/updateProject/' + projectID)
-      .type('form')
       .send({
         title: "Teste 2",
-        synopsis: "Lorem Ipsum",
+        synopsis: "Test update",
         intervationArea: "Lorem Ipsum",
         target_audience: "Lorem Ipsum",
         objectives: "Lorem Ipsum",
@@ -77,6 +75,7 @@ describe('Testar Projetos', function () {
       .then(res => {
         try {
           assert.equal(res.body.title, 'Teste 2');
+          assert.equal(res.body.synopsis, 'Test update');
         }
         catch (e) {
           return done(e);
@@ -84,13 +83,13 @@ describe('Testar Projetos', function () {
         done();
       });
   });
-
   it('TEST Delete Project', function (done) {
     chai.request(server)
       .get('/api/Projects/deleteProject/' + projectID)
       .then(res => {
         try {
           expect(res).to.have.status(202);
+          assert.isEmpty(res.body);
         }
         catch (e) {
           return done(e);
@@ -100,15 +99,13 @@ describe('Testar Projetos', function () {
   })
 });
 
-
 describe('Testar Utilizadores', function () {
   it('TEST Create Users', function (done) {
     chai.request(server)
       .post('/api/Admin/createVoluntaryUser')
-      .type('form')
       .send({
-        username: "Username",
-        name: "Name",
+        username: "Test Username",
+        name: "Test Name",
         role: "Voluntário",
         email: "emailteste@gmail.com",
         password: "Lorem Ipsum",
@@ -128,20 +125,7 @@ describe('Testar Utilizadores', function () {
       .then(res => {
         userID = res.body.userID;
         try {
-          assert.equal(res.body.name, 'Name');
-        }
-        catch (e) {
-          return done(e);
-        }
-        done();
-      });
-  });
-
-  it('TEST Read Users', function (done) {
-    chai.request(server)
-      .get('/api/Users/getUser/' + userID)
-      .then(res => {
-        try {
+          assert.equal(res.body.name, 'Test Name');
           assert.equal(res.body.email, 'emailteste@gmail.com');
         }
         catch (e) {
@@ -150,20 +134,32 @@ describe('Testar Utilizadores', function () {
         done();
       });
   });
-
+  it('TEST Read Users', function (done) {
+    chai.request(server)
+      .get('/api/Users/getUser/' + userID)
+      .then(res => {
+        try {
+          assert.equal(res.body.username, 'Test Username');
+          assert.equal(res.body.email, 'emailteste@gmail.com');
+        }
+        catch (e) {
+          return done(e);
+        }
+        done();
+      });
+  });
   it('TEST Update Users', function (done) {
     chai.request(server)
       .post('/api/Users/updateUser/' + userID)
-      .type('form')
       .send({
-        username: "Username",
-        name: "Name 2",
+        username: "Test Username 2",
+        name: "Test Name 2",
         role: "Voluntário",
         email: "emailteste@gmail.com",
         password: "Lorem Ipsum2",
         password2: "Lorem Ipsum2",
         phone: 911111111,
-        address: "Lorem Ipsum",
+        address: "Test Address update",
         birthDate: "1998-11-05T00:00:00.000+00:00",
         memberIPS: "Lorem Ipsum",
         schoolIPS: "Lorem Ipsum",
@@ -176,7 +172,8 @@ describe('Testar Utilizadores', function () {
       })
       .then(res => {
         try {
-          assert.equal(res.body.name, 'Name 2');
+          assert.equal(res.body.name, 'Test Name 2');
+          assert.equal(res.body.address, 'Test Address update');
         }
         catch (e) {
           return done(e);
@@ -184,13 +181,13 @@ describe('Testar Utilizadores', function () {
         done();
       });
   });
-
   it('TEST Delete Users', function (done) {
     chai.request(server)
       .get('/api/Admin/deleteUser/' + userID)
       .then(res => {
         try {
           expect(res).to.have.status(202);
+          assert.isEmpty(res.body);
         }
         catch (e) {
           return done(e);

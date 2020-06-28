@@ -213,7 +213,8 @@ router.route('/acceptSubmitedProject/:id').post(function (req, res) {
         relatedEntities: project.relatedEntities,
         responsibleID: project.responsibleID,
         requiredFormation: project.requiredFormation,
-        formation: project.formation
+        formation: project.formation,
+        vacancies: project.vacancies
       });
       newProject
         .save()

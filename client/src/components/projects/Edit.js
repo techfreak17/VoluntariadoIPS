@@ -398,7 +398,7 @@ class Edit extends Component {
                 />
               </div>
             </form>
-            <div className="col s12" style={{ marginTop: "1%", paddingBottom: 60 }}>
+            <div className="col s12" style={{ marginTop: "auto", marginBottom: "10%" }}>
               <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "20%" }}
                 type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable accent-3 blue">Editar
               </button>

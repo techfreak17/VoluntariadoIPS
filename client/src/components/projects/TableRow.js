@@ -16,7 +16,8 @@ class TableRow extends Component {
     this.myDate = new Date(props.obj.date);
     this.myDate = this.myDate.toLocaleDateString();
     this.state = {
-      delete: false
+      delete: false,
+      join: false
     }
   }
 
@@ -40,6 +41,13 @@ class TableRow extends Component {
   }
   closeWarning = () => {
     this.setState({ delete: false });
+  }
+
+  openWarningJoin = () => {
+    this.setState({ join: true });
+  }
+  closeWarningJoin = () => {
+    this.setState({ join: false });
   }
 
   render() {
@@ -75,7 +83,7 @@ class TableRow extends Component {
             if (this.props.auth.user.role === "Voluntário") {
               if (!this.props.obj.enroled_IDs.includes(this.props.auth.user.id)) {
                 return (
-                  <button onClick={this.joinProject} className="btn btn-danger" style={{ width: "auto", backgroundColor: "green", marginLeft: 40, color: "white" }}><i className="material-icons">add</i></button>
+                  <button onClick={this.openWarningJoin} className="btn btn-danger" style={{ width: "auto", backgroundColor: "green", marginLeft: 40, color: "white" }}><i className="material-icons">add</i></button>
                 )
               }
             }
@@ -84,10 +92,22 @@ class TableRow extends Component {
             closeOnDocumentClick
             onClose={this.closeWarning}>
             <div className={"Modal container"} style={{ maxWidth: 400, width: "auto", paddingTop: "1%", paddingBottom: "1%" }}>
-              <h5 style={{ color: "", fontFamily: "Arial" }}>Tem a certeza que pretende apagar este Projecto?</h5>
+              <h5 style={{ color: "", fontFamily: "Arial" }}>Tem a certeza que pretende apagar este Projeto?</h5>
               <div>
                 <button className="btn btn-medium waves-effect waves-light hoverable red left" onClick={this.delete}>CONFIRMAR</button>
                 <button className="btn btn-medium waves-effect waves-light hoverable gray right" onClick={this.closeWarning}>CANCELAR</button>
+              </div>
+            </div>
+          </Popup>
+
+          <Popup open={this.state.join}
+            closeOnDocumentClick
+            onClose={this.closeWarningJoin}>
+            <div className={"Modal container"} style={{ maxWidth: 400, width: "auto", paddingTop: "1%", paddingBottom: "1%" }}>
+              <h5 style={{ color: "", fontFamily: "Arial" }}>Tem a certeza que pretende entrar neste Projeto?</h5>
+              <div>
+                <button className="btn btn-medium waves-effect waves-light hoverable red left" onClick={this.joinProject}>CONFIRMAR</button>
+                <button className="btn btn-medium waves-effect waves-light hoverable gray right" onClick={this.closeWarningJoin}>CANCELAR</button>
               </div>
             </div>
           </Popup>

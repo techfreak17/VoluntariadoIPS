@@ -77,8 +77,10 @@ router.route('/editProject/:id').get(function (req, res) {
 // @desc Update Project - Administrator
 // @access Private
 router.route('/updateProject/:id').post(function (req, res) {
+  console.log(req.body);
   // Form validation
   const { errors, isValid } = validateCreateProject(req.body);
+  console.log(errors);
   // Check validation
   if (!isValid) {
     return res.status(400).json(errors);

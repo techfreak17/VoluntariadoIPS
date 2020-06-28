@@ -3,12 +3,17 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import Popup from "reactjs-popup";
+import '../../componentsCSS/Modal.css'
 
 class VoluntaryRow extends Component {
 
   constructor(props) {
     super(props);
     this.removeVoluntary = this.removeVoluntary.bind(this);
+    this.state = {
+      remove: false
+    }
   }
 
   removeVoluntary() {
@@ -18,6 +23,13 @@ class VoluntaryRow extends Component {
     axios.post('/api/projects/removeVoluntary/' + this.props.obj._id, newObj)
       .catch(err => console.log(err))
     window.location.reload();
+  }
+
+  openWarning = () => {
+    this.setState({ remove: true });
+  }
+  closeWarning = () => {
+    this.setState({ remove: false });
   }
 
   render() {
@@ -31,10 +43,21 @@ class VoluntaryRow extends Component {
           {(() => {
             if (this.props.auth.user.role === "Administrador") {
               return (
-                <button onClick={this.removeVoluntary} className="btn btn-danger" style={{ width: "auto", backgroundColor: "red", marginLeft: 40, color: "white" }}><i className="material-icons">remove</i></button>
+                <button onClick={this.openWarning} className="btn btn-danger" style={{ width: "auto", backgroundColor: "red", marginLeft: 40, color: "white" }}><i className="material-icons">remove</i></button>
               )
             }
           })()}
+           <Popup open={this.state.remove}
+            closeOnDocumentClick
+            onClose={this.closeWarning}>
+            <div className={"Modal container"} style={{ maxWidth: 400, width: "auto", paddingTop: "1%", paddingBottom: "1%" }}>
+              <h5 style={{ color: "", fontFamily: "Arial" }}>Tem a certeza que pretende remove este Voluntário?</h5>
+              <div>
+                <button className="btn btn-medium waves-effect waves-light hoverable red left" onClick={this.removeVoluntary}>CONFIRMAR</button>
+                <button className="btn btn-medium waves-effect waves-light hoverable gray right" onClick={this.closeWarning}>CANCELAR</button>
+              </div>
+            </div>
+          </Popup>
         </td>
       </tr>
 

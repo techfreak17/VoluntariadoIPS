@@ -11,7 +11,7 @@ module.exports = function validateCreateProject(data) {
     data.target_audience = !isEmpty(data.target_audience) ? data.target_audience : "";
     data.description = !isEmpty(data.description) ? data.description : "";
     data.date = !isEmpty(data.date) ? data.date : "";
-    data.vacancies = !isEmpty(data.vacancies) ? data.vacancies : "";
+    data.vacancies = !isNaN(data.vacancies) ? data.vacancies : "";
     let arrInterestAreas = new Array();
     arrInterestAreas = data.interestAreas;
     date = data.date.split("-");
@@ -27,17 +27,12 @@ module.exports = function validateCreateProject(data) {
         errors.date = "Ano Inválido";
     }
 
-    if (data.vacancies <= 0) {
+    if (data.vacancies <= 0 || data.vacancies === "") {
         errors.vacancies = "Número de Vagas Inválido";
     }
 
     if (numberYear.length > 4) {
         errors.date = "Ano Inválido";
-    }
-
-    //title checks
-    if (Validator.isEmpty(data.vacancies)) {
-        errors.vacancies = "Deverá preencher o campo Nº Máximo de Vagas";
     }
 
     //title checks

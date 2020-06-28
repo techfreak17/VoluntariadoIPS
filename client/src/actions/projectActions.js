@@ -30,6 +30,19 @@ export const submitProject = (projectData, history) => dispatch => {
         );
 };
 
+// Create Project
+export const editProject = (projectID,projectData, history) => dispatch => {
+    axios
+        .post("/api/projects/updateProject/"+ projectID, projectData)
+        .then(res => history.push("/listProjects")
+        ).catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
+};
+
 
 
 

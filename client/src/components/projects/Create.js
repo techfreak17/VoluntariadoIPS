@@ -123,7 +123,6 @@ class Create extends Component {
     };
 
     this.props.createProject(obj, this.props.history);
-
   }
 
   onChangeRelatedEntities = e => {

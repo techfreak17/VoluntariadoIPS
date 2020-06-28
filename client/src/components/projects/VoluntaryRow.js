@@ -52,7 +52,7 @@ class VoluntaryRow extends Component {
             closeOnDocumentClick
             onClose={this.closeWarning}>
             <div className={"Modal container"} style={{ maxWidth: 400, width: "auto", paddingTop: "1%", paddingBottom: "1%" }}>
-              <h5 style={{ color: "", fontFamily: "Arial" }}>Tem a certeza que pretende remove este Voluntário?</h5>
+              <h5 style={{ color: "", fontFamily: "Arial" }}>Tem a certeza que pretende remover este Voluntário?</h5>
               <div>
                 <button className="btn btn-medium waves-effect waves-light hoverable red left" onClick={this.removeVoluntary}>CONFIRMAR</button>
                 <button className="btn btn-medium waves-effect waves-light hoverable gray right" onClick={this.closeWarning}>CANCELAR</button>

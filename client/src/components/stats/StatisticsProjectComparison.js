@@ -15,7 +15,7 @@ class StatisticsProjectComparison extends Component {
             countConcluded: 0,
             countSubmited: 0,
             options: {
-                labels: ['Projectos', 'Concluidos', 'Submetidos'],
+                labels: ['A Decorrer', 'Concluidos', 'Submetidos'],
                 series: []
             },
         }
@@ -37,24 +37,8 @@ class StatisticsProjectComparison extends Component {
         return (
             <div className="container">
                 <h3 className="center"><b>Lista dos Projetos</b></h3>
-                <table className="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Projectos a Decorrer</th>
-                            <th>Projectos Concluidos</th>
-                            <th>Projectos Submetidos</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{this.state.countProjects}</td>
-                            <td>{this.state.countConcluded}</td>
-                            <td>{this.state.countSubmited}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div>
-                    <Chart options={this.state.options} series={this.state.options.series} type="donut" width="380" />
+                <div style={{ display: "flex", justifyContent: "center"}}>
+                    <Chart options={this.state.options} series={this.state.options.series} type="donut" width="165%" />
                 </div>
             </div>
         );

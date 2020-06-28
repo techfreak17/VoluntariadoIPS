@@ -37,24 +37,8 @@ class StatisticsNumberUsers extends Component {
         return (
             <div className="container">
                 <h3 className="center"><b>Número de Utilizadores</b></h3>
-                <table className="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Nº Voluntários</th>
-                            <th>Nº Empresas</th>
-                            <th>Nº Administradores</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{this.state.countVoluntary}</td>
-                            <td>{this.state.countCompany}</td>
-                            <td>{this.state.countAdmin}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div>
-                    <Chart options={this.state.options} series={this.state.options.series} type="donut" width="380" />
+                <div style={{ display: "flex", justifyContent: "center"}}>
+                    <Chart options={this.state.options} series={this.state.options.series} type="donut" width="165%" />
                 </div>
             </div>
         );

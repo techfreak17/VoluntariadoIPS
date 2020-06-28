@@ -11,8 +11,8 @@ class TableRowStats extends Component {
                 <td>
                     {this.props.obj._id}
                 </td>
-                <td>
-                    {this.props.obj.avgRating}
+                <td style={{ display: "flex", alignItems: "center"}}>
+                    {this.props.obj.avgRating} <i className="material-icons" style={{color: "#D4AF37"}} >star</i>
                 </td>
                 <td>
                     {this.props.obj.numberVotes}

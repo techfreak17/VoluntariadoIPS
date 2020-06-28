@@ -350,16 +350,6 @@ class Create extends Component {
               </div>
 
               <div className="input-field col s12">
-                <label htmlFor="name">Logótipo</label><br></br><br></br>
-                <input
-                  accept="image/*"
-                  type="file"
-                  className="inputfile"
-                  onChange={this.uploadFile}
-                />
-              </div>
-
-              <div className="input-field col s12">
                 <b>Autorização RGPD *</b>
                 <label>
                   <br></br>

@@ -5,6 +5,7 @@ import options from "materialize-css";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import Upload from "../upload/Upload";
 
 class Edit extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class Edit extends Component {
       users: [],
       selectedUser: "",
       vacancies: "",
+      file: false,
       errors: {}
     }
 
@@ -33,14 +35,6 @@ class Edit extends Component {
   }
 
   componentDidMount() {
-    if (window.localStorage) {
-      if (!localStorage.getItem('firstLoad')) {
-        localStorage['firstLoad'] = true;
-        window.location.reload();
-      }
-      else
-        localStorage.removeItem('firstLoad');
-    }
     axios.all([
       axios.get('/api/projects/editProject/' + this.props.match.params.id),
       axios.get('/api/admin/getCompanyUsers'),
@@ -121,6 +115,13 @@ class Edit extends Component {
 
   goBack() {
     window.history.back();
+  }
+
+  openWarning = () => {
+    this.setState({ file: true });
+  }
+  closeWarning = () => {
+    this.setState({ file: false });
   }
 
   render() {
@@ -390,12 +391,7 @@ class Edit extends Component {
 
               <div className="input-field col s12">
                 <label htmlFor="name">Logótipo</label><br></br><br></br>
-                <input
-                  accept="image/*"
-                  type="file"
-                  className="inputfile"
-                  onChange={this.uploadFile}
-                />
+                  <Upload type="Project" id={this.props.match.params.id}></Upload>
               </div>
             </form>
             <div className="col s12" style={{ marginTop: "1%", paddingBottom: 60 }}>

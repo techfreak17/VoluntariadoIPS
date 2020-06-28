@@ -30,7 +30,7 @@ export const submitProject = (projectData, history) => dispatch => {
         );
 };
 
-// Create Project
+// Edit Project
 export const editProject = (projectID,projectData, history) => dispatch => {
     axios
         .post("/api/projects/updateProject/"+ projectID, projectData)

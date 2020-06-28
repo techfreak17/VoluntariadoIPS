@@ -33,6 +33,7 @@ class VoluntaryRow extends Component {
   }
 
   render() {
+    console.log(this.props.responsibleID);
     return (
       <tr>
         <td>
@@ -41,7 +42,7 @@ class VoluntaryRow extends Component {
         <td>
           <Link to={"/getUser/" + this.props.obj.userID} className="btn btn-primary" style={{ width: "auto", backgroundColor: "lightGrey", color: "black", marginLeft: 40 }}><i className="material-icons">search</i></Link>
           {(() => {
-            if (this.props.auth.user.role === "Administrador") {
+            if (this.props.auth.user.role === "Administrador" || this.props.responsibleID===this.props.userID) {
               return (
                 <button onClick={this.openWarning} className="btn btn-danger" style={{ width: "auto", backgroundColor: "red", marginLeft: 40, color: "white" }}><i className="material-icons">remove</i></button>
               )

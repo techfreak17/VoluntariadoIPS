@@ -27,8 +27,10 @@ class VoluntariesList extends Component {
 
   rowVolun = () => {
     let project = this.props.projectID;
+    let responsibleID = this.props.responsibleID
+    let userID = this.props.userID
     return this.state.voluntaries.map(function (object, i) {
-      return <VoluntaryRow obj={object} key={i} project = {project}/>;
+      return <VoluntaryRow obj={object} key={i} project = {project} userID= {userID} responsibleID= {responsibleID}/>;
     });
   }
 

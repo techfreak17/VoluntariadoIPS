@@ -99,7 +99,7 @@ class ProjectDetails extends Component {
   render() {
     return (
       <div>
-        <div className="card" style={{ backgroundColor: "#00000", width: 900, margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px black" }}>
+        <div className="card" style={{ backgroundColor: "#f2f2f2", width: 900, margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px black" }}>
           <div className="card-header center" style={{ overflow: "hidden", height: 400, width: "100%" }}>
             <h2 style={{ color: "#1167B1" }}><b>{this.state.title}</b></h2>
             <img src={require('../layout/images/volun.png')} alt="(Não esquecer de verificar no spam)" className="img-responsive" style={{ width: "40%", height: "70%" }} />
@@ -169,7 +169,7 @@ class ProjectDetails extends Component {
                 closeOnDocumentClick
                 onClose={this.closeModal}>
                 <div className="Modal">
-                  <VoluntariesList projectID={this.props.match.params.id}></VoluntariesList>
+                  <VoluntariesList projectID={this.props.match.params.id} userID={this.props.auth.user.id} responsibleID ={this.state.responsibleID}></VoluntariesList>
                 </div>
               </Popup>
             </div><br></br>

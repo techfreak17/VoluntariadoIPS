@@ -350,14 +350,13 @@ class Create extends Component {
                                 </label>
                             </div>
                         </form>
-                        <div className="col s12" style={{ marginTop: "1%", paddingBottom: 60 }}>
-                            <br></br><br></br><br></br><br></br><br></br>
+                        <div className="col s12" style={{ marginTop: "30%", marginBottom: "20%"}}>
                             <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "16%" }}
                                 type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Submeter
-              </button>
+                            </button>
                             <a style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "16%" }}
                                 href="/listProjects" className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
-              </a>
+                            </a>
                         </div>
                     </div>
                 </div>

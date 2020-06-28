@@ -51,7 +51,7 @@ class Create extends Component {
       .then(response => {
         this.setState({
           users: response.data,
-          selectedUser: response.data[0].name
+          selectedUser: response.data[0].responsibleID,
         });
       })
       .catch(function (error) {
@@ -142,7 +142,7 @@ class Create extends Component {
     });
 
     let optionTemplate = this.state.users.map(v => (
-      <option key={v.email} value={v.name}>{v.name}</option>
+      <option key={v.email} value={v.responsibleID}>{v.name}</option>
     ));
 
     return (
@@ -333,7 +333,7 @@ class Create extends Component {
                 />
                 <label htmlFor="name">Entidades Envolvidas (ex: Siemens, Google, Vodafone)</label>
               </div>
-              
+
               <div className="input-field col s12">
                 <input
                   onChange={this.onChange}
@@ -370,7 +370,7 @@ class Create extends Component {
                 </label>
               </div>
             </form>
-            <div className="col s12" style={{ marginTop: "30%", marginBottom: "20%"}}>
+            <div className="col s12" style={{ marginTop: "30%", marginBottom: "20%" }}>
               <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "16%" }}
                 type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Submeter
               </button>

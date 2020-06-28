@@ -35,7 +35,7 @@ router.post("/createProject", (req, res) => {
     if (project) {
       return res.status(400).json({ title: "Project already exists" });
     } else {
-      Company.findOne({ name: req.body.responsibleID }).then(company => {
+      Company.findOne({ responsibleID: req.body.responsibleID }).then(company => {
         const newProject = new Project({
           title: req.body.title,
           synopsis: req.body.synopsis,
@@ -77,7 +77,6 @@ router.route('/editProject/:id').get(function (req, res) {
 // @desc Update Project - Administrator
 // @access Private
 router.route('/updateProject/:id').post(function (req, res) {
-  console.log(req.body);
   // Form validation
   const { errors, isValid } = validateCreateProject(req.body);
   console.log(errors);
@@ -91,7 +90,7 @@ router.route('/updateProject/:id').post(function (req, res) {
       res.status(404).send("data is not found");
     else {
       if (req.body.responsibleID !== undefined) {
-        Company.findOne({ name: req.body.responsibleID }).then(company => {
+        Company.findOne({ responsibleID: req.body.responsibleID }).then(company => {
           project.title = req.body.title;
           project.synopsis = req.body.synopsis,
             project.intervationArea = req.body.intervationArea,

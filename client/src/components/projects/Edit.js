@@ -69,8 +69,8 @@ class Edit extends Component {
           photo: responseArr[0].data.photo,
           observations: responseArr[0].data.observations,
           relatedEntities: responseArr[0].data.relatedEntities,
+          selectedUser: responseArr[1].data[0].responsibleID,
           users: responseArr[1].data,
-          selectedUser: responseArr[1].data[0].name,
           vacancies: responseArr[0].data.vacancies
         });
       })
@@ -81,6 +81,7 @@ class Edit extends Component {
   };
 
   onSubmit(e) {
+    console.log(this.state.selectedUser);
     e.preventDefault();
     const obj = {
       title: this.state.title,
@@ -132,7 +133,7 @@ class Edit extends Component {
     });
 
     let optionTemplate = this.state.users.map(v => (
-      <option key={v.email} value={v.name}>{v.name}</option>
+      <option key={v.email} value={v.responsibleID}>{v.name}</option>
     ));
 
     return (
@@ -403,7 +404,7 @@ class Edit extends Component {
                 type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable accent-3 blue">Editar
               </button>
               <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "20%" }}
-               onClick={this.goBack} className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
+                onClick={this.goBack} className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
               </button>
             </div>
           </div>

@@ -53,8 +53,8 @@ class VoluntaryProjectsTableRow extends Component {
           <Popup open={this.state.unjoin}
             closeOnDocumentClick
             onClose={this.closeWarning}>
-            <div className={"Modal container"} style={{ maxWidth: 400, width: "auto", paddingTop: "1%", paddingBottom: "1%" }}>
-              <h5 style={{ color: "", fontFamily: "Arial" }}>Tem a certeza que pretende sair deste Projeto?</h5>
+            <div className={"Modal container"} style={{width: "50"}}>
+              <h5 className= {"center"}>Tem a certeza que pretende sair deste Projeto?</h5>
               <div>
                 <button className="btn btn-medium waves-effect waves-light hoverable red left" onClick={this.unjoinProject}>CONFIRMAR</button>
                 <button className="btn btn-medium waves-effect waves-light hoverable gray right" onClick={this.closeWarning}>CANCELAR</button>

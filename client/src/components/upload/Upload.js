@@ -17,7 +17,8 @@ class Upload extends Component {
     };
 
     // On file upload (click the upload button) 
-    onFileUpload = () => {
+    onFileUpload = (event) => {
+        event.preventDefault();
 
         // Create an object of formData 
         const formData = new FormData();
@@ -28,21 +29,29 @@ class Upload extends Component {
             this.state.selectedFile,
             this.state.selectedFile.name
         );
-        formData.append(
-            "type",
-            "Projeto"//this.props.type
-        )
-        formData.append(
-            "id",
-            this.props.id
-        )
 
-        // Details of the uploaded file 
-        console.log(this.state.selectedFile);
+        if(this.props.isChild){
+            this.props.handleUpload(formData);
+            console.log("sent form to parent");
+            console.log(formData);
+            console.log("------------------");
+        } else {
+            formData.append(
+                "type",
+                "Projeto"//this.props.type
+            )
+            formData.append(
+                "id",
+                this.props.id
+            )
 
-        // Request made to the backend api 
-        // Send formData object 
-        axios.post("api/upload", formData).then(alert("O seu ficheiro foi guardado!"));
+            // Details of the uploaded file 
+            console.log(this.state.selectedFile);
+
+            // Request made to the backend api 
+            // Send formData object 
+            axios.post("api/upload", formData).then(alert("O seu ficheiro foi guardado!"));
+        }
     };
 
     // File content to be displayed after 
@@ -83,7 +92,7 @@ class Upload extends Component {
                         <input type="file" onChange={this.onFileChange} />
                         <button type="button" onClick={this.onFileUpload}>
                             Guardar!
-                    </button>
+                        </button>
                     </div>
                     {this.fileData()}
                 </div>

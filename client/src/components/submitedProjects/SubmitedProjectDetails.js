@@ -54,8 +54,29 @@ export default class Edit extends Component {
           li.appendChild(document.createTextNode(name));
           ul.appendChild(li);
         }
+        this.insertImage(response.data[0].img);
       })
       .catch(error => console.log(error));
+  }
+
+  insertImage = (file) => {
+    let myDiv = document.getElementById("projectImg");
+    let img = document.createElement('img');
+    let imageFile = null;
+
+    if(file){
+      imageFile = `data:${file.contentType};base64,${Buffer.from(file.data).toString('base64')}`;
+    }else{
+      imageFile = require('../layout/images/volun.png');
+    }
+    
+    img.src = imageFile;
+    img.alt ="(No Image)";
+    img.className = "img-responsive";
+    img.style.width = "40%";
+    img.style.height= "70%";
+
+    myDiv.appendChild(img);
   }
 
   goBack() {
@@ -68,7 +89,7 @@ export default class Edit extends Component {
         <div className="card" style={{ backgroundColor: "#00000", width: 900, margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px black" }}>
           <div className="card-header center" style={{ overflow: "hidden", height: 400, width: "100%" }}>
             <h2 style={{ color: "#1167B1" }}><b>{this.state.title}</b></h2>
-            <img src={require('../layout/images/volun.png')} alt="(Não esquecer de verificar no spam)" className="img-responsive" style={{ width: "40%", height: "70%" }} />
+            <div id="projectImg"></div>          
           </div>
           <div className="card-content" style={{ paddingLeft: 50 }}>
             <div className="right" style={{ paddingRight: 25 }}>

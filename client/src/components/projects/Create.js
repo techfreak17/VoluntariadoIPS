@@ -6,6 +6,7 @@ import classnames from "classnames";
 import M from "materialize-css";
 import options from "materialize-css";
 import axios from 'axios';
+import Upload from "../upload/Upload";
 
 class Create extends Component {
   constructor(props) {
@@ -28,12 +29,12 @@ class Create extends Component {
       users: [],
       selectedUser: "",
       vacancies: "",
+      fileFormData: null,
       errors: {}
     }
 
     this.handleChangeInterestAreas = this.handleChangeInterestAreas.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.uploadFile = this.uploadFile.bind(this);
     this.onChangeRelatedEntities = this.onChangeRelatedEntities.bind(this);
     this.onChange = this.onChange.bind(this);
   }
@@ -57,16 +58,6 @@ class Create extends Component {
       .catch(function (error) {
         console.log(error);
       })
-  }
-
-  uploadFile(event) {
-    console.log(event.target.files[0]);
-
-    const data = new FormData();
-    data.append('file', event.target.files[0]);
-    data.append('name', 'some value user types');
-    data.append('description', 'some value user types');
-
   }
 
   toggleChangeAuthorization = () => {
@@ -122,7 +113,7 @@ class Create extends Component {
       vacancies: this.state.vacancies
     };
 
-    this.props.createProject(obj, this.props.history);
+    this.props.createProject(obj, this.state.fileFormData, this.props.history);
 
   }
 
@@ -132,6 +123,10 @@ class Create extends Component {
     var inputList = input.split(point);
     this.setState({ [e.target.id]: inputList });
   };
+
+  handleUpload = (formData) => {
+    this.setState({fileFormData: formData});
+  }
 
   render() {
     const { errors } = this.state;
@@ -347,6 +342,10 @@ class Create extends Component {
                 />
                 <label htmlFor="name">Nº Máximo de Vagas *</label>
                 <span className="red-text">{errors.vacancies}</span>
+              </div>
+              <div className="input-field col s12">
+                <label htmlFor="name">Logótipo</label><br></br><br></br>
+                  <Upload handleUpload={this.handleUpload} isChild={true}></Upload>
               </div>
 
               <div className="input-field col s12">

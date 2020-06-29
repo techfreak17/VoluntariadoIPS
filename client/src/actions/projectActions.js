@@ -5,11 +5,23 @@ import {
 } from "./types";
 
 // Create Project
-export const createProject = (projectData, history) => dispatch => {
+export const createProject = (projectData, file, history) => dispatch => {
     axios
         .post("/api/projects/createProject", projectData)
-        .then(res => history.push("/listProjects")
-        ).catch(err =>
+        .then(res => {
+            file.append(
+                "type",
+                "Projeto"
+            )
+            file.append(
+                "id",
+                res.data._id
+            )
+            axios
+                .post("api/upload", file)
+                .then(history.push("/listProjects"))
+        })
+        .catch(err =>
             dispatch({
                 type: GET_ERRORS,
                 payload: err.response.data

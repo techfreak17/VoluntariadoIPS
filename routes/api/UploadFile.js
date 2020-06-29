@@ -1,7 +1,16 @@
 const formidable = require('formidable');
+const Project = require("../../models/project");
+const ConcludedProject = require("../../models/concludedProject");
+const User = require("../../models/user");
+const fs = require("fs");
+
 
 addImageToProject = (id, file) => {
-    console.log(file);
+  Project.findById(id, function (err, project) {
+    project.img.data = fs.readFileSync(file.path);
+    project.img.contentType = file.type;
+    project.save();
+  });
 };
 
 addImageToUser = (id, file) => {

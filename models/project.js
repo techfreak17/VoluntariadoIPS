@@ -83,6 +83,10 @@ const ProjectSchema = new Schema({
     ended:{
         type: Boolean,
         default: false
+    },
+    img: { 
+        data: Buffer, 
+        contentType: String 
     }
 });
 module.exports = mongoose.model("Projects", ProjectSchema);

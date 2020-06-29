@@ -3,8 +3,11 @@ import axios from 'axios';
 import M from "materialize-css";
 import options from "materialize-css";
 import classnames from "classnames";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { editUser } from "../../actions/userActions";
 
-export default class EditVoluntary extends Component {
+class EditVoluntary extends Component {
   constructor(props) {
     super(props);
 
@@ -68,25 +71,27 @@ export default class EditVoluntary extends Component {
       .catch(error => console.log(error));
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
+  }
+
   onChange = e => {
     this.setState({ [e.target.id]: e.target.value });
   };
 
   handleChangeInterestAreas(event) {
     this.setState({
-      interestAreas: Array.from(event.target.selectedOptions, (item) => item.value), validationErrorInterestAreas:
-        event.target.value === ""
-          ? "Deverá preencher o campo Áreas Interesse"
-          : ""
+      interestAreas: Array.from(event.target.selectedOptions, (item) => item.value)
     });
   }
 
   handleChangeReasons(event) {
     this.setState({
-      reasons: Array.from(event.target.selectedOptions, (item) => item.value), validationErrorReasons:
-        event.target.value === ""
-          ? "Deverá preencher o campo Razões Para Querer Ser Voluntário"
-          : ""
+      reasons: Array.from(event.target.selectedOptions, (item) => item.value)
     });
   }
 
@@ -111,10 +116,8 @@ export default class EditVoluntary extends Component {
       birthDate: this.state.birthDate,
       role: this.state.role
     };
-    axios
-      .post('/api/admin/updateUser/' + this.props.match.params.id, obj)
-    this.props.history.push('/listUsers');
-    window.location.reload();
+    
+    this.props.editUser(this.props.match.params.id,obj,this.props.history);
   }
 
   render() {
@@ -137,7 +140,6 @@ export default class EditVoluntary extends Component {
                 <input
                   onChange={e => this.setState({
                     username: e.target.value,
-                    validationErrorUsername: e.target.value === "" ? "Deverá preencher o campo Username" : ""
                   })}
                   value={this.state.username}
                   id="username"
@@ -147,9 +149,6 @@ export default class EditVoluntary extends Component {
                     invalid: errors.username
                   })}
                 />
-                <div style={{ color: "red", marginTop: "5px" }}>
-                  {this.state.validationErrorUsername}
-                </div>
                 <span className="red-text">{errors.username}</span>
               </div>
 
@@ -158,7 +157,6 @@ export default class EditVoluntary extends Component {
                 <input
                   onChange={e => this.setState({
                     email: e.target.value,
-                    validationErrorEmail: e.target.value === "" ? "Deverá preencher o campo Email" : ""
                   })}
                   value={this.state.email}
                   id="email"
@@ -168,9 +166,6 @@ export default class EditVoluntary extends Component {
                     invalid: errors.email
                   })}
                 />
-                <div style={{ color: "red", marginTop: "5px" }}>
-                  {this.state.validationErrorEmail}
-                </div>
                 <span className="red-text">{errors.email}</span>
               </div>
 
@@ -179,7 +174,6 @@ export default class EditVoluntary extends Component {
                 <input
                   onChange={e => this.setState({
                     name: e.target.value,
-                    validationErrorName: e.target.value === "" ? "Deverá preencher o campo Nome Completo" : ""
                   })}
                   value={this.state.name}
                   id="name"
@@ -189,9 +183,6 @@ export default class EditVoluntary extends Component {
                     invalid: errors.name
                   })}
                 />
-                <div style={{ color: "red", marginTop: "5px" }}>
-                  {this.state.validationErrorName}
-                </div>
                 <span className="red-text">{errors.name}</span>
               </div>
 
@@ -200,7 +191,6 @@ export default class EditVoluntary extends Component {
                 <input
                   onChange={e => this.setState({
                     phone: e.target.value,
-                    validationErrorPhone: e.target.value === "" ? "Deverá preencher o campo Nº Telemóvel" : ""
                   })}
                   value={this.state.phone}
                   id="phone"
@@ -210,9 +200,6 @@ export default class EditVoluntary extends Component {
                     invalid: errors.phone
                   })}
                 />
-                <div style={{ color: "red", marginTop: "5px" }}>
-                  {this.state.validationErrorPhone}
-                </div>
                 <span className="red-text">{errors.phone}</span>
               </div>
 
@@ -236,7 +223,6 @@ export default class EditVoluntary extends Component {
                 <input
                   onChange={e => this.setState({
                     birthDate: e.target.value,
-                    validationErrorBirthDate: e.target.value === "" ? "Deverá preencher o campo Data Nascimento" : ""
                   })}
                   value={this.state.birthDate}
                   id="birthDate"
@@ -246,9 +232,6 @@ export default class EditVoluntary extends Component {
                     invalid: errors.birthDate
                   })}
                 />
-                <div style={{ color: "red", marginTop: "5px" }}>
-                  {this.state.validationErrorBirthDate}
-                </div>
                 <span className="red-text">{errors.birthDate}</span>
               </div>
 
@@ -327,9 +310,6 @@ export default class EditVoluntary extends Component {
                   <option value="Saúde">Saúde (por ex. rastreios, ações de sensibilização…)</option>
                   <option value="Social">Social (por ex. apoio a idosos, a crianças, Banco Alimentar…)</option>
                 </select>
-                <div style={{ color: "red", marginTop: "5px" }}>
-                  {this.state.validationErrorInterestAreas}
-                </div>
                 <span className="red-text">{errors.interestAreas}</span>
               </div>
 
@@ -352,9 +332,6 @@ export default class EditVoluntary extends Component {
                   <option value="Ocupar Tempo Livre">Para ocupar tempo livre</option>
                   <option value="Outro">Outro</option>
                 </select>
-                <div style={{ color: "red", marginTop: "5px" }}>
-                  {this.state.validationErrorReasons}
-                </div>
                 <span className="red-text">{errors.reasons}</span>
               </div>
 
@@ -388,3 +365,19 @@ export default class EditVoluntary extends Component {
     )
   }
 }
+
+EditVoluntary.propTypes = {
+  editUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { editUser }
+)(EditVoluntary);

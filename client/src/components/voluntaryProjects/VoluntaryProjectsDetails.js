@@ -7,8 +7,6 @@ import Popup from "reactjs-popup";
 import '../../componentsCSS/Modal.css'
 import ProjectClassification from "../projects/ProjectClassification.js";
 import VoluntariesList from '../projects/VoluntariesList';
-import { Link } from "react-router-dom";
-
 
 class VoluntaryProjectsDetails extends Component {
   constructor(props) {

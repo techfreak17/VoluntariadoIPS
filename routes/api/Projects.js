@@ -187,7 +187,7 @@ router.route('/listProjects').get(function (req, res) {
   });
 });
 
-// @route GET api/projects/searchProject
+// @route POST api/projects/searchProject
 // @desc Search Project
 // @access Private
 router.post("/searchProject", (req, res) => {
@@ -283,6 +283,9 @@ router.route('/getCompanyProjectDetails/:id').get(function (req, res) {
   });
 });
 
+// @route POST api/projects/removeVoluntary/:id
+// @desc Remove Voluntary
+// @access Private
 router.route('/removeVoluntary/:id').post(function (req, res) {
   let id = req.params.id;
   Voluntary.findById(mongoose.Types.ObjectId(id), function (err, voluntary) {
@@ -299,6 +302,7 @@ router.route('/removeVoluntary/:id').post(function (req, res) {
     })
   });
 });
+
 // @route POST api/projects/ratingProject/:id
 // @desc Add Rating of Project from User
 // @access Private
@@ -322,7 +326,7 @@ router.route('/ratingProject/:id').post(function (req, res) {
   })
 });
 
-// @route GET api/projects/getProjectUserStats/:id
+// @route POST api/projects/getProjectUserStats/:id
 // @desc Get Rating Stats
 // @access Private
 router.route('/getProjectUserStats').post(function (req, res) {

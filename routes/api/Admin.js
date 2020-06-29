@@ -283,8 +283,8 @@ router.route('/deleteUser/:id').get(function (req, res) {
   });
 });
 
-// @route GET api/admin/deleteUser/:id
-// @desc Delete Voluntary User
+// @route GET api/admin/getCompanyUsers/:id
+// @desc Get Company Users
 // @access Private
 router.route('/getCompanyUsers').get(function (req, res) {
   Company.find(function (err, users) {

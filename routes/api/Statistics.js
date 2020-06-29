@@ -6,8 +6,6 @@ const ProjectClassification = require("../../models/projectClassification");
 const ConcludedProject = require("../../models/concludedProject");
 const SubmitedProject=require("../../models/submitedProject");
 
-const { use } = require("passport");
-
 const buildJSON = (...files) => {
   var obj = {}
   Object.assign(obj, files);
@@ -53,8 +51,8 @@ router.route('/listProjectsClassifications').get(function (req, res) {
     });
 });
 
-// @route GET api/projects/getProjectUserDetails/:id
-// @desc Get Company Projects Details
+// @route GET api/stats/getVoluntaryStatsData/:id
+// @desc Get Voluntary Stats Data
 // @access Private
 router.route('/getVoluntaryStatsData/:id').get(function (req, res) {
   let id = req.params.id;
@@ -74,8 +72,8 @@ router.route('/getVoluntaryStatsData/:id').get(function (req, res) {
 });
 
 
-// @route GET api/users/listProjects
-// @desc Get List of Projects
+// @route GET api/stats/countProjects
+// @desc Get Count Projects
 // @access Private
 router.route('/countProjects').get(function (req, res) {
     Project.estimatedDocumentCount(function (err, project) {

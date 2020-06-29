@@ -4,7 +4,7 @@ import {
     GET_ERRORS
 } from "./types";
 
-// Edit Admin Profile
+// Edit Profile
 export const editProfile = (userID, userData, history) => dispatch => {
     axios
         .post("/api/users/updateUser/"+ userID, userData)

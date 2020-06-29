@@ -3,7 +3,9 @@ const User = require("../../models/user");
 const express = require("express");
 const router = express.Router();
 
-
+// @route GET api/notifications/listNotifications/:id
+// @desc List Notifications
+// @access Private
 router.route('/listNotifications/:id').get(function (req, res) {
   const id = req.params.id;
   User.findById(id, function(err,user){
@@ -19,6 +21,9 @@ router.route('/listNotifications/:id').get(function (req, res) {
   
 });
 
+// @route GET api/notifications/listReadNotifications/:id
+// @desc List Read Notifications
+// @access Private
 router.route('/listReadNotifications/:id').get(function (req, res) {
   const id = req.params.id;
   User.findById(id, function(err,user){
@@ -34,6 +39,9 @@ router.route('/listReadNotifications/:id').get(function (req, res) {
   
 });
 
+// @route GET api/notifications/deleteNotification/:id
+// @desc Delete Notification
+// @access Private
 router.route('/deleteNotification/:id').get(function (req, res) {
   notifications.findByIdAndRemove(req.params.id, function (err, notif) {
     if (err) res.json(err);
@@ -41,6 +49,9 @@ router.route('/deleteNotification/:id').get(function (req, res) {
   });
 });
 
+// @route GET api/notifications/updateNotification/:id
+// @desc Update Notification
+// @access Private
 router.route('/updateNotification/:id').get(function (req, res) {
   notifications.findOne({_id: req.params.id},function(err, notif){
     if(err){
@@ -54,7 +65,9 @@ router.route('/updateNotification/:id').get(function (req, res) {
   });
 });
 
-
+// @route POST api/notifications/createNotification
+// @desc Create Notification
+// @access Private
 router.post("/createNotification", (req, res) => {
 
   const newNotif = new notifications;

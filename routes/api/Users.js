@@ -256,7 +256,7 @@ router.post("/recover", (req, res) => {
 
 });
 
-// @route POST api/users/recover
+// @route POST api/users/updatePassword
 // @desc Recover User password
 // @access Public
 router.post("/updatePassword", (req, res) => {

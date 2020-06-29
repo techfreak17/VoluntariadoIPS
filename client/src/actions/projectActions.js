@@ -17,7 +17,7 @@ export const createProject = (projectData, history) => dispatch => {
         );
 };
 
-// Create Project
+// Submit Project
 export const submitProject = (projectData, history) => dispatch => {
     axios
         .post("/api/submitedProjects/submitCreateProject", projectData)

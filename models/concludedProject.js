@@ -79,10 +79,6 @@ const ConcludedProjectSchema = new Schema({
     vacancies:{
         type: Number,
         required: true
-    },
-    ended:{
-        type: Boolean,
-        default: false
     }
 });
 module.exports = mongoose.model("ConcludedProjects", ConcludedProjectSchema);

@@ -131,8 +131,8 @@ router.route('/submitDeleteProject/:id').get(function (req, res) {
   });
 });
 
-// @route GET api/submitedProjects/listProjects
-// @desc Get List of Projects
+// @route GET api/submitedProjects/listSubmitedProjects
+// @desc Get List of Submited Projects
 // @access Private
 router.route('/listSubmitedProjects').get(function (req, res) {
   SubmitedProject.find(function (err, submitedProject) {
@@ -145,8 +145,8 @@ router.route('/listSubmitedProjects').get(function (req, res) {
   });
 });
 
-// @route GET api/submitedProjects/searchProject
-// @desc Search Project
+// @route GET api/submitedProjects/searchSubmitedProject
+// @desc Search Submited Project
 // @access Private
 router.post("/searchSubmitedProject", (req, res) => {
   SubmitedProject.find({ title: { $regex: req.body.search, $options: "i" } }).then(submitedProject => {
@@ -213,7 +213,8 @@ router.route('/acceptSubmitedProject/:id').post(function (req, res) {
         relatedEntities: project.relatedEntities,
         responsibleID: project.responsibleID,
         requiredFormation: project.requiredFormation,
-        formation: project.formation
+        formation: project.formation,
+        vacancies: project.vacancies
       });
       newProject
         .save()

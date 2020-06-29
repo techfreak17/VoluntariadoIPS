@@ -17,3 +17,16 @@ export const createUser = (userData, history) => dispatch => {
         );
 };
 
+// Edit User
+export const editUser = (userID, userData, history) => dispatch => {
+    axios
+        .post("/api/admin/updateUser/"+ userID, userData)
+        .then(res => history.goBack())
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
+};
+

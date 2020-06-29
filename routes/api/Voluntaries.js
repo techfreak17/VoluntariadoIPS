@@ -35,7 +35,7 @@ router.route('/joinProject/:id').post(function (req, res) {
 });
 
 // @route POST api/voluntaries/unjoinProject/:id
-// @desc Join Project
+// @desc Unjoin Project
 // @access Private
 router.route('/unjoinProject/:id').post(function (req, res) {
     let id = req.params.id;
@@ -69,7 +69,7 @@ router.route('/listVoluntaryProjects/:id').get(function (req, res) {
     });
 });
 
-// @route GET api/voluntaries/searchVoluntaryProject/:id
+// @route POST api/voluntaries/searchVoluntaryProject/:id
 // @desc Search Project
 // @access Private
 router.post("/searchVoluntaryProject/:id", (req, res) => {
@@ -82,6 +82,6 @@ router.post("/searchVoluntaryProject/:id", (req, res) => {
             res.json(projects);
         }
     });
-  });
+});
   
 module.exports = router;

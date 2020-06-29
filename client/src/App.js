@@ -48,6 +48,9 @@ import VoluntariesList from "./components/projects/VoluntariesList.js";
 import StatisticsNumberUsers from "./components/stats/StatisticsNumberUsers.js";
 import StatisticsNumberProjects from "./components/stats/StatisticsNumberProjects.js";
 import Upload from "./components/upload/Upload.js";
+import StatisticsRatingProjects from "./components/stats/StatisticsRatingProjects.js";
+import StatisticsVoluntary from "./components/stats/StatisticsVoluntary.js";
+import StatisticsProjectComparison from "./components/stats/StatisticsProjectComparison.js"
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -105,6 +108,9 @@ class App extends Component {
               <PrivateRoute path='/editProject/:id' component={ Edit } />
               <PrivateRoute path='/statsNumberUsers' component={ StatisticsNumberUsers } />
               <PrivateRoute path='/statsNumberProjects' component={ StatisticsNumberProjects } />
+              <PrivateRoute path='/statsRatingProjects' component={ StatisticsRatingProjects } />
+              <PrivateRoute path='/statsVoluntary' component={ StatisticsVoluntary } />
+              <PrivateRoute path='/statsCompareProjects' component={ StatisticsProjectComparison } />
               <AdminRoute exact path='/createCompanyUser' component={ CreateCompanyUser } />
               <AdminRoute exact path='/createVoluntaryUser' component={ CreateVoluntaryUser } />
               <AdminRoute exact path='/createProject' component={ Create } />

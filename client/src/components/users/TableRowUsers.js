@@ -1,18 +1,32 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Popup from "reactjs-popup";
+import '../../componentsCSS/Modal.css'
 
 class TableRowUsers extends Component {
 
   constructor(props) {
     super(props);
     this.delete = this.delete.bind(this);
+    this.state={
+      delete:false
+    }
   }
+
   delete() {
     axios.get('/api/admin/deleteUser/' + this.props.obj._id)
       .catch(err => console.log(err))
     window.location.reload();
   }
+
+  openWarning = () => {
+    this.setState({ delete: true });
+  }
+  closeWarning = () => {
+    this.setState({ delete: false });
+  }
+
   render() {
     return (
       <tr>
@@ -44,11 +58,21 @@ class TableRowUsers extends Component {
           {(() => {
             if (this.props.obj.role !== "Administrador") {
               return (
-                <button onClick={this.delete} className="btn btn-danger" style={{ width: "auto", backgroundColor: "red", color: "black", marginLeft: 40 }}><i className="material-icons">delete</i></button>
+                <button onClick={this.openWarning} className="btn btn-danger" style={{ width: "auto", backgroundColor: "red", color: "black", marginLeft: 40 }}><i className="material-icons">delete</i></button>
               )
             }
           })()}
-         
+         <Popup open={this.state.delete}
+            closeOnDocumentClick
+            onClose={this.closeWarning}>
+             <div className={"Modal container"} style={{width: "50"}}>
+              <h5 className= {"center"}>Tem a certeza que pretende apagar este Utilizador?</h5>
+              <div>
+                <button className="btn btn-medium waves-effect waves-light hoverable red left" onClick={this.delete}>CONFIRMAR</button>
+                <button className="btn btn-medium waves-effect waves-light hoverable gray right" onClick={this.closeWarning}>CANCELAR</button>
+              </div>
+            </div>
+          </Popup>
         </td>
       </tr>
     );

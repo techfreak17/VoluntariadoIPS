@@ -19,8 +19,6 @@ const buildJSON = (...files) => {
 
 // Load input validation
 const validateCreateProject = require("../../validation/createProject");
-const projectClassification = require("../../models/projectClassification");
-const concludedProject = require("../../models/concludedProject");
 
 // @route POST api/projects/createProject
 // @desc Create Project - Administrator
@@ -37,7 +35,7 @@ router.post("/createProject", (req, res) => {
     if (project) {
       return res.status(400).json({ title: "Project already exists" });
     } else {
-      Company.findOne({ name: req.body.responsibleID }).then(company => {
+      Company.findOne({ responsibleID: req.body.responsibleID }).then(company => {
         const newProject = new Project({
           title: req.body.title,
           synopsis: req.body.synopsis,
@@ -91,7 +89,7 @@ router.route('/updateProject/:id').post(function (req, res) {
       res.status(404).send("data is not found");
     else {
       if (req.body.responsibleID !== undefined) {
-        Company.findOne({ name: req.body.responsibleID }).then(company => {
+        Company.findOne({ responsibleID: req.body.responsibleID }).then(company => {
           project.title = req.body.title;
           project.synopsis = req.body.synopsis,
             project.intervationArea = req.body.intervationArea,
@@ -119,6 +117,7 @@ router.route('/updateProject/:id').post(function (req, res) {
             responsibleID: project.responsibleID,
             vacancies: project.vacancies
           })
+            .then(project => res.json(project))
             .catch(err => {
               res.status(400).send("unable to update the database");
             });
@@ -150,6 +149,7 @@ router.route('/updateProject/:id').post(function (req, res) {
           relatedEntities: project.relatedEntities,
           vacancies: project.vacancies
         })
+          .then(project => res.json(project))
           .catch(err => {
             res.status(400).send("unable to update the database");
           });
@@ -187,7 +187,7 @@ router.route('/listProjects').get(function (req, res) {
   });
 });
 
-// @route GET api/projects/searchProject
+// @route POST api/projects/searchProject
 // @desc Search Project
 // @access Private
 router.post("/searchProject", (req, res) => {
@@ -283,22 +283,26 @@ router.route('/getCompanyProjectDetails/:id').get(function (req, res) {
   });
 });
 
+// @route POST api/projects/removeVoluntary/:id
+// @desc Remove Voluntary
+// @access Private
 router.route('/removeVoluntary/:id').post(function (req, res) {
   let id = req.params.id;
   Voluntary.findById(mongoose.Types.ObjectId(id), function (err, voluntary) {
     User.findById(voluntary.userID).then(user => {
       if (user.role === "Voluntário") {
         Project.findById(req.body.projectID).then(project => {
-            voluntary.listProjects.pull(project._id);
-            voluntary.save();
-            project.enroled_IDs.pull(user._id);
-            project.save();
-            createNotification('sairProjeto', project.title, user.email);
+          voluntary.listProjects.pull(project._id);
+          voluntary.save();
+          project.enroled_IDs.pull(user._id);
+          project.save();
+          createNotification('sairProjeto', project.title, user.email);
         })
-    }
+      }
     })
   });
 });
+
 // @route POST api/projects/ratingProject/:id
 // @desc Add Rating of Project from User
 // @access Private
@@ -310,7 +314,8 @@ router.route('/ratingProject/:id').post(function (req, res) {
       const newProjectClassification = new ProjectClassification({
         projectID: project._id,
         userID: user._id,
-        rating: req.body.rating
+        rating: req.body.rating,
+        title: project.title
       });
 
       newProjectClassification
@@ -321,50 +326,51 @@ router.route('/ratingProject/:id').post(function (req, res) {
   })
 });
 
-// @route GET api/projects/getProjectUserStats/:id
+// @route POST api/projects/getProjectUserStats/:id
 // @desc Get Rating Stats
 // @access Private
 router.route('/getProjectUserStats').post(function (req, res) {
-  ProjectClassification.findOne({ projectID: req.body.projectID, userID: req.body.userID}).then(projectClassification => {
+  ProjectClassification.findOne({ projectID: req.body.projectID, userID: req.body.userID }).then(projectClassification => {
     const obj = {
       alreadyClassified: true,
     };
     if (projectClassification)
-    res.json(obj);
+      res.json(obj);
   })
 });
 
 // @route GET  api/projects/concludeProject/:id
 // @desc Deletes a project from Projects, and had it to ConcludedProjects
 // @public
-router.route('/concludeProject/:id').get( function(req, res){
+router.route('/concludeProject/:id').get(function (req, res) {
   let id = req.params.id;
-  Project.findById(id, function(err, project){
-      if(project){
-        const newProject = new ConcludedProject({
-          title: project.title,
-          synopsis: project.synopsis,
-          intervationArea: project.intervationArea,
-          target_audience: project.target_audience,
-          objectives: project.objectives,
-          description: project.description,
-          date: project.date,
-          interestAreas: project.interestAreas,
-          photo: project.photo,
-          observations: project.observations,
-          relatedEntities: project.relatedEntities,
-          responsibleID: project.responsibleID,
-          requiredFormation: project.requiredFormation,
-          formation: project.formation,
-          vacancies: project.vacancies
-        });
-        newProject.save()
+  Project.findById(id, function (err, project) {
+    if (project) {
+      const newProject = new ConcludedProject({
+        title: project.title,
+        synopsis: project.synopsis,
+        intervationArea: project.intervationArea,
+        target_audience: project.target_audience,
+        objectives: project.objectives,
+        description: project.description,
+        date: project.date,
+        interestAreas: project.interestAreas,
+        photo: project.photo,
+        observations: project.observations,
+        relatedEntities: project.relatedEntities,
+        responsibleID: project.responsibleID,
+        requiredFormation: project.requiredFormation,
+        formation: project.formation,
+        vacancies: project.vacancies,
+        enroled_IDs: project.enroled_IDs
+      });
+      newProject.save()
         .then(project.deleteOne()
-        .then(project => res.json(project)));
-      }
-      else{
-        return res.status(404).json("Porjecto não encontrado.");
-      }
+          .then(project => res.json(project)));
+    }
+    else {
+      return res.status(404).json("Porjecto não encontrado.");
+    }
   });
 });
 

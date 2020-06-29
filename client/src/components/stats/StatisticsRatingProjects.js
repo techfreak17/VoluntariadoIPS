@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import TableRow from './TableRowProjects';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
+import TableRow from './TableRowStats';
 
-class StatisticsNumberProjects extends Component {
+class StatisticsRatingProjects extends Component {
 
     constructor(props) {
         super(props);
@@ -14,8 +14,9 @@ class StatisticsNumberProjects extends Component {
         };
     }
     componentDidMount() {
-        axios.get('/api/projects/listProjects')
+        axios.get('/api/stats/listProjectsClassifications')
             .then(response => {
+                console.log(response.data)
                 this.setState({
                     projects: response.data
                 });
@@ -23,25 +24,25 @@ class StatisticsNumberProjects extends Component {
             .catch(function (error) {
                 console.log(error);
             })
+        console.log(this.state.projects);
     }
 
     tabRow() {
         return this.state.projects.map(function (object, i) {
-            let array = [...object.enroled_IDs];
-            let lenght = array.length;
-            return <TableRow title={object.title} number={lenght} key={i} />;
+            return <TableRow obj={object} key={i} />
         });
     }
 
     render() {
         return (
             <div className="container">
-                <h3 className="center"><b>Voluntários nos Projetos</b></h3>
+                <h3 className="center"><b>Classificação dos Projetos</b></h3>
                 <table className="table table-striped" style={{ marginTop: 20 }}>
                     <thead>
                         <tr>
                             <th>Projeto</th>
-                            <th>Nº Voluntários</th>
+                            <th>Classificação Média</th>
+                            <th>Número Votos</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,7 +54,7 @@ class StatisticsNumberProjects extends Component {
     }
 }
 
-StatisticsNumberProjects.propTypes = {
+StatisticsRatingProjects.propTypes = {
     logoutUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
 };
@@ -65,4 +66,4 @@ const mapStateToProps = state => ({
 export default connect(
     mapStateToProps,
     { logoutUser }
-)(StatisticsNumberProjects);
+)(StatisticsRatingProjects);

@@ -3,12 +3,17 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import Popup from "reactjs-popup";
+import '../../componentsCSS/Modal.css'
 
 class VoluntaryRow extends Component {
 
   constructor(props) {
     super(props);
     this.removeVoluntary = this.removeVoluntary.bind(this);
+    this.state = {
+      remove: false
+    }
   }
 
   removeVoluntary() {
@@ -20,7 +25,15 @@ class VoluntaryRow extends Component {
     window.location.reload();
   }
 
+  openWarning = () => {
+    this.setState({ remove: true });
+  }
+  closeWarning = () => {
+    this.setState({ remove: false });
+  }
+
   render() {
+    console.log(this.props.responsibleID);
     return (
       <tr>
         <td>
@@ -29,12 +42,23 @@ class VoluntaryRow extends Component {
         <td>
           <Link to={"/getUser/" + this.props.obj.userID} className="btn btn-primary" style={{ width: "auto", backgroundColor: "lightGrey", color: "black", marginLeft: 40 }}><i className="material-icons">search</i></Link>
           {(() => {
-            if (this.props.auth.user.role === "Administrador") {
+            if (this.props.auth.user.role === "Administrador" || this.props.responsibleID===this.props.userID) {
               return (
-                <button onClick={this.removeVoluntary} className="btn btn-danger" style={{ width: "auto", backgroundColor: "red", marginLeft: 40, color: "white" }}><i className="material-icons">remove</i></button>
+                <button onClick={this.openWarning} className="btn btn-danger" style={{ width: "auto", backgroundColor: "red", marginLeft: 40, color: "white" }}><i className="material-icons">remove</i></button>
               )
             }
           })()}
+           <Popup open={this.state.remove}
+            closeOnDocumentClick
+            onClose={this.closeWarning}>
+            <div className={"Modal container"} style={{width: "50"}}>
+              <h5 className= {"center"}>Tem a certeza que pretende remover este Voluntário deste Projeto?</h5>
+              <div>
+                <button className="btn btn-medium waves-effect waves-light hoverable red left" onClick={this.removeVoluntary}>CONFIRMAR</button>
+                <button className="btn btn-medium waves-effect waves-light hoverable gray right" onClick={this.closeWarning}>CANCELAR</button>
+              </div>
+            </div>
+          </Popup>
         </td>
       </tr>
 

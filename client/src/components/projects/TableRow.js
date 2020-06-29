@@ -4,6 +4,8 @@ import axios from 'axios';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
+import Popup from "reactjs-popup";
+import '../../componentsCSS/Modal.css'
 
 class TableRow extends Component {
 
@@ -13,6 +15,10 @@ class TableRow extends Component {
     this.joinProject = this.joinProject.bind(this);
     this.myDate = new Date(props.obj.date);
     this.myDate = this.myDate.toLocaleDateString();
+    this.state = {
+      delete: false,
+      join: false
+    }
   }
 
   delete() {
@@ -27,7 +33,21 @@ class TableRow extends Component {
     };
     axios.post('/api/voluntaries/joinProject/' + this.props.obj._id, newObj)
       .catch(err => console.log(err))
-      window.location.reload();
+    window.location.reload();
+  }
+
+  openWarning = () => {
+    this.setState({ delete: true });
+  }
+  closeWarning = () => {
+    this.setState({ delete: false });
+  }
+
+  openWarningJoin = () => {
+    this.setState({ join: true });
+  }
+  closeWarningJoin = () => {
+    this.setState({ join: false });
   }
 
   render() {
@@ -54,7 +74,8 @@ class TableRow extends Component {
           {(() => {
             if (this.props.auth.user.role === "Administrador") {
               return (
-                <button onClick={this.delete} className="btn btn-danger" style={{ width: "auto", backgroundColor: "red", marginLeft: 40, color: "black" }}><i className="material-icons">delete</i></button>
+
+                <button onClick={this.openWarning} className="btn btn-danger" style={{ width: "auto", backgroundColor: "red", marginLeft: 40, color: "black" }}><i className="material-icons">delete</i></button>
               )
             }
           })()}
@@ -62,11 +83,34 @@ class TableRow extends Component {
             if (this.props.auth.user.role === "Voluntário") {
               if (!this.props.obj.enroled_IDs.includes(this.props.auth.user.id)) {
                 return (
-                  <button onClick={this.joinProject} className="btn btn-danger" style={{ width: "auto", backgroundColor: "green", marginLeft: 40, color: "white" }}><i className="material-icons">add</i></button>
+                  <button onClick={this.openWarningJoin} className="btn btn-danger" style={{ width: "auto", backgroundColor: "green", marginLeft: 40, color: "white" }}><i className="material-icons">add</i></button>
                 )
               }
             }
           })()}
+          <Popup open={this.state.delete}
+            closeOnDocumentClick
+            onClose={this.closeWarning}>
+            <div className={"Modal container"} style={{ width: "50" }}>
+              <h5 className={"center"}>Tem a certeza que pretende apagar este Projeto?</h5>
+              <div>
+                <button className="btn btn-medium waves-effect waves-light hoverable red left" onClick={this.delete}>CONFIRMAR</button>
+                <button className="btn btn-medium waves-effect waves-light hoverable gray right" onClick={this.closeWarning}>CANCELAR</button>
+              </div>
+            </div>
+          </Popup>
+
+          <Popup open={this.state.join}
+            closeOnDocumentClick
+            onClose={this.closeWarningJoin}>
+            <div className={"Modal container"} style={{ width: "50" }}>
+              <h5 className={"center"}>Tem a certeza que pretende entrar neste Projeto?</h5>
+              <div>
+                <button className="btn btn-medium waves-effect waves-light hoverable red left" onClick={this.joinProject}>CONFIRMAR</button>
+                <button className="btn btn-medium waves-effect waves-light hoverable gray right" onClick={this.closeWarningJoin}>CANCELAR</button>
+              </div>
+            </div>
+          </Popup>
         </td>
       </tr>
     );

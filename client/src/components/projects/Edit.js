@@ -6,6 +6,7 @@ import classnames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Upload from "../upload/Upload";
+import { editProject } from "../../actions/projectActions";
 
 class Edit extends Component {
   constructor(props) {
@@ -63,8 +64,8 @@ class Edit extends Component {
           photo: responseArr[0].data.photo,
           observations: responseArr[0].data.observations,
           relatedEntities: responseArr[0].data.relatedEntities,
+          selectedUser: responseArr[0].data.responsibleID,
           users: responseArr[1].data,
-          selectedUser: responseArr[1].data[0].name,
           vacancies: responseArr[0].data.vacancies
         });
       })
@@ -74,7 +75,16 @@ class Edit extends Component {
     this.setState({ [e.target.id]: e.target.value });
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
+  }
+
   onSubmit(e) {
+    console.log(this.state.errors);
     e.preventDefault();
     const obj = {
       title: this.state.title,
@@ -92,17 +102,12 @@ class Edit extends Component {
       vacancies: this.state.vacancies
     };
 
-    axios.post('/api/projects/updateProject/' + this.props.match.params.id, obj)
-    this.props.history.push('/listProjects');
-    window.location.reload();
+    this.props.editProject(this.props.match.params.id,obj, this.props.history);
   }
 
   handleChangeInterestAreas(event) {
     this.setState({
-      interestAreas: Array.from(event.target.selectedOptions, (item) => item.value), validationErrorInterestAreas:
-        event.target.value === ""
-          ? "Deverá preencher o campo Áreas Interesse"
-          : ""
+      interestAreas: Array.from(event.target.selectedOptions, (item) => item.value)
     });
   }
 
@@ -133,7 +138,7 @@ class Edit extends Component {
     });
 
     let optionTemplate = this.state.users.map(v => (
-      <option key={v.email} value={v.name}>{v.name}</option>
+      <option key={v.email} value={v.responsibleID}>{v.name}</option>
     ));
 
     return (
@@ -147,7 +152,6 @@ class Edit extends Component {
                 <input
                   onChange={e => this.setState({
                     title: e.target.value,
-                    validationErrorTitle: e.target.value === "" ? "Deverá preencher o campo Designação do Projeto/Atividade" : ""
                   })}
                   value={this.state.title}
                   id="title"
@@ -157,9 +161,6 @@ class Edit extends Component {
                     invalid: errors.title
                   })}
                 />
-                <div style={{ color: "red", marginTop: "5px" }}>
-                  {this.state.validationErrorTitle}
-                </div>
                 <span className="red-text">{errors.title}</span>
               </div>
 
@@ -168,7 +169,6 @@ class Edit extends Component {
                 <input
                   onChange={e => this.setState({
                     synopsis: e.target.value,
-                    validationErrorSynopsis: e.target.value === "" ? "Deverá preencher o campo Resumo do Projeto/Atividade" : ""
                   })}
                   value={this.state.synopsis}
                   id="synopsis"
@@ -178,9 +178,6 @@ class Edit extends Component {
                     invalid: errors.synopsis
                   })}
                 />
-                <div style={{ color: "red", marginTop: "5px" }}>
-                  {this.state.validationErrorSynopsis}
-                </div>
                 <span className="red-text">{errors.synopsis}</span>
               </div>
 
@@ -190,7 +187,6 @@ class Edit extends Component {
                   onChange={e =>
                     this.setState({
                       intervationArea: e.target.value,
-                      validationErrorIntervationArea: e.target.value === "" ? "Deverá preencher o campo Área de Intervenção" : ""
                     })}
                   value={this.state.intervationArea}
                   id="intervationArea"
@@ -200,9 +196,6 @@ class Edit extends Component {
                     invalid: errors.intervationArea
                   })}
                 />
-                <div style={{ color: "red", marginTop: "5px" }}>
-                  {this.state.validationErrorIntervationArea}
-                </div>
                 <span className="red-text">{errors.intervationArea}</span>
               </div>
 
@@ -212,7 +205,6 @@ class Edit extends Component {
                   onChange={e =>
                     this.setState({
                       target_audience: e.target.value,
-                      validationErrorTargetAudience: e.target.value === "" ? "Deverá preencher o campo Público Alvo (Beneficiários)" : ""
                     })}
                   value={this.state.target_audience}
                   id="target_audience"
@@ -222,9 +214,6 @@ class Edit extends Component {
                     invalid: errors.target_audience
                   })}
                 />
-                <div style={{ color: "red", marginTop: "5px" }}>
-                  {this.state.validationErrorTargetAudience}
-                </div>
                 <span className="red-text">{errors.target_audience}</span>
               </div>
 
@@ -249,7 +238,6 @@ class Edit extends Component {
                   onChange={e =>
                     this.setState({
                       description: e.target.value,
-                      validationErrorDescription: e.target.value === "" ? "Deverá preencher o campo Descrição das Atividades" : ""
                     })}
                   value={this.state.description}
                   id="description"
@@ -259,9 +247,6 @@ class Edit extends Component {
                     invalid: errors.description
                   })}
                 />
-                <div style={{ color: "red", marginTop: "5px" }}>
-                  {this.state.validationErrorDescription}
-                </div>
                 <span className="red-text">{errors.description}</span>
               </div>
 
@@ -270,7 +255,6 @@ class Edit extends Component {
                 <input
                   onChange={e => this.setState({
                     date: e.target.value,
-                    validationErrorDate: e.target.value === "" ? "Deverá preencher o campo Data/Horário Previsto" : ""
                   })}
                   value={this.state.date}
                   id="date"
@@ -280,9 +264,6 @@ class Edit extends Component {
                     invalid: errors.date
                   })}
                 />
-                <div style={{ color: "red", marginTop: "5px" }}>
-                  {this.state.validationErrorDate}
-                </div>
                 <span className="red-text">{errors.date}</span>
               </div>
 
@@ -305,9 +286,6 @@ class Edit extends Component {
                   <option value="Saúde">Saúde (por ex. rastreios, ações de sensibilização…)</option>
                   <option value="Social">Social (por ex. apoio a idosos, a crianças, Banco Alimentar…)</option>
                 </select>
-                <div style={{ color: "red", marginTop: "5px" }}>
-                  {this.state.validationErrorInterestAreas}
-                </div>
                 <span className="red-text">{errors.interestAreas}</span>
               </div>
 
@@ -320,7 +298,6 @@ class Edit extends Component {
                         <select value={this.state.selectedUser} onChange={e =>
                           this.setState({
                             selectedUser: e.target.value,
-                            validationErrorSelectedUser: e.target.value === "" ? "Deverá preencher o campo Responsável" : ""
                           })}
                           error={errors.selectedUser}
                           className="browser-default"
@@ -328,9 +305,6 @@ class Edit extends Component {
                           type="text">
                           {optionTemplate}
                         </select>
-                        <div style={{ color: "red", marginTop: "5px" }}>
-                          {this.state.validationErrorSelectedUser}
-                        </div>
                         <span className="red-text">{errors.selectedUser}</span>
                       </div>
                     </div>
@@ -373,7 +347,6 @@ class Edit extends Component {
                 <input
                   onChange={e => this.setState({
                     vacancies: e.target.value,
-                    validationErrorVacancies: e.target.value === "" ? "Deverá preencher o campo Nº Máximo de Vagas" : ""
                   })}
                   value={this.state.vacancies}
                   id="vacancies"
@@ -383,9 +356,6 @@ class Edit extends Component {
                     invalid: errors.vacancies
                   })}
                 />
-                <div style={{ color: "red", marginTop: "5px" }}>
-                  {this.state.validationErrorVacancies}
-                </div>
                 <span className="red-text">{errors.vacancies}</span>
               </div>
 
@@ -394,12 +364,12 @@ class Edit extends Component {
                   <Upload type="Project" id={this.props.match.params.id}></Upload>
               </div>
             </form>
-            <div className="col s12" style={{ marginTop: "1%", paddingBottom: 60 }}>
+            <div className="col s12" style={{ marginTop: "auto", marginBottom: "10%" }}>
               <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "20%" }}
-                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable accent-3 blue">Editar
+                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable accent-3 blue">Submeter
               </button>
               <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "20%" }}
-               onClick={this.goBack} className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
+                onClick={this.goBack} className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
               </button>
             </div>
           </div>
@@ -411,6 +381,7 @@ class Edit extends Component {
 }
 
 Edit.propTypes = {
+  editProject: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -422,6 +393,6 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { Edit }
+  { editProject }
 )(Edit);
 

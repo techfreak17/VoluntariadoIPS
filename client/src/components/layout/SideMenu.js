@@ -6,10 +6,10 @@ import M from "materialize-css";
 
 class SideMenu extends Component {
     render() {
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('.sidenav');
-            M.Sidenav.init(elems, {edge:'right'});
-          });
+            M.Sidenav.init(elems, { edge: 'right' });
+        });
 
         return (
             <ul id="slide-out" className="sidenav">
@@ -24,8 +24,24 @@ class SideMenu extends Component {
                     <p><span className="white-text email">{this.props.email}</span></p>
                 </div></li>
                 <li><a href={"/baseProfile/" + this.props.auth.user.id}><i className="material-icons left">account_box</i>Perfil</a></li>
-                <li><a href={"/statsNumberUsers"}><i className="material-icons left">search</i>Estatísticas Utilizadores</a></li>
-                <li><a href={"/statsNumberProjects"}><i className="material-icons left">search</i>Estatísticas Projetos</a></li>
+                <li><div className="divider"></div></li>
+
+                {(() => {
+                    if (this.props.auth.user.role === "Voluntário") {
+                        return (
+                            <div>
+                                <li><button className="subheader" style={{ backgroundColor: "transparent", border: "none" }}>Minhas Estatísticas</button></li>
+                                <li><a href={"/statsVoluntary"}><i className="material-icons left">search</i>Meus Projetos</a></li>
+                            </div>
+                        )
+                    }
+                })()}
+                <li><button className="subheader" style={{ backgroundColor: "transparent", border: "none" }}>Estatísticas Utilizadores</button></li>
+                <li><a href={"/statsNumberUsers"}><i className="material-icons left">search</i>Número de Utilizadores</a></li>
+                <li><button className="subheader" style={{ backgroundColor: "transparent", border: "none" }}>Estatísticas Projetos</button></li>
+                <li><a href={"/statsNumberProjects"}><i className="material-icons left">search</i>Voluntários nos Projetos</a></li>
+                <li><a href={"/statsRatingProjects"}><i className="material-icons left">search</i>Classificação dos Projetos</a></li>
+                <li><a href={"/statsCompareProjects"}><i className="material-icons left">search</i>Lista dos Projetos</a></li>
                 <li><button onClick={this.props.logout} className="blue btn" style={{ borderRadius: 10, marginLeft: 12, marginBottom: 5 }}>Sair</button></li>
             </ul>
         );

@@ -5,29 +5,29 @@ import { logoutUser } from "../../actions/authActions";
 import axios from 'axios';
 import Chart from 'react-apexcharts'
 
-class StatisticsNumberUsers extends Component {
+class StatisticsProjectComparison extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            countVoluntary: 0,
-            countCompany: 0,
-            countAdmin: 0,
+            countProjects: 0,
+            countConcluded: 0,
+            countSubmited: 0,
             options: {
-                labels: ['Voluntário', 'Empresa', 'Administrador'],
+                labels: ['A Decorrer', 'Concluidos', 'Submetidos'],
                 series: []
-            }
+            },
         }
     }
 
     componentDidMount() {
-        axios.get('/api/stats/countUsers').then(response => {
+        axios.get('/api/stats/countProjects').then(response => {
             this.setState(prevState => ({
                 options: { series: [...prevState.options.series, ...response.data] },
-                countVoluntary: response.data[0],
-                countCompany: response.data[1],
-                countAdmin: response.data[2],
+                countProjects: response.data[0],
+                countConcluded: response.data[1],
+                countSubmited: response.data[2],
             }));
         })
             .catch(error => console.log(error));
@@ -36,7 +36,7 @@ class StatisticsNumberUsers extends Component {
     render() {
         return (
             <div className="container">
-                <h3 className="center"><b>Número de Utilizadores</b></h3>
+                <h3 className="center"><b>Lista dos Projetos</b></h3>
                 <div style={{ display: "flex", justifyContent: "center"}}>
                     <Chart options={this.state.options} series={this.state.options.series} type="donut" width="165%" />
                 </div>
@@ -45,7 +45,7 @@ class StatisticsNumberUsers extends Component {
     }
 }
 
-StatisticsNumberUsers.propTypes = {
+StatisticsProjectComparison.propTypes = {
     logoutUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
 };
@@ -57,4 +57,4 @@ const mapStateToProps = state => ({
 export default connect(
     mapStateToProps,
     { logoutUser }
-)(StatisticsNumberUsers);
+)(StatisticsProjectComparison);

@@ -36,7 +36,7 @@ router.route('/listCompanySubmitedProjects/:id').get(function (req, res) {
     });
 });
 
-// @route GET api/voluntaries/searchCompanyProject/:id
+// @route POST api/voluntaries/searchCompanyProject/:id
 // @desc Search Project
 // @access Private
 router.post("/searchCompanyProject/:id", (req, res) => {

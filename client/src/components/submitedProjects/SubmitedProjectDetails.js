@@ -26,7 +26,7 @@ export default class Edit extends Component {
 
   componentDidMount() {
     axios.get('/api/submitedProjects/getSubmitedProjectUserDetails/' + this.props.match.params.id)
-    .then(response => {
+      .then(response => {
         this.myDate = new Date(response.data[0].date);
         this.myDate = this.myDate.toLocaleString();
         this.setState({
@@ -86,7 +86,7 @@ export default class Edit extends Component {
   render() {
     return (
       <div>
-        <div className="card" style={{ backgroundColor: "#00000", width: 900, margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px black" }}>
+        <div className="card" style={{ backgroundColor: "#f2f2f2", width: 900, margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px black" }}>
           <div className="card-header center" style={{ overflow: "hidden", height: 400, width: "100%" }}>
             <h2 style={{ color: "#1167B1" }}><b>{this.state.title}</b></h2>
             <div id="projectImg"></div>          
@@ -97,20 +97,8 @@ export default class Edit extends Component {
               <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons" style={{ paddingRight: 5 }}>person</i>{this.state.name}</p>
               <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons" style={{ paddingRight: 6 }}>email</i>{this.state.email}</p>
               <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons" style={{ paddingRight: 6 }}>phone</i>{this.state.phone}</p>
-              {(() => {
-                if (this.state.role === "Empresa") {
-                  return (
-                    <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons" style={{ paddingRight: 6 }}>business</i>{this.state.companyName}</p>
-                  )
-                }
-              })()}
-              {(() => {
-                if (this.state.role === "Empresa") {
-                  return (
-                    <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons" style={{ paddingRight: 6 }}>navigation</i>{this.state.companyAddress}</p>
-                  )
-                }
-              })()}
+              <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons" style={{ paddingRight: 6 }}>business</i>{this.state.companyName}</p>
+              <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons" style={{ paddingRight: 6 }}>navigation</i>{this.state.companyAddress}</p>
               <br></br><p style={{ color: "#000000" }}><b>Número de Vagas Totais do Projeto:</b> {this.state.vacancies}</p>
             </div>
             <div>

@@ -29,9 +29,9 @@ class RegisterCompany extends Component {
 
     toggleChangeAuthorization = () => {
         this.setState({
-          authorization: !this.state.authorization,
+            authorization: !this.state.authorization,
         });
-      }
+    }
 
     componentDidMount() {
         // If logged in and user navigates to Register page, should redirect them to dashboard
@@ -80,7 +80,7 @@ class RegisterCompany extends Component {
         const { errors } = this.state;
 
         return (
-            <div className="container" style={{marginTop: "1%"}}>
+            <div className="container" style={{ marginTop: "1%" }}>
                 <div className="row">
                     <div className="col s8 offset-s2">
                         <a href="/" className="btn-flat waves-effect">
@@ -88,14 +88,14 @@ class RegisterCompany extends Component {
                             Voltar
                         </a>
 
-                        <div className="col s12" style={{ paddingLeft: "11.250px"}}>
+                        <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                             <h4>
                                 <b>Registe-se como Empresa </b>
                             </h4>
-                            <p className="grey-text text-darken-1" style={{fontWeight:"bolder"}}>
+                            <p className="grey-text text-darken-1" style={{ fontWeight: "bolder" }}>
                                 Já tem conta? <Link to="/login">Log in</Link>
                             </p>
-                            <p className="grey-text text-darken-1" style={{fontWeight:"bolder"}}>
+                            <p className="grey-text text-darken-1" style={{ fontWeight: "bolder" }}>
                                 Registe-se como Voluntário <Link to="/registerVoluntary">Registar</Link>
                             </p>
                         </div>
@@ -250,7 +250,7 @@ class RegisterCompany extends Component {
                                 <label htmlFor="name">Morada (Concelho) Empresa *</label>
                                 <span className="red-text">{errors.companyAddress}</span>
                             </div>
-        
+
                             <div className="input-field col s12">
                                 <input
                                     onChange={this.onChange}
@@ -277,21 +277,20 @@ class RegisterCompany extends Component {
                                 </label>
                             </div>
                         </form>
-                            <div className="col s12" style={{ paddingLeft: "11.250px", paddingBottom: "60px" }}>
-                                <br></br><br></br><br></br><br></br><br></br>
-                                <button
-                                    style={{
-                                        width: "150px",
-                                        borderRadius: 10,
-                                        letterSpacing: "1.5px",
-                                        marginTop: "1rem"
-                                    }}
-                                    type="submit"
-                                    onClick={this.onSubmit}
-                                    className="btn btn-large waves-effect waves-light hoverable blue accent-3">
-                                    Registar
+                        <div className="col s12" style={{ marginTop: "25%", marginBottom: "20%" }}>
+                            <button
+                                style={{
+                                    width: "150px",
+                                    borderRadius: 10,
+                                    letterSpacing: "1.5px",
+                                    marginTop: "1rem"
+                                }}
+                                type="submit"
+                                onClick={this.onSubmit}
+                                className="btn btn-large waves-effect waves-light hoverable blue accent-3">
+                                Registar
                                 </button>
-                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

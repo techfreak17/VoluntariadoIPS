@@ -256,7 +256,7 @@ router.post("/recover", (req, res) => {
 
 });
 
-// @route POST api/users/recover
+// @route POST api/users/updatePassword
 // @desc Recover User password
 // @access Public
 router.post("/updatePassword", (req, res) => {
@@ -366,8 +366,13 @@ router.route('/updateUser/:id').post(function (req, res) {
     if (!user) {
       res.status(404).send("data is not found");
     }
-
     if (user.role === "Voluntário") {
+      
+      const { errors, isValid } = validateEditInputAdminProfileUser(req.body);
+      // Check validation
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
       atualPassword = req.body.password;
       newPassword = req.body.password2;
       var countAtualPassword = Object.keys(newPassword).length
@@ -380,6 +385,7 @@ router.route('/updateUser/:id').post(function (req, res) {
             user.updateOne({
               password: newPassword,
             })
+              .then(user => res.json(user))
               .catch(err => {
                 res.status(400).send("unable to update the database");
               });
@@ -409,6 +415,7 @@ router.route('/updateUser/:id').post(function (req, res) {
               courseIPS: voluntary.courseIPS,
               interestAreas: voluntary.interestAreas,
             })
+              .then(voluntary => res.json(voluntary))
               .catch(err => {
                 res.status(400).send("unable to update the database");
               });
@@ -421,6 +428,7 @@ router.route('/updateUser/:id').post(function (req, res) {
               birthDate: voluntary.birthDate,
               interestAreas: voluntary.interestAreas,
             })
+              .then(voluntary => res.json(voluntary))
               .catch(err => {
                 res.status(400).send("unable to update the database");
               });
@@ -432,6 +440,12 @@ router.route('/updateUser/:id').post(function (req, res) {
       });
 
     } else if (user.role === "Empresa") {
+
+      const { errors, isValid } = validateEditInputAdminProfileUser(req.body);
+      // Check validation
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
 
       atualPassword = req.body.password;
       newPassword = req.body.password2;
@@ -445,6 +459,7 @@ router.route('/updateUser/:id').post(function (req, res) {
             user.updateOne({
               password: newPassword,
             })
+              .then(user => res.json(user))
               .catch(err => {
                 res.status(400).send("unable to update the database");
               });
@@ -470,6 +485,7 @@ router.route('/updateUser/:id').post(function (req, res) {
               companyName: company.companyName,
               companyAddress: company.companyAddress
             })
+              .then(company => res.json(company))
               .catch(err => {
                 res.status(400).send("unable to update the database");
               });
@@ -481,6 +497,7 @@ router.route('/updateUser/:id').post(function (req, res) {
               address: company.address,
               birthDate: company.birthDate,
             })
+              .then(company => res.json(company))
               .catch(err => {
                 res.status(400).send("unable to update the database");
               });
@@ -509,6 +526,7 @@ router.route('/updateUser/:id').post(function (req, res) {
             user.updateOne({
               password: newPassword,
             })
+              .then(user => res.json(user))
               .catch(err => {
                 res.status(400).send("unable to update the database");
               });
@@ -529,6 +547,7 @@ router.route('/updateUser/:id').post(function (req, res) {
             address: admin.address,
             birthDate: admin.birthDate,
           })
+            .then(admin => res.json(admin))
             .catch(err => {
               res.status(400).send("unable to update the database");
             });

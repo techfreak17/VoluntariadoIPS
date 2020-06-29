@@ -377,8 +377,7 @@ class RegisterVoluntary extends Component {
                                 </label>
                             </div>
                         </form>
-                        <div className="col s12" style={{ paddingLeft: "11.250px", paddingBottom: "60px" }}>
-                            <br></br><br></br><br></br><br></br><br></br>
+                        <div className="col s12" style={{ marginTop: "25%", marginBottom: "20%" }}>
                             <button
                                 style={{
                                     width: "150px",

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import TableRow from './TableRowProjects';
+import TableRowP from './TableRowVoluntaryStatsProjects';
+import TableRowCP from './TableRowVoluntaryStatsConcludedProjects';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
@@ -10,14 +11,17 @@ class StatisticsNumberProjects extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            projects: []
+            projects: [],
+            concludedProjects: []
         };
     }
     componentDidMount() {
-        axios.get('/api/projects/listProjects')
+        axios.get('/api/stats/getVoluntaryStatsData/' + this.props.auth.user.id)
             .then(response => {
+                console.log(response.data);
                 this.setState({
-                    projects: response.data
+                    projects: response.data[0],
+                    concludedProjects: response.data[1]
                 });
             })
             .catch(function (error) {
@@ -25,27 +29,32 @@ class StatisticsNumberProjects extends Component {
             })
     }
 
-    tabRow() {
+    tabRowP() {
         return this.state.projects.map(function (object, i) {
-            let array = [...object.enroled_IDs];
-            let lenght = array.length;
-            return <TableRow title={object.title} number={lenght} key={i} />;
+            return <TableRowP obj={object} key={i} />;
+        });
+    }
+
+    tabRowCP() {
+        return this.state.concludedProjects.map(function (object, i) {
+            return <TableRowCP obj={object} key={i} />;
         });
     }
 
     render() {
         return (
             <div className="container">
-                <h3 className="center"><b>Voluntários nos Projetos</b></h3>
+                <h3 className="center"><b>Meus Projetos</b></h3>
                 <table className="table table-striped" style={{ marginTop: 20 }}>
                     <thead>
                         <tr>
                             <th>Projeto</th>
-                            <th>Nº Voluntários</th>
+                            <th>Estado</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {this.tabRow()}
+                        {this.tabRowP()}
+                        {this.tabRowCP()}
                     </tbody>
                 </table>
             </div>

@@ -10,7 +10,6 @@ const users = require("./routes/api/Users");
 const projects = require("./routes/api/Projects");
 const submitedProjects = require("./routes/api/SubmitedProjects");
 const voluntaries = require("./routes/api/Voluntaries");
-const aaips = require("./routes/api/AAIPS");
 const admin = require("./routes/api/Admin");
 const companies = require("./routes/api/Company");
 const notifications = require("./routes/api/Notifications");
@@ -61,7 +60,6 @@ app.use("/api/users", users);
 app.use("/api/voluntaries", voluntaries);
 app.use("/api/companies", companies);
 app.use("/api/admin", admin);
-app.use("/api/aaips", aaips);
 app.use("/api/notifications",notifications)
 app.use("/api/stats",stats)
 app.use("/api/upload",uploadFile);

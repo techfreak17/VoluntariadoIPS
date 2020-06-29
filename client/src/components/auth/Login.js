@@ -73,7 +73,7 @@ class Login extends Component {
                                 <b>Login </b>
                             </h4>
                             <p className="grey-text text-darken-1">
-                                Não tem conta? <Link to="/registerVoluntary">Clique aqui</Link>
+                                <b>Não tem conta?</b> <Link to="/registerVoluntary"><b>Clique aqui</b></Link>
                             </p>
                         </div>
                         <form noValidate onSubmit={this.onSubmit}>
@@ -126,7 +126,7 @@ class Login extends Component {
                             </div>
                             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                                 <p className="grey-text text-darken-1">
-                                  Esqueceu-se da password? <Link to="/recover">Clique aqui</Link>
+                                  <b>Esqueceu-se da password?</b><Link to="/recover"><b> Clique aqui</b></Link>
                                 </p>
                             </div>
                         </form>

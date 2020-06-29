@@ -110,16 +110,16 @@ class Profile extends Component {
                                         <input readOnly value={this.state.phone}></input>
                                         <h5 style={{ fontWeight: 'bold' }}>Data Nascimento</h5>
                                         <input readOnly type="date" value={this.state.birthDate} />
-                                        <h5 style={{ fontWeight: 'bold' }}>Morada (Concelho)</h5>
-                                        <input readOnly value={this.state.address}></input>
                                         <h5 style={{ fontWeight: 'bold' }}>Escola</h5>
                                         <input readOnly value={this.state.school}></input>
                                         {(() => {
-                                            if (this.state.course !== "") {
+                                            if (this.state.course !== "" && this.state.address !== "") {
                                                 return (
                                                     <div>
                                                         <h5 style={{ fontWeight: 'bold' }}>Curso</h5>
                                                         <input readOnly value={this.state.course}></input>
+                                                        <h5 style={{ fontWeight: 'bold' }}>Morada (Concelho)</h5>
+                                                        <input readOnly value={this.state.address}></input>
                                                     </div>
                                                 )
                                             }
@@ -142,8 +142,16 @@ class Profile extends Component {
                                         <input readOnly value={this.state.phone}></input>
                                         <h5 style={{ fontWeight: 'bold' }}>Data Nascimento</h5>
                                         <input readOnly type="date" value={this.state.birthDate} />
-                                        <h5 style={{ fontWeight: 'bold' }}>Morada (Concelho)</h5>
-                                        <input readOnly value={this.state.address}></input>
+                                        {(() => {
+                                            if (this.state.address !== "") {
+                                                return (
+                                                    <div>
+                                                        <h5 style={{ fontWeight: 'bold' }}>Morada (Concelho)</h5>
+                                                        <input readOnly value={this.state.address}></input>
+                                                    </div>
+                                                )
+                                            }
+                                        })()}
                                         <h5 style={{ fontWeight: 'bold' }}>Nome Empresa</h5>
                                         <input readOnly value={this.state.companyName}></input>
                                         <h5 style={{ fontWeight: 'bold' }}>Morada (Concelho) Empresa</h5>
@@ -164,8 +172,16 @@ class Profile extends Component {
                                         <input readOnly value={this.state.phone}></input>
                                         <h5 style={{ fontWeight: 'bold' }}>Data Nascimento</h5>
                                         <input readOnly type="date" value={this.state.birthDate} />
-                                        <h5 style={{ fontWeight: 'bold' }}>Morada (Concelho)</h5>
-                                        <input readOnly value={this.state.address}></input>
+                                        {(() => {
+                                            if (this.state.address !== "") {
+                                                return (
+                                                    <div>
+                                                        <h5 style={{ fontWeight: 'bold' }}>Morada (Concelho)</h5>
+                                                        <input readOnly value={this.state.address}></input>
+                                                    </div>
+                                                )
+                                            }
+                                        })()}
                                     </div>
                                 )
                             }

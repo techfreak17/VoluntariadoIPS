@@ -370,7 +370,7 @@ class Edit extends Component {
             </form>
             <div className="col s12" style={{ marginTop: "auto", marginBottom: "10%" }}>
               <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "20%" }}
-                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable accent-3 blue">Editar
+                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable accent-3 blue">Submeter
               </button>
               <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "20%" }}
                 onClick={this.goBack} className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar

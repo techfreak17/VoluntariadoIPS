@@ -31,22 +31,18 @@ class Upload extends Component {
         );
 
         if(this.props.isChild){
+            //Sets up to send formData to parent component
             this.props.handleUpload(formData);
-            console.log("sent form to parent");
-            console.log(formData);
-            console.log("------------------");
         } else {
+            //Else, Builds rest of info for Post
             formData.append(
                 "type",
-                "Projeto"//this.props.type
+                this.props.type
             )
             formData.append(
                 "id",
                 this.props.id
             )
-
-            // Details of the uploaded file 
-            console.log(this.state.selectedFile);
 
             // Request made to the backend api 
             // Send formData object 

@@ -14,7 +14,6 @@ class Login extends Component {
             email: "",
             password: "",
             errors: {}
-            
         };
     }
 
@@ -51,23 +50,21 @@ class Login extends Component {
             email: this.state.email,
             password: this.state.password
         };
-
         
         this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
-      
     };
 
     render() {
         const { errors } = this.state;
         return (
             <div className="container">
-                <div style={{marginTop: "10%"}} className="row">
+                <div style={{ marginTop: "10%" }} className="row">
                     <div className="col s8 offset-s2">
                         <a href="/" className="btn-flat waves-effect" >
                             <i className="material-icons left">keyboard_backspace</i>
                             Voltar
                         </a>
-                        
+
                         <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                             <h4>
                                 <b>Login </b>
@@ -79,7 +76,10 @@ class Login extends Component {
                         <form noValidate onSubmit={this.onSubmit}>
                             <div className="input-field col s12">
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        email: e.target.value,
+                                        validationErrorEmail: e.target.value === "" ? "Deverá preencher o campo Email" : ""
+                                    })}
                                     value={this.state.email}
                                     error={errors.email}
                                     id="email"
@@ -88,6 +88,9 @@ class Login extends Component {
                                         invalid: errors.email || errors.emailnotfound
                                     })}
                                 />
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationErrorEmail}
+                                </div>
                                 <label htmlFor="email">Email</label>
                                 <span className="red-text">
                                     {errors.email}
@@ -96,7 +99,10 @@ class Login extends Component {
                             </div>
                             <div className="input-field col s12">
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        password: e.target.value,
+                                        validationPassword: e.target.value === "" ? "Deverá preencher o campo Password" : ""
+                                    })}
                                     value={this.state.password}
                                     error={errors.password}
                                     id="password"
@@ -105,6 +111,9 @@ class Login extends Component {
                                         invalid: errors.password || errors.passwordincorrect
                                     })}
                                 />
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationPassword}
+                                </div>
                                 <label htmlFor="password">Password</label>
                                 <span className="red-text">
                                     {errors.password}
@@ -126,7 +135,7 @@ class Login extends Component {
                             </div>
                             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                                 <p className="grey-text text-darken-1">
-                                  <b>Esqueceu-se da password?</b><Link to="/recover"><b> Clique aqui</b></Link>
+                                    <b>Esqueceu-se da password?</b><Link to="/recover"><b> Clique aqui</b></Link>
                                 </p>
                             </div>
                         </form>

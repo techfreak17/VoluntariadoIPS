@@ -36,6 +36,14 @@ class Edit extends Component {
   }
 
   componentDidMount() {
+    if (window.localStorage) {
+      if (!localStorage.getItem('firstLoad')) {
+        localStorage['firstLoad'] = true;
+        window.location.reload();
+      }
+      else
+        localStorage.removeItem('firstLoad');
+    }
     axios.all([
       axios.get('/api/projects/editProject/' + this.props.match.params.id),
       axios.get('/api/admin/getCompanyUsers'),
@@ -102,12 +110,15 @@ class Edit extends Component {
       vacancies: this.state.vacancies
     };
 
-    this.props.editProject(this.props.match.params.id,obj, this.props.history);
+    this.props.editProject(this.props.match.params.id, obj, this.props.history);
   }
 
   handleChangeInterestAreas(event) {
     this.setState({
-      interestAreas: Array.from(event.target.selectedOptions, (item) => item.value)
+      interestAreas: Array.from(event.target.selectedOptions, (item) => item.value), validationErrorInterestAreas:
+        event.target.value === ""
+          ? "Deverá preencher o campo Áreas Interesse"
+          : ""
     });
   }
 
@@ -146,12 +157,14 @@ class Edit extends Component {
         <div className="row">
           <div className="col s8 offset-s2">
             <h3 align="left">Editar Detalhes</h3>
+            <p><b>Nota:</b> Todos os campos a * deverão ser preenchidos.</p>
             <form noValidate>
               <div className="input-field col s12">
                 <label>Designação do Projeto/Atividade *</label><br></br><br></br>
                 <input
                   onChange={e => this.setState({
                     title: e.target.value,
+                    validationErrorTitle: e.target.value === "" ? "Deverá preencher o campo Designação do Projeto/Atividade" : ""
                   })}
                   value={this.state.title}
                   id="title"
@@ -161,6 +174,9 @@ class Edit extends Component {
                     invalid: errors.title
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorTitle}
+                </div>
                 <span className="red-text">{errors.title}</span>
               </div>
 
@@ -169,6 +185,7 @@ class Edit extends Component {
                 <input
                   onChange={e => this.setState({
                     synopsis: e.target.value,
+                    validationErrorSynopsis: e.target.value === "" ? "Deverá preencher o campo Resumo do Projeto/Atividade" : ""
                   })}
                   value={this.state.synopsis}
                   id="synopsis"
@@ -178,6 +195,9 @@ class Edit extends Component {
                     invalid: errors.synopsis
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorSynopsis}
+                </div>
                 <span className="red-text">{errors.synopsis}</span>
               </div>
 
@@ -187,6 +207,7 @@ class Edit extends Component {
                   onChange={e =>
                     this.setState({
                       intervationArea: e.target.value,
+                      validationErrorIntervationArea: e.target.value === "" ? "Deverá preencher o campo Área de Intervenção" : ""
                     })}
                   value={this.state.intervationArea}
                   id="intervationArea"
@@ -196,6 +217,9 @@ class Edit extends Component {
                     invalid: errors.intervationArea
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorIntervationArea}
+                </div>
                 <span className="red-text">{errors.intervationArea}</span>
               </div>
 
@@ -205,6 +229,7 @@ class Edit extends Component {
                   onChange={e =>
                     this.setState({
                       target_audience: e.target.value,
+                      validationErrorTargetAudience: e.target.value === "" ? "Deverá preencher o campo Público Alvo (Beneficiários)" : ""
                     })}
                   value={this.state.target_audience}
                   id="target_audience"
@@ -214,6 +239,9 @@ class Edit extends Component {
                     invalid: errors.target_audience
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorTargetAudience}
+                </div>
                 <span className="red-text">{errors.target_audience}</span>
               </div>
 
@@ -238,6 +266,7 @@ class Edit extends Component {
                   onChange={e =>
                     this.setState({
                       description: e.target.value,
+                      validationErrorDescription: e.target.value === "" ? "Deverá preencher o campo Descrição das Atividades" : ""
                     })}
                   value={this.state.description}
                   id="description"
@@ -247,6 +276,9 @@ class Edit extends Component {
                     invalid: errors.description
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorDescription}
+                </div>
                 <span className="red-text">{errors.description}</span>
               </div>
 
@@ -255,6 +287,7 @@ class Edit extends Component {
                 <input
                   onChange={e => this.setState({
                     date: e.target.value,
+                    validationErrorDate: e.target.value === "" ? "Deverá preencher o campo Data/Horário Previsto" : ""
                   })}
                   value={this.state.date}
                   id="date"
@@ -264,6 +297,9 @@ class Edit extends Component {
                     invalid: errors.date
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorDate}
+                </div>
                 <span className="red-text">{errors.date}</span>
               </div>
 
@@ -286,6 +322,9 @@ class Edit extends Component {
                   <option value="Saúde">Saúde (por ex. rastreios, ações de sensibilização…)</option>
                   <option value="Social">Social (por ex. apoio a idosos, a crianças, Banco Alimentar…)</option>
                 </select>
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorInterestAreas}
+                </div>
                 <span className="red-text">{errors.interestAreas}</span>
               </div>
 
@@ -347,6 +386,7 @@ class Edit extends Component {
                 <input
                   onChange={e => this.setState({
                     vacancies: e.target.value,
+                    validationErrorVacancies: e.target.value === "" ? "Deverá preencher o campo Nº Máximo de Vagas" : ""
                   })}
                   value={this.state.vacancies}
                   id="vacancies"
@@ -356,12 +396,15 @@ class Edit extends Component {
                     invalid: errors.vacancies
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorVacancies}
+                </div>
                 <span className="red-text">{errors.vacancies}</span>
               </div>
 
               <div className="input-field col s12">
                 <label htmlFor="name">Logótipo</label><br></br><br></br>
-                  <Upload type="Project" id={this.props.match.params.id}></Upload>
+                <Upload type="Project" id={this.props.match.params.id}></Upload>
               </div>
             </form>
             <div className="col s12" style={{ marginTop: "auto", marginBottom: "10%" }}>

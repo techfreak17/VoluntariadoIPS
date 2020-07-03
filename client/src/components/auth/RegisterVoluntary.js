@@ -68,11 +68,21 @@ class RegisterVoluntary extends Component {
     };
 
     handleChangeInterestAreas(event) {
-        this.setState({ interestAreas: Array.from(event.target.selectedOptions, (item) => item.value) });
+        this.setState({
+            interestAreas: Array.from(event.target.selectedOptions, (item) => item.value), validationErrorInterestAreas:
+                event.target.value === ""
+                    ? "Deverá preencher o campo Áreas Interesse"
+                    : ""
+        });
     }
 
     handleChangeReasons(event) {
-        this.setState({ reasons: Array.from(event.target.selectedOptions, (item) => item.value) });
+        this.setState({
+            reasons: Array.from(event.target.selectedOptions, (item) => item.value), validationErrorReasons:
+                event.target.value === ""
+                    ? "Deverá preencher o campo Razões Para Querer Ser Voluntário"
+                    : ""
+        });
     }
 
     onSubmit = e => {
@@ -122,6 +132,7 @@ class RegisterVoluntary extends Component {
                             <h4>
                                 <b>Registe-se como Voluntário </b>
                             </h4>
+                            <p><b>Nota:</b> Todos os campos a * deverão ser preenchidos.</p>
                             <p className="grey-text text-darken-1" style={{ fontWeight: "bolder" }}>
                                 Já tem conta? <Link to="/login">Log in</Link>
                             </p>
@@ -133,7 +144,10 @@ class RegisterVoluntary extends Component {
                         <form noValidate>
                             <div className="input-field col s12">
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        username: e.target.value,
+                                        validationErrorUsername: e.target.value === "" ? "Deverá preencher o campo Username" : ""
+                                    })}
                                     value={this.state.username}
                                     error={errors.username}
                                     id="username"
@@ -142,13 +156,19 @@ class RegisterVoluntary extends Component {
                                         invalid: errors.username
                                     })}
                                 />
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationErrorUsername}
+                                </div>
                                 <label htmlFor="name">Username *</label>
                                 <span className="red-text">{errors.username}</span>
                             </div>
 
                             <div className="input-field col s12">
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        email: e.target.value,
+                                        validationErrorEmail: e.target.value === "" ? "Deverá preencher o campo Email" : ""
+                                    })}
                                     value={this.state.email}
                                     error={errors.email}
                                     id="email"
@@ -157,13 +177,19 @@ class RegisterVoluntary extends Component {
                                         invalid: errors.email
                                     })}
                                 />
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationErrorEmail}
+                                </div>
                                 <label htmlFor="email">Email *</label>
                                 <span className="red-text">{errors.email}</span>
                             </div>
 
                             <div className="input-field col s12">
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        password: e.target.value,
+                                        validationPassword: e.target.value === "" ? "Deverá preencher o campo Password" : ""
+                                    })}
                                     value={this.state.password}
                                     error={errors.password}
                                     id="password"
@@ -172,13 +198,19 @@ class RegisterVoluntary extends Component {
                                         invalid: errors.password
                                     })}
                                 />
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationPassword}
+                                </div>
                                 <label htmlFor="password">Password *</label>
                                 <span className="red-text">{errors.password}</span>
                             </div>
 
                             <div className="input-field col s12">
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        password2: e.target.value,
+                                        validationPassword2: e.target.value === "" ? "Deverá preencher o campo Confirmar Password" : ""
+                                    })}
                                     value={this.state.password2}
                                     error={errors.password2}
                                     id="password2"
@@ -187,13 +219,19 @@ class RegisterVoluntary extends Component {
                                         invalid: errors.password2
                                     })}
                                 />
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationPassword2}
+                                </div>
                                 <label htmlFor="password2">Confirmar Password *</label>
                                 <span className="red-text">{errors.password2}</span>
                             </div>
 
                             <div className="input-field col s12">
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        name: e.target.value,
+                                        validationErrorName: e.target.value === "" ? "Deverá preencher o campo Nome Completo" : ""
+                                    })}
                                     value={this.state.name}
                                     error={errors.name}
                                     id="name"
@@ -202,13 +240,19 @@ class RegisterVoluntary extends Component {
                                         invalid: errors.name
                                     })}
                                 />
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationErrorName}
+                                </div>
                                 <label htmlFor="name">Nome Completo *</label>
                                 <span className="red-text">{errors.name}</span>
                             </div>
 
                             <div className="input-field col s12">
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        phone: e.target.value,
+                                        validationErrorPhone: e.target.value === "" ? "Deverá preencher o campo Nº Telemóvel" : ""
+                                    })}
                                     value={this.state.phone}
                                     error={errors.phone}
                                     id="phone"
@@ -217,6 +261,9 @@ class RegisterVoluntary extends Component {
                                         invalid: errors.phone
                                     })}
                                 />
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationErrorPhone}
+                                </div>
                                 <label htmlFor="number">Nº Telemóvel *</label>
                                 <span className="red-text">{errors.phone}</span>
                             </div>
@@ -237,8 +284,12 @@ class RegisterVoluntary extends Component {
                             </div>
 
                             <div className="input-field col s12">
+                                <label htmlFor="name">Data Nascimento *</label><br></br>
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        birthDate: e.target.value,
+                                        validationErrorBirthDate: e.target.value === "" ? "Deverá preencher o campo Data Nascimento" : ""
+                                    })}
                                     value={this.state.birthDate}
                                     error={errors.birthDate}
                                     id="birthDate"
@@ -247,7 +298,9 @@ class RegisterVoluntary extends Component {
                                         invalid: errors.birthDate
                                     })}
                                 />
-                                <label htmlFor="name">Data Nascimento *</label>
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationErrorBirthDate}
+                                </div>
                                 <span className="red-text">{errors.birthDate}</span>
                             </div>
 
@@ -326,6 +379,9 @@ class RegisterVoluntary extends Component {
                                     <option value="Saúde">Saúde (por ex. rastreios, ações de sensibilização…)</option>
                                     <option value="Social">Social (por ex. apoio a idosos, a crianças, Banco Alimentar…)</option>
                                 </select>
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationErrorInterestAreas}
+                                </div>
                                 <span className="red-text">{errors.interestAreas}</span>
                             </div>
 
@@ -348,6 +404,9 @@ class RegisterVoluntary extends Component {
                                     <option value="Ocupar Tempo Livre">Para ocupar tempo livre</option>
                                     <option value="Outro">Outro</option>
                                 </select>
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationErrorReasons}
+                                </div>
                                 <span className="red-text">{errors.reasons}</span>
                             </div>
 

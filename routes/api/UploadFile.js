@@ -31,16 +31,31 @@ addImageToProject = (id, file) => {
     } else {
       return buildResponse(404)
     }
-    
   });
 };
 
 addImageToUser = (id, file) => {
-    console.log(file);
+  User.findById(id, function (err, user) {
+    if(user){
+      user.img.data = fs.readFileSync(file.path);
+      user.img.contentType = file.type;
+      user.save().then(us => {return buildResponse(200,us)});
+    } else {
+      return buildResponse(404)
+    }
+  });
 };
 
 addFileToProject = (id, file) => {
-    console.log(file);
+  Project.findById(id, function (err, project) {
+    if(project){
+      project.file.data = fs.readFileSync(file.path);
+      project.file.contentType = file.type;
+      project.save().then(proj => {return buildResponse(200,proj)});
+    } else {
+      return buildResponse(404)
+    }
+  });
 };
 
 module.exports = function upload(req, res) {

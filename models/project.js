@@ -87,6 +87,10 @@ const ProjectSchema = new Schema({
     img: { 
         data: Buffer, 
         contentType: String 
+    },
+    file:{
+        data: Buffer,
+        contentType: String
     }
 });
 module.exports = mongoose.model("Projects", ProjectSchema);

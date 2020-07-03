@@ -85,13 +85,19 @@ class EditVoluntary extends Component {
 
   handleChangeInterestAreas(event) {
     this.setState({
-      interestAreas: Array.from(event.target.selectedOptions, (item) => item.value)
+      interestAreas: Array.from(event.target.selectedOptions, (item) => item.value), validationErrorInterestAreas:
+        event.target.value === ""
+          ? "Deverá preencher o campo Áreas Interesse"
+          : ""
     });
   }
 
   handleChangeReasons(event) {
     this.setState({
-      reasons: Array.from(event.target.selectedOptions, (item) => item.value)
+      reasons: Array.from(event.target.selectedOptions, (item) => item.value), validationErrorReasons:
+        event.target.value === ""
+          ? "Deverá preencher o campo Razões Para Querer Ser Voluntário"
+          : ""
     });
   }
 
@@ -116,8 +122,8 @@ class EditVoluntary extends Component {
       birthDate: this.state.birthDate,
       role: this.state.role
     };
-    
-    this.props.editUser(this.props.match.params.id,obj,this.props.history);
+
+    this.props.editUser(this.props.match.params.id, obj, this.props.history);
   }
 
   render() {
@@ -134,12 +140,14 @@ class EditVoluntary extends Component {
         <div className="row">
           <div className="col s8 offset-s2">
             <h3>Editar Detalhes</h3>
+            <p><b>Nota:</b> Todos os campos a * deverão ser preenchidos.</p>
             <form noValidate>
               <div className="input-field col s12">
                 <label htmlFor="name">Username *</label><br></br>
                 <input
                   onChange={e => this.setState({
                     username: e.target.value,
+                    validationErrorUsername: e.target.value === "" ? "Deverá preencher o campo Username" : ""
                   })}
                   value={this.state.username}
                   id="username"
@@ -149,6 +157,9 @@ class EditVoluntary extends Component {
                     invalid: errors.username
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorUsername}
+                </div>
                 <span className="red-text">{errors.username}</span>
               </div>
 
@@ -157,6 +168,7 @@ class EditVoluntary extends Component {
                 <input
                   onChange={e => this.setState({
                     email: e.target.value,
+                    validationErrorEmail: e.target.value === "" ? "Deverá preencher o campo Email" : ""
                   })}
                   value={this.state.email}
                   id="email"
@@ -166,6 +178,9 @@ class EditVoluntary extends Component {
                     invalid: errors.email
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorEmail}
+                </div>
                 <span className="red-text">{errors.email}</span>
               </div>
 
@@ -174,6 +189,7 @@ class EditVoluntary extends Component {
                 <input
                   onChange={e => this.setState({
                     name: e.target.value,
+                    validationErrorName: e.target.value === "" ? "Deverá preencher o campo Nome Completo" : ""
                   })}
                   value={this.state.name}
                   id="name"
@@ -183,6 +199,9 @@ class EditVoluntary extends Component {
                     invalid: errors.name
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorName}
+                </div>
                 <span className="red-text">{errors.name}</span>
               </div>
 
@@ -191,6 +210,7 @@ class EditVoluntary extends Component {
                 <input
                   onChange={e => this.setState({
                     phone: e.target.value,
+                    validationErrorPhone: e.target.value === "" ? "Deverá preencher o campo Nº Telemóvel" : ""
                   })}
                   value={this.state.phone}
                   id="phone"
@@ -200,6 +220,9 @@ class EditVoluntary extends Component {
                     invalid: errors.phone
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorPhone}
+                </div>
                 <span className="red-text">{errors.phone}</span>
               </div>
 
@@ -223,6 +246,7 @@ class EditVoluntary extends Component {
                 <input
                   onChange={e => this.setState({
                     birthDate: e.target.value,
+                    validationErrorBirthDate: e.target.value === "" ? "Deverá preencher o campo Data Nascimento" : ""
                   })}
                   value={this.state.birthDate}
                   id="birthDate"
@@ -232,6 +256,9 @@ class EditVoluntary extends Component {
                     invalid: errors.birthDate
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorBirthDate}
+                </div>
                 <span className="red-text">{errors.birthDate}</span>
               </div>
 
@@ -310,6 +337,9 @@ class EditVoluntary extends Component {
                   <option value="Saúde">Saúde (por ex. rastreios, ações de sensibilização…)</option>
                   <option value="Social">Social (por ex. apoio a idosos, a crianças, Banco Alimentar…)</option>
                 </select>
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorInterestAreas}
+                </div>
                 <span className="red-text">{errors.interestAreas}</span>
               </div>
 
@@ -332,6 +362,9 @@ class EditVoluntary extends Component {
                   <option value="Ocupar Tempo Livre">Para ocupar tempo livre</option>
                   <option value="Outro">Outro</option>
                 </select>
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorReasons}
+                </div>
                 <span className="red-text">{errors.reasons}</span>
               </div>
 

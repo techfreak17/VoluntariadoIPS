@@ -17,6 +17,7 @@ export const createProject = (projectData, file, history) => dispatch => {
                 "id",
                 res.data._id
             )
+            console.log(file);
             axios
                 .post("api/upload", file)
                 .then(history.push("/listProjects"))

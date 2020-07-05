@@ -15,7 +15,7 @@ class SideMenu extends Component {
     }
 
     insertImage = (file) => {
-        let myDiv = document.getElementById("userImg");
+        let myDiv = document.getElementById("userImgSideMenu");
         let img = document.createElement('img');
         let imageFile = null;
 
@@ -46,7 +46,7 @@ class SideMenu extends Component {
                             alt="(Não esquecer de verificar no spam)"
                             className="img-responsive" />
                     </div>
-                    <div id="userImg"></div>
+                    <div id="userImgSideMenu"></div>
                     <p><span className="white-text name">{this.props.username}</span></p>
                     <p><span className="white-text email">{this.props.email}</span></p>
                 </div></li>

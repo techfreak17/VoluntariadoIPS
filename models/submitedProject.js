@@ -74,6 +74,14 @@ const SubmitedProjectSchema = new Schema({
     vacancies:{
         type: Number,
         required: true
+    },
+    img: { 
+        data: Buffer, 
+        contentType: String 
+    },
+    file:{
+        data: Buffer,
+        contentType: String
     }
 });
 

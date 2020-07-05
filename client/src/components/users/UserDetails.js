@@ -46,7 +46,7 @@ export default class Edit extends Component {
   }
 
   insertImage = (file) => {
-    let myDiv = document.getElementById("userImg");
+    let myDiv = document.getElementById("userImgDetails");
     let img = document.createElement('img');
     let imageFile = null;
 
@@ -59,8 +59,8 @@ export default class Edit extends Component {
     img.src = imageFile;
     img.alt = "(No Image)";
     img.className = "img-responsive";
-    img.style.width = "30%";
-    img.style.height = "auto"
+    img.style.width = "40%";
+    img.style.height = "50%"
     img.style.borderRadius = "30%"
 
     myDiv.appendChild(img);
@@ -75,9 +75,9 @@ export default class Edit extends Component {
             return (
               <div className="card" style={{ backgroundColor: "#f2f2f2", width: 900, margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px " }}>
 
-                <div className="card-header center" style={{ overflow: "hidden", height: 400, width: "100%" }}>
+                <div className="card-header center" style={{ overflow: "hidden"}}>
                   <h3 style={{ color: "#1167B1" }}><b>{this.state.name}</b></h3>
-                  <div id="userImg"></div>
+                  <div id="userImgDetails"></div>
                 </div>
 
                 <div className="card-content" style={{ paddingLeft: 45, paddingTop: -100 }}>
@@ -118,9 +118,9 @@ export default class Edit extends Component {
             return (
               <div className="card" style={{ backgroundColor: "#00000", width: 900, margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px " }}>
 
-                <div className="card-header center" style={{ overflow: "hidden", height: 400, width: "100%" }}>
+                <div className="card-header center" style={{ overflow: "hidden", width: "100%" }}>
                   <h3 style={{ color: "#1167B1" }}><b>{this.state.name}</b></h3>
-                  <div id="userImg"></div>
+                  <div id="userImgDetails"></div>
                 </div>
 
                 <div className="card-content" style={{ paddingLeft: 45 }}>
@@ -152,9 +152,9 @@ export default class Edit extends Component {
             return (
               <div className="card" style={{ backgroundColor: "#00000", width: 900, margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px " }}>
 
-                <div className="card-header center" style={{ overflow: "hidden", height: 400, width: "100%" }}>
+                <div className="card-header center" style={{ overflow: "hidden", width: "100%" }}>
                   <h3 style={{ color: "#1167B1" }}><b>{this.state.name}</b></h3>
-                  <div id="userImg"></div>
+                  <div id="userImgDetails"></div>
                 </div>
 
                 <div className="card-content" style={{ paddingLeft: 45 }}>

@@ -1,6 +1,6 @@
 const formidable = require('formidable');
 const Project = require("../../models/project");
-const ConcludedProject = require("../../models/concludedProject");
+const SubmitedProject = require("../../models/submitedProject");
 const User = require("../../models/user");
 const Voluntary = require("../../models/voluntary");
 const fs = require("fs");
@@ -30,6 +30,19 @@ addImageToProject = (id, file) => {
       project.img.contentType = file.type;
       project.save();
       return buildResponse(200, project);
+    } else {
+      return buildResponse(404)
+    }
+  });
+};
+
+addImageToSubmitedProject = (id, file) => {
+  SubmitedProject.findById(id, function (err, submitedProject) {
+    if (submitedProject) {
+      submitedProject.img.data = fs.readFileSync(file.path);
+      submitedProject.img.contentType = file.type;
+      submitedProject.save();
+      return buildResponse(200, submitedProject);
     } else {
       return buildResponse(404)
     }
@@ -76,6 +89,8 @@ module.exports = function upload(req, res) {
       resJSON = addImageToUser(fields.id, files.myFile);
     } else if (fields.type === "Anex") {
       resJSON = addFileToProject(fields.id, files.myFile)
+    } else if (fields.type === "Submissao Projeto") {
+      resJSON = addImageToSubmitedProject(fields.id, files.myFile)
     }
     if (resJSON) {
       res.status(resJSON.status).json(resJSON.obj);

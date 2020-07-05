@@ -37,7 +37,7 @@ export const submitProject = (projectData, file, history) => dispatch => {
         .then(res => {
             file.append(
                 "type",
-                "Projeto"
+                "Submissao Projeto"
             )
             file.append(
                 "id",

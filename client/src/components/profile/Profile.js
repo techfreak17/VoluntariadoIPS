@@ -62,7 +62,7 @@ class Profile extends Component {
     }
 
     insertImage = (file) => {
-        let myDiv = document.getElementById("userImg1");
+        let myDiv = document.getElementById("userImgProfile");
         let img = document.createElement('img');
         let imageFile = null;
 
@@ -79,7 +79,6 @@ class Profile extends Component {
         img.style.height = "auto";
         img.style.borderRadius = "50%";
         img.style.paddingTop = "20%";
-        img.style.position = "relative";
 
         myDiv.appendChild(img);
     }
@@ -91,7 +90,7 @@ class Profile extends Component {
                     <div className='row'>
                         <div className='col s5 center'>
                             <div>
-                                <div id="userImg1"></div>
+                                <div id="userImgProfile"></div>
                                 <h4>{this.state.name}</h4>
                                 <h4 style={{ fontWeight: "bold" }}>{this.state.role}</h4>
                                 {(() => {

@@ -34,13 +34,14 @@ export const createCompany = (userData,file,history) => dispatch => {
     axios
         .post("/api/admin/createCompanyUser", userData)
         .then(res => {
+            console.log(res);
             file.append(
                 "type",
                 "Utilizador"
             )
             file.append(
                 "id",
-                res.data.userID
+                res.data.responsibleID
             )
             axios
                 .post("api/upload", file)

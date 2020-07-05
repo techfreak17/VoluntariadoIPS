@@ -13,13 +13,14 @@ export const registerVoluntary = (userData,file, history) => dispatch => {
     axios
         .post("/api/users/registerVoluntary", userData)
         .then(res => {
+            console.log(res);
             file.append(
                 "type",
                 "Utilizador"
             )
             file.append(
                 "id",
-                res.data.userID
+                res.data._id
             )
             axios
                 .post("api/upload", file)
@@ -44,7 +45,7 @@ export const registerCompany = (userData,file, history) => dispatch => {
             )
             file.append(
                 "id",
-                res.data.userID
+                res.data._id
             )
             axios
                 .post("api/upload", file)

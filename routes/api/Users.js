@@ -80,7 +80,7 @@ router.post("/registerVoluntary", (req, res) => {
                   observations: req.body.observations,
                   authorization: req.body.authorization,
                   listProjects: req.body.listProjects,
-                  userID: user._id,
+                  userID: user._id
                 });
                 newVoluntary.save();
               });
@@ -142,7 +142,7 @@ router.post("/registerCompany", (req, res) => {
                   observations: req.body.observations,
                   authorization: req.body.authorization,
                   listProjects: req.body.listProjects,
-                  responsibleID: user._id,
+                  responsibleID: user._id
                 });
                 newCompany.save();
               });
@@ -392,8 +392,8 @@ router.route('/updateUser/:id').post(function (req, res) {
           })
         })
       }
-
       Voluntary.findOne({ email: user.email }).then(voluntary => {
+
         if (voluntary) {
           voluntary.name = req.body.name;
           voluntary.phone = req.body.phone;

@@ -46,6 +46,7 @@ mongoose
     .then(() => console.log("MongoDB successfully connected"))
     .catch(err => console.log(err));
 mongoose.set('useCreateIndex', true);
+mongoose.set('useFindAndModify', false);
 
 // Passport middleware
 app.use(passport.initialize());
@@ -65,4 +66,6 @@ app.use("/api/stats",stats)
 app.use("/api/upload",uploadFile);
 
 const port = process.env.PORT || 5000; // process.env.port is Heroku's port if you choose to deploy the app there
-app.listen(port, () => console.log(`Server up and running on port ${port} !`));
+var server = app.listen(port, () => console.log(`Server up and running on port ${port} !`));
+
+module.exports = server;

@@ -169,6 +169,7 @@ router.route('/deleteProject/:id').get(function (req, res) {
     else {
       project.deleteOne();
       createNotification('projetoRemovido', project.title, 'admin@teste.pt');
+      res.status(202).send("Deleted sucesfull")
     }
   });
 });

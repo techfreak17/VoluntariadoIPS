@@ -406,6 +406,7 @@ class Edit extends Component {
                 <label htmlFor="name">Logótipo</label><br></br><br></br>
                 <Upload type="Project" id={this.props.match.params.id}></Upload>
               </div>
+              
             </form>
             <div className="col s12" style={{ marginTop: "auto", marginBottom: "10%" }}>
               <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "20%" }}

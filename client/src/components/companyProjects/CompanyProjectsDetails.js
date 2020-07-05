@@ -31,7 +31,7 @@ class CompanyProjectDetails extends Component {
       vacanciesToFill: "",
       on: false,
       delete: false,
-      responsibleID : "",
+      responsibleID: "",
     }
   }
 
@@ -57,7 +57,7 @@ class CompanyProjectDetails extends Component {
           role: response.data[1].role,
           vacancies: response.data[0].vacancies,
           vacanciesToFill: response.data[0].vacancies - response.data[0].enroled_IDs.length,
-          responsibleID : response.data[0].responsibleID
+          responsibleID: response.data[0].responsibleID
         });
         var ul = document.getElementById("friendsList");
 
@@ -67,6 +67,7 @@ class CompanyProjectDetails extends Component {
           li.appendChild(document.createTextNode(name));
           ul.appendChild(li);
         }
+        this.insertImage(response.data[0].img);
       })
       .catch(error => console.log(error));
   }
@@ -94,13 +95,33 @@ class CompanyProjectDetails extends Component {
       });
   }
 
+  insertImage = (file) => {
+    let myDiv = document.getElementById("projectImg");
+    let img = document.createElement('img');
+    let imageFile = null;
+
+    if (file) {
+      imageFile = `data:${file.contentType};base64,${Buffer.from(file.data).toString('base64')}`;
+    } else {
+      imageFile = require('../layout/images/volun.png');
+    }
+
+    img.src = imageFile;
+    img.alt = "(No Image)";
+    img.className = "img-responsive";
+    img.style.width = "40%";
+    img.style.height = "70%";
+
+    myDiv.appendChild(img);
+  }
+
   render() {
     return (
       <div>
         <div className="card" style={{ backgroundColor: "#f2f2f2", width: 900, margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px black" }}>
           <div className="card-header center" style={{ overflow: "hidden", height: 400, width: "100%" }}>
             <h2 style={{ color: "#1167B1" }}><b>{this.state.title}</b></h2>
-            <img src={require('../layout/images/volun.png')} alt="(Não esquecer de verificar no spam)" className="img-responsive" style={{ width: "40%", height: "70%" }} />
+            <div id="projectImg"></div>
           </div>
 
           <div className="card-content" style={{ paddingLeft: 50 }}>
@@ -160,7 +181,7 @@ class CompanyProjectDetails extends Component {
                 closeOnDocumentClick
                 onClose={this.closeModal}>
                 <div className="Modal">
-                  <VoluntariesList projectID={this.props.match.params.id} userID={this.props.auth.user.id} responsibleID ={this.state.responsibleID}></VoluntariesList>
+                  <VoluntariesList projectID={this.props.match.params.id} userID={this.props.auth.user.id} responsibleID={this.state.responsibleID}></VoluntariesList>
                 </div>
               </Popup>
             </div><br></br>

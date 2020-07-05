@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createCompany } from "../../actions/createActions";
 import classnames from "classnames";
+import Upload from "../upload/Upload";
 
 class CreateCompanyUser extends Component {
     constructor() {
@@ -24,7 +25,8 @@ class CreateCompanyUser extends Component {
             authorization: true,
             listProjects: [],
             isVerified: true,
-            errors: {}
+            errors: {},
+            fileFormData: null,
         };
     }
 
@@ -39,6 +41,10 @@ class CreateCompanyUser extends Component {
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
     };
+
+    handleUpload = (formData) => {
+        this.setState({ fileFormData: formData });
+    }
 
     onSubmit = e => {
         e.preventDefault();
@@ -61,7 +67,7 @@ class CreateCompanyUser extends Component {
             isVerified: this.state.isVerified
         };
 
-        this.props.createCompany(newUser, this.props.history);
+        this.props.createCompany(newUser, this.state.fileFormData, this.props.history);
     };
 
     goBack() {
@@ -297,6 +303,11 @@ class CreateCompanyUser extends Component {
                                 />
                                 <label htmlFor="name">Observações</label>
                                 <span className="red-text">{errors.observations}</span>
+                            </div>
+
+                            <div className="input-field col s12">
+                                <label htmlFor="name">Logótipo</label><br></br><br></br>
+                                <Upload handleUpload={this.handleUpload} isChild={true}></Upload>
                             </div>
 
                         </form>

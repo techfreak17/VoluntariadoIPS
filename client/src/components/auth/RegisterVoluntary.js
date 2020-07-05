@@ -6,6 +6,7 @@ import { registerVoluntary } from "../../actions/authActions";
 import classnames from "classnames";
 import M from "materialize-css";
 import options from "materialize-css";
+import Upload from "../upload/Upload";
 
 class RegisterVoluntary extends Component {
     constructor() {
@@ -28,6 +29,7 @@ class RegisterVoluntary extends Component {
             observations: "",
             authorization: false,
             listProjects: [],
+            fileFormData: null,
             errors: {}
         };
         this.handleChangeInterestAreas = this.handleChangeInterestAreas.bind(this);
@@ -66,6 +68,10 @@ class RegisterVoluntary extends Component {
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
     };
+
+    handleUpload = (formData) => {
+        this.setState({ fileFormData: formData });
+    }
 
     handleChangeInterestAreas(event) {
         this.setState({
@@ -108,7 +114,7 @@ class RegisterVoluntary extends Component {
             listProjects: this.state.listProjects
         };
 
-        this.props.registerVoluntary(newUser, this.props.history);
+        this.props.registerVoluntary(newUser,this.state.fileFormData, this.props.history);
     };
 
     render() {
@@ -423,6 +429,11 @@ class RegisterVoluntary extends Component {
                                 />
                                 <label htmlFor="name">Observações</label>
                                 <span className="red-text">{errors.observations}</span>
+                            </div>
+
+                            <div className="input-field col s12">
+                                <label htmlFor="name">Logótipo</label><br></br><br></br>
+                                <Upload handleUpload={this.handleUpload} isChild={true}></Upload>
                             </div>
 
                             <div className="input-field col s12">

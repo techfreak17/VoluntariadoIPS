@@ -5,6 +5,7 @@ import { createVoluntary } from "../../actions/createActions";
 import classnames from "classnames";
 import M from "materialize-css";
 import options from "materialize-css";
+import Upload from "../upload/Upload";
 
 class CreateVoluntaryUser extends Component {
     constructor(props) {
@@ -28,7 +29,8 @@ class CreateVoluntaryUser extends Component {
             isVerified: true,
             authorization: true,
             listProjects: [],
-            errors: {}
+            errors: {},
+            fileFormData: null,
         };
 
         this.handleChangeInterestAreas = this.handleChangeInterestAreas.bind(this);
@@ -104,10 +106,12 @@ class CreateVoluntaryUser extends Component {
             listProjects: this.state.listProjects
         };
 
-        this.props.createVoluntary(newUser, this.props.history);
+        this.props.createVoluntary(newUser, this.state.fileFormData, this.props.history);
     };
 
-
+    handleUpload = (formData) => {
+        this.setState({ fileFormData: formData });
+    }
 
     render() {
         const { errors } = this.state;
@@ -407,6 +411,11 @@ class CreateVoluntaryUser extends Component {
                                 />
                                 <label htmlFor="name">Observações</label>
                                 <span className="red-text">{errors.observations}</span>
+                            </div>
+
+                            <div className="input-field col s12">
+                                <label htmlFor="name">Logótipo</label><br></br><br></br>
+                                <Upload handleUpload={this.handleUpload} isChild={true}></Upload>
                             </div>
 
                         </form>

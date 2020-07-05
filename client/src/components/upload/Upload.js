@@ -30,7 +30,7 @@ class Upload extends Component {
             this.state.selectedFile.name
         );
 
-        if(this.props.isChild){
+        if (this.props.isChild) {
             //Sets up to send formData to parent component
             this.props.handleUpload(formData);
         } else {
@@ -46,7 +46,7 @@ class Upload extends Component {
 
             // Request made to the backend api 
             // Send formData object 
-            axios.post("api/upload", formData).then(alert("O seu ficheiro foi guardado!"));
+            axios.post("api/upload", formData);
         }
     };
 
@@ -70,7 +70,7 @@ class Upload extends Component {
         } else {
             return (
                 <div>
-                    <p>Por favor, selecione um ficheiro!</p>
+                    <p>Ficheiro deverá ter no máximo 16 MB</p>
                 </div>
             );
         }
@@ -81,13 +81,11 @@ class Upload extends Component {
         return (
             <div className="container">
                 <div className="card center">
-                    <h4>
-                        Upload de Ficheiro
-                </h4>
+                    <h4><b>Upload de Ficheiro</b></h4>
                     <div>
                         <input type="file" onChange={this.onFileChange} />
-                        <button type="button" onClick={this.onFileUpload}>
-                            Guardar!
+                        <button type="button" style={{backgroundColor:"black", color:"white"}}onClick={this.onFileUpload}>
+                           <b>Guardar</b>
                         </button>
                     </div>
                     {this.fileData()}

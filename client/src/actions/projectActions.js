@@ -31,10 +31,23 @@ export const createProject = (projectData, file, history) => dispatch => {
 };
 
 // Submit Project
-export const submitProject = (projectData, history) => dispatch => {
+export const submitProject = (projectData, file, history) => dispatch => {
     axios
         .post("/api/submitedProjects/submitCreateProject", projectData)
-        .then(res => history.push("/listSubmitedProjects")
+        .then(res => {
+            file.append(
+                "type",
+                "Projeto"
+            )
+            file.append(
+                "id",
+                res.data._id
+            )
+            console.log(file);
+            axios
+                .post("api/upload", file)
+                .then(history.push("/listSubmitedProjects"))
+        }
         ).catch(err =>
             dispatch({
                 type: GET_ERRORS,
@@ -44,7 +57,7 @@ export const submitProject = (projectData, history) => dispatch => {
 };
 
 // Edit Project
-export const editProject = (projectID,projectData, history) => dispatch => {
+export const editProject = (projectID, projectData, history) => dispatch => {
     axios
         .post("/api/projects/updateProject/"+ projectID, projectData)
         .then(res => history.push("/listProjects")

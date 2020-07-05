@@ -6,6 +6,7 @@ import classnames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { editUser } from "../../actions/userActions";
+import Upload from "../upload/Upload";
 
 class EditCompany extends Component {
     constructor(props) {
@@ -289,6 +290,11 @@ class EditCompany extends Component {
                                     })}
                                 />
                                 <span className="red-text">{errors.observations}</span>
+                            </div>
+
+                            <div className="input-field col s12">
+                                <label htmlFor="name">Logótipo</label><br></br><br></br>
+                                <Upload type="Utilizador" id={this.props.match.params.id}></Upload>
                             </div>
 
                         </form>

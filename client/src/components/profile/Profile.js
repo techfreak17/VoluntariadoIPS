@@ -49,6 +49,7 @@ class Profile extends Component {
                     birthDate: date,
                     role: this.props.auth.user.role
                 });
+                this.insertImage(response.data[0].img);
             });
     }
 
@@ -60,6 +61,29 @@ class Profile extends Component {
         }
     }
 
+    insertImage = (file) => {
+        let myDiv = document.getElementById("userImg1");
+        let img = document.createElement('img');
+        let imageFile = null;
+
+        if (file) {
+            imageFile = `data:${file.contentType};base64,${Buffer.from(file.data).toString('base64')}`;
+        } else {
+            imageFile = require('../layout/images/avatar.jpg');
+        }
+
+        img.src = imageFile;
+        img.alt = "(No Image)";
+        img.className = "img-responsive";
+        img.style.width = "250px";
+        img.style.height = "auto";
+        img.style.borderRadius = "50%";
+        img.style.paddingTop = "20%";
+        img.style.position = "relative";
+
+        myDiv.appendChild(img);
+    }
+
     render() {
         return (
             <div style={{ paddingBottom: 50 }}>
@@ -67,11 +91,7 @@ class Profile extends Component {
                     <div className='row'>
                         <div className='col s5 center'>
                             <div>
-                                <a className="" href="/dashboard"><img src={require('../layout/images/avatar.jpg')}
-                                    alt="Avatar"
-                                    className="img-responsive"
-                                    style={{ position: "relative", height: "auto", width: "250px", paddingTop: '20%', borderRadius: '50%' }} />
-                                </a>
+                                <div id="userImg1"></div>
                                 <h4>{this.state.name}</h4>
                                 <h4 style={{ fontWeight: "bold" }}>{this.state.role}</h4>
                                 {(() => {

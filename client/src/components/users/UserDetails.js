@@ -22,27 +22,50 @@ export default class Edit extends Component {
   componentDidMount() {
     axios.get('/api/users/getUserDetails/' + this.props.match.params.id)
       .then(response => {
-      this.myDate = new Date(response.data[1].birthDate);
-      this.myDate = this.myDate.toLocaleDateString();
-      this.setState({
-        name: response.data[1].name,
-        email: response.data[1].email,
-        phone: response.data[1].phone,
-        address: response.data[1].address,
-        member: response.data[1].memberIPS,
-        school: response.data[1].schoolIPS,
-        course: response.data[1].courseIPS,
-        companyAddress: response.data[1].companyAddress,
-        companyName: response.data[1].companyName,
-        role: response.data[0].role
-      });
-    })
-        .catch(error => console.log(error));
+        this.myDate = new Date(response.data[1].birthDate);
+        this.myDate = this.myDate.toLocaleDateString();
+        this.setState({
+          name: response.data[1].name,
+          email: response.data[1].email,
+          phone: response.data[1].phone,
+          address: response.data[1].address,
+          member: response.data[1].memberIPS,
+          school: response.data[1].schoolIPS,
+          course: response.data[1].courseIPS,
+          companyAddress: response.data[1].companyAddress,
+          companyName: response.data[1].companyName,
+          role: response.data[0].role
+        });
+        this.insertImage(response.data[0].img);
+      })
+      .catch(error => console.log(error));
   }
 
   goBack() {
     window.history.back();
   }
+
+  insertImage = (file) => {
+    let myDiv = document.getElementById("userImg");
+    let img = document.createElement('img');
+    let imageFile = null;
+
+    if (file) {
+      imageFile = `data:${file.contentType};base64,${Buffer.from(file.data).toString('base64')}`;
+    } else {
+      imageFile = require('../layout/images/avatar.jpg');
+    }
+
+    img.src = imageFile;
+    img.alt = "(No Image)";
+    img.className = "img-responsive";
+    img.style.width = "30%";
+    img.style.height = "auto"
+    img.style.borderRadius = "30%"
+
+    myDiv.appendChild(img);
+  }
+
 
   render() {
     return (
@@ -54,7 +77,7 @@ export default class Edit extends Component {
 
                 <div className="card-header center" style={{ overflow: "hidden", height: 400, width: "100%" }}>
                   <h3 style={{ color: "#1167B1" }}><b>{this.state.name}</b></h3>
-                  <img src={require('../layout/images/avatar.jpg')} alt="(Não esquecer de verificar no spam)" className="img-responsive" style={{ height: "auto", width: "300px", borderRadius: '30%' }} />
+                  <div id="userImg"></div>
                 </div>
 
                 <div className="card-content" style={{ paddingLeft: 45, paddingTop: -100 }}>
@@ -97,7 +120,7 @@ export default class Edit extends Component {
 
                 <div className="card-header center" style={{ overflow: "hidden", height: 400, width: "100%" }}>
                   <h3 style={{ color: "#1167B1" }}><b>{this.state.name}</b></h3>
-                  <img src={require('../layout/images/avatar.jpg')} alt="(Não esquecer de verificar no spam)" className="img-responsive" style={{ height: "auto", width: "300px", borderRadius: '30%' }} />
+                  <div id="userImg"></div>
                 </div>
 
                 <div className="card-content" style={{ paddingLeft: 45 }}>
@@ -131,7 +154,7 @@ export default class Edit extends Component {
 
                 <div className="card-header center" style={{ overflow: "hidden", height: 400, width: "100%" }}>
                   <h3 style={{ color: "#1167B1" }}><b>{this.state.name}</b></h3>
-                  <img src={require('../layout/images/avatar.jpg')} alt="(Não esquecer de verificar no spam)" className="img-responsive" style={{ height: "auto", width: "300px", borderRadius: '30%' }} />
+                  <div id="userImg"></div>
                 </div>
 
                 <div className="card-content" style={{ paddingLeft: 45 }}>

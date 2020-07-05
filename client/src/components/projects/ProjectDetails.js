@@ -72,8 +72,6 @@ class ProjectDetails extends Component {
         this.insertImage(response.data[0].img);
       })
       .catch(error => console.log(error));
-
-      
   }
 
   openModal = () => {
@@ -119,15 +117,13 @@ class ProjectDetails extends Component {
     myDiv.appendChild(img);
   }
 
-
   render() {
     return (
       <div>
         <div className="card" style={{ backgroundColor: "#f2f2f2", width: 900, margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px black" }}>
           <div className="card-header center" style={{ overflow: "hidden", height: 400, width: "100%" }}>
             <h2 style={{ color: "#1167B1" }}><b>{this.state.title}</b></h2>
-            <div id="projectImg"></div>
-            
+            <div id="projectImg"></div>    
           </div>
 
           <div className="card-content" style={{ paddingLeft: 50 }}>

@@ -9,10 +9,22 @@ import {
 } from "./types";
 
 // Register User
-export const registerVoluntary = (userData, history) => dispatch => {
+export const registerVoluntary = (userData,file, history) => dispatch => {
     axios
         .post("/api/users/registerVoluntary", userData)
-        .then(res => history.push("/confirmAccount")) // re-direct to login on successful register
+        .then(res => {
+            file.append(
+                "type",
+                "Utilizador"
+            )
+            file.append(
+                "id",
+                res.data.userID
+            )
+            axios
+                .post("api/upload", file)
+                .then(history.push("/confirmAccount"))
+        })
         .catch(err =>
             dispatch({
                 type: GET_ERRORS,
@@ -22,10 +34,22 @@ export const registerVoluntary = (userData, history) => dispatch => {
 };
 
 // Register User
-export const registerCompany = (userData, history) => dispatch => {
+export const registerCompany = (userData,file, history) => dispatch => {
     axios
         .post("/api/users/registerCompany", userData)
-        .then(res => history.push("/confirmAccount")) // re-direct to login on successful register
+        .then(res => {
+            file.append(
+                "type",
+                "Utilizador"
+            )
+            file.append(
+                "id",
+                res.data.userID
+            )
+            axios
+                .post("api/upload", file)
+                .then(history.push("/confirmAccount"))
+        })
         .catch(err =>
             dispatch({
                 type: GET_ERRORS,

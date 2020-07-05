@@ -5,6 +5,7 @@ import { submitProject } from "../../actions/projectActions";
 import classnames from "classnames";
 import M from "materialize-css";
 import options from "materialize-css";
+import Upload from "../upload/Upload";
 
 class Create extends Component {
     constructor(props) {
@@ -26,6 +27,7 @@ class Create extends Component {
             authorization: false,
             responsibleID: this.props.auth.user.id,
             vacancies: "",
+            fileFormData: null,
             errors: {}
         }
 
@@ -105,7 +107,7 @@ class Create extends Component {
             vacancies: this.state.vacancies
         };
 
-        this.props.submitProject(obj, this.props.history);
+        this.props.submitProject(obj, this.state.fileFormData, this.props.history);
     }
 
     onChangeRelatedEntities = e => {
@@ -115,6 +117,9 @@ class Create extends Component {
         this.setState({ [e.target.id]: inputList });
     };
 
+    handleUpload = (formData) => {
+        this.setState({ fileFormData: formData });
+    }
 
     render() {
         const { errors } = this.state;
@@ -379,13 +384,7 @@ class Create extends Component {
 
                             <div className="input-field col s12">
                                 <label htmlFor="name">Logótipo</label><br></br><br></br>
-                                <span className="red-text">{errors.photo}</span>
-                                <input
-                                    accept="image/*"
-                                    type="file"
-                                    className="inputfile"
-                                    onChange={this.uploadFile}
-                                />
+                                <Upload handleUpload={this.handleUpload} isChild={true}></Upload>
                             </div>
 
                             <div className="input-field col s12">

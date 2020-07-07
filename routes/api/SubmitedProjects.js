@@ -42,7 +42,6 @@ router.post("/submitCreateProject", (req, res) => {
         description: req.body.description,
         date: req.body.date,
         interestAreas: req.body.interestAreas,
-        photo: req.body.photo,
         observations: req.body.observations,
         relatedEntities: req.body.relatedEntities,
         responsibleID: req.body.responsibleID,

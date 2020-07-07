@@ -54,7 +54,7 @@ class ConfirmAccountToken extends Component {
 
                         <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                             <h4>
-                                Conclua o processo ao clicar em confirmar.
+                                Conclua o processo clicando em confirmar.
                              </h4>
                         </div>
                         <form noValidate onSubmit={this.onSubmit}>

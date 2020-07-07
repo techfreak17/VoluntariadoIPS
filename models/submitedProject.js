@@ -48,18 +48,9 @@ const SubmitedProjectSchema = new Schema({
         type: Array,
         required: false
     },
-    logo: {
-        data: Buffer,
-        contentType: String
-    },
     observations: {
         type: String,
         required: false
-    },
-    authorization: {
-        type: Boolean,
-        required: true,
-        default: false
     },
     responsibleID: {
         type: Schema.ObjectId,

@@ -112,8 +112,7 @@ class ProjectDetails extends Component {
     img.alt ="(No Image)";
     img.className = "img-responsive";
     img.style.width = "40%";
-    img.style.height = "50%"
-    img.style.borderRadius = "30%"
+    img.style.borderRadius = "5%";
 
     myDiv.appendChild(img);
   }

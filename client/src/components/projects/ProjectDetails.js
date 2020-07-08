@@ -33,7 +33,7 @@ class ProjectDetails extends Component {
       vacanciesToFill: "",
       on: false,
       delete: false,
-      responsibleID : "",
+      responsibleID: "",
     }
   }
 
@@ -59,7 +59,7 @@ class ProjectDetails extends Component {
           role: response.data[1].role,
           vacancies: response.data[0].vacancies,
           vacanciesToFill: response.data[0].vacancies - response.data[0].enroled_IDs.length,
-          responsibleID : response.data[0].responsibleID
+          responsibleID: response.data[0].responsibleID
         });
         var ul = document.getElementById("friendsList");
 
@@ -69,6 +69,7 @@ class ProjectDetails extends Component {
           li.appendChild(document.createTextNode(name));
           ul.appendChild(li);
         }
+        this.insertImage(response.data[0].img);
       })
       .catch(error => console.log(error));
   }
@@ -96,13 +97,33 @@ class ProjectDetails extends Component {
       });
   }
 
+  insertImage = (file) => {
+    let myDiv = document.getElementById("projectImgDetails");
+    let img = document.createElement('img');
+    let imageFile = null;
+
+    if(file){
+      imageFile = `data:${file.contentType};base64,${Buffer.from(file.data).toString('base64')}`;
+    }else{
+      imageFile = require('../layout/images/volun.png');
+    }
+    
+    img.src = imageFile;
+    img.alt ="(No Image)";
+    img.className = "img-responsive";
+    img.style.width = "40%";
+    img.style.borderRadius = "5%";
+
+    myDiv.appendChild(img);
+  }
+
   render() {
     return (
       <div>
         <div className="card" style={{ backgroundColor: "#f2f2f2", width: 900, margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px black" }}>
-          <div className="card-header center" style={{ overflow: "hidden", height: 400, width: "100%" }}>
+          <div className="card-header center" style={{ overflow: "hidden", width: "100%" }}>
             <h2 style={{ color: "#1167B1" }}><b>{this.state.title}</b></h2>
-            <img src={require('../layout/images/volun.png')} alt="(Não esquecer de verificar no spam)" className="img-responsive" style={{ width: "40%", height: "70%" }} />
+            <div id="projectImgDetails"></div>    
           </div>
 
           <div className="card-content" style={{ paddingLeft: 50 }}>
@@ -118,16 +139,8 @@ class ProjectDetails extends Component {
               <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons" style={{ paddingRight: 5 }}>person</i>{this.state.name}</p>
               <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons" style={{ paddingRight: 6 }}>email</i>{this.state.email}</p>
               <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons" style={{ paddingRight: 6 }}>phone</i>{this.state.phone}</p>
-              {(() => {
-                if (this.state.role === "Empresa") {
-                  return (
-                    <div>
-                      <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons" style={{ paddingRight: 6 }}>business</i>{this.state.companyName}</p>
-                      <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons" style={{ paddingRight: 6 }}>navigation</i>{this.state.companyAddress}</p>
-                    </div>
-                  )
-                }
-              })()}
+              <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons" style={{ paddingRight: 6 }}>business</i>{this.state.companyName}</p>
+              <p style={{ display: "flex", alignItems: "center", color: "#000000" }}><i className="material-icons" style={{ paddingRight: 6 }}>navigation</i>{this.state.companyAddress}</p>
               <br></br><p style={{ color: "#000000" }}><b>Número de Vagas Totais do Projeto:</b> {this.state.vacancies}</p>
               <p style={{ color: "#000000" }}><b>Número de Vagas Disponíveis:</b> {this.state.vacanciesToFill}</p><br></br>
               {(() => {
@@ -138,8 +151,8 @@ class ProjectDetails extends Component {
                       <Popup open={this.state.delete}
                         closeOnDocumentClick
                         onClose={this.closeWarning}>
-                        <div className={"Modal container"} style={{ maxWidth: 400, width: "auto", paddingTop: "1%", paddingBottom: "1%" }}>
-                          <h5 style={{ color: "", fontFamily: "Arial" }}>Tem a certeza que pretende dar por concluido este Projecto?</h5>
+                         <div className={"Modal container"} style={{width: "50"}}>
+                          <h5 className= {"center"}>Tem a certeza que pretende dar por concluido este Projecto?</h5>
                           <div>
                             <button className="btn btn-medium waves-effect waves-light hoverable red left" onClick={this.concludeProject}>CONFIRMAR</button>
                             <button className="btn btn-medium waves-effect waves-light hoverable gray right" onClick={this.closeWarning}>CANCELAR</button>
@@ -169,7 +182,7 @@ class ProjectDetails extends Component {
                 closeOnDocumentClick
                 onClose={this.closeModal}>
                 <div className="Modal">
-                  <VoluntariesList projectID={this.props.match.params.id} userID={this.props.auth.user.id} responsibleID ={this.state.responsibleID}></VoluntariesList>
+                  <VoluntariesList projectID={this.props.match.params.id} userID={this.props.auth.user.id} responsibleID={this.state.responsibleID}></VoluntariesList>
                 </div>
               </Popup>
             </div><br></br>

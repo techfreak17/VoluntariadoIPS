@@ -161,6 +161,7 @@ router.route('/updateUser/:id').post(function (req, res) {
         email: newEmail,
         username: user.username
       })
+        .then(user => res.json(user))
         .catch(err => {
           res.status(400).send("unable to update the database");
         });
@@ -192,6 +193,7 @@ router.route('/updateUser/:id').post(function (req, res) {
             reasons: voluntary.reasons,
             observations: voluntary.observations,
           })
+            .then(voluntary => res.json(voluntary))
             .catch(err => {
               res.status(400).send("unable to update the database");
             });
@@ -216,6 +218,7 @@ router.route('/updateUser/:id').post(function (req, res) {
         email: newEmail,
         username: user.username
       })
+        .then(user => res.json(user))
         .catch(err => {
           res.status(400).send("unable to update the database");
         });
@@ -241,6 +244,7 @@ router.route('/updateUser/:id').post(function (req, res) {
             companyAddress: company.companyAddress,
             observations: company.observations,
           })
+            .then(company => res.json(company))
             .catch(err => {
               res.status(400).send("unable to update the database");
             });
@@ -265,22 +269,24 @@ router.route('/deleteUser/:id').get(function (req, res) {
       if (user.role === "Voluntário") {
         Voluntary.findOneAndRemove({ email: user.email }, function (err, voluntary) {
           if (err) res.json(err);
-          else res.json('Successfully removed');
-          createNotification('apagarVoluntario', voluntary.name, 'admin@teste.pt');
+          else
+            createNotification('apagarVoluntario', voluntary.name, 'admin@teste.pt');
+          res.status(202).send("Deleted sucesfull")
         });
       } else if (user.role === "Empresa") {
         Company.findOneAndRemove({ email: user.email }, function (err, company) {
           if (err) res.json(err);
-          else res.json('Successfully removed');
-          createNotification('apagarEntidade', company.name, 'admin@teste.pt');
+          else
+            createNotification('apagarEntidade', company.name, 'admin@teste.pt');
+          res.status(202).send("Deleted sucesfull")
         });
       }
     }
   });
 });
 
-// @route GET api/admin/deleteUser/:id
-// @desc Delete Voluntary User
+// @route GET api/admin/getCompanyUsers/:id
+// @desc Get Company Users
 // @access Private
 router.route('/getCompanyUsers').get(function (req, res) {
   Company.find(function (err, users) {

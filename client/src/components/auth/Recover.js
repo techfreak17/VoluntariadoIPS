@@ -60,8 +60,8 @@ class Recover extends Component {
 
                         <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                             <h4>
-                                <b>Recuperar </b>
-                                Password
+                                Recuperar
+                                <b> Password</b>
                             </h4>
                         </div>
 
@@ -92,7 +92,7 @@ class Recover extends Component {
                                     }}
                                     type="submit"
                                     className="btn btn-large waves-effect waves-light hoverable blue accent-3">
-                                    Recuperar!
+                                    Enviar
                                 </button>
                             </div>
                         </form>

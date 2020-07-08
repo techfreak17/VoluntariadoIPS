@@ -6,6 +6,7 @@ import classnames from "classnames";
 import M from "materialize-css";
 import options from "materialize-css";
 import axios from 'axios';
+import Upload from "../upload/Upload";
 
 class Create extends Component {
   constructor(props) {
@@ -21,19 +22,17 @@ class Create extends Component {
       formation: "",
       date: "",
       interestAreas: [],
-      photo: "",
       relatedEntities: [],
       observations: "",
-      authorization: false,
       users: [],
       selectedUser: "",
       vacancies: "",
+      fileFormData: null,
       errors: {}
     }
 
     this.handleChangeInterestAreas = this.handleChangeInterestAreas.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.uploadFile = this.uploadFile.bind(this);
     this.onChangeRelatedEntities = this.onChangeRelatedEntities.bind(this);
     this.onChange = this.onChange.bind(this);
   }
@@ -59,22 +58,6 @@ class Create extends Component {
       })
   }
 
-  uploadFile(event) {
-    console.log(event.target.files[0]);
-
-    const data = new FormData();
-    data.append('file', event.target.files[0]);
-    data.append('name', 'some value user types');
-    data.append('description', 'some value user types');
-
-  }
-
-  toggleChangeAuthorization = () => {
-    this.setState({
-      authorization: !this.state.authorization,
-    });
-  }
-
   toggleChangeRequiredFormation = () => {
     this.setState({
       requiredFormation: !this.state.requiredFormation,
@@ -86,7 +69,12 @@ class Create extends Component {
   };
 
   handleChangeInterestAreas(event) {
-    this.setState({ interestAreas: Array.from(event.target.selectedOptions, (item) => item.value) });
+    this.setState({
+      interestAreas: Array.from(event.target.selectedOptions, (item) => item.value), validationErrorInterestAreas:
+        event.target.value === ""
+          ? "Deverá preencher o campo Áreas Interesse"
+          : ""
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -114,15 +102,13 @@ class Create extends Component {
       formation: this.state.formation,
       date: this.state.date,
       interestAreas: this.state.interestAreas,
-      photo: this.state.photo,
       observations: this.state.observations,
-      authorization: this.state.authorization,
       relatedEntities: this.state.relatedEntities,
       responsibleID: this.state.selectedUser,
       vacancies: this.state.vacancies
     };
 
-    this.props.createProject(obj, this.props.history);
+    this.props.createProject(obj, this.state.fileFormData, this.props.history);
 
   }
 
@@ -132,6 +118,10 @@ class Create extends Component {
     var inputList = input.split(point);
     this.setState({ [e.target.id]: inputList });
   };
+
+  handleUpload = (formData) => {
+    this.setState({ fileFormData: formData });
+  }
 
   render() {
     const { errors } = this.state;
@@ -152,12 +142,16 @@ class Create extends Component {
 
             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
               <h3>Criar Projeto</h3>
+              <p><b>Nota:</b> Todos os campos a * deverão ser preenchidos.</p>
             </div>
 
             <form noValidate>
               <div className="input-field col s12">
                 <input
-                  onChange={this.onChange}
+                  onChange={e => this.setState({
+                    title: e.target.value,
+                    validationErrorTitle: e.target.value === "" ? "Deverá preencher o campo Designação do Projeto/Atividade" : ""
+                  })}
                   value={this.state.title}
                   error={errors.title}
                   id="title"
@@ -167,12 +161,18 @@ class Create extends Component {
                   })}
                 />
                 <label htmlFor="name">Designação do Projeto/Atividade *</label>
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorTitle}
+                </div>
                 <span className="red-text">{errors.title}</span>
               </div>
 
               <div className="input-field col s12">
                 <input
-                  onChange={this.onChange}
+                  onChange={e => this.setState({
+                    synopsis: e.target.value,
+                    validationErrorSynopsis: e.target.value === "" ? "Deverá preencher o campo Resumo do Projeto/Atividade" : ""
+                  })}
                   value={this.state.synopsis}
                   error={errors.synopsis}
                   id="synopsis"
@@ -181,13 +181,20 @@ class Create extends Component {
                     invalid: errors.synopsis
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorSynopsis}
+                </div>
                 <label htmlFor="name">Resumo do Projeto/Atividade *</label>
                 <span className="red-text">{errors.synopsis}</span>
               </div>
 
               <div className="input-field col s12">
                 <input
-                  onChange={this.onChange}
+                  onChange={e =>
+                    this.setState({
+                      intervationArea: e.target.value,
+                      validationErrorIntervationArea: e.target.value === "" ? "Deverá preencher o campo Área de Intervenção" : ""
+                    })}
                   value={this.state.intervationArea}
                   error={errors.intervationArea}
                   id="intervationArea"
@@ -196,13 +203,20 @@ class Create extends Component {
                     invalid: errors.intervationArea
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorIntervationArea}
+                </div>
                 <label htmlFor="name">Área de Intervenção *</label>
                 <span className="red-text">{errors.intervationArea}</span>
               </div>
 
               <div className="input-field col s12">
                 <input
-                  onChange={this.onChange}
+                  onChange={e =>
+                    this.setState({
+                      target_audience: e.target.value,
+                      validationErrorTargetAudience: e.target.value === "" ? "Deverá preencher o campo Público Alvo (Beneficiários)" : ""
+                    })}
                   value={this.state.target_audience}
                   error={errors.target_audience}
                   id="target_audience"
@@ -211,6 +225,9 @@ class Create extends Component {
                     invalid: errors.target_audience
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorTargetAudience}
+                </div>
                 <label htmlFor="name">Público Alvo (Beneficiários) *</label>
                 <span className="red-text">{errors.target_audience}</span>
               </div>
@@ -232,7 +249,11 @@ class Create extends Component {
 
               <div className="input-field col s12">
                 <input
-                  onChange={this.onChange}
+                  onChange={e =>
+                    this.setState({
+                      description: e.target.value,
+                      validationErrorDescription: e.target.value === "" ? "Deverá preencher o campo Descrição das Atividades" : ""
+                    })}
                   value={this.state.description}
                   error={errors.description}
                   id="description"
@@ -241,6 +262,9 @@ class Create extends Component {
                     invalid: errors.description
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorDescription}
+                </div>
                 <label htmlFor="name">Descrição das Atividades *</label>
                 <span className="red-text">{errors.description}</span>
               </div>
@@ -268,7 +292,10 @@ class Create extends Component {
               <div className="input-field col s12">
                 <label htmlFor="name">Data/Horário Previsto *</label><br></br><br></br>
                 <input
-                  onChange={this.onChange}
+                  onChange={e => this.setState({
+                    date: e.target.value,
+                    validationErrorDate: e.target.value === "" ? "Deverá preencher o campo Data/Horário Previsto" : ""
+                  })}
                   value={this.state.date}
                   error={errors.date}
                   id="date"
@@ -277,6 +304,9 @@ class Create extends Component {
                     invalid: errors.date
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorDate}
+                </div>
                 <span className="red-text">{errors.date}</span>
               </div>
 
@@ -299,6 +329,9 @@ class Create extends Component {
                   <option value="Saúde">Saúde (por ex. rastreios, ações de sensibilização…)</option>
                   <option value="Social">Social (por ex. apoio a idosos, a crianças, Banco Alimentar…)</option>
                 </select>
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorInterestAreas}
+                </div>
                 <span className="red-text">{errors.interestAreas}</span>
               </div>
 
@@ -336,7 +369,10 @@ class Create extends Component {
 
               <div className="input-field col s12">
                 <input
-                  onChange={this.onChange}
+                  onChange={e => this.setState({
+                    vacancies: e.target.value,
+                    validationErrorVacancies: e.target.value === "" ? "Deverá preencher o campo Nº Máximo de Vagas" : ""
+                  })}
                   value={this.state.vacancies}
                   error={errors.vacancies}
                   id="vacancies"
@@ -345,32 +381,20 @@ class Create extends Component {
                     invalid: errors.vacancies
                   })}
                 />
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  {this.state.validationErrorVacancies}
+                </div>
                 <label htmlFor="name">Nº Máximo de Vagas *</label>
                 <span className="red-text">{errors.vacancies}</span>
               </div>
 
               <div className="input-field col s12">
                 <label htmlFor="name">Logótipo</label><br></br><br></br>
-                <input
-                  accept="image/*"
-                  type="file"
-                  className="inputfile"
-                  onChange={this.uploadFile}
-                />
+                <Upload handleUpload={this.handleUpload} isChild={true}></Upload>
               </div>
 
-              <div className="input-field col s12">
-                <b>Autorização RGPD *</b>
-                <label>
-                  <br></br>
-                  <input type="checkbox" checked={this.state.authorization} onChange={this.toggleChangeAuthorization} />
-                  <span>Consinto, ao abrigo do Regulamento Geral de Proteção de Dados (RGPD), a utilização dos meus dados pessoais, fornecidos no formulário, ficando informado/a do direito a retirar o consentimento a qualquer momento e que o tratamento de dados é da responsabilidade do IPS, sendo-lhe aplicada a Política de Proteção de Dados do IPS.</span>
-                  <br></br>
-                  <a href="http://www.si.ips.pt/ips_si/web_base.gera_pagina?P_pagina=40723" rel="noopener noreferrer" target="_blank">(Disponível aqui)</a>
-                </label>
-              </div>
             </form>
-            <div className="col s12" style={{ marginTop: "30%", marginBottom: "20%" }}>
+            <div className="col s12" style={{ marginTop: "auto", marginBottom: "20%" }}>
               <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "16%" }}
                 type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Submeter
               </button>

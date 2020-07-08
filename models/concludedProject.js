@@ -48,19 +48,9 @@ const ConcludedProjectSchema = new Schema({
         type: Array,
         required: false
     },
-    logo: {
-        data: Buffer,
-        contentType: String,
-        required: false
-    },
     observations: {
         type: String,
         required: false
-    },
-    authorization: {
-        type: Boolean,
-        required: true,
-        default: false
     },
     responsibleID: {
         type: Schema.ObjectId,

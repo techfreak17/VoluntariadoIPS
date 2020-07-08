@@ -42,7 +42,6 @@ router.post("/submitCreateProject", (req, res) => {
         description: req.body.description,
         date: req.body.date,
         interestAreas: req.body.interestAreas,
-        photo: req.body.photo,
         observations: req.body.observations,
         relatedEntities: req.body.relatedEntities,
         responsibleID: req.body.responsibleID,
@@ -131,8 +130,8 @@ router.route('/submitDeleteProject/:id').get(function (req, res) {
   });
 });
 
-// @route GET api/submitedProjects/listProjects
-// @desc Get List of Projects
+// @route GET api/submitedProjects/listSubmitedProjects
+// @desc Get List of Submited Projects
 // @access Private
 router.route('/listSubmitedProjects').get(function (req, res) {
   SubmitedProject.find(function (err, submitedProject) {
@@ -145,8 +144,8 @@ router.route('/listSubmitedProjects').get(function (req, res) {
   });
 });
 
-// @route GET api/submitedProjects/searchProject
-// @desc Search Project
+// @route GET api/submitedProjects/searchSubmitedProject
+// @desc Search Submited Project
 // @access Private
 router.post("/searchSubmitedProject", (req, res) => {
   SubmitedProject.find({ title: { $regex: req.body.search, $options: "i" } }).then(submitedProject => {

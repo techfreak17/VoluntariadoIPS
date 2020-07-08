@@ -65,8 +65,8 @@ class TableRowUsers extends Component {
          <Popup open={this.state.delete}
             closeOnDocumentClick
             onClose={this.closeWarning}>
-            <div className={"Modal container"} style={{ maxWidth: 400, width: "auto", paddingTop: "1%", paddingBottom: "1%" }}>
-              <h5 style={{ color: "", fontFamily: "Arial" }}>Tem a certeza que pretende apagar este Utilizador?</h5>
+             <div className={"Modal container"} style={{width: "50"}}>
+              <h5 className= {"center"}>Tem a certeza que pretende apagar este Utilizador?</h5>
               <div>
                 <button className="btn btn-medium waves-effect waves-light hoverable red left" onClick={this.delete}>CONFIRMAR</button>
                 <button className="btn btn-medium waves-effect waves-light hoverable gray right" onClick={this.closeWarning}>CANCELAR</button>

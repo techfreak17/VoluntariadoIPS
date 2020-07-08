@@ -49,6 +49,7 @@ class Profile extends Component {
                     birthDate: date,
                     role: this.props.auth.user.role
                 });
+                this.insertImage(response.data[0].img);
             });
     }
 
@@ -60,6 +61,28 @@ class Profile extends Component {
         }
     }
 
+    insertImage = (file) => {
+        let myDiv = document.getElementById("userImgProfile");
+        let img = document.createElement('img');
+        let imageFile = null;
+
+        if (file) {
+            imageFile = `data:${file.contentType};base64,${Buffer.from(file.data).toString('base64')}`;
+        } else {
+            imageFile = require('../layout/images/avatar.jpg');
+        }
+
+        img.src = imageFile;
+        img.alt = "(No Image)";
+        img.className = "img-responsive";
+        img.style.width = "250px";
+        img.style.height = "auto";
+        img.style.borderRadius = "50%";
+        img.style.paddingTop = "20%";
+
+        myDiv.appendChild(img);
+    }
+
     render() {
         return (
             <div style={{ paddingBottom: 50 }}>
@@ -67,11 +90,7 @@ class Profile extends Component {
                     <div className='row'>
                         <div className='col s5 center'>
                             <div>
-                                <a className="" href="/dashboard"><img src={require('../layout/images/avatar.jpg')}
-                                    alt="Avatar"
-                                    className="img-responsive"
-                                    style={{ position: "relative", height: "auto", width: "250px", paddingTop: '20%', borderRadius: '50%' }} />
-                                </a>
+                                <div id="userImgProfile"></div>
                                 <h4>{this.state.name}</h4>
                                 <h4 style={{ fontWeight: "bold" }}>{this.state.role}</h4>
                                 {(() => {
@@ -110,16 +129,16 @@ class Profile extends Component {
                                         <input readOnly value={this.state.phone}></input>
                                         <h5 style={{ fontWeight: 'bold' }}>Data Nascimento</h5>
                                         <input readOnly type="date" value={this.state.birthDate} />
-                                        <h5 style={{ fontWeight: 'bold' }}>Morada (Concelho)</h5>
-                                        <input readOnly value={this.state.address}></input>
                                         <h5 style={{ fontWeight: 'bold' }}>Escola</h5>
                                         <input readOnly value={this.state.school}></input>
                                         {(() => {
-                                            if (this.state.course !== "") {
+                                            if (this.state.course !== "" && this.state.address !== "") {
                                                 return (
                                                     <div>
                                                         <h5 style={{ fontWeight: 'bold' }}>Curso</h5>
                                                         <input readOnly value={this.state.course}></input>
+                                                        <h5 style={{ fontWeight: 'bold' }}>Morada (Concelho)</h5>
+                                                        <input readOnly value={this.state.address}></input>
                                                     </div>
                                                 )
                                             }
@@ -142,8 +161,16 @@ class Profile extends Component {
                                         <input readOnly value={this.state.phone}></input>
                                         <h5 style={{ fontWeight: 'bold' }}>Data Nascimento</h5>
                                         <input readOnly type="date" value={this.state.birthDate} />
-                                        <h5 style={{ fontWeight: 'bold' }}>Morada (Concelho)</h5>
-                                        <input readOnly value={this.state.address}></input>
+                                        {(() => {
+                                            if (this.state.address !== "") {
+                                                return (
+                                                    <div>
+                                                        <h5 style={{ fontWeight: 'bold' }}>Morada (Concelho)</h5>
+                                                        <input readOnly value={this.state.address}></input>
+                                                    </div>
+                                                )
+                                            }
+                                        })()}
                                         <h5 style={{ fontWeight: 'bold' }}>Nome Empresa</h5>
                                         <input readOnly value={this.state.companyName}></input>
                                         <h5 style={{ fontWeight: 'bold' }}>Morada (Concelho) Empresa</h5>
@@ -164,8 +191,16 @@ class Profile extends Component {
                                         <input readOnly value={this.state.phone}></input>
                                         <h5 style={{ fontWeight: 'bold' }}>Data Nascimento</h5>
                                         <input readOnly type="date" value={this.state.birthDate} />
-                                        <h5 style={{ fontWeight: 'bold' }}>Morada (Concelho)</h5>
-                                        <input readOnly value={this.state.address}></input>
+                                        {(() => {
+                                            if (this.state.address !== "") {
+                                                return (
+                                                    <div>
+                                                        <h5 style={{ fontWeight: 'bold' }}>Morada (Concelho)</h5>
+                                                        <input readOnly value={this.state.address}></input>
+                                                    </div>
+                                                )
+                                            }
+                                        })()}
                                     </div>
                                 )
                             }

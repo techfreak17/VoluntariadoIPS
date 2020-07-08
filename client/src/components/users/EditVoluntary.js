@@ -3,8 +3,12 @@ import axios from 'axios';
 import M from "materialize-css";
 import options from "materialize-css";
 import classnames from "classnames";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { editUser } from "../../actions/userActions";
+import Upload from "../upload/Upload";
 
-export default class EditVoluntary extends Component {
+class EditVoluntary extends Component {
   constructor(props) {
     super(props);
 
@@ -68,6 +72,14 @@ export default class EditVoluntary extends Component {
       .catch(error => console.log(error));
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
+  }
+
   onChange = e => {
     this.setState({ [e.target.id]: e.target.value });
   };
@@ -111,10 +123,8 @@ export default class EditVoluntary extends Component {
       birthDate: this.state.birthDate,
       role: this.state.role
     };
-    axios
-      .post('/api/admin/updateUser/' + this.props.match.params.id, obj)
-    this.props.history.push('/listUsers');
-    window.location.reload();
+
+    this.props.editUser(this.props.match.params.id, obj, this.props.history);
   }
 
   render() {
@@ -131,6 +141,7 @@ export default class EditVoluntary extends Component {
         <div className="row">
           <div className="col s8 offset-s2">
             <h3>Editar Detalhes</h3>
+            <p><b>Nota:</b> Todos os campos a * deverão ser preenchidos.</p>
             <form noValidate>
               <div className="input-field col s12">
                 <label htmlFor="name">Username *</label><br></br>
@@ -373,6 +384,11 @@ export default class EditVoluntary extends Component {
                 <span className="red-text">{errors.observations}</span>
               </div>
 
+              <div className="input-field col s12">
+                <label htmlFor="name">Logótipo</label><br></br><br></br>
+                <Upload type="Utilizador" id={this.props.match.params.id}></Upload>
+              </div>
+
             </form>
             <div className="col s12" style={{ marginTop: "1%", paddingBottom: 60 }}>
               <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "20%" }}
@@ -388,3 +404,19 @@ export default class EditVoluntary extends Component {
     )
   }
 }
+
+EditVoluntary.propTypes = {
+  editUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { editUser }
+)(EditVoluntary);

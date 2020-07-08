@@ -48,19 +48,9 @@ const ProjectSchema = new Schema({
         type: Array,
         required: false
     },
-    logo: {
-        data: Buffer,
-        contentType: String,
-        required: false
-    },
     observations: {
         type: String,
         required: false
-    },
-    authorization: {
-        type: Boolean,
-        required: true,
-        default: false
     },
     responsibleID: {
         type: Schema.ObjectId,
@@ -80,9 +70,13 @@ const ProjectSchema = new Schema({
         type: Number,
         required: true
     },
-    ended:{
-        type: Boolean,
-        default: false
+    img: { 
+        data: Buffer, 
+        contentType: String 
+    },
+    file:{
+        data: Buffer,
+        contentType: String
     }
 });
 module.exports = mongoose.model("Projects", ProjectSchema);

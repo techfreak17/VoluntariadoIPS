@@ -47,6 +47,7 @@ import CompanySubmitedProjectsDetails from "./components/companyProjects/Company
 import VoluntariesList from "./components/projects/VoluntariesList.js";
 import StatisticsNumberUsers from "./components/stats/StatisticsNumberUsers.js";
 import StatisticsNumberProjects from "./components/stats/StatisticsNumberProjects.js";
+import Upload from "./components/upload/Upload.js";
 import StatisticsRatingProjects from "./components/stats/StatisticsRatingProjects.js";
 import StatisticsVoluntary from "./components/stats/StatisticsVoluntary.js";
 import StatisticsProjectComparison from "./components/stats/StatisticsProjectComparison.js"
@@ -95,6 +96,7 @@ class App extends Component {
             <Route exact path="/resetpassword/:token" component={ResetPassword} />
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute exact path="/uploadFile" component={Upload} />
               <PrivateRoute path='/listProjects' component={ IndexProjects } />
               <PrivateRoute path='/getProject/:id' component={ ProjectDetails } />
               <PrivateRoute path="/baseProfile/:id" component={Profile}/>

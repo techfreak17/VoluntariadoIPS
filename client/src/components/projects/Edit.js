@@ -5,6 +5,8 @@ import options from "materialize-css";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import Upload from "../upload/Upload";
+import { editProject } from "../../actions/projectActions";
 
 class Edit extends Component {
   constructor(props) {
@@ -24,6 +26,7 @@ class Edit extends Component {
       users: [],
       selectedUser: "",
       vacancies: "",
+      file: false,
       errors: {}
     }
 
@@ -69,7 +72,7 @@ class Edit extends Component {
           photo: responseArr[0].data.photo,
           observations: responseArr[0].data.observations,
           relatedEntities: responseArr[0].data.relatedEntities,
-          selectedUser: responseArr[1].data[0].responsibleID,
+          selectedUser: responseArr[0].data.responsibleID,
           users: responseArr[1].data,
           vacancies: responseArr[0].data.vacancies
         });
@@ -80,8 +83,16 @@ class Edit extends Component {
     this.setState({ [e.target.id]: e.target.value });
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
+  }
+
   onSubmit(e) {
-    console.log(this.state.selectedUser);
+    console.log(this.state.errors);
     e.preventDefault();
     const obj = {
       title: this.state.title,
@@ -99,9 +110,7 @@ class Edit extends Component {
       vacancies: this.state.vacancies
     };
 
-    axios.post('/api/projects/updateProject/' + this.props.match.params.id, obj)
-    this.props.history.push('/listProjects');
-    window.location.reload();
+    this.props.editProject(this.props.match.params.id, obj, this.props.history);
   }
 
   handleChangeInterestAreas(event) {
@@ -124,6 +133,13 @@ class Edit extends Component {
     window.history.back();
   }
 
+  openWarning = () => {
+    this.setState({ file: true });
+  }
+  closeWarning = () => {
+    this.setState({ file: false });
+  }
+
   render() {
     const { errors } = this.state;
 
@@ -141,6 +157,7 @@ class Edit extends Component {
         <div className="row">
           <div className="col s8 offset-s2">
             <h3 align="left">Editar Detalhes</h3>
+            <p><b>Nota:</b> Todos os campos a * deverão ser preenchidos.</p>
             <form noValidate>
               <div className="input-field col s12">
                 <label>Designação do Projeto/Atividade *</label><br></br><br></br>
@@ -320,7 +337,6 @@ class Edit extends Component {
                         <select value={this.state.selectedUser} onChange={e =>
                           this.setState({
                             selectedUser: e.target.value,
-                            validationErrorSelectedUser: e.target.value === "" ? "Deverá preencher o campo Responsável" : ""
                           })}
                           error={errors.selectedUser}
                           className="browser-default"
@@ -328,9 +344,6 @@ class Edit extends Component {
                           type="text">
                           {optionTemplate}
                         </select>
-                        <div style={{ color: "red", marginTop: "5px" }}>
-                          {this.state.validationErrorSelectedUser}
-                        </div>
                         <span className="red-text">{errors.selectedUser}</span>
                       </div>
                     </div>
@@ -391,17 +404,13 @@ class Edit extends Component {
 
               <div className="input-field col s12">
                 <label htmlFor="name">Logótipo</label><br></br><br></br>
-                <input
-                  accept="image/*"
-                  type="file"
-                  className="inputfile"
-                  onChange={this.uploadFile}
-                />
+                <Upload type="Project" id={this.props.match.params.id}></Upload>
               </div>
+              
             </form>
             <div className="col s12" style={{ marginTop: "auto", marginBottom: "10%" }}>
               <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "20%" }}
-                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable accent-3 blue">Editar
+                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable accent-3 blue">Submeter
               </button>
               <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "20%" }}
                 onClick={this.goBack} className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
@@ -416,6 +425,7 @@ class Edit extends Component {
 }
 
 Edit.propTypes = {
+  editProject: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -427,6 +437,6 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { Edit }
+  { editProject }
 )(Edit);
 

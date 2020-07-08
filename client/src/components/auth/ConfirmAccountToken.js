@@ -54,7 +54,7 @@ class ConfirmAccountToken extends Component {
 
                         <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                             <h4>
-                                Conclui o processo ao clicar no botão abaixo!
+                                Conclua o processo clicando em confirmar.
                              </h4>
                         </div>
                         <form noValidate onSubmit={this.onSubmit}>
@@ -68,7 +68,7 @@ class ConfirmAccountToken extends Component {
                                     }}
                                     type="submit"
                                     className="btn btn-large waves-effect waves-light hoverable blue accent-3">
-                                    Confirmar!
+                                    Confirmar
                         </button>
                             </div>
                         </form>

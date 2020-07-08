@@ -5,21 +5,23 @@ import {
 } from "./types";
 
 // Create Voluntary User
-export const createVoluntary = (userData,file, history) => dispatch => {
+export const createVoluntary = (userData, file, history) => dispatch => {
     axios
         .post("/api/admin/createVoluntaryUser", userData)
         .then(res => {
-            file.append(
-                "type",
-                "Utilizador"
-            )
-            file.append(
-                "id",
-                res.data.userID
-            )
-            axios
-                .post("api/upload", file)
-                .then(history.push("/listUsers"))
+            history.push("/listUsers")
+            if (file !== null) {
+                file.append(
+                    "type",
+                    "Utilizador"
+                )
+                file.append(
+                    "id",
+                    res.data.userID
+                )
+                axios
+                    .post("api/upload", file)
+            }
         })
         .catch(err =>
             dispatch({
@@ -30,22 +32,23 @@ export const createVoluntary = (userData,file, history) => dispatch => {
 };
 
 // Create Company User
-export const createCompany = (userData,file,history) => dispatch => {
+export const createCompany = (userData, file, history) => dispatch => {
     axios
         .post("/api/admin/createCompanyUser", userData)
         .then(res => {
-            console.log(res);
-            file.append(
-                "type",
-                "Utilizador"
-            )
-            file.append(
-                "id",
-                res.data.responsibleID
-            )
-            axios
-                .post("api/upload", file)
-                .then(history.push("/listUsers"))
+            history.push("/listUsers")
+            if (file !== null) {
+                file.append(
+                    "type",
+                    "Utilizador"
+                )
+                file.append(
+                    "id",
+                    res.data.responsibleID
+                )
+                axios
+                    .post("api/upload", file)
+            }
         })
         .catch(err =>
             dispatch({

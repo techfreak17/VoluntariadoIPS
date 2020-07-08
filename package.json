@@ -50,6 +50,7 @@
     "vue": "^2.6.11"
   },
   "devDependencies": {
+    "mocha": "^8.0.1",
     "nodemon": "^2.0.4"
   }
 }

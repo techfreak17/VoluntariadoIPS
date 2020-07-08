@@ -21,6 +21,7 @@ const Voluntary = require("../../models/voluntary");
 const Company = require("../../models/company");
 const Token = require("../../models/token");
 const Administrator = require("../../models/administrator");
+const { use } = require("chai");
 
 const buildJSON = (...files) => {
   var obj = {}
@@ -358,6 +359,20 @@ router.route('/getUserDetails/:id').get(function (req, res) {
   });
 });
 
+// @route GET api/users/getUser/:id
+// @desc Get User Details
+// @access Private
+router.route('/getUser/:id').get(function (req, res) {
+  let id = req.params.id;
+  User.findById(id, function (err, user) {
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).send("data is not found");
+    }
+  });
+});
+
 // @route POST api/users/updateUser/:id
 // @desc Update User
 // @access Private
@@ -367,7 +382,7 @@ router.route('/updateUser/:id').post(function (req, res) {
       res.status(404).send("data is not found");
     }
     if (user.role === "Voluntário") {
-      
+
       const { errors, isValid } = validateEditInputAdminProfileUser(req.body);
       // Check validation
       if (!isValid) {

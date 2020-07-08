@@ -115,6 +115,10 @@ class CompanyProjectDetails extends Component {
     myDiv.appendChild(img);
   }
 
+  goBack() {
+    window.history.back();
+  }
+
   render() {
     return (
       <div>
@@ -185,8 +189,8 @@ class CompanyProjectDetails extends Component {
                 </div>
               </Popup>
             </div><br></br>
-            <Link to="/listProjects" style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold", }}
-              className="btn btn-large waves-effect waves-light hoverable black center">Voltar</Link>
+            <button onClick={this.goBack} style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold", }}
+              className="btn btn-large waves-effect waves-light hoverable black center">Voltar</button>
           </div>
         </div>
       </div>

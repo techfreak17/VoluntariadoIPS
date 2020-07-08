@@ -3,6 +3,7 @@ var chai = require('chai');
 var chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 var server = require('../server');
+const mongoose = require("mongoose");
 
 var projectID;
 var userID;
@@ -23,9 +24,10 @@ describe('Testar Projetos', function () {
         photo: "",
         observations: "Lorem Ipsum",
         relatedEntities: "Lorem Ipsum",
-        responsibleID: "Abílio Lários",
+        responsibleID: mongoose.Types.ObjectId("5f013715f5874954b08679d1"),
         requiredFormation: false,
-        formation: "Lorem Ipsum"
+        formation: "Lorem Ipsum",
+        vacancies: 50
       })
       .then(res => {
         projectID = res.body._id;
@@ -68,9 +70,10 @@ describe('Testar Projetos', function () {
         photo: "",
         observations: "Lorem Ipsum",
         relatedEntities: "Lorem Ipsum",
-        responsibleID: "Abílio Lários",
+        responsibleID: mongoose.Types.ObjectId("5f013715f5874954b08679d1"),
         requiredFormation: false,
-        formation: "Lorem Ipsum"
+        formation: "Lorem Ipsum",
+        vacancies: 60
       })
       .then(res => {
         try {
@@ -171,6 +174,7 @@ describe('Testar Utilizadores', function () {
         listProjects: "Lorem Ipsum"
       })
       .then(res => {
+        console.log(res.body);
         try {
           assert.equal(res.body.name, 'Test Name 2');
           assert.equal(res.body.address, 'Test Address update');

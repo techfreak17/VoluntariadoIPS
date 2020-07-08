@@ -97,7 +97,6 @@ class Create extends Component {
             formation: this.state.formation,
             date: this.state.date,
             interestAreas: this.state.interestAreas,
-            photo: this.state.photo,
             observations: this.state.observations,
             relatedEntities: this.state.relatedEntities,
             responsibleID: this.state.responsibleID,

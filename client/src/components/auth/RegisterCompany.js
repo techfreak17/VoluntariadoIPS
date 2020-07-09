@@ -329,7 +329,7 @@ class RegisterCompany extends Component {
 
                             <div className="input-field col s12">
                                 <label htmlFor="name">Logótipo</label><br></br><br></br>
-                                <Upload handleUpload={this.handleUpload} isChild={true}></Upload>
+                                <Upload handleUpload={this.handleUpload}></Upload>
                             </div>
 
                             <div className="input-field col s12">

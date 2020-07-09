@@ -24,7 +24,7 @@ export const registerVoluntary = (userData, file, history) => dispatch => {
                     res.data._id
                 )
                 axios
-                    .post("api/upload", file)
+                    .post("api/upload/file", file)
             }
         })
         .catch(err =>
@@ -51,7 +51,7 @@ export const registerCompany = (userData, file, history) => dispatch => {
                     res.data._id
                 )
                 axios
-                    .post("api/upload", file)
+                    .post("api/upload/file", file)
             }
         })
         .catch(err =>

@@ -20,7 +20,7 @@ export const createProject = (projectData, file, history) => dispatch => {
             )
             console.log(file);
             axios
-                .post("api/upload", file)
+                .post("api/upload/file", file)
                 .then(history.push("/listProjects"));
             } else {
                 history.push("/listProjects");
@@ -52,7 +52,7 @@ export const submitProject = (projectData, file, history) => dispatch => {
                 )
                 console.log(file);
                 axios
-                    .post("api/upload", file)
+                    .post("api/upload/file", file)
             }
         }).catch(err =>
             dispatch({
@@ -78,7 +78,7 @@ export const editProject = (projectID, file, projectData, history) => dispatch =
                     res.data._id
                 )
                 axios
-                    .post("api/upload", file)
+                    .post("api/upload/file", file)
             }
         }).catch(err =>
             dispatch({

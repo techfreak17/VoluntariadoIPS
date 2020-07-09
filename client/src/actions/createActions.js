@@ -20,7 +20,7 @@ export const createVoluntary = (userData, file, history) => dispatch => {
                     res.data.userID
                 )
                 axios
-                    .post("api/upload", file)
+                    .post("api/upload/file", file)
             }
         })
         .catch(err =>
@@ -47,7 +47,7 @@ export const createCompany = (userData, file, history) => dispatch => {
                     res.data.responsibleID
                 )
                 axios
-                    .post("api/upload", file)
+                    .post("api/upload/file", file)
             }
         })
         .catch(err =>

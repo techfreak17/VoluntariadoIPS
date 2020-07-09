@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { Component } from 'react';
 
 class Upload extends Component {
@@ -13,13 +12,12 @@ class Upload extends Component {
 
         // Update the state 
         this.setState({ selectedFile: event.target.files[0] });
-        onFileUpload(event);
+        this.onFileUpload(event.target.files[0]);
 
     };
 
     // On file upload (click the upload button) 
-    onFileUpload = (event) => {
-        event.preventDefault();
+    onFileUpload = (file) => {
 
         // Create an object of formData 
         const formData = new FormData();
@@ -27,8 +25,8 @@ class Upload extends Component {
         // Update the formData object 
         formData.append(
             "myFile",
-            this.state.selectedFile,
-            this.state.selectedFile.name
+            file,
+            file.name
         );
 
 

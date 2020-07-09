@@ -2,8 +2,9 @@ const formidable = require('formidable');
 const Project = require("../../models/project");
 const SubmitedProject = require("../../models/submitedProject");
 const User = require("../../models/user");
-const Voluntary = require("../../models/voluntary");
 const fs = require("fs");
+const express = require("express");
+const router = express.Router();
 
 buildResponse = (myStatus, myObj) => {
   var auxStatus = 500;
@@ -18,6 +19,7 @@ buildResponse = (myStatus, myObj) => {
     if (myStatus === undefined) {
       auxStatus = 200;
     }
+    return {status: auxStatus, obj: auxObj};
   }
 
   return JSON.stringify({ status: auxStatus, obj: auxObj });
@@ -73,7 +75,7 @@ addFileToProject = (id, file) => {
   });
 };
 
-module.exports = function upload(req, res) {
+router.post("/file", function (req, res) {
   const form = new formidable.IncomingForm();
   var resJSON;
 
@@ -95,8 +97,10 @@ module.exports = function upload(req, res) {
     if (resJSON) {
       res.status(resJSON.status).json(resJSON.obj);
     } else {
-      res.status(400).json({ error: "Appearantly, it died" });
+      res.status(202).json({ error: "Appearantly, it's not the best option" });
     }
 
   });
-};
+});
+
+module.exports = router;

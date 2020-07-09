@@ -207,7 +207,7 @@ class EditProfileAdmin extends Component {
 
                             <div className="input-field col s12">
                                 <label htmlFor="name">Logótipo</label><br></br><br></br>
-                                <Upload handleUpload={this.handleUpload} isChild={true}></Upload>
+                                <Upload handleUpload={this.handleUpload} ></Upload>
                             </div>
                         </form>
                         <div className="col s12" style={{ marginTop: "1%", paddingBottom: 60 }}>

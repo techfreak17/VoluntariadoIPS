@@ -33,7 +33,7 @@ export const editUser = (userID, file, userData, history) => dispatch => {
                     res.data[0]._id
                 )
                 axios
-                    .post("api/upload", file)
+                    .post("api/upload/file", file)
             }
         })
         .catch(err =>

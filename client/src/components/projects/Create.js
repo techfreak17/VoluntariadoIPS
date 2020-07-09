@@ -313,7 +313,7 @@ class Create extends Component {
               </div>
 
               <div className="input-field col s12">
-                <label>Para a concretização do Projeto/Atividades, em que áreas necessita de voluntários*</label><br></br>
+                <label>Para a concretização do Projeto/Atividades, em que áreas necessita de voluntários*</label><br></br><br></br>
                 <select required multiple={true} value={this.state.interestAreas} onChange={this.handleChangeInterestAreas}
                   error={errors.interestAreas}
                   className={classnames("", {
@@ -396,12 +396,12 @@ class Create extends Component {
               </div>
 
             </form>
-            <div className="botoes col s12" style={{ marginTop: "auto", marginBottom: "10%", display: "flex", justifyContent: "space-around"}}>
+            <div className="botoes col s12" style={{ marginTop: "auto", marginBottom: 70, display: "flex", justifyContent: "space-around"}}>
               <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5}}
-                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Submeter
+                type="submit" onClick={this.onSubmit} className="btn-large hoverable blue accent-3">Submeter
               </button>
               <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red"}}
-                onClick={this.goBack} className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
+                onClick={this.goBack} className="btn-large hoverable accent-3">Cancelar
               </button>
             </div>
           </div>

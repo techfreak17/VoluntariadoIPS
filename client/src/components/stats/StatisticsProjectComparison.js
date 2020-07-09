@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import axios from 'axios';
-import Chart from 'react-apexcharts'
+import Chart from 'react-apexcharts';
+import "../../componentsCSS/Stats.css";
 
 class StatisticsProjectComparison extends Component {
 
@@ -37,7 +38,7 @@ class StatisticsProjectComparison extends Component {
         return (
             <div className="container">
                 <h3 className="center"><b>Lista dos Projetos</b></h3>
-                <div style={{ display: "flex", justifyContent: "center"}}>
+                <div className="chart" style={{ display: "flex", justifyContent: "center"}}>
                     <Chart options={this.state.options} series={this.state.options.series} type="donut" width="165%" />
                 </div>
             </div>

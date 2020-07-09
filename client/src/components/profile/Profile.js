@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import "../../componentsCSS/Profile.css";
 
 
 class Profile extends Component {
@@ -88,7 +89,7 @@ class Profile extends Component {
             <div style={{ paddingBottom: 50 }}>
                 <div className='container'>
                     <div className='row'>
-                        <div className='col s5 center'>
+                        <div className='editar col s6 center'>
                             <div>
                                 <div id="userImgProfile"></div>
                                 <h4>{this.state.name}</h4>
@@ -120,7 +121,7 @@ class Profile extends Component {
                         {(() => {
                             if (this.props.auth.user.role === "Voluntário") {
                                 return (
-                                    <div className='col s7' style={{ marginTop: 20 }}>
+                                    <div className='info col s6' style={{ marginTop: 20 }}>
                                         <h5 style={{ fontWeight: 'bold' }}>Nome Completo</h5>
                                         <input readOnly value={this.state.name}></input>
                                         <h5 style={{ fontWeight: 'bold' }}>Email</h5>
@@ -152,7 +153,7 @@ class Profile extends Component {
                         {(() => {
                             if (this.props.auth.user.role === "Empresa") {
                                 return (
-                                    <div className='col s7' style={{ marginTop: 20 }}>
+                                    <div className='info col s6' style={{ marginTop: 20 }}>
                                         <h5 style={{ fontWeight: 'bold' }}>Nome Completo</h5>
                                         <input readOnly value={this.state.name}></input>
                                         <h5 style={{ fontWeight: 'bold' }}>Email</h5>
@@ -182,7 +183,7 @@ class Profile extends Component {
                         {(() => {
                             if (this.props.auth.user.role === "Administrador") {
                                 return (
-                                    <div className='col s7' style={{ marginTop: 20 }}>
+                                    <div className='info col s6' style={{ marginTop: 20 }}>
                                         <h5 style={{ fontWeight: 'bold' }}>Nome Completo</h5>
                                         <input readOnly value={this.state.name}></input>
                                         <h5 style={{ fontWeight: 'bold' }}>Email</h5>

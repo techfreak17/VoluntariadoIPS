@@ -420,7 +420,7 @@ class CreateVoluntaryUser extends Component {
                             </div>
 
                         </form>
-                        <div className="botoes col s12" style={{ marginTop: "auto", marginBottom: "10%", display: "flex", justifyContent: "space-around"}}>
+                        <div className="botoes col s12" style={{ marginTop: "auto", marginBottom: 70, display: "flex", justifyContent: "space-around"}}>
                             <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5}}
                                 type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Submeter
                             </button>

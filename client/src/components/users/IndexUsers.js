@@ -64,7 +64,7 @@ export default class IndexUsers extends Component {
               borderRadius: 5,
               letterSpacing: "1px",
               backgroundColor: "#23395D",
-              marginLeft: 10
+              margin: 10
             }}> Criar Voluntário</Link>
 
           <Link to="/createCompanyUser" className="right btn waves-effect waves-light hoverable"
@@ -72,7 +72,7 @@ export default class IndexUsers extends Component {
               borderRadius: 5,
               letterSpacing: "1px",
               backgroundColor: "#23395D",
-              marginRight: 10
+              margin: 10
             }}> Criar Empresa</Link>
         </p>
         <form onSubmit={this.onSubmit}>

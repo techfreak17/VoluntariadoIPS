@@ -26,7 +26,7 @@ class Edit extends Component {
       users: [],
       selectedUser: "",
       vacancies: "",
-      file: false,
+      fileFormData: null,
       errors: {}
     }
 
@@ -110,7 +110,7 @@ class Edit extends Component {
       vacancies: this.state.vacancies
     };
 
-    this.props.editProject(this.props.match.params.id, obj, this.props.history);
+    this.props.editProject(this.props.match.params.id, this.state.fileFormData, obj, this.props.history);
   }
 
   handleChangeInterestAreas(event) {
@@ -138,6 +138,10 @@ class Edit extends Component {
   }
   closeWarning = () => {
     this.setState({ file: false });
+  }
+
+  handleUpload = (formData) => {
+    this.setState({ fileFormData: formData });
   }
 
   render() {
@@ -404,9 +408,9 @@ class Edit extends Component {
 
               <div className="input-field col s12">
                 <label htmlFor="name">Logótipo</label><br></br><br></br>
-                <Upload type="Project" id={this.props.match.params.id}></Upload>
+                <Upload handleUpload={this.handleUpload} isChild={true}></Upload>
               </div>
-              
+
             </form>
             <div className="col s12" style={{ marginTop: "auto", marginBottom: "10%" }}>
               <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "20%" }}

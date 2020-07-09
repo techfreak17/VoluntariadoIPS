@@ -59,7 +59,7 @@ export default class Edit extends Component {
     img.src = imageFile;
     img.alt = "(No Image)";
     img.className = "img-responsive";
-    img.style.width = "40%";
+    img.style.width = "30%";
     img.style.borderRadius = "5%";
 
     myDiv.appendChild(img);

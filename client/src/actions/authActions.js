@@ -9,22 +9,23 @@ import {
 } from "./types";
 
 // Register User
-export const registerVoluntary = (userData,file, history) => dispatch => {
+export const registerVoluntary = (userData, file, history) => dispatch => {
     axios
         .post("/api/users/registerVoluntary", userData)
         .then(res => {
-            console.log(res);
-            file.append(
-                "type",
-                "Utilizador"
-            )
-            file.append(
-                "id",
-                res.data._id
-            )
-            axios
-                .post("api/upload", file)
-                .then(history.push("/confirmAccount"))
+            history.push("/confirmAccount")
+            if (file !== null) {
+                file.append(
+                    "type",
+                    "Utilizador"
+                )
+                file.append(
+                    "id",
+                    res.data._id
+                )
+                axios
+                    .post("api/upload", file)
+            }
         })
         .catch(err =>
             dispatch({
@@ -35,21 +36,23 @@ export const registerVoluntary = (userData,file, history) => dispatch => {
 };
 
 // Register User
-export const registerCompany = (userData,file, history) => dispatch => {
+export const registerCompany = (userData, file, history) => dispatch => {
     axios
         .post("/api/users/registerCompany", userData)
         .then(res => {
-            file.append(
-                "type",
-                "Utilizador"
-            )
-            file.append(
-                "id",
-                res.data._id
-            )
-            axios
-                .post("api/upload", file)
-                .then(history.push("/confirmAccount"))
+            history.push("/confirmAccount")
+            if (file !== null) {
+                file.append(
+                    "type",
+                    "Utilizador"
+                )
+                file.append(
+                    "id",
+                    res.data._id
+                )
+                axios
+                    .post("api/upload", file)
+            }
         })
         .catch(err =>
             dispatch({
@@ -148,7 +151,7 @@ export const logoutUser = () => dispatch => {
 
     // Remove auth header for future requests
     setAuthToken(false);
-    
+
     // Set current user to empty object {} which will set isAuthenticated to false
     dispatch(setCurrentUser({}));
 };

@@ -104,8 +104,11 @@ router.route('/submitUpdateProject/:id').post(function (req, res) {
         interestAreas: submitedProject.interestAreas,
         observations: submitedProject.observations,
         relatedEntities: submitedProject.relatedEntities,
-      }
-      )
+      })
+
+      submitedProject
+        .save()
+        .then(updatedSubmitedProject => res.json(updatedSubmitedProject))
         .catch(err => {
           res.status(400).send("unable to update the database");
         });
@@ -168,9 +171,9 @@ router.route('/getSubmitedProjectUserDetails/:id').get(function (req, res) {
       if (user.role === "Empresa") {
         Company.findOne({ responsibleID: newId }).then(company => {
           if (company) {
-            
-            res.json(buildJSON(submitedProject, user, company ));
-          
+
+            res.json(buildJSON(submitedProject, user, company));
+
           } else {
             return res.status(400).json({ company: "Such data doesn´t exist" });
           };

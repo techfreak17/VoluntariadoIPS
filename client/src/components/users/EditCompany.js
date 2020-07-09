@@ -23,6 +23,7 @@ class EditCompany extends Component {
             observations: "",
             username: "",
             birthDate: "",
+            fileFormData: null,
             errors: {}
         }
 
@@ -92,12 +93,16 @@ class EditCompany extends Component {
             birthDate: this.state.birthDate
         };
 
-        this.props.editUser(this.props.match.params.id, obj, this.props.history);
+        this.props.editUser(this.props.match.params.id, this.state.fileFormData, obj, this.props.history);
 
     }
 
     goBack() {
         window.history.back();
+    }
+
+    handleUpload = (formData) => {
+        this.setState({ fileFormData: formData });
     }
 
     render() {
@@ -294,7 +299,7 @@ class EditCompany extends Component {
 
                             <div className="input-field col s12">
                                 <label htmlFor="name">Logótipo</label><br></br><br></br>
-                                <Upload type="Utilizador" id={this.props.match.params.id}></Upload>
+                                <Upload handleUpload={this.handleUpload} isChild={true}></Upload>
                             </div>
 
                         </form>

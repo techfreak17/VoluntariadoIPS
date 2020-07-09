@@ -18,10 +18,24 @@ export const createUser = (userData, history) => dispatch => {
 };
 
 // Edit User
-export const editUser = (userID, userData, history) => dispatch => {
+export const editUser = (userID, file, userData, history) => dispatch => {
     axios
         .post("/api/admin/updateUser/"+ userID, userData)
-        .then(res => history.goBack())
+        .then(res => {
+            history.push("/listUsers")
+            if (file !== null) {
+                file.append(
+                    "type",
+                    "Utilizador"
+                )
+                file.append(
+                    "id",
+                    res.data[0]._id
+                )
+                axios
+                    .post("api/upload", file)
+            }
+        })
         .catch(err =>
             dispatch({
                 type: GET_ERRORS,

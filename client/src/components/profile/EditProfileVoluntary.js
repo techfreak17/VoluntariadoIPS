@@ -6,6 +6,7 @@ import classnames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { editProfile } from "../../actions/profileActions";
+import Upload from "../upload/Upload";
 
 class EditProfileVoluntary extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class EditProfileVoluntary extends Component {
       password2: "",
       interestAreas: [],
       reasons: [],
+      fileFormData: null,
       errors: {}
     }
 
@@ -84,7 +86,6 @@ class EditProfileVoluntary extends Component {
     e.preventDefault();
     const obj = {
       name: this.state.name,
-      email: this.state.email,
       phone: this.state.phone,
       address: this.state.address,
       interestAreas: this.state.interestAreas,
@@ -95,7 +96,7 @@ class EditProfileVoluntary extends Component {
       password2: this.state.password2,
     };
 
-    this.props.editProfile(this.props.match.params.id, obj, this.props.history);
+    this.props.editProfile(this.props.match.params.id, this.state.fileFormData, obj, this.props.history);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -104,6 +105,10 @@ class EditProfileVoluntary extends Component {
         errors: nextProps.errors
       });
     }
+  }
+
+  handleUpload = (formData) => {
+    this.setState({ fileFormData: formData });
   }
 
   render() {
@@ -265,6 +270,11 @@ class EditProfileVoluntary extends Component {
                 />
                 <label htmlFor="password2">Password Nova (Preencher apenas se pretender alterar a password)</label>
                 <span className="red-text">{errors.password2}</span>
+              </div>
+
+              <div className="input-field col s12">
+                <label htmlFor="name">Logótipo</label><br></br><br></br>
+                <Upload handleUpload={this.handleUpload} isChild={true}></Upload>
               </div>
 
             </form>

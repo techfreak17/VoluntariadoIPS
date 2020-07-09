@@ -116,8 +116,11 @@ router.route('/updateProject/:id').post(function (req, res) {
             relatedEntities: project.relatedEntities,
             responsibleID: project.responsibleID,
             vacancies: project.vacancies
-          })
-            .then(project => res.json(project))
+          });
+
+          project
+            .save()
+            .then(updatedProject => res.json(updatedProject))
             .catch(err => {
               res.status(400).send("unable to update the database");
             });
@@ -148,8 +151,11 @@ router.route('/updateProject/:id').post(function (req, res) {
           observations: project.observations,
           relatedEntities: project.relatedEntities,
           vacancies: project.vacancies
-        })
-          .then(project => res.json(project))
+        });
+
+        project
+          .save()
+          .then(updatedProject => res.json(updatedProject))
           .catch(err => {
             res.status(400).send("unable to update the database");
           });

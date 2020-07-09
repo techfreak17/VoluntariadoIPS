@@ -153,7 +153,7 @@ describe('Testar Utilizadores', function () {
   });
   it('TEST Update Users', function (done) {
     chai.request(server)
-      .post('/api/Users/updateUser/' + userID)
+      .post('/api/Admin/updateUser/' + userID)
       .send({
         username: "Test Username 2",
         name: "Test Name 2",
@@ -167,17 +167,17 @@ describe('Testar Utilizadores', function () {
         memberIPS: "Lorem Ipsum",
         schoolIPS: "Lorem Ipsum",
         courseIPS: "Lorem Ipsum",
-        interestAreas: "Lorem Ipsum",
-        reasons: "Lorem Ipsum",
+        interestAreas: ["Lorem Ipsum"],
+        reasons: ["Lorem Ipsum"],
         observations: "Lorem Ipsum",
         authorization: true,
-        listProjects: "Lorem Ipsum"
+        isVerified: true,
+        listProjects: []
       })
       .then(res => {
-        console.log(res.body);
         try {
-          assert.equal(res.body.name, 'Test Name 2');
-          assert.equal(res.body.address, 'Test Address update');
+          assert.equal(res.body[1].name, 'Test Name 2');
+          assert.equal(res.body[1].address, 'Test Address update');
         }
         catch (e) {
           return done(e);

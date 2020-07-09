@@ -14,6 +14,13 @@ const User = require("../../models/user");
 const Voluntary = require("../../models/voluntary");
 const Company = require("../../models/company");
 
+const buildJSON = (...files) => {
+  var obj = {}
+  Object.assign(obj, files);
+  return obj;
+};
+
+
 // @route POST api/admin/createVoluntaryUser
 // @desc Create Voluntary User
 // @access Private
@@ -160,8 +167,10 @@ router.route('/updateUser/:id').post(function (req, res) {
       user.updateOne({
         email: newEmail,
         username: user.username
-      })
-        .then(user => res.json(user))
+      });
+
+      user
+        .save()
         .catch(err => {
           res.status(400).send("unable to update the database");
         });
@@ -193,7 +202,9 @@ router.route('/updateUser/:id').post(function (req, res) {
             reasons: voluntary.reasons,
             observations: voluntary.observations,
           })
-            .then(voluntary => res.json(voluntary))
+          voluntary
+            .save()
+            .then(res.json(buildJSON(user, voluntary)))
             .catch(err => {
               res.status(400).send("unable to update the database");
             });
@@ -218,7 +229,9 @@ router.route('/updateUser/:id').post(function (req, res) {
         email: newEmail,
         username: user.username
       })
-        .then(user => res.json(user))
+
+      user
+        .save()
         .catch(err => {
           res.status(400).send("unable to update the database");
         });
@@ -244,7 +257,9 @@ router.route('/updateUser/:id').post(function (req, res) {
             companyAddress: company.companyAddress,
             observations: company.observations,
           })
-            .then(company => res.json(company))
+          company
+            .save()
+            .then(res.json(buildJSON(user, company)))
             .catch(err => {
               res.status(400).send("unable to update the database");
             });

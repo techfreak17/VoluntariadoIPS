@@ -170,8 +170,8 @@ router.route('/updateUser/:id').post(function (req, res) {
       });
 
       user
-      .save()
-      .catch(err => {
+        .save()
+        .catch(err => {
           res.status(400).send("unable to update the database");
         });
 

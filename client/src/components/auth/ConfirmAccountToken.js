@@ -43,7 +43,7 @@ class ConfirmAccountToken extends Component {
 
     render() {
         return (
-            <div className="container" style={{marginTop: "5%"}} >
+            <div className="container">
                 <div className="row">
                     <div className="col s8 offset-s2">
 

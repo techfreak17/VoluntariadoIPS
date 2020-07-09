@@ -87,26 +87,23 @@ class Landing extends Component {
                         </p></h5>
                                 <h5 style={{ color: "#FEF4E8", fontWeight: "bold" }}>REGISTE-SE</h5>
                             </div>
-                            <div className="row center">
-                                <div className="col s6">
+                            <div className="botoes row center" style={{display: "flex", justifyContent: "center"}}>
                                     <a href="/registerCompany"
                                         style={{
                                             borderRadius: 10,
                                             fontWeight: "bold"
                                         }}
-                                        className="botoes btn-large hoverable green">
+                                        className="botao btn-large hoverable green">
                                         Empresa
                                         </a>
-                                </div>
-                                <div className="col s6">
+                                        <div style={{margin: 10}}> </div>
                                     <a href="/registerVoluntary"
                                         style={{
                                             borderRadius: 10,
                                             fontWeight: "bold"
                                         }}
-                                        className="botoes btn-large hoverable green">
-                                        Voluntário</a>
-                                </div>
+                                        className="botao btn-large hoverable green">
+                                        Voluntário</a> 
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,5 @@
+@media screen and (max-width: 850px) {
+    .slides h2{
+        font-size: 20px;
+    }
+}

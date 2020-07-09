@@ -84,8 +84,9 @@ class Upload extends Component {
                     <h4><b>Upload de Ficheiro</b></h4>
                     <div>
                         <input type="file" onChange={this.onFileChange} />
-                        <button type="button" style={{backgroundColor:"black", color:"white"}}onClick={this.onFileUpload}>
-                           <b>Guardar</b>
+                        <br></br>
+                        <button type="button" style={{ backgroundColor: "black", color: "white" }} onClick={this.onFileUpload}>
+                            <b>Guardar</b>
                         </button>
                     </div>
                     {this.fileData()}

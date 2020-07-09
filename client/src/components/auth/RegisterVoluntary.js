@@ -7,6 +7,7 @@ import classnames from "classnames";
 import M from "materialize-css";
 import options from "materialize-css";
 import Upload from "../upload/Upload";
+import "../../componentsCSS/Register.css"
 
 class RegisterVoluntary extends Component {
     constructor() {
@@ -447,17 +448,16 @@ class RegisterVoluntary extends Component {
                                 </label>
                             </div>
                         </form>
-                        <div className="col s12" style={{ marginTop: "25%", marginBottom: "20%" }}>
+                        <div className="botao col s12 center">
                             <button
                                 style={{
-                                    width: "150px",
                                     borderRadius: 10,
                                     letterSpacing: "1.5px",
-                                    marginTop: "1rem"
+                                    marginTop: 150
                                 }}
                                 type="submit"
                                 onClick={this.onSubmit}
-                                className="btn btn-large waves-effect waves-light hoverable blue accent-3">
+                                className="btn-large hoverable blue accent-3">
                                 Registar
                                 </button>
                         </div>

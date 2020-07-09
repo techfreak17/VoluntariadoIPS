@@ -6,6 +6,7 @@ import M from "materialize-css";
 import options from "materialize-css";
 import Slider from "../layout/Slider"
 import axios from 'axios';
+import "../../componentsCSS/Dashboard.css"
 
 
 class Dashboard extends Component {
@@ -77,8 +78,8 @@ class Dashboard extends Component {
                     </div>
                 </div>
 
-                <div className="container" style={{ marginBottom: 70, display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    <a className="img" href="https://moodle.ips.pt/1920/" rel="noopener noreferrer" target="_blank" style={{ paddingRight: 100 }}>
+                <div className="container" style={{ marginBottom: 60, display: "flex", justifyContent: "space-around", alignItems: "center" }}>
+                    <a className="img" href="https://moodle.ips.pt/1920/" rel="noopener noreferrer" target="_blank" >
                         <img src={require('../layout/images/MOODLE.png')}
                             alt="Moodle" />
                     </a>
@@ -86,7 +87,7 @@ class Dashboard extends Component {
                         <img src={require('../layout/images/AAIPS.png')}
                             alt="AAIPS" />
                     </a>
-                    <a className="img" href="https://www.ips.pt/ips_si/web_page.inicial" rel="noopener noreferrer" target="_blank" style={{ paddingLeft: 100 }}>
+                    <a className="img" href="https://www.ips.pt/ips_si/web_page.inicial" rel="noopener noreferrer" target="_blank" >
                         <img src={require('../layout/images/IPS.png')}
                             alt="IPS" />
                     </a>

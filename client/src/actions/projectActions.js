@@ -9,7 +9,8 @@ export const createProject = (projectData, file, history) => dispatch => {
     axios
         .post("/api/projects/createProject", projectData)
         .then(res => {
-            file.append(
+            if(file){
+                file.append(
                 "type",
                 "Projeto"
             )
@@ -20,7 +21,11 @@ export const createProject = (projectData, file, history) => dispatch => {
             console.log(file);
             axios
                 .post("api/upload", file)
-                .then(history.push("/listProjects"))
+                .then(history.push("/listProjects"));
+            } else {
+                history.push("/listProjects");
+            }
+            
         })
         .catch(err =>
             dispatch({

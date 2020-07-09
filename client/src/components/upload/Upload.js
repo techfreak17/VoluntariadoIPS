@@ -13,6 +13,7 @@ class Upload extends Component {
 
         // Update the state 
         this.setState({ selectedFile: event.target.files[0] });
+        onFileUpload(event);
 
     };
 
@@ -30,24 +31,9 @@ class Upload extends Component {
             this.state.selectedFile.name
         );
 
-        if (this.props.isChild) {
-            //Sets up to send formData to parent component
-            this.props.handleUpload(formData);
-        } else {
-            //Else, Builds rest of info for Post
-            formData.append(
-                "type",
-                this.props.type
-            )
-            formData.append(
-                "id",
-                this.props.id
-            )
 
-            // Request made to the backend api 
-            // Send formData object 
-            axios.post("api/upload", formData);
-        }
+        //Sets up to send formData to parent component
+        this.props.handleUpload(formData);
     };
 
     // File content to be displayed after 
@@ -84,9 +70,6 @@ class Upload extends Component {
                     <h4><b>Upload de Ficheiro</b></h4>
                     <div>
                         <input type="file" onChange={this.onFileChange} />
-                        <button type="button" style={{backgroundColor:"black", color:"white"}}onClick={this.onFileUpload}>
-                           <b>Guardar</b>
-                        </button>
                     </div>
                     {this.fileData()}
                 </div>

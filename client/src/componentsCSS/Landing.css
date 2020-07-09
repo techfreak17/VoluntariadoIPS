@@ -1,6 +1,32 @@
 @media screen and (max-width: 600px) {
-    .Landing container {
-        font-size: 10;
-        background-color: brown;
+    .slides h2{
+        font-size: 30px;
+    }
+    .slides h5{
+        font-size: 20px;
+    }
+    
+    .section h2{
+        font-size: 25px;
+    }
+    .section h5{
+        font-size: 15px;
+    }
+    .section p{
+        font-size: 15px;
+    }
+    .botoes{
+        font-size: 12px;
+        width: 80%;
+        height: 40%;
+    }
+
+    .container{
+
+    }
+    .img{
+        size: 10%;
+        width: 30%;
+        height: 30%;
     }
 }

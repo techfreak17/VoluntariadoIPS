@@ -26,6 +26,7 @@ class EditVoluntary extends Component {
       reasons: [],
       observations: "",
       authorization: false,
+      fileFormData: null,
       errors: {}
     }
 
@@ -124,7 +125,11 @@ class EditVoluntary extends Component {
       role: this.state.role
     };
 
-    this.props.editUser(this.props.match.params.id, obj, this.props.history);
+    this.props.editUser(this.props.match.params.id, this.state.fileFormData, obj, this.props.history);
+  }
+
+  handleUpload = (formData) => {
+    this.setState({ fileFormData: formData });
   }
 
   render() {
@@ -386,7 +391,7 @@ class EditVoluntary extends Component {
 
               <div className="input-field col s12">
                 <label htmlFor="name">Logótipo</label><br></br><br></br>
-                <Upload type="Utilizador" id={this.props.match.params.id}></Upload>
+                <Upload handleUpload={this.handleUpload} isChild={true}></Upload>
               </div>
 
             </form>

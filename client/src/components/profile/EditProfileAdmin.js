@@ -6,6 +6,7 @@ import classnames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { editProfile } from "../../actions/profileActions";
+import Upload from "../upload/Upload";
 
 class EditProfileAdmin extends Component {
     constructor(props) {
@@ -19,6 +20,7 @@ class EditProfileAdmin extends Component {
             birthDate: "",
             password: "",
             password2: "",
+            fileFormData: null,
             errors: {}
         }
 
@@ -37,7 +39,7 @@ class EditProfileAdmin extends Component {
         }
 
         axios.get('/api/users/getUserDetails/' + this.props.match.params.id)
-        .then(response => {
+            .then(response => {
                 var date = new Date(response.data[1].birthDate);
                 var year = date.getFullYear();
                 var month = date.getMonth() + 1;
@@ -58,11 +60,11 @@ class EditProfileAdmin extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.errors) {
-          this.setState({
-            errors: nextProps.errors
-          });
+            this.setState({
+                errors: nextProps.errors
+            });
         }
-      }
+    }
 
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
@@ -80,7 +82,11 @@ class EditProfileAdmin extends Component {
             password2: this.state.password2,
         };
 
-        this.props.editProfile(this.props.match.params.id,obj,this.props.history);
+        this.props.editProfile(this.props.match.params.id, this.state.fileFormData, obj, this.props.history);
+    }
+
+    handleUpload = (formData) => {
+        this.setState({ fileFormData: formData });
     }
 
     render() {
@@ -90,7 +96,7 @@ class EditProfileAdmin extends Component {
             var elems = document.querySelectorAll('select');
             M.FormSelect.init(elems, options);
         });
-        
+
         return (
             <div className="container">
                 <div className="row">
@@ -198,6 +204,11 @@ class EditProfileAdmin extends Component {
                                 <label htmlFor="password2">Password Nova (Preencher apenas se pretender alterar a password)</label>
                                 <span className="red-text">{errors.password2}</span>
                             </div>
+
+                            <div className="input-field col s12">
+                                <label htmlFor="name">Logótipo</label><br></br><br></br>
+                                <Upload handleUpload={this.handleUpload} isChild={true}></Upload>
+                            </div>
                         </form>
                         <div className="col s12" style={{ marginTop: "1%", paddingBottom: 60 }}>
                             <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "20%" }}
@@ -218,14 +229,14 @@ EditProfileAdmin.propTypes = {
     editProfile: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
-  };
-  
-  const mapStateToProps = state => ({
+};
+
+const mapStateToProps = state => ({
     auth: state.auth,
     errors: state.errors
-  });
-  
-  export default connect(
+});
+
+export default connect(
     mapStateToProps,
     { editProfile }
-  )(EditProfileAdmin);
+)(EditProfileAdmin);

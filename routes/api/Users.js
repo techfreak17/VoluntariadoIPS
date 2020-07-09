@@ -399,10 +399,10 @@ router.route('/updateUser/:id').post(function (req, res) {
             newPassword = hash;
             user.updateOne({
               password: newPassword,
-            })
+            });
+
             user
               .save()
-              .then(updatedUser => res.json(updatedUser))
               .catch(err => {
                 res.status(400).send("unable to update the database");
               });
@@ -416,45 +416,15 @@ router.route('/updateUser/:id').post(function (req, res) {
           voluntary.phone = req.body.phone;
           voluntary.address = req.body.address;
           voluntary.birthDate = req.body.birthDate;
-          voluntary.memberIPS = req.body.memberIPS;
-          voluntary.schoolIPS = req.body.schoolIPS;
-          voluntary.courseIPS = req.body.courseIPS;
+          voluntary.reasons = req.body.reasons;
           voluntary.interestAreas = req.body.interestAreas;
 
-          if (voluntary.courseIPS !== undefined && voluntary.schoolIPS !== undefined && voluntary.memberIPS !== undefined) {
-            voluntary.updateOne({
-              name: voluntary.name,
-              phone: voluntary.phone,
-              address: voluntary.address,
-              birthDate: voluntary.birthDate,
-              memberIPS: voluntary.memberIPS,
-              schoolIPS: voluntary.schoolIPS,
-              courseIPS: voluntary.courseIPS,
-              interestAreas: voluntary.interestAreas,
-            })
-            voluntary
-              .save()
-              .then(voluntaryUpdated => res.json(voluntaryUpdated))
-              .catch(err => {
-                res.status(400).send("unable to update the database");
-              });
-            createNotification('editarVoluntario', voluntary.name, user.email);
-          } else {
-            voluntary.updateOne({
-              name: voluntary.name,
-              phone: voluntary.phone,
-              address: voluntary.address,
-              birthDate: voluntary.birthDate,
-              interestAreas: voluntary.interestAreas,
-            })
-            voluntary
-              .save()
-              .then(voluntaryUpdated => res.json(voluntaryUpdated))
-              .catch(err => {
-                res.status(400).send("unable to update the database");
-              });
-            createNotification('editarPerfil', voluntary.name, user.email);
-          }
+          voluntary
+            .save()
+            .then(res.json(buildJSON(user, voluntary)))
+
+          createNotification('editarPerfil', voluntary.name, user.email);
+
         } else {
           res.status(404).send("data is not found");
         }
@@ -482,7 +452,6 @@ router.route('/updateUser/:id').post(function (req, res) {
             })
             user
               .save()
-              .then(userUpdated => res.json(userUpdated))
               .catch(err => {
                 res.status(400).send("unable to update the database");
               });
@@ -496,40 +465,12 @@ router.route('/updateUser/:id').post(function (req, res) {
           company.phone = req.body.phone;
           company.address = req.body.address;
           company.birthDate = req.body.birthDate;
-          company.companyName = req.body.companyName;
-          company.companyAddress = req.body.companyAddress;
 
-          if (company.companyName !== undefined && company.companyAddress !== undefined) {
-            company.updateOne({
-              name: company.name,
-              phone: company.phone,
-              address: company.address,
-              birthDate: company.birthDate,
-              companyName: company.companyName,
-              companyAddress: company.companyAddress
-            })
-            company
-              .save()
-              .then(companyUpdated => res.json(companyUpdated))
-              .catch(err => {
-                res.status(400).send("unable to update the database");
-              });
-            createNotification('editarEntidade', company.companyName, user.email);
-          } else {
-            company.updateOne({
-              name: company.name,
-              phone: company.phone,
-              address: company.address,
-              birthDate: company.birthDate,
-            })
-            company
-              .save()
-              .then(companyUpdated => res.json(companyUpdated))
-              .catch(err => {
-                res.status(400).send("unable to update the database");
-              });
-            createNotification('editarPerfil', company.companyName, user.email);
-          }
+          company
+            .save()
+            .then(res.json(buildJSON(user, company)))
+
+          createNotification('editarPerfil', company.companyName, user.email);
         } else {
           res.status(404).send("data is not found");
         }
@@ -555,7 +496,6 @@ router.route('/updateUser/:id').post(function (req, res) {
             })
             user
               .save()
-              .then(userUpdated => res.json(userUpdated))
               .catch(err => {
                 res.status(400).send("unable to update the database");
               });
@@ -578,10 +518,8 @@ router.route('/updateUser/:id').post(function (req, res) {
           })
           admin
             .save()
-            .then(adminUpdated => res.json(adminUpdated))
-            .catch(err => {
-              res.status(400).send("unable to update the database");
-            });
+            .then(res.json(buildJSON(user, admin)))
+
           createNotification('editarPerfil', admin.name, user.email);
         } else {
           res.status(404).send("data is not found");

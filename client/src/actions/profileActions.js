@@ -6,10 +6,12 @@ import {
 
 // Edit Profile
 export const editProfile = (userID, file, userData, history) => dispatch => {
+    console.log(userData);
     axios
-        .post("/api/users/updateUser/"+ userID, userData)
+        .post("/api/users/updateUser/" + userID, userData)
         .then(res => {
-            history.goBack()
+            history.push("/dashboard")
+            console.log(res.data);
             if (file !== null) {
                 file.append(
                     "type",
@@ -17,9 +19,8 @@ export const editProfile = (userID, file, userData, history) => dispatch => {
                 )
                 file.append(
                     "id",
-                    res.data._id
+                    res.data[0]._id
                 )
-                console.log(file);
                 axios
                     .post("api/upload", file)
             }

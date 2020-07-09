@@ -110,7 +110,7 @@ class Edit extends Component {
       vacancies: this.state.vacancies
     };
 
-    this.props.editProject(this.props.match.params.id,this.state.fileFormData, obj, this.props.history);
+    this.props.editProject(this.props.match.params.id, this.state.fileFormData, obj, this.props.history);
   }
 
   handleChangeInterestAreas(event) {
@@ -410,7 +410,7 @@ class Edit extends Component {
                 <label htmlFor="name">Logótipo</label><br></br><br></br>
                 <Upload handleUpload={this.handleUpload} isChild={true}></Upload>
               </div>
-              
+
             </form>
             <div className="col s12" style={{ marginTop: "auto", marginBottom: "10%" }}>
               <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "20%" }}

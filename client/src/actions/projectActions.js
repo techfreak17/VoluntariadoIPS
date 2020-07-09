@@ -36,7 +36,7 @@ export const submitProject = (projectData, file, history) => dispatch => {
     axios
         .post("/api/submitedProjects/submitCreateProject", projectData)
         .then(res => {
-            history.push("/listSubmitedProjects")
+            history.push("/listSubmitedProjectsCompany")
             if (file !== null) {
                 file.append(
                     "type",

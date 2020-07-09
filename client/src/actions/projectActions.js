@@ -52,7 +52,11 @@ export const submitProject = (projectData, file, history) => dispatch => {
                 )
                 console.log(file);
                 axios
-                    .post("api/upload/file", file)
+                    .post("api/upload/file", file, {
+                        headers: {
+                            "Content-type": "multipart/form-data"
+                      }
+                    })
                     .then(history.push("/listSubmitedProjectsCompany"));
             } else {
                 history.push("/listSubmitedProjectsCompany");

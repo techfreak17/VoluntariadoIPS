@@ -19,7 +19,11 @@ export const createVoluntary = (userData, file, history) => dispatch => {
                     res.data.userID
                 )
                 axios
-                    .post("api/upload/file", file)
+                    .post("api/upload/file", file, {
+                        headers: {
+                            "Content-type": "multipart/form-data"
+                      }
+                    })
                     .then(history.push("/listUsers"));
             }else{
                 history.push("/listUsers");
@@ -48,7 +52,11 @@ export const createCompany = (userData, file, history) => dispatch => {
                     res.data.responsibleID
                 )
                 axios
-                    .post("api/upload/file", file)
+                    .post("api/upload/file", file, {
+                        headers: {
+                            "Content-type": "multipart/form-data"
+                      }
+                    })
                     .then(history.push("/listUsers"));
             }else{
                 history.push("/listUsers");

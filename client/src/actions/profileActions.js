@@ -20,7 +20,11 @@ export const editProfile = (userID, file, userData, history) => dispatch => {
                     res.data[0]._id
                 )
                 axios
-                    .post("api/upload/file", file)
+                    .post("api/upload/file", file, {
+                        headers: {
+                            "Content-type": "multipart/form-data"
+                      }
+                    })
                     .then(history.push("/dashboard"));
             } else {
                 history.push("/dashboard");

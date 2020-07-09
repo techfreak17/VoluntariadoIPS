@@ -189,7 +189,18 @@ router.route('/listProjects').get(function (req, res) {
       console.log(err);
     }
     else {
-      res.json(projects);
+      let projectSend = [];
+      projects.forEach(project => {
+        let aux = {
+          _id: project._id,
+          title: project.title,
+          synopsis: project.synopsis,
+          date: project.date,
+          enroled_IDs: project.enroled_IDs
+        };
+        projectSend.push(aux);
+      })
+      res.json(projectSend);
     }
   });
 });

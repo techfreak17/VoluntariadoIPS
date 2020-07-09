@@ -6,13 +6,11 @@ import {
 
 // Edit Profile
 export const editProfile = (userID, file, userData, history) => dispatch => {
-    console.log(userData);
     axios
         .post("/api/users/updateUser/" + userID, userData)
         .then(res => {
-            history.push("/dashboard")
             console.log(res.data);
-            if (file !== null) {
+            if (file) {
                 file.append(
                     "type",
                     "Utilizador"
@@ -23,6 +21,9 @@ export const editProfile = (userID, file, userData, history) => dispatch => {
                 )
                 axios
                     .post("api/upload/file", file)
+                    .then(history.push("/dashboard"));
+            } else {
+                history.push("/dashboard");
             }
         })
         .catch(err =>

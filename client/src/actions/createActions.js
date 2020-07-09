@@ -9,8 +9,7 @@ export const createVoluntary = (userData, file, history) => dispatch => {
     axios
         .post("/api/admin/createVoluntaryUser", userData)
         .then(res => {
-            history.push("/listUsers")
-            if (file !== null) {
+            if (file) {
                 file.append(
                     "type",
                     "Utilizador"
@@ -21,6 +20,9 @@ export const createVoluntary = (userData, file, history) => dispatch => {
                 )
                 axios
                     .post("api/upload/file", file)
+                    .then(history.push("/listUsers"));
+            }else{
+                history.push("/listUsers");
             }
         })
         .catch(err =>
@@ -36,7 +38,6 @@ export const createCompany = (userData, file, history) => dispatch => {
     axios
         .post("/api/admin/createCompanyUser", userData)
         .then(res => {
-            history.push("/listUsers")
             if (file !== null) {
                 file.append(
                     "type",
@@ -48,6 +49,9 @@ export const createCompany = (userData, file, history) => dispatch => {
                 )
                 axios
                     .post("api/upload/file", file)
+                    .then(history.push("/listUsers"));
+            }else{
+                history.push("/listUsers");
             }
         })
         .catch(err =>

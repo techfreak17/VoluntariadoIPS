@@ -13,8 +13,7 @@ export const registerVoluntary = (userData, file, history) => dispatch => {
     axios
         .post("/api/users/registerVoluntary", userData)
         .then(res => {
-            history.push("/confirmAccount")
-            if (file !== null) {
+            if (file) {
                 file.append(
                     "type",
                     "Utilizador"
@@ -25,6 +24,9 @@ export const registerVoluntary = (userData, file, history) => dispatch => {
                 )
                 axios
                     .post("api/upload/file", file)
+                    .then(history.push("/confirmAccount"));
+            } else {
+                history.push("/confirmAccount");
             }
         })
         .catch(err =>
@@ -40,8 +42,7 @@ export const registerCompany = (userData, file, history) => dispatch => {
     axios
         .post("/api/users/registerCompany", userData)
         .then(res => {
-            history.push("/confirmAccount")
-            if (file !== null) {
+            if (file) {
                 file.append(
                     "type",
                     "Utilizador"
@@ -52,6 +53,9 @@ export const registerCompany = (userData, file, history) => dispatch => {
                 )
                 axios
                     .post("api/upload/file", file)
+                    .then(history.push("/confirmAccount"));
+            } else {
+                history.push("/confirmAccount");
             }
         })
         .catch(err =>

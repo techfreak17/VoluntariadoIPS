@@ -40,7 +40,7 @@ export const submitProject = (projectData, file, history) => dispatch => {
     axios
         .post("/api/submitedProjects/submitCreateProject", projectData)
         .then(res => {
-            history.push("/listSubmitedProjectsCompany")
+            
             if (file !== null) {
                 file.append(
                     "type",
@@ -53,6 +53,9 @@ export const submitProject = (projectData, file, history) => dispatch => {
                 console.log(file);
                 axios
                     .post("api/upload/file", file)
+                    .then(history.push("/listSubmitedProjectsCompany"));
+            } else {
+                history.push("/listSubmitedProjectsCompany");
             }
         }).catch(err =>
             dispatch({

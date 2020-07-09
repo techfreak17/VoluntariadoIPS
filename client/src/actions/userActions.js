@@ -22,8 +22,7 @@ export const editUser = (userID, file, userData, history) => dispatch => {
     axios
         .post("/api/admin/updateUser/"+ userID, userData)
         .then(res => {
-            history.push("/listUsers")
-            if (file !== null) {
+            if (file) {
                 file.append(
                     "type",
                     "Utilizador"
@@ -34,6 +33,7 @@ export const editUser = (userID, file, userData, history) => dispatch => {
                 )
                 axios
                     .post("api/upload/file", file)
+                    .then(history.push("/listUsers"));
             }
         })
         .catch(err =>

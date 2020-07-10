@@ -6,7 +6,6 @@ import classnames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { editProfile } from "../../actions/profileActions";
-import Upload from "../upload/Upload";
 import "../../componentsCSS/Forms.css";
 
 class EditProfileVoluntary extends Component {
@@ -281,8 +280,7 @@ class EditProfileVoluntary extends Component {
               type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Submeter
             </button>
             <a style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red" }}
-              href={"/baseProfile/" + this.props.match.params.id} className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
-            </a>
+              href={"/baseProfile/" + this.props.match.params.id} className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar</a>
           </div>
         </div>
       </div>

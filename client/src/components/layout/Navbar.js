@@ -77,8 +77,8 @@ class Navbar extends Component {
                                         alt="(Não esquecer de verificar no spam)"
                                         className="logo img-responsive"
                                         style={{ position: "absolute", left: 0, maxWidth: 200 }} /></a></li>
-                                    <li><a href="/login"><i className="material-icons left">person</i>Iniciar Sessão</a></li>
-                                    <li><a href="/registerVoluntary" className="green btn" style={{ borderRadius: 10, marginBottom: 3 }}>Registar</a></li>
+                                    <li><a href="/login" style={{fontSize: 14}}><i className="material-icons left">person</i>Iniciar Sessão</a></li>
+                                    <li><a href="/registerVoluntary" id="botao" className="green btn" style={{ width: 100, borderRadius: 10, marginBottom: 3, fontSize: 14 }}>Registar</a></li>
                                 </ul>
                             </div>
                         </nav>

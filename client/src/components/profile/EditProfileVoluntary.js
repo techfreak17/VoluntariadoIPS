@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { editProfile } from "../../actions/profileActions";
 import "../../componentsCSS/Forms.css";
+import Upload from "../upload/Upload";
 
 class EditProfileVoluntary extends Component {
   constructor(props) {

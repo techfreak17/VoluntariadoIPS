@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import "../../componentsCSS/Details.css";
 
 export default class Edit extends Component {
   constructor(props) {
@@ -86,7 +87,7 @@ export default class Edit extends Component {
   render() {
     return (
       <div>
-        <div className="card" style={{ backgroundColor: "#f2f2f2", width: 900, margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px black" }}>
+        <div className="card" style={{ backgroundColor: "#f2f2f2", width: "50%", margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px black" }}>
           <div className="card-header center" style={{ overflow: "hidden", width: "100%" }}>
             <h2 style={{ color: "#1167B1" }}><b>{this.state.title}</b></h2>
             <div id="SubmitedProjectImg"></div>          
@@ -112,8 +113,8 @@ export default class Edit extends Component {
               <p style={{ color: "#000000" }}><b>Observações:</b> {this.state.observations}</p>
               <ul id="friendsList" style={{ color: "#000000" }}><b>Áreas:</b></ul>
             </div>
-            <button onClick={this.goBack} style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold", }}
-              className="btn btn-large waves-effect waves-light hoverable black center">Voltar</button>
+            <button onClick={this.goBack} style={{ width: "100%", borderRadius: 10, backgroundColor: "#23395D", fontWeight: "bold"}}
+              className="btn btn-large hoverable accent-3 center">Voltar</button>
           </div>
         </div>
       </div>

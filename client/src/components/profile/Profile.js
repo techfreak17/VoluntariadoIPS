@@ -88,40 +88,37 @@ class Profile extends Component {
         return (
             <div style={{ paddingBottom: 50 }}>
                 <div className='container'>
-                    <div className='row'>
-                        <div className='editar col s6 center'>
-                            <div>
+                    <div className='row' style={{display: "flex", justifyContent: "space-around", alignItems: "center"}}>
+                        <div className='editar center'>
                                 <div id="userImgProfile"></div>
                                 <h4>{this.state.name}</h4>
                                 <h4 style={{ fontWeight: "bold" }}>{this.state.role}</h4>
                                 {(() => {
                                     if (this.props.auth.user.role === "Voluntário") {
                                         return (
-                                            <Link to={"/editProfileVoluntary/" + this.props.match.params.id} className="btn waves-effect waves-light hoverable" style={{ backgroundColor: "#23395D", color: "white", height: 35 }}>Editar Perfil</Link>
+                                            <Link to={"/editProfileVoluntary/" + this.props.match.params.id} className="btn waves-effect waves-light hoverable" style={{ backgroundColor: "#23395D", color: "white"}}>Editar Perfil</Link>
                                         )
                                     }
                                 })()}
                                 {(() => {
                                     if (this.props.auth.user.role === "Empresa") {
                                         return (
-                                            <Link to={"/editProfileCompany/" + this.props.match.params.id} className="btn waves-effect waves-light hoverable" style={{ backgroundColor: "#23395D", color: "white", height: 35 }}>Editar Perfil</Link>
+                                            <Link to={"/editProfileCompany/" + this.props.match.params.id} className="btn waves-effect waves-light hoverable" style={{ backgroundColor: "#23395D", color: "white"}}>Editar Perfil</Link>
                                         )
                                     }
                                 })()}
                                 {(() => {
                                     if (this.props.auth.user.role === "Administrador") {
                                         return (
-                                            <Link to={"/editProfileAdmin/" + this.props.match.params.id} className="btn waves-effect waves-light hoverable" style={{ backgroundColor: "#23395D", color: "white", height: 35 }}>Editar Perfil</Link>
+                                            <Link to={"/editProfileAdmin/" + this.props.match.params.id} className="btn waves-effect waves-light hoverable" style={{ backgroundColor: "#23395D", color: "white"}}>Editar Perfil</Link>
                                         )
                                     }
                                 })()}
-
-                            </div>
                         </div>
                         {(() => {
                             if (this.props.auth.user.role === "Voluntário") {
                                 return (
-                                    <div className='info col s6' style={{ marginTop: 20 }}>
+                                    <div className='info' style={{ marginTop: 20, width: "60%" }}>
                                         <h5 style={{ fontWeight: 'bold' }}>Nome Completo</h5>
                                         <input readOnly value={this.state.name}></input>
                                         <h5 style={{ fontWeight: 'bold' }}>Email</h5>
@@ -153,7 +150,7 @@ class Profile extends Component {
                         {(() => {
                             if (this.props.auth.user.role === "Empresa") {
                                 return (
-                                    <div className='info col s6' style={{ marginTop: 20 }}>
+                                    <div className='info' style={{ marginTop: 20,  width: "60%" }}>
                                         <h5 style={{ fontWeight: 'bold' }}>Nome Completo</h5>
                                         <input readOnly value={this.state.name}></input>
                                         <h5 style={{ fontWeight: 'bold' }}>Email</h5>
@@ -183,7 +180,7 @@ class Profile extends Component {
                         {(() => {
                             if (this.props.auth.user.role === "Administrador") {
                                 return (
-                                    <div className='info col s6' style={{ marginTop: 20 }}>
+                                    <div className='info' style={{ marginTop: 20,  width: "60%" }}>
                                         <h5 style={{ fontWeight: 'bold' }}>Nome Completo</h5>
                                         <input readOnly value={this.state.name}></input>
                                         <h5 style={{ fontWeight: 'bold' }}>Email</h5>

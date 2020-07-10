@@ -62,7 +62,7 @@ class ProjectClassification extends Component {
                                     onStarClick={this.onStarClick.bind(this)}
                                 />
                                 <button className="waves-effect waves-light btn"
-                                    type="submit" onClick={this.onSubmit} style={{ backgroundColor: "#000000", marginLeft: "5%" }}>Submeter</button>
+                                    type="submit" onClick={this.onSubmit} style={{ backgroundColor: "#D4AF37", marginLeft: "5%", color: "black", fontWeight: "bold", borderRadius: 10 }}>Submeter</button>
                             </div>
                         )
                     }

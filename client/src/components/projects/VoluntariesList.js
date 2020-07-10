@@ -36,7 +36,7 @@ class VoluntariesList extends Component {
 
   render() {
     return (
-      <div className="card" style={{ minWidth: 400, width: "auto" }}>
+      <div className="card" style={{width: "auto" }}>
         <table className="striped">
           <thead>
             <tr>

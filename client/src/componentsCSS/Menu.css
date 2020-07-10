@@ -1,0 +1,5 @@
+@media screen and (max-width: 600px) {
+    #nav-mobile a{
+        font-size: 2vw;
+    }
+}

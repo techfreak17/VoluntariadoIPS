@@ -4,6 +4,9 @@
         flex-direction: column;
         align-items: center;
     }
+    .editar{
+        margin: auto;
+    }
     .info{
         --auto-grid-min-size: 16rem;
         display: grid;

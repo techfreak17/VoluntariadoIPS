@@ -42,20 +42,20 @@ class VoluntaryRow extends Component {
         <td>
           <Link to={"/getUser/" + this.props.obj.userID} className="btn btn-primary" style={{ width: "auto", backgroundColor: "lightGrey", color: "black", marginLeft: 40 }}><i className="material-icons">search</i></Link>
           {(() => {
-            if (this.props.auth.user.role === "Administrador" || this.props.responsibleID===this.props.userID) {
+            if (this.props.auth.user.role === "Administrador" || this.props.responsibleID === this.props.userID) {
               return (
                 <button onClick={this.openWarning} className="btn btn-danger" style={{ width: "auto", backgroundColor: "red", marginLeft: 40, color: "white" }}><i className="material-icons">remove</i></button>
               )
             }
           })()}
-           <Popup open={this.state.remove}
+          <Popup open={this.state.remove}
             closeOnDocumentClick
             onClose={this.closeWarning}>
-            <div className={"Modal container"} style={{width: "50"}}>
-              <h5 className= {"center"}>Tem a certeza que pretende remover este Voluntário deste Projeto?</h5>
-              <div>
-                <button className="btn btn-medium waves-effect waves-light hoverable red left" onClick={this.removeVoluntary}>CONFIRMAR</button>
-                <button className="btn btn-medium waves-effect waves-light hoverable gray right" onClick={this.closeWarning}>CANCELAR</button>
+            <div className={"Modal container"}>
+              <h5 className={"center"}>Tem a certeza que pretende remover este Voluntário deste Projeto?</h5>
+              <div className="botoes" style={{ display: "flex", justifyContent: "space-around", marginBottom: 10 }}>
+                <button className="btn hoverable blue accent-3" style={{ borderRadius: 5 }} onClick={this.removeVoluntary}>CONFIRMAR</button>
+                <button className="btn hoverable accent-3" style={{ borderRadius: 5, backgroundColor: "red" }} onClick={this.closeWarning}>CANCELAR</button>
               </div>
             </div>
           </Popup>

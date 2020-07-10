@@ -7,6 +7,7 @@ import Popup from "reactjs-popup";
 import '../../componentsCSS/Modal.css'
 import ProjectClassification from "../projects/ProjectClassification.js";
 import VoluntariesList from '../projects/VoluntariesList';
+import "../../componentsCSS/Details.css";
 
 class VoluntaryProjectsDetails extends Component {
   constructor(props) {
@@ -103,8 +104,8 @@ class VoluntaryProjectsDetails extends Component {
   render() {
     return (
       <div>
-        <div className="card" style={{ backgroundColor: "#f2f2f2", width: 900, margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px black" }}>
-          <div className="card-header center" style={{ overflow: "hidden", height: 400, width: "100%" }}>
+        <div className="card" style={{ backgroundColor: "#f2f2f2", width: "50%", margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px black" }}>
+          <div className="card-header center" style={{ overflow: "hidden", width: "100%" }}>
             <h2 style={{ color: "#1167B1" }}><b>{this.state.title}</b></h2>
             <div id="VoluntaryProjectImg"></div>  
           </div>
@@ -132,8 +133,8 @@ class VoluntaryProjectsDetails extends Component {
               <p style={{ color: "#000000" }}><b>Observações:</b> {this.state.observations}</p>
               <ul id="friendsList" style={{ color: "#000000" }}><b>Áreas:</b></ul>
 
-              <button className="btn btn-medium waves-effect waves-light hoverable blue center" onClick={this.openModal}>
-                Lista de Inscritos
+              <button style={{ width: "100%", borderRadius: 10, fontWeight: "bold", backgroundColor: "#1167B1"}} className="btn btn-medium hoverable center" onClick={this.openModal}>
+                lista de Inscritos
               </button>
               <Popup open={this.state.open}
                 closeOnDocumentClick
@@ -143,8 +144,8 @@ class VoluntaryProjectsDetails extends Component {
                 </div>
               </Popup>
             </div><br></br>
-            <button onClick={this.goBack} style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold", }}
-              className="btn btn-large waves-effect waves-light hoverable black center">Voltar</button>
+            <button onClick={this.goBack} style={{ width: "100%", borderRadius: 10, backgroundColor: "#23395D", fontWeight: "bold"}}
+              className="btn btn-large hoverable accent-3 center">Voltar</button>
           </div>
         </div>
       </div>

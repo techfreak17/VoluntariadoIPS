@@ -6,8 +6,9 @@ import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import VoluntariesList from './VoluntariesList';
 import Popup from "reactjs-popup";
-import '../../componentsCSS/Modal.css'
+import '../../componentsCSS/Modal.css';
 import ProjectClassification from "./ProjectClassification.js";
+import "../../componentsCSS/Details.css";
 
 
 class ProjectDetails extends Component {
@@ -102,14 +103,14 @@ class ProjectDetails extends Component {
     let img = document.createElement('img');
     let imageFile = null;
 
-    if(file){
+    if (file) {
       imageFile = `data:${file.contentType};base64,${Buffer.from(file.data).toString('base64')}`;
-    }else{
+    } else {
       imageFile = require('../layout/images/volun.png');
     }
-    
+
     img.src = imageFile;
-    img.alt ="(No Image)";
+    img.alt = "(No Image)";
     img.className = "img-responsive";
     img.style.width = "40%";
     img.style.borderRadius = "5%";
@@ -120,10 +121,10 @@ class ProjectDetails extends Component {
   render() {
     return (
       <div>
-        <div className="card" style={{ backgroundColor: "#f2f2f2", width: 900, margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px black" }}>
-          <div className="card-header center" style={{ overflow: "hidden", width: "100%" }}>
+        <div className="card" style={{ backgroundColor: "#f2f2f2", width: "50%", margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px black" }}>
+          <div className="card-header center" style={{ overflow: "hidden" }}>
             <h2 style={{ color: "#1167B1" }}><b>{this.state.title}</b></h2>
-            <div id="projectImgDetails"></div>    
+            <div id="projectImgDetails"></div>
           </div>
 
           <div className="card-content" style={{ paddingLeft: 50 }}>
@@ -147,15 +148,17 @@ class ProjectDetails extends Component {
                 if (this.props.auth.user.role === "Administrador" || this.props.auth.user.id === this.state.responsibleID) {
                   return (
                     <div>
-                      <button className="btn btn-medium waves-effect waves-light hoverable blue center" onClick={this.openWarning}>Fechar Projecto</button>
+                      <button style={{ width: "100%", borderRadius: 10, fontWeight: "bold", backgroundColor: "#1167B1", marginBottom: 20 }} className="btn btn-medium hoverable center" onClick={this.openWarning}>
+                        Fechar Projeto
+                      </button>
                       <Popup open={this.state.delete}
                         closeOnDocumentClick
                         onClose={this.closeWarning}>
-                         <div className={"Modal container"} style={{width: "50"}}>
-                          <h5 className= {"center"}>Tem a certeza que pretende dar por concluido este Projecto?</h5>
-                          <div>
-                            <button className="btn btn-medium waves-effect waves-light hoverable red left" onClick={this.concludeProject}>CONFIRMAR</button>
-                            <button className="btn btn-medium waves-effect waves-light hoverable gray right" onClick={this.closeWarning}>CANCELAR</button>
+                        <div className={"Modal container"}>
+                          <h5 className="center">Tem a certeza que pretende dar por concluido este Projecto?</h5>
+                          <div className="botoes" style={{ display: "flex", justifyContent: "space-around", marginBottom: 10 }}>
+                            <button className="btn hoverable blue accent-3" style={{ borderRadius: 5 }} onClick={this.concludeProject}>CONFIRMAR</button>
+                            <button className="btn hoverable accent-3" style={{ borderRadius: 5, backgroundColor: "red" }} onClick={this.closeWarning}>CANCELAR</button>
                           </div>
                         </div>
                       </Popup>
@@ -175,7 +178,7 @@ class ProjectDetails extends Component {
               <p style={{ color: "#000000" }}><b>Observações:</b> {this.state.observations}</p>
               <ul id="friendsList" style={{ color: "#000000" }}><b>Áreas:</b></ul>
 
-              <button className="btn btn-medium waves-effect waves-light hoverable blue center" onClick={this.openModal}>
+              <button style={{ width: "100%", borderRadius: 10, fontWeight: "bold", backgroundColor: "#1167B1" }} className="btn btn-medium hoverable center" onClick={this.openModal}>
                 lista de Inscritos
               </button>
               <Popup open={this.state.open}
@@ -186,8 +189,8 @@ class ProjectDetails extends Component {
                 </div>
               </Popup>
             </div><br></br>
-            <Link to="/listProjects" style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold", }}
-              className="btn btn-large waves-effect waves-light hoverable black center">Voltar</Link>
+            <Link to="/listProjects" style={{ width: "100%", borderRadius: 10, backgroundColor: "#23395D", fontWeight: "bold" }}
+              className="btn btn-large hoverable accent-3 center">Voltar</Link>
           </div>
         </div>
       </div>

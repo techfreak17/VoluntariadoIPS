@@ -8,7 +8,6 @@ class TableRowAdminRole extends Component {
     constructor(props) {
         super(props);
         this.number = this.props.number;
-        console.log(this.props.obj)
     }
 
     render() {
@@ -18,7 +17,7 @@ class TableRowAdminRole extends Component {
                     {this.props.obj.name}
                 </td>
                 <td>
-                    Admin
+                    Administrador
                 </td>
             </tr>
         );

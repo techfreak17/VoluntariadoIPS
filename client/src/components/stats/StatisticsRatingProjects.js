@@ -16,7 +16,6 @@ class StatisticsRatingProjects extends Component {
     componentDidMount() {
         axios.get('/api/stats/listProjectsClassifications')
             .then(response => {
-                console.log(response.data)
                 this.setState({
                     projects: response.data
                 });
@@ -24,7 +23,6 @@ class StatisticsRatingProjects extends Component {
             .catch(function (error) {
                 console.log(error);
             })
-        console.log(this.state.projects);
     }
 
     tabRow() {

@@ -40,7 +40,6 @@ class StatisticsNumberUsers extends Component {
 
         axios.get('/api/stats/getUsersInfo')
             .then(response => {
-                console.log(response.data);
                 this.setState({
                     voluntaries: response.data[0],
                     companies: response.data[1],
@@ -77,7 +76,7 @@ class StatisticsNumberUsers extends Component {
                 <div className="chart" style={{ display: "flex", justifyContent: "center" }}>
                     <Chart options={this.state.options} series={this.state.options.series} type="donut" width="165%" />
                 </div>
-                <table className="table table-striped" style={{ marginTop: 20, marginBottom: 60 }}>
+                <table className="table table-striped" style={{ marginTop: 20, marginBottom: 80 }}>
                     <thead>
                         <tr>
                             <th>Utilizador</th>

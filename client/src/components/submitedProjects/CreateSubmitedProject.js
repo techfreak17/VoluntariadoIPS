@@ -48,8 +48,7 @@ class Create extends Component {
     }
 
     uploadFile(event) {
-        console.log(event.target.files[0]);
-
+        
         const data = new FormData();
         data.append('file', event.target.files[0]);
         data.append('name', 'some value user types');

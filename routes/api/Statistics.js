@@ -96,7 +96,7 @@ router.route('/getAllProjects').get(function (req, res) {
     ConcludedProject.find({}, { title: 1 }).then(concludedProject => {
       SubmitedProject.find({}, { title: 1 }).then(submitedProject => {
         if (project || concludedProject || submitedProject) {
-          res.json(buildJSON(project, concludedProject, SubmitedProject));
+          res.json(buildJSON(project, concludedProject, submitedProject));
         }
       })
     })

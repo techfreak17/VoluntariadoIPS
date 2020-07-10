@@ -93,7 +93,6 @@ class Edit extends Component {
   }
 
   onSubmit(e) {
-    console.log(this.state.errors);
     e.preventDefault();
     const obj = {
       title: this.state.title,

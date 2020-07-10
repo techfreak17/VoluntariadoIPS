@@ -18,7 +18,6 @@ class StatisticsNumberProjects extends Component {
     componentDidMount() {
         axios.get('/api/stats/getVoluntaryStatsData/' + this.props.auth.user.id)
             .then(response => {
-                console.log(response.data);
                 this.setState({
                     projects: response.data[0],
                     concludedProjects: response.data[1]

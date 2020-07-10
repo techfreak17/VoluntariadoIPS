@@ -8,7 +8,6 @@ class TableRowCompanyRole extends Component {
     constructor(props) {
         super(props);
         this.number = this.props.number;
-        console.log(this.props.obj)
     }
 
     render() {

@@ -200,3 +200,5 @@ describe('Testar Utilizadores', function () {
       });
   });
 });
+
+process.exit(1);

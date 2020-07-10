@@ -529,4 +529,21 @@ router.route('/updateUser/:id').post(function (req, res) {
   });
 });
 
+
+// Utilizado somente para criar o administrador não é recomendado o uso dele mais que uma vez vez.
+/*router.post("/createAdmin", (req, res) => {
+  const newAdmin = new Administrator({
+    name: "João Antunes",
+    email: "admin@ips.pt",
+    phone: 912345688,
+    address: "Lisboa",
+    birthDate: "1983-10-29T00:00:00.000Z",
+    userID: mongoose.Types.ObjectId("5f088f3d5f995830e0882ebc")
+  });
+
+  console.log(newAdmin);
+
+  newAdmin.save().then(() => {console.log("Save with success")});
+});*/
+
 module.exports = router;

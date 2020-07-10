@@ -24,7 +24,7 @@ describe('Testar Projetos', function () {
         photo: "",
         observations: "Lorem Ipsum",
         relatedEntities: "Lorem Ipsum",
-        responsibleID: mongoose.Types.ObjectId("5f013715f5874954b08679d1"),
+        responsibleID: mongoose.Types.ObjectId("5f0895d0794ff40aac710001"),
         requiredFormation: false,
         formation: "Lorem Ipsum",
         vacancies: 50
@@ -70,7 +70,7 @@ describe('Testar Projetos', function () {
         photo: "",
         observations: "Lorem Ipsum",
         relatedEntities: "Lorem Ipsum",
-        responsibleID: mongoose.Types.ObjectId("5f013715f5874954b08679d1"),
+        responsibleID: mongoose.Types.ObjectId("5f0895d0794ff40aac710001"),
         requiredFormation: false,
         formation: "Lorem Ipsum",
         vacancies: 60

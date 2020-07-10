@@ -5,10 +5,30 @@ import {
 } from "./types";
 
 // Create Voluntary User
-export const createVoluntary = (userData, history) => dispatch => {
+export const createVoluntary = (userData, file, history) => dispatch => {
     axios
         .post("/api/admin/createVoluntaryUser", userData)
-        .then(res => history.push("/listUsers")) // re-direct to login on successful register
+        .then(res => {
+            if (file) {
+                file.append(
+                    "type",
+                    "Utilizador"
+                )
+                file.append(
+                    "id",
+                    res.data.userID
+                )
+                axios
+                    .post("api/upload/file", file, {
+                        headers: {
+                            "Content-type": "multipart/form-data"
+                      }
+                    })
+                    .then(history.push("/listUsers"));
+            }else{
+                history.push("/listUsers");
+            }
+        })
         .catch(err =>
             dispatch({
                 type: GET_ERRORS,
@@ -18,10 +38,30 @@ export const createVoluntary = (userData, history) => dispatch => {
 };
 
 // Create Company User
-export const createCompany = (userData, history) => dispatch => {
+export const createCompany = (userData, file, history) => dispatch => {
     axios
         .post("/api/admin/createCompanyUser", userData)
-        .then(res => history.push("/listUsers")) // re-direct to login on successful register
+        .then(res => {
+            if (file !== null) {
+                file.append(
+                    "type",
+                    "Utilizador"
+                )
+                file.append(
+                    "id",
+                    res.data.responsibleID
+                )
+                axios
+                    .post("api/upload/file", file, {
+                        headers: {
+                            "Content-type": "multipart/form-data"
+                      }
+                    })
+                    .then(history.push("/listUsers"));
+            }else{
+                history.push("/listUsers");
+            }
+        })
         .catch(err =>
             dispatch({
                 type: GET_ERRORS,

@@ -27,7 +27,7 @@ class ConfirmAccount extends Component {
 
     render() {
         return (
-            <div className="container" style={{marginTop: "5%"}}>
+            <div className="container">
                 <div className="row">
                     <div className="col s8 offset-s2">
                         <a href="/" className="btn-flat waves-effect">
@@ -37,14 +37,14 @@ class ConfirmAccount extends Component {
 
                         <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                             <h4>
-                                Agora já estás registado na plataforma, deverás receber um email em breve!
+                               Registo efetuado com sucesso, deverá receber um email em breve.
                             </h4>
                         </div>
 
                         <div className="col s12">
                             <h5>
                                 <p className="grey-text text-darken-1">
-                                    Verifica a tua caixa de correio e segue o link para confirmares a tua conta.
+                                    Verifique a sua caixa de correio e siga o link para confirmar a sua conta.
                                 </p>
                             </h5>
                         </div>

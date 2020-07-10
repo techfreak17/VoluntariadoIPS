@@ -19,15 +19,19 @@ router.route('/joinProject/:id').post(function (req, res) {
         if (user.role === "Voluntário") {
             Voluntary.findOne({ userID: user._id }).then(voluntary => {
                 Project.findById(id).then(project => {
-                    if(project.vacancies>Object.keys(project.enroled_IDs).length){
+                    if (project.vacancies > Object.keys(project.enroled_IDs).length) {
                         voluntary.listProjects.push(project._id);
-                        voluntary.save();
-                        project.enroled_IDs.push(user._id);
-                        project.save();
-                        createNotification('entrarProjeto', project.title, user.email);
-                    }else{
+                        voluntary.save().then(() => {
+                            project.enroled_IDs.push(user._id);
+                            project.save().then(() => {
+                                createNotification('entrarProjeto', project.title, user.email);
+                                res.status(200);
+                            })
+                        });
+                    } else {
                         createNotification('semVagas', project.title, user.email);
-                    }                    
+                        res.status(403);
+                    }
                 })
             })
         }
@@ -35,7 +39,7 @@ router.route('/joinProject/:id').post(function (req, res) {
 });
 
 // @route POST api/voluntaries/unjoinProject/:id
-// @desc Join Project
+// @desc Unjoin Project
 // @access Private
 router.route('/unjoinProject/:id').post(function (req, res) {
     let id = req.params.id;
@@ -44,10 +48,13 @@ router.route('/unjoinProject/:id').post(function (req, res) {
             Voluntary.findOne({ userID: user._id }).then(voluntary => {
                 Project.findById(id).then(project => {
                     voluntary.listProjects.pull(project._id);
-                    voluntary.save();
-                    project.enroled_IDs.pull(user._id);
-                    project.save();
-                    createNotification('sairProjeto', project.title, user.email);
+                    voluntary.save().then(() => {
+                        project.enroled_IDs.pull(user._id);
+                        project.save().then(() => {
+                            createNotification('sairProjeto', project.title, user.email);
+                            res.status(200);
+                        })
+                    })
                 })
             })
         }
@@ -59,7 +66,7 @@ router.route('/unjoinProject/:id').post(function (req, res) {
 // @access Private
 router.route('/listVoluntaryProjects/:id').get(function (req, res) {
     let userID = req.params.id;
-    Project.find({ enroled_IDs: mongoose.Types.ObjectId(userID) },function (err, projects) {
+    Project.find({ enroled_IDs: mongoose.Types.ObjectId(userID) }, {title: 1, synopsis: 1, date: 1, enroled_IDs: 1}, function (err, projects) {
         if (err) {
             console.log(err);
         }
@@ -69,12 +76,12 @@ router.route('/listVoluntaryProjects/:id').get(function (req, res) {
     });
 });
 
-// @route GET api/voluntaries/searchVoluntaryProject/:id
+// @route POST api/voluntaries/searchVoluntaryProject/:id
 // @desc Search Project
 // @access Private
 router.post("/searchVoluntaryProject/:id", (req, res) => {
     let userID = req.params.id;
-    Project.find({ enroled_IDs: mongoose.Types.ObjectId(userID), title: { $regex: req.body.search, $options: "i" } },function (err, projects) {
+    Project.find({ enroled_IDs: mongoose.Types.ObjectId(userID), title: { $regex: req.body.search, $options: "i" } }, function (err, projects) {
         if (err) {
             console.log(err);
         }
@@ -82,6 +89,6 @@ router.post("/searchVoluntaryProject/:id", (req, res) => {
             res.json(projects);
         }
     });
-  });
-  
+});
+
 module.exports = router;

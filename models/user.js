@@ -31,6 +31,10 @@ const UserSchema = new Schema({
     passwordResetExpires: {
         type: Date,
         required: false
+    },
+    img: { 
+        data: Buffer, 
+        contentType: String 
     }
 });
 module.exports = mongoose.model("Users", UserSchema);

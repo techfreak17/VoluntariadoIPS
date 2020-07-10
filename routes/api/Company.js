@@ -11,7 +11,7 @@ const SubmitedProject = require("../../models/submitedProject");
 // @access Private
 router.route('/listCompanyProjects/:id').get(function (req, res) {
     let userID = req.params.id;
-    Project.find({ responsibleID: mongoose.Types.ObjectId(userID) },function (err, projects) {
+    Project.find({ responsibleID: mongoose.Types.ObjectId(userID) }, { title: 1, synopsis: 1, date: 1, enroled_IDs: 1 }, function (err, projects) {
         if (err) {
             console.log(err);
         }
@@ -26,7 +26,7 @@ router.route('/listCompanyProjects/:id').get(function (req, res) {
 // @access Private
 router.route('/listCompanySubmitedProjects/:id').get(function (req, res) {
     let userID = req.params.id;
-    SubmitedProject.find({ responsibleID: mongoose.Types.ObjectId(userID) },function (err, projects) {
+    SubmitedProject.find({ responsibleID: mongoose.Types.ObjectId(userID) }, function (err, projects) {
         if (err) {
             console.log(err);
         }
@@ -36,12 +36,12 @@ router.route('/listCompanySubmitedProjects/:id').get(function (req, res) {
     });
 });
 
-// @route GET api/voluntaries/searchCompanyProject/:id
+// @route POST api/voluntaries/searchCompanyProject/:id
 // @desc Search Project
 // @access Private
 router.post("/searchCompanyProject/:id", (req, res) => {
     let userID = req.params.id;
-    Project.find({ responsibleID: mongoose.Types.ObjectId(userID), title: { $regex: req.body.search, $options: "i" } },function (err, projects) {
+    Project.find({ responsibleID: mongoose.Types.ObjectId(userID), title: { $regex: req.body.search, $options: "i" } }, function (err, projects) {
         if (err) {
             console.log(err);
         }
@@ -49,6 +49,6 @@ router.post("/searchCompanyProject/:id", (req, res) => {
             res.json(projects);
         }
     });
-  });
+});
 
 module.exports = router;

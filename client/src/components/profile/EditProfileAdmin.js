@@ -3,8 +3,13 @@ import axios from 'axios';
 import M from "materialize-css";
 import options from "materialize-css";
 import classnames from "classnames";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { editProfile } from "../../actions/profileActions";
+import "../../componentsCSS/Forms.css";
+import Upload from "../upload/Upload";
 
-export default class EditProfileAdmin extends Component {
+class EditProfileAdmin extends Component {
     constructor(props) {
         super(props);
 
@@ -16,6 +21,7 @@ export default class EditProfileAdmin extends Component {
             birthDate: "",
             password: "",
             password2: "",
+            fileFormData: null,
             errors: {}
         }
 
@@ -34,7 +40,7 @@ export default class EditProfileAdmin extends Component {
         }
 
         axios.get('/api/users/getUserDetails/' + this.props.match.params.id)
-        .then(response => {
+            .then(response => {
                 var date = new Date(response.data[1].birthDate);
                 var year = date.getFullYear();
                 var month = date.getMonth() + 1;
@@ -53,6 +59,14 @@ export default class EditProfileAdmin extends Component {
             .catch(error => console.log(error));
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+            this.setState({
+                errors: nextProps.errors
+            });
+        }
+    }
+
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
     };
@@ -68,8 +82,12 @@ export default class EditProfileAdmin extends Component {
             password: this.state.password,
             password2: this.state.password2,
         };
-        axios.post('/api/users/updateUser/' + this.props.match.params.id, obj)
-        window.location.reload();
+
+        this.props.editProfile(this.props.match.params.id, this.state.fileFormData, obj, this.props.history);
+    }
+
+    handleUpload = (formData) => {
+        this.setState({ fileFormData: formData });
     }
 
     render() {
@@ -82,147 +100,142 @@ export default class EditProfileAdmin extends Component {
 
         return (
             <div className="container">
-                <div className="row">
-                    <div className="col s8 offset-s2">
-                        <h3>Editar Detalhes</h3>
-                        <form noValidate>
-                            <div className="input-field col s12">
-                                <label htmlFor="name">Nome Completo</label><br></br>
-                                <input
-                                    onChange={e => this.setState({
-                                        name: e.target.value,
-                                        validationErrorName: e.target.value === "" ? "Deverá preencher o campo Nome Completo" : ""
-                                    })}
-                                    value={this.state.name}
-                                    id="name"
-                                    type="text"
-                                    error={errors.name}
-                                    className={classnames("", {
-                                        invalid: errors.name
-                                    })}
-                                />
-                                <div style={{ color: "red", marginTop: "5px" }}>
-                                    {this.state.validationErrorName}
-                                </div>
-                                <span className="red-text">{errors.name}</span>
-                            </div>
-
-                            <div className="input-field col s12">
-                                <label htmlFor="number">Nº Telemóvel</label><br></br>
-                                <input
-                                    onChange={e => this.setState({
-                                        phone: e.target.value,
-                                        validationErrorPhone: e.target.value === "" ? "Deverá preencher o campo Nº Telemóvel" : ""
-                                    })}
-                                    value={this.state.phone}
-                                    id="phone"
-                                    type="number"
-                                    error={errors.phone}
-                                    className={classnames("", {
-                                        invalid: errors.phone
-                                    })}
-                                />
-                                <div style={{ color: "red", marginTop: "5px" }}>
-                                    {this.state.validationErrorPhone}
-                                </div>
-                                <span className="red-text">{errors.phone}</span>
-                            </div>
-
-                            <div className="input-field col s12">
-                                <label htmlFor="name">Morada (Concelho)</label><br></br>
-                                <input
-                                    onChange={e => this.setState({
-                                        address: e.target.value,
-                                        validationErrorAddress: e.target.value === "" ? "Deverá preencher o campo Morada (Concelho)" : ""
-                                    })}
-                                    value={this.state.address}
-                                    id="address"
-                                    type="text"
-                                    error={errors.address}
-                                    className={classnames("", {
-                                        invalid: errors.address
-                                    })}
-                                />
-                                <div style={{ color: "red", marginTop: "5px" }}>
-                                    {this.state.validationErrorAddress}
-                                </div>
-                                <span className="red-text">{errors.address}</span>
-                            </div>
-
-                            <div className="input-field col s12">
-                                <label htmlFor="name">Data Nascimento</label><br></br>
-                                <input
-                                    onChange={e => this.setState({
-                                        birthDate: e.target.value,
-                                        validationErrorBirthDate: e.target.value === "" ? "Deverá preencher o campo Data Nascimento" : ""
-                                    })}
-                                    value={this.state.birthDate}
-                                    id="birthDate"
-                                    type="date"
-                                    error={errors.birthDate}
-                                    className={classnames("", {
-                                        invalid: errors.birthDate
-                                    })}
-                                />
-                                <div style={{ color: "red", marginTop: "5px" }}>
-                                    {this.state.validationErrorBirthDate}
-                                </div>
-                                <span className="red-text">{errors.birthDate}</span>
-                            </div>
-
-                            <div className="input-field col s12">
-                                <input
-                                    onChange={e => this.setState({
-                                        password: e.target.value,
-                                        validationErrorPassword: e.target.value === "" ? "Deverá preencher o campo Password Atual" : ""
-                                    })}
-                                    value={this.state.password}
-                                    error={errors.password}
-                                    id="password"
-                                    type="password"
-                                    className={classnames("", {
-                                        invalid: errors.password
-                                    })}
-                                />
-                                <label htmlFor="password">Password Atual</label>
-                                <div style={{ color: "red", marginTop: "5px" }}>
-                                    {this.state.validationErrorPassword}
-                                </div>
-                                <span className="red-text">{errors.password}</span>
-                            </div>
-
-                            <div className="input-field col s12">
-                                <input
-                                    onChange={e => this.setState({
-                                        password2: e.target.value,
-                                        validationErrorPassword2: e.target.value === "" ? "Deverá preencher o campo Password Nova" : ""
-                                    })}
-                                    value={this.state.password2}
-                                    error={errors.password2}
-                                    id="password2"
-                                    type="password"
-                                    className={classnames("", {
-                                        invalid: errors.password2
-                                    })}
-                                />
-                                <label htmlFor="password2">Password Nova</label>
-                                <div style={{ color: "red", marginTop: "5px" }}>
-                                    {this.state.validationErrorPassword2}
-                                </div>
-                                <span className="red-text">{errors.password2}</span>
-                            </div>
-                        </form>
-                        <div className="col s12" style={{ marginTop: "1%", paddingBottom: 60 }}>
-                            <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "20%" }}
-                                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Editar
-                            </button>
-                            <a style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "20%" }}
-                                href={"/baseProfile/" + this.props.match.params.id} className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
-                            </a>
+                <div className="container">
+                    <h3>Editar Detalhes</h3>
+                    <form noValidate>
+                        <div className="input-field">
+                            <label htmlFor="name">Nome Completo</label><br></br>
+                            <input
+                                onChange={e => this.setState({
+                                    name: e.target.value,
+                                })}
+                                value={this.state.name}
+                                id="name"
+                                type="text"
+                                error={errors.name}
+                                className={classnames("", {
+                                    invalid: errors.name
+                                })}
+                            />
+                            <span className="red-text">{errors.name}</span>
                         </div>
+
+                        <div className="input-field">
+                            <label htmlFor="number">Nº Telemóvel</label><br></br>
+                            <input
+                                onChange={e => this.setState({
+                                    phone: e.target.value,
+                                })}
+                                value={this.state.phone}
+                                id="phone"
+                                type="number"
+                                error={errors.phone}
+                                className={classnames("", {
+                                    invalid: errors.phone
+                                })}
+                            />
+                            <span className="red-text">{errors.phone}</span>
+                        </div>
+
+                        <div className="input-field">
+                            <label htmlFor="name">Morada (Concelho)</label><br></br>
+                            <input
+                                onChange={e => this.setState({
+                                    address: e.target.value,
+                                })}
+                                value={this.state.address}
+                                id="address"
+                                type="text"
+                                error={errors.address}
+                                className={classnames("", {
+                                    invalid: errors.address
+                                })}
+                            />
+                            <span className="red-text">{errors.address}</span>
+                        </div>
+
+                        <div className="input-field">
+                            <label htmlFor="name">Data Nascimento</label><br></br>
+                            <input
+                                onChange={e => this.setState({
+                                    birthDate: e.target.value,
+                                })}
+                                value={this.state.birthDate}
+                                id="birthDate"
+                                type="date"
+                                error={errors.birthDate}
+                                className={classnames("", {
+                                    invalid: errors.birthDate
+                                })}
+                            />
+                            <span className="red-text">{errors.birthDate}</span>
+                        </div>
+
+                        <div className="input-field">
+                            <input
+                                onChange={e => this.setState({
+                                    password: e.target.value,
+                                })}
+                                value={this.state.password}
+                                error={errors.password}
+                                id="password"
+                                type="password"
+                                className={classnames("", {
+                                    invalid: errors.password
+                                })}
+                            />
+                            <label htmlFor="password">Password Atual (Preencher apenas se pretender alterar a password)</label>
+                            <span className="red-text">{errors.password}</span>
+                        </div>
+
+                        <div className="input-field">
+                            <input
+                                onChange={e => this.setState({
+                                    password2: e.target.value,
+                                })}
+                                value={this.state.password2}
+                                error={errors.password2}
+                                id="password2"
+                                type="password"
+                                className={classnames("", {
+                                    invalid: errors.password2
+                                })}
+                            />
+                            <label htmlFor="password2">Password Nova (Preencher apenas se pretender alterar a password)</label>
+                            <span className="red-text">{errors.password2}</span>
+                        </div>
+
+                        <div className="input-field col s12">
+                            <label htmlFor="name">Logótipo</label><br></br><br></br>
+                            <Upload handleUpload={this.handleUpload}></Upload>
+                        </div>
+                    </form>
+                    <div className="botoes col s12" style={{ marginTop: "auto", marginBottom: 70, display: "flex", justifyContent: "space-around" }}>
+                        <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5 }}
+                            type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Submeter
+                        </button>
+                        <a style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red" }}
+                            href={"/baseProfile/" + this.props.match.params.id} className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
+                        </a>
                     </div>
                 </div>
             </div>
         )
     }
 }
+
+EditProfileAdmin.propTypes = {
+    editProfile: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+    auth: state.auth,
+    errors: state.errors
+});
+
+export default connect(
+    mapStateToProps,
+    { editProfile }
+)(EditProfileAdmin);

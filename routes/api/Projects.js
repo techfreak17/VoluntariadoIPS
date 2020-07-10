@@ -1,11 +1,14 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
 
 const Project = require("../../models/project");
+const ConcludedProject = require("../../models/concludedProject");
 const User = require("../../models/user");
 const Company = require("../../models/company");
 const Administrator = require("../../models/administrator");
 const Voluntary = require("../../models/voluntary");
+const ProjectClassification = require("../../models/projectClassification");
 const createNotification = require("../../Notifications/pushNotifications");
 
 const buildJSON = (...files) => {
@@ -32,7 +35,7 @@ router.post("/createProject", (req, res) => {
     if (project) {
       return res.status(400).json({ title: "Project already exists" });
     } else {
-      Company.findOne({ name: req.body.responsibleID }).then(company => {
+      Company.findOne({ responsibleID: req.body.responsibleID }).then(company => {
         const newProject = new Project({
           title: req.body.title,
           synopsis: req.body.synopsis,
@@ -65,7 +68,11 @@ router.post("/createProject", (req, res) => {
 // @access Private
 router.route('/editProject/:id').get(function (req, res) {
   let id = req.params.id;
-  Project.findById(id, function (err, project) {
+  Project.findById(id, {
+    title: 1, interestAreas: 1, relatedEntities: 1, relatedEntities: 1, title: 1,
+    synopsis: 1, intervationArea: 1, target_audience: 1, objectives: 1, description: 1, date: 1,
+    observations: 1, responsibleID: 1, requiredFormation: 1, formation: 1, vacancies: 1
+  }, function (err, project) {
     res.json(project);
   });
 });
@@ -86,7 +93,7 @@ router.route('/updateProject/:id').post(function (req, res) {
       res.status(404).send("data is not found");
     else {
       if (req.body.responsibleID !== undefined) {
-        Company.findOne({ name: req.body.responsibleID }).then(company => {
+        Company.findOne({ responsibleID: req.body.responsibleID }).then(company => {
           project.title = req.body.title;
           project.synopsis = req.body.synopsis,
             project.intervationArea = req.body.intervationArea,
@@ -113,7 +120,11 @@ router.route('/updateProject/:id').post(function (req, res) {
             relatedEntities: project.relatedEntities,
             responsibleID: project.responsibleID,
             vacancies: project.vacancies
-          })
+          });
+
+          project
+            .save()
+            .then(updatedProject => res.json(updatedProject))
             .catch(err => {
               res.status(400).send("unable to update the database");
             });
@@ -144,7 +155,11 @@ router.route('/updateProject/:id').post(function (req, res) {
           observations: project.observations,
           relatedEntities: project.relatedEntities,
           vacancies: project.vacancies
-        })
+        });
+
+        project
+          .save()
+          .then(updatedProject => res.json(updatedProject))
           .catch(err => {
             res.status(400).send("unable to update the database");
           });
@@ -164,6 +179,7 @@ router.route('/deleteProject/:id').get(function (req, res) {
     else {
       project.deleteOne();
       createNotification('projetoRemovido', project.title, 'admin@teste.pt');
+      res.status(202).send("Deleted with sucess")
     }
   });
 });
@@ -172,7 +188,7 @@ router.route('/deleteProject/:id').get(function (req, res) {
 // @desc Get List of Projects
 // @access Private
 router.route('/listProjects').get(function (req, res) {
-  Project.find(function (err, projects) {
+  Project.find({},{ title: 1, synopsis: 1, date: 1, enroled_IDs: 1 },function (err, projects) {
     if (err) {
       console.log(err);
     }
@@ -182,7 +198,7 @@ router.route('/listProjects').get(function (req, res) {
   });
 });
 
-// @route GET api/projects/searchProject
+// @route POST api/projects/searchProject
 // @desc Search Project
 // @access Private
 router.post("/searchProject", (req, res) => {
@@ -232,18 +248,18 @@ router.route('/getProjectVoluntaries/:id').get(function (req, res) {
   let id = req.params.id;
   Project.findById(id, function (err, project) {
     if (project) {
-        Voluntary.find({'userID': { $in: project.enroled_IDs}}, function (err, user) {
-          if(user){
-            res.json(user);
-          }
-          else{
-            return res.status(404).json({user: 'User não encontrado'});
-          }
-        });
-      
+      Voluntary.find({ 'userID': { $in: project.enroled_IDs } }, function (err, user) {
+        if (user) {
+          res.json(user);
+        }
+        else {
+          return res.status(404).json({ user: 'User não encontrado' });
+        }
+      });
+
     }
-    else{
-      return res.status(404).json({project:'Projeto não foi encontrado'});
+    else {
+      return res.status(404).json({ project: 'Projeto não foi encontrado' });
     }
 
   });
@@ -260,9 +276,7 @@ router.route('/getCompanyProjectDetails/:id').get(function (req, res) {
       if (user.role === "Empresa") {
         Company.findOne({ responsibleID: newId }).then(company => {
           if (company) {
-            
-            res.json(buildJSON(project, user, company ));
-          
+            res.json(buildJSON(project, user, company));
           } else {
             return res.status(400).json({ company: "Such data doesn´t exist" });
           };
@@ -275,11 +289,100 @@ router.route('/getCompanyProjectDetails/:id').get(function (req, res) {
             return res.status(400).json({ admin: "Such data doesn´t exist" });
           };
         })
-
       }
     })
   });
 });
 
+// @route POST api/projects/removeVoluntary/:id
+// @desc Remove Voluntary
+// @access Private
+router.route('/removeVoluntary/:id').post(function (req, res) {
+  let id = req.params.id;
+  Voluntary.findById(mongoose.Types.ObjectId(id), function (err, voluntary) {
+    User.findById(voluntary.userID).then(user => {
+      if (user.role === "Voluntário") {
+        Project.findById(req.body.projectID).then(project => {
+          voluntary.listProjects.pull(project._id);
+          voluntary.save();
+          project.enroled_IDs.pull(user._id);
+          project.save();
+          createNotification('sairProjeto', project.title, user.email);
+        })
+      }
+    })
+  });
+});
+
+// @route POST api/projects/ratingProject/:id
+// @desc Add Rating of Project from User
+// @access Private
+router.route('/ratingProject/:id').post(function (req, res) {
+  let id = req.params.id;
+  Project.findById(id, function (err, project) {
+    let newId = req.body.userID;
+    User.findOne({ _id: newId }).then(user => {
+      const newProjectClassification = new ProjectClassification({
+        projectID: project._id,
+        userID: user._id,
+        rating: req.body.rating,
+        title: project.title
+      });
+
+      newProjectClassification
+        .save()
+        .then(projectClassification => res.json(projectClassification))
+        .catch(err => console.log(err));
+    })
+  })
+});
+
+// @route POST api/projects/getProjectUserStats/:id
+// @desc Get Rating Stats
+// @access Private
+router.route('/getProjectUserStats').post(function (req, res) {
+  ProjectClassification.findOne({ projectID: req.body.projectID, userID: req.body.userID }).then(projectClassification => {
+    const obj = {
+      alreadyClassified: true,
+    };
+    if (projectClassification)
+      res.json(obj);
+  })
+});
+
+// @route GET  api/projects/concludeProject/:id
+// @desc Deletes a project from Projects, and had it to ConcludedProjects
+// @public
+router.route('/concludeProject/:id').get(function (req, res) {
+  let id = req.params.id;
+  Project.findById(id, function (err, project) {
+    if (project) {
+      const newProject = new ConcludedProject({
+        title: project.title,
+        synopsis: project.synopsis,
+        intervationArea: project.intervationArea,
+        target_audience: project.target_audience,
+        objectives: project.objectives,
+        description: project.description,
+        date: project.date,
+        interestAreas: project.interestAreas,
+        photo: project.photo,
+        observations: project.observations,
+        relatedEntities: project.relatedEntities,
+        responsibleID: project.responsibleID,
+        requiredFormation: project.requiredFormation,
+        formation: project.formation,
+        vacancies: project.vacancies,
+        enroled_IDs: project.enroled_IDs
+      });
+      newProject.save()
+        .then(project.deleteOne()
+          .then(project => res.json(project)));
+    }
+    else {
+      return res.status(404).json("Porjecto não encontrado.");
+    }
+  });
+});
 
 module.exports = router;

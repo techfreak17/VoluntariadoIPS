@@ -3,6 +3,7 @@ import axios from 'axios';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
+import "../../componentsCSS/Details.css";
 
 
 class CompanySubmitedProjectsDetails extends Component {
@@ -58,22 +59,42 @@ class CompanySubmitedProjectsDetails extends Component {
           li.appendChild(document.createTextNode(name));
           ul.appendChild(li);
         }
+        this.insertImage(response.data[0].img);
       })
       .catch(error => console.log(error));
   }
-
 
   goBack() {
     window.history.back();
   }
 
+  insertImage = (file) => {
+    let myDiv = document.getElementById("CompanySubmitedProjectImg");
+    let img = document.createElement('img');
+    let imageFile = null;
+
+    if(file){
+      imageFile = `data:${file.contentType};base64,${Buffer.from(file.data).toString('base64')}`;
+    }else{
+      imageFile = require('../layout/images/volun.png');
+    }
+    
+    img.src = imageFile;
+    img.alt ="(No Image)";
+    img.className = "img-responsive";
+    img.style.width = "40%";
+    img.style.borderRadius = "5%";
+
+    myDiv.appendChild(img);
+  }
+
   render() {
     return (
       <div>
-        <div className="card" style={{ backgroundColor: "#00000", width: 900, margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px black" }}>
-          <div className="card-header center" style={{ overflow: "hidden", height: 400, width: "100%" }}>
+        <div className="card" style={{ backgroundColor: "#f2f2f2", width: "50%", margin: "10px auto", marginBottom: 75, boxShadow: "1px 1px 10px 5px black" }}>
+          <div className="card-header center" style={{ overflow: "hidden", width: "100%" }}>
             <h2 style={{ color: "#1167B1" }}><b>{this.state.title}</b></h2>
-            <img src={require('../layout/images/volun.png')} alt="(Não esquecer de verificar no spam)" className="img-responsive" style={{ width: "40%", height: "70%" }} />
+            <div id="CompanySubmitedProjectImg"></div>
           </div>
           <div className="card-content" style={{ paddingLeft: 50 }}>
             <div className="right" style={{ paddingRight: 25 }}>
@@ -108,8 +129,8 @@ class CompanySubmitedProjectsDetails extends Component {
               <p style={{ color: "#000000" }}><b>Observações:</b> {this.state.observations}</p>
               <ul id="friendsList" style={{ color: "#000000" }}><b>Áreas:</b></ul>
             </div>
-            <button onClick={this.goBack} style={{ width: 120, borderRadius: 10, letterSpacing: 1.5, fontWeight: "bold", }}
-              className="btn btn-large waves-effect waves-light hoverable black center">Voltar</button>
+            <button onClick={this.goBack} style={{ width: "100%", borderRadius: 10, backgroundColor: "#23395D", fontWeight: "bold" }}
+              className="btn btn-large hoverable accent-3 center">Voltar</button>
           </div>
         </div>
       </div>

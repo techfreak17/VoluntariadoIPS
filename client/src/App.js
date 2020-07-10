@@ -45,7 +45,12 @@ import CompanyProjectsDetails from "./components/companyProjects/CompanyProjects
 import IndexSubmitedCompanyProjects from "./components/companyProjects/IndexSubmitedCompanyProjects";
 import CompanySubmitedProjectsDetails from "./components/companyProjects/CompanySubmitedProjectsDetails";
 import VoluntariesList from "./components/projects/VoluntariesList.js";
-
+import StatisticsNumberUsers from "./components/stats/StatisticsNumberUsers.js";
+import StatisticsNumberProjects from "./components/stats/StatisticsNumberProjects.js";
+import Upload from "./components/upload/Upload.js";
+import StatisticsRatingProjects from "./components/stats/StatisticsRatingProjects.js";
+import StatisticsVoluntary from "./components/stats/StatisticsVoluntary.js";
+import StatisticsProjectComparison from "./components/stats/StatisticsProjectComparison.js"
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -91,6 +96,7 @@ class App extends Component {
             <Route exact path="/resetpassword/:token" component={ResetPassword} />
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute exact path="/uploadFile" component={Upload} />
               <PrivateRoute path='/listProjects' component={ IndexProjects } />
               <PrivateRoute path='/getProject/:id' component={ ProjectDetails } />
               <PrivateRoute path="/baseProfile/:id" component={Profile}/>
@@ -100,6 +106,11 @@ class App extends Component {
               <PrivateRoute path='/getUser/:id' component={ UserDetails } />
               <PrivateRoute path='/listVoluntary/:id' component={VoluntariesList}/>
               <PrivateRoute path='/editProject/:id' component={ Edit } />
+              <PrivateRoute path='/statsNumberUsers' component={ StatisticsNumberUsers } />
+              <PrivateRoute path='/statsNumberProjects' component={ StatisticsNumberProjects } />
+              <PrivateRoute path='/statsRatingProjects' component={ StatisticsRatingProjects } />
+              <PrivateRoute path='/statsVoluntary' component={ StatisticsVoluntary } />
+              <PrivateRoute path='/statsCompareProjects' component={ StatisticsProjectComparison } />
               <AdminRoute exact path='/createCompanyUser' component={ CreateCompanyUser } />
               <AdminRoute exact path='/createVoluntaryUser' component={ CreateVoluntaryUser } />
               <AdminRoute exact path='/createProject' component={ Create } />

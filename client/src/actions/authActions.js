@@ -9,10 +9,30 @@ import {
 } from "./types";
 
 // Register User
-export const registerVoluntary = (userData, history) => dispatch => {
+export const registerVoluntary = (userData, file, history) => dispatch => {
     axios
         .post("/api/users/registerVoluntary", userData)
-        .then(res => history.push("/confirmAccount")) // re-direct to login on successful register
+        .then(res => {
+            if (file) {
+                file.append(
+                    "type",
+                    "Utilizador"
+                )
+                file.append(
+                    "id",
+                    res.data._id
+                )
+                axios
+                    .post("api/upload/file", file, {
+                        headers: {
+                            "Content-type": "multipart/form-data"
+                      }
+                    })
+                    .then(history.push("/confirmAccount"));
+            } else {
+                history.push("/confirmAccount");
+            }
+        })
         .catch(err =>
             dispatch({
                 type: GET_ERRORS,
@@ -22,10 +42,30 @@ export const registerVoluntary = (userData, history) => dispatch => {
 };
 
 // Register User
-export const registerCompany = (userData, history) => dispatch => {
+export const registerCompany = (userData, file, history) => dispatch => {
     axios
         .post("/api/users/registerCompany", userData)
-        .then(res => history.push("/confirmAccount")) // re-direct to login on successful register
+        .then(res => {
+            if (file) {
+                file.append(
+                    "type",
+                    "Utilizador"
+                )
+                file.append(
+                    "id",
+                    res.data._id
+                )
+                axios
+                    .post("api/upload/file", file, {
+                        headers: {
+                            "Content-type": "multipart/form-data"
+                      }
+                    })
+                    .then(history.push("/confirmAccount"));
+            } else {
+                history.push("/confirmAccount");
+            }
+        })
         .catch(err =>
             dispatch({
                 type: GET_ERRORS,
@@ -123,7 +163,7 @@ export const logoutUser = () => dispatch => {
 
     // Remove auth header for future requests
     setAuthToken(false);
-    
+
     // Set current user to empty object {} which will set isAuthenticated to false
     dispatch(setCurrentUser({}));
 };

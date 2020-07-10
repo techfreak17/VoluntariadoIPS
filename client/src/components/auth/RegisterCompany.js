@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { registerCompany } from "../../actions/authActions";
 import classnames from "classnames";
+import Upload from "../upload/Upload";
+import "../../componentsCSS/Register.css"
 
 class RegisterCompany extends Component {
     constructor() {
@@ -23,15 +25,16 @@ class RegisterCompany extends Component {
             observations: "",
             authorization: false,
             listProjects: [],
+            fileFormData: null,
             errors: {}
         };
     }
 
     toggleChangeAuthorization = () => {
         this.setState({
-          authorization: !this.state.authorization,
+            authorization: !this.state.authorization,
         });
-      }
+    }
 
     componentDidMount() {
         // If logged in and user navigates to Register page, should redirect them to dashboard
@@ -53,6 +56,10 @@ class RegisterCompany extends Component {
         this.setState({ [e.target.id]: e.target.value });
     };
 
+    handleUpload = (formData) => {
+        this.setState({ fileFormData: formData });
+    }
+
     onSubmit = e => {
         e.preventDefault();
 
@@ -73,14 +80,14 @@ class RegisterCompany extends Component {
             listProjects: this.state.listProjects
         };
 
-        this.props.registerCompany(newUser, this.props.history);
+        this.props.registerCompany(newUser,this.state.fileFormData, this.props.history);
     };
 
     render() {
         const { errors } = this.state;
 
         return (
-            <div className="container" style={{marginTop: "1%"}}>
+            <div className="container" style={{ marginTop: "1%" }}>
                 <div className="row">
                     <div className="col s8 offset-s2">
                         <a href="/" className="btn-flat waves-effect">
@@ -88,14 +95,15 @@ class RegisterCompany extends Component {
                             Voltar
                         </a>
 
-                        <div className="col s12" style={{ paddingLeft: "11.250px"}}>
+                        <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                             <h4>
                                 <b>Registe-se como Empresa </b>
                             </h4>
-                            <p className="grey-text text-darken-1" style={{fontWeight:"bolder"}}>
+                            <p><b>Nota:</b> Todos os campos a * deverão ser preenchidos.</p>
+                            <p className="grey-text text-darken-1" style={{ fontWeight: "bolder" }}>
                                 Já tem conta? <Link to="/login">Log in</Link>
                             </p>
-                            <p className="grey-text text-darken-1" style={{fontWeight:"bolder"}}>
+                            <p className="grey-text text-darken-1" style={{ fontWeight: "bolder" }}>
                                 Registe-se como Voluntário <Link to="/registerVoluntary">Registar</Link>
                             </p>
                         </div>
@@ -103,7 +111,10 @@ class RegisterCompany extends Component {
                         <form noValidate>
                             <div className="input-field col s12">
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        username: e.target.value,
+                                        validationErrorUsername: e.target.value === "" ? "Deverá preencher o campo Username" : ""
+                                    })}
                                     value={this.state.username}
                                     error={errors.username}
                                     id="username"
@@ -112,13 +123,19 @@ class RegisterCompany extends Component {
                                         invalid: errors.username
                                     })}
                                 />
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationErrorUsername}
+                                </div>
                                 <label htmlFor="name">Username *</label>
                                 <span className="red-text">{errors.username}</span>
                             </div>
 
                             <div className="input-field col s12">
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        email: e.target.value,
+                                        validationErrorEmail: e.target.value === "" ? "Deverá preencher o campo Email" : ""
+                                    })}
                                     value={this.state.email}
                                     error={errors.email}
                                     id="email"
@@ -127,13 +144,19 @@ class RegisterCompany extends Component {
                                         invalid: errors.email
                                     })}
                                 />
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationErrorEmail}
+                                </div>
                                 <label htmlFor="email">Email *</label>
                                 <span className="red-text">{errors.email}</span>
                             </div>
 
                             <div className="input-field col s12">
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        password: e.target.value,
+                                        validationPassword: e.target.value === "" ? "Deverá preencher o campo Password" : ""
+                                    })}
                                     value={this.state.password}
                                     error={errors.password}
                                     id="password"
@@ -142,13 +165,19 @@ class RegisterCompany extends Component {
                                         invalid: errors.password
                                     })}
                                 />
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationPassword}
+                                </div>
                                 <label htmlFor="password">Password *</label>
                                 <span className="red-text">{errors.password}</span>
                             </div>
 
                             <div className="input-field col s12">
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        password2: e.target.value,
+                                        validationPassword2: e.target.value === "" ? "Deverá preencher o campo Confirmar Password" : ""
+                                    })}
                                     value={this.state.password2}
                                     error={errors.password2}
                                     id="password2"
@@ -157,13 +186,19 @@ class RegisterCompany extends Component {
                                         invalid: errors.password2
                                     })}
                                 />
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationPassword2}
+                                </div>
                                 <label htmlFor="password2">Confirmar Password *</label>
                                 <span className="red-text">{errors.password2}</span>
                             </div>
 
                             <div className="input-field col s12">
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        name: e.target.value,
+                                        validationErrorName: e.target.value === "" ? "Deverá preencher o campo Nome Completo" : ""
+                                    })}
                                     value={this.state.name}
                                     error={errors.name}
                                     id="name"
@@ -172,13 +207,19 @@ class RegisterCompany extends Component {
                                         invalid: errors.name
                                     })}
                                 />
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationErrorName}
+                                </div>
                                 <label htmlFor="name">Nome Completo *</label>
                                 <span className="red-text">{errors.name}</span>
                             </div>
 
                             <div className="input-field col s12">
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        phone: e.target.value,
+                                        validationErrorPhone: e.target.value === "" ? "Deverá preencher o campo Nº Telemóvel" : ""
+                                    })}
                                     value={this.state.phone}
                                     error={errors.phone}
                                     id="phone"
@@ -187,6 +228,9 @@ class RegisterCompany extends Component {
                                         invalid: errors.phone
                                     })}
                                 />
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationErrorPhone}
+                                </div>
                                 <label htmlFor="number">Nº Telemóvel *</label>
                                 <span className="red-text">{errors.phone}</span>
                             </div>
@@ -207,8 +251,12 @@ class RegisterCompany extends Component {
                             </div>
 
                             <div className="input-field col s12">
+                                <label htmlFor="name">Data Nascimento *</label><br></br>
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        birthDate: e.target.value,
+                                        validationErrorBirthDate: e.target.value === "" ? "Deverá preencher o campo Data Nascimento" : ""
+                                    })}
                                     value={this.state.birthDate}
                                     error={errors.birthDate}
                                     id="birthDate"
@@ -217,13 +265,18 @@ class RegisterCompany extends Component {
                                         invalid: errors.birthDate
                                     })}
                                 />
-                                <label htmlFor="name">Data Nascimento *</label>
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationErrorBirthDate}
+                                </div>
                                 <span className="red-text">{errors.birthDate}</span>
                             </div>
 
                             <div className="input-field col s12">
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        companyName: e.target.value,
+                                        validationErrorCompanyName: e.target.value === "" ? "Deverá preencher o campo Nome Empresa" : ""
+                                    })}
                                     value={this.state.companyName}
                                     error={errors.companyName}
                                     id="companyName"
@@ -232,13 +285,19 @@ class RegisterCompany extends Component {
                                         invalid: errors.companyName
                                     })}
                                 />
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationErrorCompanyName}
+                                </div>
                                 <label htmlFor="name">Nome Empresa *</label>
                                 <span className="red-text">{errors.companyName}</span>
                             </div>
 
                             <div className="input-field col s12">
                                 <input
-                                    onChange={this.onChange}
+                                    onChange={e => this.setState({
+                                        companyAddress: e.target.value,
+                                        validationErrorCompanyAddress: e.target.value === "" ? "Deverá preencher o campo Morada (Concelho) Empresa" : ""
+                                    })}
                                     value={this.state.companyAddress}
                                     error={errors.companyAddress}
                                     id="companyAddress"
@@ -247,10 +306,13 @@ class RegisterCompany extends Component {
                                         invalid: errors.companyAddress
                                     })}
                                 />
+                                <div style={{ color: "red", marginTop: "5px" }}>
+                                    {this.state.validationErrorCompanyAddress}
+                                </div>
                                 <label htmlFor="name">Morada (Concelho) Empresa *</label>
                                 <span className="red-text">{errors.companyAddress}</span>
                             </div>
-        
+
                             <div className="input-field col s12">
                                 <input
                                     onChange={this.onChange}
@@ -267,6 +329,11 @@ class RegisterCompany extends Component {
                             </div>
 
                             <div className="input-field col s12">
+                                <label htmlFor="name">Logótipo</label><br></br><br></br>
+                                <Upload handleUpload={this.handleUpload}></Upload>
+                            </div>
+
+                            <div className="input-field col s12">
                                 <b>Autorização RGPD *</b>
                                 <label>
                                     <br></br>
@@ -277,21 +344,19 @@ class RegisterCompany extends Component {
                                 </label>
                             </div>
                         </form>
-                            <div className="col s12" style={{ paddingLeft: "11.250px", paddingBottom: "60px" }}>
-                                <br></br><br></br><br></br><br></br><br></br>
-                                <button
-                                    style={{
-                                        width: "150px",
-                                        borderRadius: 10,
-                                        letterSpacing: "1.5px",
-                                        marginTop: "1rem"
-                                    }}
-                                    type="submit"
-                                    onClick={this.onSubmit}
-                                    className="btn btn-large waves-effect waves-light hoverable blue accent-3">
-                                    Registar
+                        <div className="botao col s12 center">
+                            <button
+                                style={{
+                                    borderRadius: 10,
+                                    letterSpacing: "1.5px",
+                                    marginTop: 150
+                                }}
+                                type="submit"
+                                onClick={this.onSubmit}
+                                className="btn-large hoverable blue accent-3">
+                                Registar
                                 </button>
-                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

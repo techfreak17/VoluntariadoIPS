@@ -1,0 +1,13 @@
+@media screen and (max-width: 600px) {
+    .logo{
+        width: 150px;
+        height: 55px;
+    }
+}
+@media screen and (max-width: 450px) {
+    .logo{
+        margin-top: 15px;
+        width: 100px;
+        height: 30px;
+    }
+}

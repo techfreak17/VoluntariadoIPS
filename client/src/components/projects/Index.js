@@ -18,6 +18,14 @@ class Index extends Component {
     };
   }
   componentDidMount() {
+    if (window.localStorage) {
+      if (!localStorage.getItem('firstLoad')) {
+        localStorage['firstLoad'] = true;
+        window.location.reload();
+      }
+      else
+        localStorage.removeItem('firstLoad');
+    }
     axios.get('/api/projects/listProjects')
       .then(response => {
         this.setState({
@@ -28,7 +36,7 @@ class Index extends Component {
         console.log(error);
       })
   }
-  
+
   onChangeSearch(e) {
     this.setState({
       search: e.target.value
@@ -78,7 +86,7 @@ class Index extends Component {
                 )
               }
             })()}
-                        {(() => {
+            {(() => {
               if (this.props.auth.user.role === "Administrador") {
                 return (
                   <Link to="/createProject"
@@ -94,9 +102,9 @@ class Index extends Component {
           </p>
           <form onSubmit={this.onSubmit}>
             <input id="myInput" type="text" placeholder="Pesquisar por título ..." name="search" onChange={this.onChangeSearch} style={{ borderBottom: "3px solid #23395D" }}></input>
-            <button type="submit" className="btn waves-effect waves-light hoverable" style={{ backgroundColor: "#DDDDDD", color: "black", height: 35, fontWeight:"bolder" }}>Pesquisar</button>
+            <button type="submit" className="btn waves-effect waves-light hoverable" style={{ backgroundColor: "#DDDDDD", color: "black", height: 35, fontWeight: "bolder" }}>Pesquisar</button>
           </form>
-          <table className="table table-striped" style={{ marginTop: 20 }}>
+          <table className="responsive-table" style={{ marginTop: 20 }}>
             <thead>
               <tr>
                 <th>Título</th>

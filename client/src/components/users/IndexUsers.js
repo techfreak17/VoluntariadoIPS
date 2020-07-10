@@ -15,6 +15,14 @@ export default class IndexUsers extends Component {
     };
   }
   componentDidMount() {
+    if (window.localStorage) {
+      if (!localStorage.getItem('firstLoad')) {
+        localStorage['firstLoad'] = true;
+        window.location.reload();
+      }
+      else
+        localStorage.removeItem('firstLoad');
+    }
     axios.get('/api/users/listUsers')
       .then(response => {
         this.setState({ user: response.data });
@@ -64,7 +72,7 @@ export default class IndexUsers extends Component {
               borderRadius: 5,
               letterSpacing: "1px",
               backgroundColor: "#23395D",
-              marginLeft: 10
+              margin: 10
             }}> Criar Voluntário</Link>
 
           <Link to="/createCompanyUser" className="right btn waves-effect waves-light hoverable"
@@ -72,14 +80,14 @@ export default class IndexUsers extends Component {
               borderRadius: 5,
               letterSpacing: "1px",
               backgroundColor: "#23395D",
-              marginRight: 10
+              margin: 10
             }}> Criar Empresa</Link>
         </p>
         <form onSubmit={this.onSubmit}>
           <input id="myInput" type="text" placeholder="Pesquisar por username ..." name="search" onChange={this.onChangeSearch} style={{ borderBottom: "3px solid #23395D" }}></input>
           <button type="submit" className="btn waves-effect waves-light hoverable" style={{ backgroundColor: "#DDDDDD", color: "black", height: 35, fontWeight:"bolder" }}>Pesquisar</button>
         </form>
-        <table className="table table-striped" style={{ marginTop: 20 }}>
+        <table className="responsive-table" style={{ marginTop: 20 }}>
           <thead>
             <tr>
               <th>Username</th>

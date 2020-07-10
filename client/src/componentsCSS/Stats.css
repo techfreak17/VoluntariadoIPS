@@ -1,0 +1,8 @@
+@media screen and (max-width: 506px) {
+    h3{
+        font-size: 6vw;
+    }
+    .chart{
+        margin-left: 50px;
+    }
+}

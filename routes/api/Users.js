@@ -21,6 +21,7 @@ const Voluntary = require("../../models/voluntary");
 const Company = require("../../models/company");
 const Token = require("../../models/token");
 const Administrator = require("../../models/administrator");
+const { use } = require("chai");
 
 const buildJSON = (...files) => {
   var obj = {}
@@ -80,7 +81,7 @@ router.post("/registerVoluntary", (req, res) => {
                   observations: req.body.observations,
                   authorization: req.body.authorization,
                   listProjects: req.body.listProjects,
-                  userID: user._id,
+                  userID: user._id
                 });
                 newVoluntary.save();
               });
@@ -142,7 +143,7 @@ router.post("/registerCompany", (req, res) => {
                   observations: req.body.observations,
                   authorization: req.body.authorization,
                   listProjects: req.body.listProjects,
-                  responsibleID: user._id,
+                  responsibleID: user._id
                 });
                 newCompany.save();
               });
@@ -256,7 +257,7 @@ router.post("/recover", (req, res) => {
 
 });
 
-// @route POST api/users/recover
+// @route POST api/users/updatePassword
 // @desc Recover User password
 // @access Public
 router.post("/updatePassword", (req, res) => {
@@ -299,7 +300,7 @@ router.post("/updatePassword", (req, res) => {
 // @desc Get List Users
 // @access Private
 router.route('/listUsers').get(function (req, res) {
-  User.find(function (err, users) {
+  User.find({}, { username: 1, email: 1, role: 1 }, function (err, users) {
     if (err) {
       console.log(err);
     }
@@ -358,6 +359,20 @@ router.route('/getUserDetails/:id').get(function (req, res) {
   });
 });
 
+// @route GET api/users/getUser/:id
+// @desc Get User Details
+// @access Private
+router.route('/getUser/:id').get(function (req, res) {
+  let id = req.params.id;
+  User.findById(id, function (err, user) {
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).send("data is not found");
+    }
+  });
+});
+
 // @route POST api/users/updateUser/:id
 // @desc Update User
 // @access Private
@@ -366,8 +381,13 @@ router.route('/updateUser/:id').post(function (req, res) {
     if (!user) {
       res.status(404).send("data is not found");
     }
-
     if (user.role === "Voluntário") {
+
+      const { errors, isValid } = validateEditInputAdminProfileUser(req.body);
+      // Check validation
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
       atualPassword = req.body.password;
       newPassword = req.body.password2;
       var countAtualPassword = Object.keys(newPassword).length
@@ -379,53 +399,32 @@ router.route('/updateUser/:id').post(function (req, res) {
             newPassword = hash;
             user.updateOne({
               password: newPassword,
-            })
+            });
+
+            user
+              .save()
               .catch(err => {
                 res.status(400).send("unable to update the database");
               });
           })
         })
       }
-
       Voluntary.findOne({ email: user.email }).then(voluntary => {
+
         if (voluntary) {
           voluntary.name = req.body.name;
           voluntary.phone = req.body.phone;
           voluntary.address = req.body.address;
           voluntary.birthDate = req.body.birthDate;
-          voluntary.memberIPS = req.body.memberIPS;
-          voluntary.schoolIPS = req.body.schoolIPS;
-          voluntary.courseIPS = req.body.courseIPS;
+          voluntary.reasons = req.body.reasons;
           voluntary.interestAreas = req.body.interestAreas;
 
-          if (voluntary.courseIPS !== undefined && voluntary.schoolIPS !== undefined && voluntary.memberIPS !== undefined) {
-            voluntary.updateOne({
-              name: voluntary.name,
-              phone: voluntary.phone,
-              address: voluntary.address,
-              birthDate: voluntary.birthDate,
-              memberIPS: voluntary.memberIPS,
-              schoolIPS: voluntary.schoolIPS,
-              courseIPS: voluntary.courseIPS,
-              interestAreas: voluntary.interestAreas,
-            })
-              .catch(err => {
-                res.status(400).send("unable to update the database");
-              });
-            createNotification('editarVoluntario', voluntary.name, user.email);
-          } else {
-            voluntary.updateOne({
-              name: voluntary.name,
-              phone: voluntary.phone,
-              address: voluntary.address,
-              birthDate: voluntary.birthDate,
-              interestAreas: voluntary.interestAreas,
-            })
-              .catch(err => {
-                res.status(400).send("unable to update the database");
-              });
-            createNotification('editarPerfil', voluntary.name, user.email);
-          }
+          voluntary
+            .save()
+            .then(res.json(buildJSON(user, voluntary)))
+
+          createNotification('editarPerfil', voluntary.name, user.email);
+
         } else {
           res.status(404).send("data is not found");
         }
@@ -433,6 +432,12 @@ router.route('/updateUser/:id').post(function (req, res) {
 
     } else if (user.role === "Empresa") {
 
+      const { errors, isValid } = validateEditInputAdminProfileUser(req.body);
+      // Check validation
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
+
       atualPassword = req.body.password;
       newPassword = req.body.password2;
       var countAtualPassword = Object.keys(newPassword).length
@@ -445,6 +450,8 @@ router.route('/updateUser/:id').post(function (req, res) {
             user.updateOne({
               password: newPassword,
             })
+            user
+              .save()
               .catch(err => {
                 res.status(400).send("unable to update the database");
               });
@@ -458,34 +465,12 @@ router.route('/updateUser/:id').post(function (req, res) {
           company.phone = req.body.phone;
           company.address = req.body.address;
           company.birthDate = req.body.birthDate;
-          company.companyName = req.body.companyName;
-          company.companyAddress = req.body.companyAddress;
 
-          if (company.companyName !== undefined && company.companyAddress !== undefined) {
-            company.updateOne({
-              name: company.name,
-              phone: company.phone,
-              address: company.address,
-              birthDate: company.birthDate,
-              companyName: company.companyName,
-              companyAddress: company.companyAddress
-            })
-              .catch(err => {
-                res.status(400).send("unable to update the database");
-              });
-            createNotification('editarEntidade', company.companyName, user.email);
-          } else {
-            company.updateOne({
-              name: company.name,
-              phone: company.phone,
-              address: company.address,
-              birthDate: company.birthDate,
-            })
-              .catch(err => {
-                res.status(400).send("unable to update the database");
-              });
-            createNotification('editarPerfil', company.companyName, user.email);
-          }
+          company
+            .save()
+            .then(res.json(buildJSON(user, company)))
+
+          createNotification('editarPerfil', company.companyName, user.email);
         } else {
           res.status(404).send("data is not found");
         }
@@ -509,6 +494,8 @@ router.route('/updateUser/:id').post(function (req, res) {
             user.updateOne({
               password: newPassword,
             })
+            user
+              .save()
               .catch(err => {
                 res.status(400).send("unable to update the database");
               });
@@ -529,9 +516,10 @@ router.route('/updateUser/:id').post(function (req, res) {
             address: admin.address,
             birthDate: admin.birthDate,
           })
-            .catch(err => {
-              res.status(400).send("unable to update the database");
-            });
+          admin
+            .save()
+            .then(res.json(buildJSON(user, admin)))
+
           createNotification('editarPerfil', admin.name, user.email);
         } else {
           res.status(404).send("data is not found");

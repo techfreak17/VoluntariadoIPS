@@ -63,7 +63,7 @@ class ResetPassword extends Component {
 
                         <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                             <h4>
-                                Redifine a tua password abaixo!
+                                Redefina a sua password abaixo.
                              </h4>
                         </div>
 
@@ -109,7 +109,7 @@ class ResetPassword extends Component {
                                     }}
                                     type="submit"
                                     className="btn btn-large waves-effect waves-light hoverable blue accent-3">
-                                    Submeter!
+                                    Submeter
                                 </button>
                             </div>
                         </form>

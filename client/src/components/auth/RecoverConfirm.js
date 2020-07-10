@@ -40,14 +40,14 @@ class RecoverConfirm extends Component {
 
                         <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                             <h4>
-                                Se estavas registado na plataforma, deverás receber um email em breve!
+                                Deverá receber um email em breve.
                             </h4>
                         </div>
 
                         <div className="col s12">
                             <h5>
                                 <p className="grey-text text-darken-1">
-                                    Verifica a tua caixa de correio e segue o link para recuperares a tua password.
+                                    Verifique a sua caixa de correio e siga o link para recuperar a sua password.
                                 </p>
                             </h5>
                         </div>

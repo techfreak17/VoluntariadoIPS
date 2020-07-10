@@ -1,0 +1,8 @@
+@media screen and (max-width: 600px) {
+    .container label{
+        font-size: 10px;
+    }
+    .container input{
+        font-size: 10px;
+    }
+}

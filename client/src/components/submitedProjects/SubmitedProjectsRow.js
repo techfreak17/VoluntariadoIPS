@@ -15,22 +15,22 @@ class SubmitedProjectsRow extends Component {
     this.accept = this.accept.bind(this);
     this.myDate = new Date(props.obj.date);
     this.myDate = this.myDate.toLocaleDateString();
-    this.state={
-      delete:false,
-      accept:false
+    this.state = {
+      delete: false,
+      accept: false
     }
   }
 
   delete() {
     axios.get('/api/submitedProjects/submitDeleteProject/' + this.props.obj._id)
+      .then(window.location.reload())
       .catch(err => console.log(err))
-    window.location.reload();
   }
 
   accept() {
     axios.post("/api/submitedProjects/acceptSubmitedProject/" + this.props.obj._id)
-        .catch(err => console.log(err))
-    window.location.reload();
+      .then(window.location.reload())
+      .catch(err => console.log(err))
   }
 
   openWarningDelete = () => {
@@ -77,8 +77,8 @@ class SubmitedProjectsRow extends Component {
           <Popup open={this.state.delete}
             closeOnDocumentClick
             onClose={this.closeWarningDelete}>
-            <div className={"Modal container"} style={{width: "50"}}>
-              <h5 className= {"center"}>Tem a certeza que pretende apagar esta Submissão de Projeto?</h5>
+            <div className={"Modal container"} style={{ width: "50" }}>
+              <h5 className={"center"}>Tem a certeza que pretende apagar esta Submissão de Projeto?</h5>
               <div>
                 <button className="btn btn-medium waves-effect waves-light hoverable red left" onClick={this.delete}>CONFIRMAR</button>
                 <button className="btn btn-medium waves-effect waves-light hoverable gray right" onClick={this.closeWarningDelete}>CANCELAR</button>

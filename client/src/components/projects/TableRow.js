@@ -23,8 +23,8 @@ class TableRow extends Component {
 
   delete() {
     axios.get('/api/projects/deleteProject/' + this.props.obj._id)
+      .then(window.location.reload())
       .catch(err => console.log(err))
-    window.location.reload();
   }
 
   joinProject() {
@@ -32,8 +32,8 @@ class TableRow extends Component {
       userID: this.props.auth.user.id,
     };
     axios.post('/api/voluntaries/joinProject/' + this.props.obj._id, newObj)
+      .then(window.location.reload())
       .catch(err => console.log(err))
-    window.location.reload();
   }
 
   openWarning = () => {

@@ -33,11 +33,6 @@ class Landing extends Component {
             .catch(function (error) {
                 console.log(error);
             })
-
-        const { user } = this.props.auth;
-        if (user.id !== undefined) {
-            window.location.replace("http://localhost:3000/dashboard");
-        }
     }
 
     render() {

@@ -21,8 +21,8 @@ class CompanyProjectsRow extends Component {
 
   removeProject() {
     axios.get('/api/projects/deleteProject/' + this.props.obj._id)
+      .then(window.location.reload())
       .catch(err => console.log(err))
-    window.location.reload();
   }
 
   openWarning = () => {

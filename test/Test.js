@@ -154,7 +154,7 @@ describe('Testar Utilizadores', function () {
   it('TEST Update Users', function (done) {
     chai.request(server)
       .post('/api/Admin/updateUser/' + userID)
-      .send({
+      .send({ 
         username: "Test Username 2",
         name: "Test Name 2",
         role: "Voluntário",

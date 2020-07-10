@@ -20,6 +20,7 @@ class Upload extends Component {
     // On file upload (click the upload button) 
     onFileUpload = (file) => {
 
+        if(file){
         // Create an object of formData 
         const formData = new FormData();
 
@@ -33,6 +34,7 @@ class Upload extends Component {
 
         //Sets up to send formData to parent component
         this.props.handleUpload(formData);
+        }
     };
 
     // File content to be displayed after 

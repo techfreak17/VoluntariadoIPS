@@ -8,10 +8,12 @@ import axios from 'axios';
 class SideMenu extends Component {
 
     componentDidMount() {
+        if(this.props.auth.user.id){
         axios.get('/api/users/getUserDetails/' + this.props.auth.user.id)
             .then(response => {
                 this.insertImage(response.data[0].img);
             });
+        }
     }
 
     insertImage = (file) => {

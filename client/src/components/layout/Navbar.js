@@ -24,6 +24,7 @@ class Navbar extends Component {
     };
 
     componentDidMount() {
+        if(this.props.auth.user.id){
         axios.get('/api/users/getUserDetails/' + this.props.auth.user.id)
             .then(response => {
                 this.setState({
@@ -34,6 +35,7 @@ class Navbar extends Component {
             .catch(function (error) {
                 console.log(error);
             })
+        }
     }
 
 

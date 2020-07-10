@@ -6,6 +6,7 @@ import classnames from "classnames";
 import M from "materialize-css";
 import options from "materialize-css";
 import Upload from "../upload/Upload";
+import "../../componentsCSS/Forms.css"
 
 class Create extends Component {
     constructor(props) {
@@ -384,12 +385,12 @@ class Create extends Component {
                             </div>
 
                         </form>
-                        <div className="col s12" style={{ marginTop: "auto", marginBottom: "20%" }}>
-                            <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "16%" }}
-                                type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Submeter
+                        <div className="botoes col s12" style={{ marginTop: "auto", marginBottom: 70, display: "flex", justifyContent: "space-around" }}>
+                            <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5 }}
+                                type="submit" onClick={this.onSubmit} className="btn-large hoverable blue accent-3">Submeter
                             </button>
-                            <a style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "16%" }}
-                                href="/listProjects" className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
+                            <a style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red" }}
+                                href="/listProjects" className="btn-large hoverable accent-3">Cancelar
                             </a>
                         </div>
                     </div>

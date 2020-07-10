@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { createCompany } from "../../actions/createActions";
 import classnames from "classnames";
 import Upload from "../upload/Upload";
+import "../../componentsCSS/Forms.css"
 
 class CreateCompanyUser extends Component {
     constructor() {
@@ -311,11 +312,11 @@ class CreateCompanyUser extends Component {
                             </div>
 
                         </form>
-                        <div className="col s12" style={{ marginTop: "1%", paddingBottom: 60 }}>
-                            <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, marginLeft: "20%" }}
+                        <div className="botoes col s12" style={{ marginTop: "auto", marginBottom: 70, display: "flex", justifyContent: "space-around"}}>
+                            <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5}}
                                 type="submit" onClick={this.onSubmit} className="btn btn-large waves-effect waves-light hoverable blue accent-3">Submeter
                             </button>
-                            <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red", marginRight: "20%" }}
+                            <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5, backgroundColor: "red"}}
                                 onClick={this.goBack} className="right btn btn-large waves-effect waves-light hoverable accent-3">Cancelar
                             </button>
                         </div>

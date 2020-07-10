@@ -91,11 +91,11 @@ class TableRow extends Component {
           <Popup open={this.state.delete}
             closeOnDocumentClick
             onClose={this.closeWarning}>
-            <div className={"Modal container"} style={{ width: "50" }}>
-              <h5 className={"center"}>Tem a certeza que pretende apagar este Projeto?</h5>
-              <div>
-                <button className="btn btn-medium waves-effect waves-light hoverable red left" onClick={this.delete}>CONFIRMAR</button>
-                <button className="btn btn-medium waves-effect waves-light hoverable gray right" onClick={this.closeWarning}>CANCELAR</button>
+            <div className="Modal container">
+              <h5 className="center">Tem a certeza que pretende apagar este Projeto?</h5>
+              <div className="botoes" style={{display: "flex", justifyContent: "space-around", marginBottom: 10}}>
+                <button className="btn hoverable blue accent-3" style={{borderRadius: 5}} onClick={this.delete}>CONFIRMAR</button>
+                <button className="btn hoverable accent-3" style={{borderRadius: 5, backgroundColor: "red"}}onClick={this.closeWarning}>CANCELAR</button>
               </div>
             </div>
           </Popup>
@@ -103,11 +103,11 @@ class TableRow extends Component {
           <Popup open={this.state.join}
             closeOnDocumentClick
             onClose={this.closeWarningJoin}>
-            <div className={"Modal container"} style={{ width: "50" }}>
-              <h5 className={"center"}>Tem a certeza que pretende entrar neste Projeto?</h5>
-              <div>
-                <button className="btn btn-medium waves-effect waves-light hoverable red left" onClick={this.joinProject}>CONFIRMAR</button>
-                <button className="btn btn-medium waves-effect waves-light hoverable gray right" onClick={this.closeWarningJoin}>CANCELAR</button>
+            <div className="Modal container">
+              <h5 className="center">Tem a certeza que pretende aderir a este Projeto?</h5>
+              <div className="botoes" style={{display: "flex", justifyContent: "space-around", marginBottom: 10}}>
+                <button className="btn hoverable blue accent-3" style={{borderRadius: 5}} onClick={this.joinProject}>CONFIRMAR</button>
+                <button className="btn hoverable accent-3" style={{borderRadius: 5, backgroundColor: "red"}}onClick={this.closeWarningJoin}>CANCELAR</button>
               </div>
             </div>
           </Popup>

@@ -69,7 +69,7 @@ class SideMenu extends Component {
                 <li><a href={"/statsNumberProjects"}><i className="material-icons left">search</i>Voluntários nos Projetos</a></li>
                 <li><a href={"/statsRatingProjects"}><i className="material-icons left">search</i>Classificação dos Projetos</a></li>
                 <li><a href={"/statsCompareProjects"}><i className="material-icons left">search</i>Lista dos Projetos</a></li>
-                <li><button onClick={this.props.logout} className="blue btn" style={{ borderRadius: 10, marginLeft: 12, marginBottom: 5 }}>Sair</button></li>
+                <li><button onClick={this.props.logout} className="btn" style={{ borderRadius: 10, marginLeft: 20, backgroundColor: "red" }}>Sair</button></li>
             </ul>
         );
     }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import "../../componentsCSS/Upload.css"
 
 class Upload extends Component {
 
@@ -42,19 +43,16 @@ class Upload extends Component {
 
             return (
                 <div>
-                    <h5>Detalhes do Ficheiro:</h5>
-                    <p>Nome do Ficheiro: {this.state.selectedFile.name}</p>
-                    <p>Tipo do Ficheiro: {this.state.selectedFile.type}</p>
-                    <p>
-                        Data de modificação:{" "}
-                        {this.state.selectedFile.lastModifiedDate.toDateString()}
-                    </p>
+                    <h5><b>Detalhes do Ficheiro</b></h5>
+                    <p><b>Nome do Ficheiro:</b> {this.state.selectedFile.name}</p>
+                    <p><b>Tipo do Ficheiro:</b> {this.state.selectedFile.type}</p>
+                    <p><b>Data de modificação:</b>{" "}{this.state.selectedFile.lastModifiedDate.toDateString()}</p>
                 </div>
             );
         } else {
             return (
                 <div>
-                    <p>Ficheiro deverá ter no máximo 16 MB</p>
+                    <b><p>Ficheiro deverá ter no máximo 16 MB</p></b>
                 </div>
             );
         }
@@ -63,14 +61,12 @@ class Upload extends Component {
     render() {
 
         return (
-            <div className="container">
-                <div className="card center">
-                    <h4><b>Upload de Ficheiro</b></h4>
-                    <div>
-                        <input type="file" onChange={this.onFileChange} />
-                    </div>
-                    {this.fileData()}
+            <div>
+                <div className="fileUpload">
+                    <input type="file" onChange={this.onFileChange} className="upload hoverable" />
+                    <span>Upload</span>
                 </div>
+                {this.fileData()}
             </div>
         );
     }

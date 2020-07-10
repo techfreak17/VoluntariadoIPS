@@ -7,6 +7,7 @@ import PushNotificationsToast from "../pushNotifications/PushNotificationToast.j
 import M from "materialize-css";
 import options from "materialize-css";
 import SideMenu from "./SideMenu.js";
+import "../../componentsCSS/Navbar.css"
 
 class Navbar extends Component {
     constructor(props) {
@@ -24,7 +25,7 @@ class Navbar extends Component {
 
     componentDidMount() {
         axios.get('/api/users/getUserDetails/' + this.props.auth.user.id)
-        .then(response => {
+            .then(response => {
                 this.setState({
                     username: response.data[0].username,
                     email: response.data[0].email
@@ -51,14 +52,16 @@ class Navbar extends Component {
                         backgroundColor: "#23395D",
                         zIndex: "10"
                     }}>
-                       <div className="nav-wrapper">
-                            <SideMenu username={this.state.username} email={this.state.email} logout={this.onLogoutClick}></SideMenu>
-                            <p data-target="slide-out" className="sidenav-trigger show-on-large right"><i className="material-icons">menu</i></p>
-                            <PushNotificationsToast></PushNotificationsToast>
-                            <li><a className="navbar-brand" href="/dashboard"><img src={require('./images/logo.png')}
-                                alt="(Não esquecer de verificar no spam)"
-                                className="img-responsive"
-                                style={{ position: "absolute", left: 0, height: "auto", width: "auto", maxWidth: 200 }} /></a></li>
+                        <div className="nav-wrapper">
+                            <ul id="nav-mobile" className="right">
+                                <li><PushNotificationsToast></PushNotificationsToast></li>
+                                <li><SideMenu username={this.state.username} email={this.state.email} logout={this.onLogoutClick}></SideMenu></li>
+                                <li><p data-target="slide-out" className="sidenav-trigger show-on-large right"><i className="material-icons">menu</i></p></li>
+                                <li><a href="/dashboard"><img src={require('./images/logo.png')}
+                                    alt="(Não esquecer de verificar no spam)"
+                                    className="logo img-responsive"
+                                    style={{ position: "absolute", left: 0, maxWidth: 200 }} /></a></li>
+                            </ul>
                         </div>
                     </nav>
                 ) : (
@@ -70,10 +73,10 @@ class Navbar extends Component {
                         }}>
                             <div className="nav-wrapper">
                                 <ul id="nav-mobile" className="right">
-                                    <li><a className="navbar-brand" href="/"><img src={require('./images/logo.png')}
+                                    <li><a href="/"><img src={require('./images/logo.png')}
                                         alt="(Não esquecer de verificar no spam)"
-                                        className="img-responsive"
-                                        style={{ position: "absolute", left: 0, height: "auto", width: "auto", maxWidth: 200 }} /></a></li>
+                                        className="logo img-responsive"
+                                        style={{ position: "absolute", left: 0, maxWidth: 200 }} /></a></li>
                                     <li><a href="/login"><i className="material-icons left">person</i>Iniciar Sessão</a></li>
                                     <li><a href="/registerVoluntary" className="green btn" style={{ borderRadius: 10, marginBottom: 3 }}>Registar</a></li>
                                 </ul>

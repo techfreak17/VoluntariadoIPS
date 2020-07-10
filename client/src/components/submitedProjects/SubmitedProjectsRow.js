@@ -65,11 +65,11 @@ class SubmitedProjectsRow extends Component {
           <Popup open={this.state.accept}
             closeOnDocumentClick
             onClose={this.closeWarningAccept}>
-            <div className={"Modal container"} style={{ maxWidth: 400, width: "auto", paddingTop: "1%", paddingBottom: "1%" }}>
-              <h5 style={{ color: "", fontFamily: "Arial" }}>Tem a certeza que pretende aceitar este Projeto?</h5>
-              <div>
-                <button className="btn btn-medium waves-effect waves-light hoverable red left" onClick={this.accept}>CONFIRMAR</button>
-                <button className="btn btn-medium waves-effect waves-light hoverable gray right" onClick={this.closeWarningAccept}>CANCELAR</button>
+            <div className="Modal container">
+              <h5 className="center">Tem a certeza que pretende aceitar este Projeto?</h5>
+              <div className="botoes" style={{display: "flex", justifyContent: "space-around", marginBottom: 10}}>
+                <button className="btn hoverable blue accent-3" style={{borderRadius: 5}} onClick={this.accept}>CONFIRMAR</button>
+                <button className="btn hoverable accent-3" style={{borderRadius: 5, backgroundColor: "red"}}onClick={this.closeWarningAccept}>CANCELAR</button>
               </div>
             </div>
           </Popup>
@@ -77,11 +77,11 @@ class SubmitedProjectsRow extends Component {
           <Popup open={this.state.delete}
             closeOnDocumentClick
             onClose={this.closeWarningDelete}>
-            <div className={"Modal container"} style={{width: "50"}}>
-              <h5 className= {"center"}>Tem a certeza que pretende apagar esta Submissão de Projeto?</h5>
-              <div>
-                <button className="btn btn-medium waves-effect waves-light hoverable red left" onClick={this.delete}>CONFIRMAR</button>
-                <button className="btn btn-medium waves-effect waves-light hoverable gray right" onClick={this.closeWarningDelete}>CANCELAR</button>
+            <div className="Modal container">
+              <h5 className="center">Tem a certeza que pretende apagar esta submissão de Projeto?</h5>
+              <div className="botoes" style={{display: "flex", justifyContent: "space-around", marginBottom: 10}}>
+                <button className="btn hoverable blue accent-3" style={{borderRadius: 5}} onClick={this.delete}>CONFIRMAR</button>
+                <button className="btn hoverable accent-3" style={{borderRadius: 5, backgroundColor: "red"}}onClick={this.closeWarningDelete}>CANCELAR</button>
               </div>
             </div>
           </Popup>

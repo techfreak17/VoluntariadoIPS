@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import axios from 'axios';
 import ProjectsRow from "./ProjectsRow"
 import PropTypes from "prop-types";
@@ -7,6 +6,7 @@ import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import M from "materialize-css";
 import options from "materialize-css";
+import "../../componentsCSS/Landing.css"
 
 
 class Landing extends Component {
@@ -62,7 +62,7 @@ class Landing extends Component {
 
         return (
             <div>
-                <div className="parallax-container" style={{marginBottom:"-30px"}}>
+                <div className="parallax-container" style={{ marginBottom: "-30px" }}>
                     <div className="parallax"><img src={require('../layout/images/background.jpg')} alt="(Não esquecer de verificar no spam)" className="img-responsive" /></div>
                 </div>
                 <div>
@@ -75,7 +75,7 @@ class Landing extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="container" style={{ width: "60%", backgroundColor: "#23395D", borderRadius: 50, marginTop: 25, marginBottom: 30}}>
+                    <div className="container" style={{ width: "60%", backgroundColor: "#23395D", borderRadius: 50, marginTop: 25, marginBottom: 30 }}>
                         <div className="section">
                             <h2 className="header center text-lighten-2" style={{ fontFamily: "monospace", fontWeight: "bold", color: "#50C878" }}>Plataforma {" "}
                                 <span>VoluntariadoIPS</span></h2>
@@ -87,31 +87,23 @@ class Landing extends Component {
                         </p></h5>
                                 <h5 style={{ color: "#FEF4E8", fontWeight: "bold" }}>REGISTE-SE</h5>
                             </div>
-                            <div className="row center" style={{ width: "40%" }}>
-                                <div className="col s6">
-                                    <Link
-                                        to="/registerCompany"
+                            <div className="botoes row center" style={{display: "flex", justifyContent: "center"}}>
+                                    <a href="/registerCompany"
                                         style={{
-                                            width: "140px",
                                             borderRadius: 10,
-                                            letterSpacing: "1.5px",
                                             fontWeight: "bold"
                                         }}
-                                        className="btn btn-large waves-effect waves-light hoverable green">
+                                        className="botao btn-large hoverable green">
                                         Empresa
-                                </Link>
-                                </div>
-                                <div className="col s6">
+                                        </a>
+                                        <div style={{margin: 10}}> </div>
                                     <a href="/registerVoluntary"
                                         style={{
-                                            width: "170px",
                                             borderRadius: 10,
-                                            letterSpacing: "1.5px",
                                             fontWeight: "bold"
                                         }}
-                                        className="btn btn-large waves-effect waves-light hoverable green">
-                                        Voluntário</a>
-                                </div>
+                                        className="botao btn-large hoverable green">
+                                        Voluntário</a> 
                             </div>
                         </div>
                     </div>
@@ -119,9 +111,9 @@ class Landing extends Component {
                 <div className="parallax-container">
                     <div className="parallax"><img src={require('../layout/images/background.jpg')} alt="(Não esquecer de verificar no spam)" className="img-responsive" /></div>
                 </div>
-                
-                <div className="container" style={{ marginBottom: 20, display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    <a className="img" href="https://moodle.ips.pt/1920/" rel="noopener noreferrer" target="_blank" style={{ paddingRight: 100 }}>
+
+                <div className="container" style={{ marginBottom: 20, display: "flex", justifyContent: "space-around", alignItems: "center" }}>
+                    <a className="img" href="https://moodle.ips.pt/1920/" rel="noopener noreferrer" target="_blank" >
                         <img src={require('../layout/images/MOODLE.png')}
                             alt="Moodle" />
                     </a>
@@ -129,7 +121,7 @@ class Landing extends Component {
                         <img src={require('../layout/images/AAIPS.png')}
                             alt="AAIPS" />
                     </a>
-                    <a className="img" href="https://www.ips.pt/ips_si/web_page.inicial" rel="noopener noreferrer" target="_blank" style={{ paddingLeft: 100 }}>
+                    <a className="img" href="https://www.ips.pt/ips_si/web_page.inicial" rel="noopener noreferrer" target="_blank" >
                         <img src={require('../layout/images/IPS.png')}
                             alt="IPS" />
                     </a>

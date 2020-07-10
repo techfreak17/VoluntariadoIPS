@@ -5,6 +5,9 @@ import { logoutUser } from "../../actions/authActions";
 import axios from 'axios';
 import Chart from 'react-apexcharts';
 import "../../componentsCSS/Stats.css";
+import TableRowP from './TableRowVoluntaryStatsProjects';
+import TableRowCP from './TableRowVoluntaryStatsConcludedProjects';
+import TableRowSP from './TableRowVoluntaryStatsSubmitedProjects';
 
 class StatisticsProjectComparison extends Component {
 
@@ -15,6 +18,9 @@ class StatisticsProjectComparison extends Component {
             countProjects: 0,
             countConcluded: 0,
             countSubmited: 0,
+            projects: [],
+            concludedProjects: [],
+            submitedProjects: [],
             options: {
                 labels: ['A Decorrer', 'Concluidos', 'Submetidos'],
                 series: []
@@ -30,17 +36,59 @@ class StatisticsProjectComparison extends Component {
                 countConcluded: response.data[1],
                 countSubmited: response.data[2],
             }));
-        })
-            .catch(error => console.log(error));
+        }).catch(error => console.log(error));
+        
+        axios.get('/api/stats/getAllProjects')
+            .then(response => {
+                this.setState({
+                    projects: response.data[0],
+                    concludedProjects: response.data[1],
+                    submitedProjects: response.data[2]
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
+    tabRowP() {
+        return this.state.projects.map(function (object, i) {
+            return <TableRowP obj={object} key={i} />;
+        });
+    }
+
+    tabRowCP() {
+        return this.state.concludedProjects.map(function (object, i) {
+            return <TableRowCP obj={object} key={i} />;
+        });
+    }
+
+    tabRowSP() {
+        return this.state.submitedProjects.map(function (object, i) {
+            return <TableRowSP obj={object} key={i} />;
+        });
     }
 
     render() {
         return (
             <div className="container">
                 <h3 className="center"><b>Lista dos Projetos</b></h3>
-                <div className="chart" style={{ display: "flex", justifyContent: "center"}}>
+                <div className="chart" style={{ display: "flex", justifyContent: "center" }}>
                     <Chart options={this.state.options} series={this.state.options.series} type="donut" width="165%" />
                 </div>
+                <table className="table table-striped" style={{ marginTop: 20, marginBottom: 80}}>
+                    <thead>
+                        <tr>
+                            <th>Projeto</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.tabRowP()}
+                        {this.tabRowCP()}
+                        {this.tabRowSP()}
+                    </tbody>
+                </table>
             </div>
         );
     }

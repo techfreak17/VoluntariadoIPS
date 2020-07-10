@@ -9,7 +9,6 @@ export const editProfile = (userID, file, userData, history) => dispatch => {
     axios
         .post("/api/users/updateUser/" + userID, userData)
         .then(res => {
-            console.log(res.data);
             if (file) {
                 file.append(
                     "type",

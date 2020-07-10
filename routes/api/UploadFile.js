@@ -81,6 +81,8 @@ router.post("/file", function (req, res) {
 
   // Parse `req` and upload all associated files
   form.parse(req, function (err, fields, files) {
+    console.log(fields);
+    console.log(files);
     if (err) {
       return res.status(400).json({ error: err.message });
     }

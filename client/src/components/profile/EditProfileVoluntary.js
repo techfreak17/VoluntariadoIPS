@@ -270,6 +270,11 @@ class EditProfileVoluntary extends Component {
               <label htmlFor="password2">Password Nova (Preencher apenas se pretender alterar a password)</label>
               <span className="red-text">{errors.password2}</span>
             </div>
+            
+            <div className="input-field col s12">
+              <label htmlFor="name">Logótipo</label><br></br><br></br>
+              <Upload handleUpload={this.handleUpload}></Upload>
+            </div>
           </form>
           <div className="botoes col s12" style={{ marginTop: "auto", marginBottom: 70, display: "flex", justifyContent: "space-around" }}>
             <button style={{ width: 150, borderRadius: 10, letterSpacing: 1.5 }}

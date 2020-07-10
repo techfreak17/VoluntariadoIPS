@@ -36,8 +36,9 @@ export const editUser = (userID, file, userData, history) => dispatch => {
                         headers: {
                             "Content-type": "multipart/form-data"
                       }
-                    })
-                    .then(history.push("/listUsers"));
+                    }).then(history.push("/listUsers"));
+            }else {
+                history.push("/listUsers");
             }
         })
         .catch(err =>

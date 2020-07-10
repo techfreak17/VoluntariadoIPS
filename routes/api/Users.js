@@ -300,7 +300,7 @@ router.post("/updatePassword", (req, res) => {
 // @desc Get List Users
 // @access Private
 router.route('/listUsers').get(function (req, res) {
-  User.find(function (err, users) {
+  User.find({}, { username: 1, email: 1, role: 1 }, function (err, users) {
     if (err) {
       console.log(err);
     }

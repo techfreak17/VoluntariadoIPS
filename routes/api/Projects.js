@@ -68,7 +68,11 @@ router.post("/createProject", (req, res) => {
 // @access Private
 router.route('/editProject/:id').get(function (req, res) {
   let id = req.params.id;
-  Project.findById(id, function (err, project) {
+  Project.findById(id, {
+    title: 1, interestAreas: 1, relatedEntities: 1, relatedEntities: 1, title: 1,
+    synopsis: 1, intervationArea: 1, target_audience: 1, objectives: 1, description: 1, date: 1,
+    observations: 1, responsibleID: 1, requiredFormation: 1, formation: 1, vacancies: 1
+  }, function (err, project) {
     res.json(project);
   });
 });
@@ -175,7 +179,7 @@ router.route('/deleteProject/:id').get(function (req, res) {
     else {
       project.deleteOne();
       createNotification('projetoRemovido', project.title, 'admin@teste.pt');
-      res.status(202).send("Deleted sucesfull")
+      res.status(202).send("Deleted with sucess")
     }
   });
 });
@@ -184,23 +188,12 @@ router.route('/deleteProject/:id').get(function (req, res) {
 // @desc Get List of Projects
 // @access Private
 router.route('/listProjects').get(function (req, res) {
-  Project.find(function (err, projects) {
+  Project.find({},{ title: 1, synopsis: 1, date: 1, enroled_IDs: 1 },function (err, projects) {
     if (err) {
       console.log(err);
     }
     else {
-      let projectSend = [];
-      projects.forEach(project => {
-        let aux = {
-          _id: project._id,
-          title: project.title,
-          synopsis: project.synopsis,
-          date: project.date,
-          enroled_IDs: project.enroled_IDs
-        };
-        projectSend.push(aux);
-      })
-      res.json(projectSend);
+      res.json(projects);
     }
   });
 });

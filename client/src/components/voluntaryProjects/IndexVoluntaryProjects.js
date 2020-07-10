@@ -17,6 +17,14 @@ class IndexVoluntaryProjects extends Component {
         };
     }
     componentDidMount() {
+        if (window.localStorage) {
+            if (!localStorage.getItem('firstLoad')) {
+              localStorage['firstLoad'] = true;
+              window.location.reload();
+            }
+            else
+              localStorage.removeItem('firstLoad');
+          }
         axios.get('/api/voluntaries/listVoluntaryProjects/' + this.props.auth.user.id)
             .then(response => {
                 this.setState({

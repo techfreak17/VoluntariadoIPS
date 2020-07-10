@@ -66,7 +66,7 @@ router.route('/unjoinProject/:id').post(function (req, res) {
 // @access Private
 router.route('/listVoluntaryProjects/:id').get(function (req, res) {
     let userID = req.params.id;
-    Project.find({ enroled_IDs: mongoose.Types.ObjectId(userID) }, function (err, projects) {
+    Project.find({ enroled_IDs: mongoose.Types.ObjectId(userID) }, {title: 1, synopsis: 1, date: 1, enroled_IDs: 1}, function (err, projects) {
         if (err) {
             console.log(err);
         }

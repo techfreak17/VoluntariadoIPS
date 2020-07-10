@@ -15,6 +15,14 @@ export default class IndexUsers extends Component {
     };
   }
   componentDidMount() {
+    if (window.localStorage) {
+      if (!localStorage.getItem('firstLoad')) {
+        localStorage['firstLoad'] = true;
+        window.location.reload();
+      }
+      else
+        localStorage.removeItem('firstLoad');
+    }
     axios.get('/api/users/listUsers')
       .then(response => {
         this.setState({ user: response.data });

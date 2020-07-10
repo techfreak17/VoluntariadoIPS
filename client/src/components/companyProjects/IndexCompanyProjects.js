@@ -17,6 +17,14 @@ class IndexCompanyProjects extends Component {
         };
     }
     componentDidMount() {
+        if (window.localStorage) {
+            if (!localStorage.getItem('firstLoad')) {
+              localStorage['firstLoad'] = true;
+              window.location.reload();
+            }
+            else
+              localStorage.removeItem('firstLoad');
+          }
         axios.get('/api/companies/listCompanyProjects/' + this.props.auth.user.id)
             .then(response => {
                 this.setState({

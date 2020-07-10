@@ -9,23 +9,23 @@ export const createProject = (projectData, file, history) => dispatch => {
     axios
         .post("/api/projects/createProject", projectData)
         .then(res => {
-            if(file){
+            if (file) {
                 file.append(
-                "type",
-                "Projeto"
-            )
-            file.append(
-                "id",
-                res.data._id
-            )
-            console.log(file);
-            axios
-                .post("api/upload/file", file)
-                .then(history.push("/listProjects"));
+                    "type",
+                    "Projeto"
+                )
+                file.append(
+                    "id",
+                    res.data._id
+                )
+                console.log(file);
+                axios
+                    .post("api/upload/file", file)
+                    .then(history.push("/listProjects"));
             } else {
                 history.push("/listProjects");
             }
-            
+
         })
         .catch(err =>
             dispatch({
@@ -40,8 +40,8 @@ export const submitProject = (projectData, file, history) => dispatch => {
     axios
         .post("/api/submitedProjects/submitCreateProject", projectData)
         .then(res => {
-            
-            if (file !== null) {
+
+            if (file) {
                 file.append(
                     "type",
                     "Submissao Projeto"
@@ -55,7 +55,7 @@ export const submitProject = (projectData, file, history) => dispatch => {
                     .post("api/upload/file", file, {
                         headers: {
                             "Content-type": "multipart/form-data"
-                      }
+                        }
                     })
                     .then(history.push("/listSubmitedProjectsCompany"));
             } else {
@@ -74,8 +74,7 @@ export const editProject = (projectID, file, projectData, history) => dispatch =
     axios
         .post("/api/projects/updateProject/" + projectID, projectData)
         .then(res => {
-            history.push("/listProjects")
-            if (file !== null) {
+            if (file) {
                 file.append(
                     "type",
                     "Projeto"
@@ -86,6 +85,9 @@ export const editProject = (projectID, file, projectData, history) => dispatch =
                 )
                 axios
                     .post("api/upload/file", file)
+                    .then(history.push("/listProjects"))
+            } else {
+                history.push("/listProjects")
             }
         }).catch(err =>
             dispatch({

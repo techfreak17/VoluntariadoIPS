@@ -16,8 +16,8 @@ class TableRowUsers extends Component {
 
   delete() {
     axios.get('/api/admin/deleteUser/' + this.props.obj._id)
+      .then(window.location.reload())
       .catch(err => console.log(err))
-    window.location.reload();
   }
 
   openWarning = () => {

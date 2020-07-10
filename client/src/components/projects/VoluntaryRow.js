@@ -21,8 +21,8 @@ class VoluntaryRow extends Component {
       projectID: this.props.project,
     };
     axios.post('/api/projects/removeVoluntary/' + this.props.obj._id, newObj)
+      .then(window.location.reload())
       .catch(err => console.log(err))
-    window.location.reload();
   }
 
   openWarning = () => {
@@ -33,7 +33,6 @@ class VoluntaryRow extends Component {
   }
 
   render() {
-    console.log(this.props.responsibleID);
     return (
       <tr>
         <td>

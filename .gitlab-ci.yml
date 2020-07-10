@@ -13,7 +13,9 @@ build nodejs:
 test nodejs:
   stage: test
   image: node:latest
-  script: npm test
+  script: 
+    - npm install -g mocha
+    - npm test
 
 build docker image:
   stage: build_docker

@@ -13,7 +13,7 @@ build nodejs:
 test nodejs:
   stage: test
   image: node:latest
-  script: node ./tests/test.js
+  script: node ./test/Test.js
 
 build docker image:
   stage: build_docker

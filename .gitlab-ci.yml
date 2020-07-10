@@ -14,6 +14,7 @@ test nodejs:
   stage: test
   image: node:latest
   script: 
+    - npm install
     - npm install -g mocha
     - npm test
 

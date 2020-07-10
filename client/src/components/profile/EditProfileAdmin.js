@@ -6,7 +6,6 @@ import classnames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { editProfile } from "../../actions/profileActions";
-import Upload from "../upload/Upload";
 import "../../componentsCSS/Forms.css";
 
 class EditProfileAdmin extends Component {
